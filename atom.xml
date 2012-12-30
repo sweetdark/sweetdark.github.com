@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2012-12-29T21:29:11+08:00</updated>
+  <updated>2012-12-30T09:51:36+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -18,12 +18,12 @@
     <link href="http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/"/>
     <updated>2012-12-29T19:55:00+08:00</updated>
     <id>http://sweetdark.github.com/blog/2012/12/29/build-blog-problem</id>
-    <content type="html"><![CDATA[<p>  使用octorepss+github搭建博客，在这个过程中遇到了很多问题。其实根本原因是自己过于浮躁，没有详细的研究文档，很匆忙的搭建，并乱改乱折腾，所以到处碰壁。Linux下搭建参考官方文档
+    <content type="html"><![CDATA[<p> 使用octorepss+github搭建博客，在这个过程中遇到了很多问题。其实根本原因是自己过于浮躁，没有详细的研究文档，很匆忙的搭建，并乱改乱折腾，所以到处碰壁。Linux下搭建参考官方文档<br/>
   关于Windows下如何搭建octopress博客这篇文章讲的挺详细的。<a href="http://xuhehuan.com/783.html" title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>
-第一个遇到的问题：
+  第一个遇到的问题：
 <img src="http://ww1.sinaimg.cn/mw690/7485f70fjw1e00h3kzw2cj.jpg"></p>
 
-<p>  我是在windows上装的，但是我按照octopress官网上的Linux的方式去装，装了ruby 1.9.3然后又按照<a href="http://xuhehuan.com/783.html" title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>上介绍的windows的方式去装，结果导致了版本不一致的问题，建议版本最好是按照文章中建议的来装。如果装错了呢，怎么办。会提示版本对应不上的情况，可以修改Gemfile和Gemfile.lock下面的配置，设置到对应的版本号。</p>
+<p>  我是在windows上装的，但是我按照octopress官网上的Linux的方式去装，装了ruby 1.9.3然后又按照<a href="http://xuhehuan.com/783.html"     title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>上介绍的windows的方式去装，结果导致了版本不一致的问题，建议版本最好是按照文章中建议的来装。如果装错了呢，怎么办。会提示版本对应不上的情况，可以修改Gemfile和Gemfile.lock下面的配置，设置到对应的版本号。</p>
 
 <figure class='code'><figcaption><span>Gemfile </span></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
