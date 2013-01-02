@@ -3,7 +3,7 @@ layout: post
 title: "搭建博客遇到的问题以及总结"
 date: 2012-12-29 19:55
 comments: true
-categories: Technology
+categories: ['生活']
 ---
  使用octorepss+github搭建博客，在这个过程中遇到了很多问题。其实根本原因是自己过于浮躁，没有详细的研究文档，很匆忙的搭建，并乱改乱折腾，所以到处碰壁。Linux下搭建参考官方文档  
   关于Windows下如何搭建octopress博客这篇文章讲的挺详细的。<a href="http://xuhehuan.com/783.html" title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>

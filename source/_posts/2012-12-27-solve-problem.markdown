@@ -3,7 +3,8 @@ layout: post
 title: "解决问题的科学方法"
 date: 2012-12-27 12:15
 comments: true
-categories: 
+categories: IT
+tags: ['科学与技术']
 ---
 科学的方法分为两种归纳法和演绎法。
 归纳法就是由通过一些个别现象归纳出普遍性的结论。是一种由个别到一般的论证方法。
