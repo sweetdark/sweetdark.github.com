@@ -11,7 +11,7 @@ tags: ['Github','octopress']
 装完之后，要改一下_config.yml的配置，在适当的位置添加一行tag_dir: blog/tags  。然后在文章里，添加tags: 标签下面添你的标签名，例如：  tags: ['Github','octopress']
 {% img http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021334145207_0.png %}
 
-我还在导航栏理 添加了关于我的界面，修改的话，请修改about目录下的index.html文件即可。
+我还在导航栏里 添加了关于我的页面，修改的话，请修改about目录下的index.html文件即可。
 
 关于在侧边栏添加微博插件的问题，我在\_includes\asides 下增加了weibo_sina.html只要修改这个文件，替换为你的微博Html代码。微博的html代码的，只要登录你的微博，在设置里，点击我的工具可以产生。
 {% img http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021321353343_0.png %}
