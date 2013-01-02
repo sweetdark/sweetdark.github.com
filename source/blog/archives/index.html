@@ -4,12 +4,6 @@ title: 博文目录
 footer: false
 ---
 
----
-layout: page
-title: 博文目录
-footer: false
----
-
 <dl class="archives">
   {% for post in site.posts reverse %}
   {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
