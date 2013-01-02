@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-01-02T12:12:54+08:00</updated>
+  <updated>2013-01-02T13:40:03+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[博客主题的配置]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/02/blog-config/"/>
+    <updated>2013-01-02T12:17:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/02/blog-config</id>
+    <content type="html"><![CDATA[<p><strong>首先<a href="https://github.com/sweetdark/sweetdark.github.com/tree/source/.themes">我的博客主题</a>下载。把mario目录拷贝到.themes目录下。执行rake install[&#8220;mario&#8221;]</strong> 由于categories不支持中文，我加了tags标签。
+装完之后，要改一下_config.yml的配置，在适当的位置添加一行tag_dir: blog/tags  。然后在文章里，添加tags: 标签下面添你的标签名，例如：  tags: [&#8216;Github&#8217;,&#8217;octopress&#8217;]
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021334145207_0.png"></p>
+
+<p>我还在导航栏理 添加了关于我的界面，修改的话，请修改about目录下的index.html文件即可。</p>
+
+<p>关于在侧边栏添加微博插件的问题，我在_includes\asides 下增加了weibo_sina.html只要修改这个文件，替换为你的微博Html代码。微博的html代码的，只要登录你的微博，在设置里，点击我的工具可以产生。
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021321353343_0.png">
+然后再_config.yml修改一下配置
+default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina.html, asides/googleplus.html]  加上asides/weibo_sina.html即可。</p>
+
+<p>编写markdown文件的工具可以使用<a href="http://markdownpad.com/">markdownPad</a>，推荐使用notepad++编写博客，把经常使用的插件代码用宏录制好，避免重复性的工作。上传图片的工具可以使用http://www1.freep.cn/。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[2013年要点列表]]></title>
