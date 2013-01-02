@@ -5,7 +5,7 @@ date: 2013-01-02 20:16
 comments: true
 tags: markdown
 ---
-PS：[原文markdown语法地址](http://wowubuntu.com/markdown/)
+[原文markdown语法地址](http://wowubuntu.com/markdown/)  [markdown快速入门](http://wowubuntu.com/markdown/basic.html)
 -------------------
 * [概述](\#overview)
 	* [宗旨](\#philosophy)
@@ -20,6 +20,7 @@ PS：[原文markdown语法地址](http://wowubuntu.com/markdown/)
 	+ [分隔线](\#hr)
 
 <hr>
+<!-- more -->
 <h2 id="overview">概述</h2>
 <h3 id="philosophy">宗旨</h3>
 
@@ -262,7 +263,7 @@ viverra nec, fringilla in, laoreet vitae, risus.
 *   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
 Suspendisse id sem consectetuer libero luctus adipiscing.
 ```
-如果列表项目间用空行分开，在输出 HTML 时 Markdown 就会将项目内容用 ‘<p> ’标签包起来，举例来说：
+如果列表项目间用空行分开，在输出 HTML 时 Markdown 就会将项目内容用 `<p> `标签包起来，举例来说：
 ```
 *   Bird
 *   Magic
@@ -406,4 +407,5 @@ end tell
 ---------------------------------------
 ```
 ___________________________________
-此文件的源代码点击[这里]()
+(未完待续)
+此文件的源代码点击[这里](https://raw.github.com/sweetdark/sweetdark.github.com/source/source/_posts/2013-01-02-write-markdown.markdown)
