@@ -5,11 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>博文目录 - Mario's Blog</title>
+  <title>非本机快速写博客 - Mario's Blog</title>
   <meta name="author" content="Mario">
 
   
-  <meta name="description" content="博文目录 2013 2013-1-4随笔 Jan 4th, 2013 Tag: 随笔 非本机快速写博客 Jan 4th, 2013 Tags: Github, octopress 用Markdown写Markdown语法说明 Jan 2nd, 2013 Tag: markdown 博客主题的配置 &hellip;">
+  <meta name="description" content="有时出差，或者去别的地方。要在其他地方写博客怎么办呢。首先安装好机子上的本地环境。参考这里的搭建本地环境和更新本地环境。然后从github中clone 远程的仓库到本地。
+具体步骤：
+git clone git://github.com/sweetdark/sweetdark.github.com &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://sweetdark.github.com/blog/archives/">
+  <link rel="canonical" href="http://sweetdark.github.com/blog/2013/01/04/how-to-pull/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -64,52 +66,17 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
+
+
   <header>
-    <h1 class="entry-title">博文目录</h1>
     
-  </header>
-  
-  <dl class="archives">
-  
-  
-  
+      <h1 class="entry-title">非本机快速写博客</h1>
     
-    <dt>2013</dt>
-  
-  <dd><h1 class="entry-title"><a href="/blog/2013/01/04/new-rome/">2013-1-4随笔</a></h1>
-<p class="meta">
-  
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-04T22:07:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
-  
-
-<span class="tags">
-  Tag:
-  
-    <a href='/blog/tags/sui-bi/'>随笔</a>
-  
-</span>
-
-</p>
-</dd>
-  
-  
-  
-  <dd><h1 class="entry-title"><a href="/blog/2013/01/04/how-to-pull/">非本机快速写博客</a></h1>
-<p class="meta">
-  
+    
+    <p class="meta">
+      
 
 
 
@@ -122,7 +89,7 @@
 
 
 <time datetime="2013-01-04T12:51:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
-  
+	  
 
 <span class="tags">
   Tags:
@@ -131,72 +98,55 @@
   
 </span>
 
-</p>
-</dd>
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=非本机快速写博客 - &amp;url=http://sweetdark.github.com/blog/2013/01/04/how-to-pull/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=非本机快速写博客 - &amp;url=http://sweetdark.github.com/blog/2013/01/04/how-to-pull/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=非本机快速写博客 - http://sweetdark.github.com/blog/2013/01/04/how-to-pull/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
   
-  
-  
-  <dd><h1 class="entry-title"><a href="/blog/2013/01/02/write-markdown/">用Markdown写Markdown语法说明</a></h1>
-<p class="meta">
-  
+  </header>
 
 
+<div class="entry-content"><p>有时出差，或者去别的地方。要在其他地方写博客怎么办呢。首先安装好机子上的本地环境。参考<a href="http://xuhehuan.com/783.html">这里</a>的搭建本地环境和更新本地环境。然后从github中clone 远程的仓库到本地。
+具体步骤：
+git clone git://github.com/sweetdark/sweetdark.github.com.git octopress
+进入该目录
+cd octopress
+你用git branch -a命令查看分支
+你会发现只是clone了master的分支，没有克隆和创建source分支的。source的文件夹和文件没有克隆下来：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041302488150_0.jpg"></p>
+
+<p>那么我们要从本地区抓取远程的source分支。
+可以执行
+git checkout &#8211;track -b reps-branch origin/reps-branch  抓取 reps-branch, 並將此 branch 建立於 local 的 reps-branch
+再看一下你的目录：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041303593154_0.jpg">
+是不是可以了。
+附上全部命令截图：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041304293434_0.jpg"></p>
+
+<p>初始化你的github页面的地址
+rake setup_github_pages</p>
+
+<p>然后写完博客rake gen_deploy发布之后，别忘了。
+用git status检查哪些还没有提交，用git add . 和 git commit -m &#8220;yourmessage&#8221;提交更新
+最后要git push origin source</p>
+
+<p>一切搞定。</p>
+</div>
 
 
-
-
-
-
-  
-
-
-<time datetime="2013-01-02T20:16:00+08:00" pubdate data-updated="true">Jan 2<span>nd</span>, 2013</time>
-  
-
-<span class="tags">
-  Tag:
-  
-    <a href='/blog/tags/markdown/'>markdown</a>
-  
-</span>
-
-</p>
-</dd>
-  
-  
-  
-  <dd><h1 class="entry-title"><a href="/blog/2013/01/02/blog-config/">博客主题的配置</a></h1>
-<p class="meta">
-  
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-02T12:17:00+08:00" pubdate data-updated="true">Jan 2<span>nd</span>, 2013</time>
+  <footer>
+    <p class="meta">
+      
   
 
-<span class="tags">
-  Tags:
-  
-    <a href='/blog/tags/github/'>Github</a>, <a href='/blog/tags/octopress/'>octopress</a>
-  
-</span>
+<span class="byline author vcard">Posted by <span class="fn">Mario</span></span>
 
-</p>
-</dd>
-  
-  
-  
-  <dd><h1 class="entry-title"><a href="/blog/2013/01/01/important-list/">2013年要点列表</a></h1>
-<p class="meta">
-  
+      
 
 
 
@@ -208,164 +158,35 @@
   
 
 
-<time datetime="2013-01-01T23:36:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
-  
-
-<span class="tags">
-  Tag:
-  
-    <a href='/blog/tags/sheng-huo/'>生活</a>
-  
-</span>
-
-</p>
-</dd>
-  
-  
-  
-  <dd><h1 class="entry-title"><a href="/blog/2013/01/01/mood/">2013年随笔</a></h1>
-<p class="meta">
-  
+<time datetime="2013-01-04T12:51:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+      
 
 
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-01T21:33:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
-  
-
-<span class="tags">
-  Tag:
-  
-    <a href='/blog/tags/sheng-huo/'>生活</a>
-  
-</span>
-
-</p>
-</dd>
-  
-  
-  
+    </p>
     
-    <dt>2012</dt>
-  
-  <dd><h1 class="entry-title"><a href="/blog/2012/12/30/daily/">随笔</a></h1>
-<p class="meta">
-  
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-30T20:55:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2012</time>
-  
-
-<span class="tags">
-  Tag:
-  
-    <a href='/blog/tags/sheng-huo/'>生活</a>
-  
-</span>
-
-</p>
-</dd>
+      <div class="sharing">
   
   
   
-  <dd><h1 class="entry-title"><a href="/blog/2012/12/29/build-blog-problem/">搭建博客遇到的问题以及总结</a></h1>
-<p class="meta">
-  
+</div>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-29T19:55:00+08:00" pubdate data-updated="true">Dec 29<span>th</span>, 2012</time>
-  
-
-<span class="tags">
-  Tags:
-  
-    <a href='/blog/tags/github/'>Github</a>, <a href='/blog/tags/octopress/'>octopress</a>
-  
-</span>
-
-</p>
-</dd>
-  
-  
-  
-  <dd><h1 class="entry-title"><a href="/blog/2012/12/27/solve-problem/">解决问题的科学方法</a></h1>
-<p class="meta">
-  
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-27T12:15:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
-  
-
-<span class="tags">
-  Tag:
-  
-    <a href='/blog/tags/ke-xue-yu-ji-zhu/'>科学与技术</a>
-  
-</span>
-
-</p>
-</dd>
-  
-  
-  
-  <dd><h1 class="entry-title"><a href="/blog/2012/12/27/test/">测试图片</a></h1>
-<p class="meta">
-  
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-27T10:13:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
-  
-
-</p>
-</dd>
-  
-</dl>
-
-  
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/02/write-markdown/" title="Previous Post: 用Markdown写Markdown语法说明">&laquo; 用Markdown写Markdown语法说明</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/04/new-rome/" title="Next Post: 2013-1-4随笔">2013-1-4随笔 &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -450,7 +271,10 @@
       var disqus_shortname = 'sweetdark';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2013/01/04/how-to-pull/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2013/01/04/how-to-pull/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
