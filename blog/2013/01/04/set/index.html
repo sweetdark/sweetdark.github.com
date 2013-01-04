@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>集合 - Mario's Blog</title>
+  <meta name="author" content="Mario">
+
+  
+  <meta name="description" content="这里的集合是用链表的方式来实现的。 单向链表的定义：list.h #ifndef LIST_H_
+#define LIST_H_
+#include &lt;stdlib.h&gt; typedef struct ListElement_ { void *data; struct &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sweetdark.github.com/blog/2013/01/04/set/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Mario's Blog</a></h1>
+  
+    <h2>学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sweetdark.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">目录</a></li>
+  <li><a href="/about">关于我</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+
+
+  <header>
+    
+      <h1 class="entry-title">集合</h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T22:46:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/suan-fa-yu-shu-ju-jie-gou/'>算法与数据结构</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=集合 - &amp;url=http://sweetdark.github.com/blog/2013/01/04/set/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=集合 - &amp;url=http://sweetdark.github.com/blog/2013/01/04/set/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=集合 - http://sweetdark.github.com/blog/2013/01/04/set/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+<div class="entry-content"><p>这里的集合是用链表的方式来实现的。</p>
+
+<p>单向链表的定义：list.h</p>
+
+<div><script src='https://gist.github.com/4259013.js'></script>
+<noscript><pre><code>#ifndef LIST_H_
+#define LIST_H_
+#include &lt;stdlib.h&gt;
+
+typedef struct ListElement_ {
+    void *data;
+    struct ListElement_ *next;
+} ListElement;
+
+typedef struct List_ {
+    int size;
+    int (*match) (const void *data1, const void *data2);
+    void (*destory) (void* data);
+    ListElement *head;
+    ListElement *tail;
+} List;
+
+void list_init(List *list, void (*destory) (void *data));
+void destory(List *list);
+int list_ins_next(List *list, ListElement *element, const void *data);
+int list_rem_next(List *list, ListElement *element, void *data);
+#define list_size(list) ((list)-&gt;size)
+#define list_head(list) ((list)-&gt;head)
+#define list_tail(list) ((list)-&gt;tail)
+#define list_is_head(list, element) ((element) == (list-&gt;head) ? 1 : 0)
+#define list_is_tail(element)       ((element)-&gt;next == NULL ? 1 : 0)
+#define list_data(element)          ((element)-&gt;data)
+#define list_next(element)          ((element)-&gt;next)
+
+#endif</code></pre></noscript></div>
+
+
+
+
+<!-- more -->
+
+
+<p>单向链表的实现：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;list.h&quot;</span>
+</span><span class='line'><span class="kt">void</span> <span class="n">list_init</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">));</span>
+</span><span class='line'><span class="kt">void</span> <span class="n">list_destory</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">);</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">list_ins_next</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="n">ListElement</span> <span class="o">*</span><span class="n">element</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">list_rem_next</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="n">ListElement</span> <span class="o">*</span><span class="n">element</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'><span class="cp">#define list_size(list) ((list)-&gt;size)</span>
+</span><span class='line'><span class="cp">#define list_head(list) ((list)-&gt;head)</span>
+</span><span class='line'><span class="cp">#define list_tail(list)  ((list)-&gt;tail)</span>
+</span><span class='line'><span class="cp">#define list_is_head(list, element) ((element) == (list-&gt;head) ? 1 : 0)</span>
+</span><span class='line'><span class="cp">#define list_is_tail(element)        ((element)-&gt;next == NULL ? 1 : 0)</span>
+</span><span class='line'><span class="cp">#define list_data(element)           ((element)-&gt;data)</span>
+</span><span class='line'><span class="cp">#define list_next(element)           ((element)-&gt;next)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">list_init</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">match</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span> <span class="o">=</span> <span class="n">destory</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">head</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">list_destory</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_rem_next</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>    
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">memset</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">list_ins_next</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="n">ListElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">ListElement</span> <span class="o">*</span><span class="n">ins_elem</span> <span class="o">=</span> <span class="p">(</span><span class="n">ListElement</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ListElement</span><span class="p">));</span>
+</span><span class='line'>  <span class="n">list_data</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="n">list_tail</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">size</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">list_rem_next</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="n">ListElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list</span> <span class="o">||</span> <span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">ListElement</span> <span class="o">*</span><span class="n">old_element</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
+</span><span class='line'>      <span class="n">old_element</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">elem</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>      <span class="n">old_element</span> <span class="o">=</span> <span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">elem</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="n">elem</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">old_element</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">--</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>集合用链表的方式实现的，通过typedef来实现简单的多态，集合的操作包括，求交集，并集，差集，判断一个元素是否在集合中，判断一个集合是否是另外一个集合的子集。</p>
+
+<figure class='code'><figcaption><span>set.h</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef SET_H</span>
+</span><span class='line'><span class="cp">#define SET_H</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include &quot;list.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">typedef</span> <span class="n">List</span> <span class="n">Set</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">typedef</span> <span class="n">ListElement</span> <span class="n">SetElement</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="n">set_init</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">),</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#define set_destory list_destory</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_insert</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_remove</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_union</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setu</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_insertion</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">seti</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_deffirence</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setd</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_ismember</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_issubset</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_is_equal</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'><span class="cp">#define set_size(set) list_size(set)</span>
+</span><span class='line'><span class="cp">#define set_data(element) list_data(element)</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>(未完待续)</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mario</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T22:46:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/04/new-rome/" title="Previous Post: 2013-1-4随笔">&laquo; 2013-1-4随笔</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>最新发布</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/04/set/">集合</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/04/new-rome/">2013-1-4随笔</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/04/how-to-pull/">非本机快速写博客</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/02/write-markdown/">用Markdown写Markdown语法说明</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/02/blog-config/">博客主题的配置</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sweetdark">@sweetdark</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sweetdark',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+<iframe id="sina_widget_1954936591" style="width:100%; height:500px;" frameborder="0" scrolling="no" src="http://v.t.sina.com.cn/widget/widget_blog.php?uid=1954936591&height=500&skin=wd_02&showpic=1"></iframe>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Mario -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2013/01/04/set/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2013/01/04/set/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
