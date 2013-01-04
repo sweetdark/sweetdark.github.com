@@ -25,7 +25,10 @@ git checkout --track -b reps-branch origin/reps-branch  抓取 reps-branch, 並�
 附上全部命令截图：
 {% img http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041304293434_0.jpg %}
 
-写完博客发布之后，别忘了。
+初始化你的github页面的地址 
+rake setup_github_pages
+
+然后写完博客rake gen_deploy发布之后，别忘了。
 用git status检查哪些还没有提交，用git add . 和 git commit -m "yourmessage"提交更新
 最后要git push origin source
 
