@@ -13,7 +13,7 @@ tags: ['算法与数据结构']
 <!-- more -->
 单向链表的实现：
 
-``` c
+``` c list的实现list.c
 #include "list.h"
 void list_init(List *list, void (*destory) (void *data));
 void list_destory(List *list);
@@ -123,5 +123,121 @@ int set_is_equal(const Set *set1, const Set *set2);
 #define set_data(element) list_data(element)
 
 #endif
+```
+
+``` c set.c set实现文件
+#include "set.h"
+
+void set_init(Set *set, int (*match)(const void *data1, const void *data2),
+		void (*destory) (void *data)) {
+	list_init(set, destory);
+	set->match = match;
+	return;
+}
+
+int set_insert(Set *set, const void *data) {
+	if (set_ismember(set, data)) return 1;
+	return list_ins_next(set, list_tail(set), data);
+}
+
+int set_remove(Set *set, void **data) {
+	SetElement *h;
+	SetElement *pre = NULL;
+	for (h = list_head(set); h != NULL; h = list_next(h)) {
+		if (set->match(h->data, *data) == 0) {
+			break;
+		}
+		
+		pre = h;
+	}
+	if (h == NULL)
+		return -1;
+	return list_rem_next(set, prev, data);
+}
+
+int set_union(Set *setu, const Set *set1, const Set *set2) {
+	SetElement *h1 = set1->head;
+	SetElement *h2 = set2->head;
+	void *data;
+	for (h1 = list_head(set1); h1 != NULL; h1 = list_next(h1)) {
+		data = list_data(h1);
+		if (list_ins_next(setu, list_tail(setu), data) != 0) {
+			set_destory(setu);
+			return -1;
+		}
+	}
+	for (h2 = list_head(set2); h2 != NULL; h2 = list_next(h2)) {
+		data = list_data(h2);
+		if (set_ismember(set1, data) {
+			continue;
+		} else {
+			if (list_ins_next(setu, list_tail(setu), data) != 0) {
+				set_destory(setu);
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
+
+int set_intersection(Set *seti, const Set *set1, const Set *set2){
+	SetElement *memeber;
+	void 	   *data;
+	
+	set_init(seti, set1->match, NULL);
+	for (member = list_head(set1); member != NULL; member = list_next(member)) {
+		if (set_ismember(set2, list_data(set1))) {
+			data = list_data(set1);
+			
+			if (list_ins_next(seti, list_tail(seti), data) != 0) {
+				set_destory(seti);
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
+
+int set_deffirence(Set *setd, const Set *set1, const Set *set2) {
+	SetElement *member;
+	void 	   *data;
+	
+	set_init(setd, set1->match, NULL);
+	
+	for (member = list_head(set1); member != NULL; member = list_next(member)) {
+		if (!set_ismember(set2, list_data(member))) {
+			data = list_data(member);
+			if (list_ins_next(setd, list_tail(setd), data) != 0) {
+				set_destory(setd);
+				return -1;
+			}
+		}
+	}
+	
+	return 0;
+}
+
+int set_ismember(Set *set, const void *data) {
+	SetElement *p = list_head(set);
+	for (; p != NULL; p = list_next(p)) {
+		if (set->match(list_data(p), data) == 0) return 1;
+	}
+	return 0;
+}
+
+int set_issubset(const Set *set1, const Set *set2) {
+	SetElement *p;
+	if (set_size(set1) > set_size(set2)) return 0;
+	for (p = list_head(set2); p != NULL; p = list_next(p)) {
+		if (set_ismemeber(set2, list_data(p)) == 0) return 0;
+	}
+	return 1;
+}
+
+int set_is_equal(const Set *set1, const Set *set2) {
+	if (set_size(set1) != set_size(set2)) return 0;
+	
+	return set_issubset(set1, set2);
+}
 ```
 *(未完待续)*
