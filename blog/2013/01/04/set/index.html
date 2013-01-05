@@ -154,7 +154,7 @@ int list_rem_next(List *list, ListElement *element, void *data);
 
 <p>单向链表的实现：</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>list的实现list.c</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -372,6 +372,237 @@ int list_rem_next(List *list, ListElement *element, void *data);
 </span></code></pre></td></tr></table></div></figure>
 
 
+
+
+<figure class='code'><figcaption><span>set.c set实现文件</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;set.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">set_init</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">),</span>
+</span><span class='line'>      <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">list_init</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">destory</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span> <span class="o">=</span> <span class="n">match</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_insert</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">list_ins_next</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">set</span><span class="p">),</span> <span class="n">data</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_remove</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">pre</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span> <span class="n">h</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">(</span><span class="n">h</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="n">pre</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">h</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">list_rem_next</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">prev</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_union</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setu</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h1</span> <span class="o">=</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">head</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h2</span> <span class="o">=</span> <span class="n">set2</span><span class="o">-&gt;</span><span class="n">head</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h1</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">h1</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h1</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h1</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">h1</span><span class="p">);</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setu</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setu</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">set_destory</span><span class="p">(</span><span class="n">setu</span><span class="p">);</span>
+</span><span class='line'>          <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h2</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span> <span class="n">h2</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h2</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">h2</span><span class="p">);</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setu</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setu</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">setu</span><span class="p">);</span>
+</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_intersection</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">seti</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">){</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">memeber</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span>       <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="n">set_init</span><span class="p">(</span><span class="n">seti</span><span class="p">,</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">member</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">member</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">member</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">member</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">set1</span><span class="p">)))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span>
+</span><span class='line'>          
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">seti</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">seti</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">seti</span><span class="p">);</span>
+</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_deffirence</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setd</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">member</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span>       <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="n">set_init</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">member</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">member</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">member</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">member</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">)))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">);</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setd</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span>
+</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_ismember</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">(</span><span class="n">list_data</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_issubset</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_size</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">set_size</span><span class="p">(</span><span class="n">set2</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span> <span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismemeber</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">set_is_equal</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_size</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span> <span class="o">!=</span> <span class="n">set_size</span><span class="p">(</span><span class="n">set2</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">return</span> <span class="n">set_issubset</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">set2</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <p><em>(未完待续)</em></p>
 </div>
 
@@ -413,6 +644,8 @@ int list_rem_next(List *list, ListElement *element, void *data);
         <a class="basic-alignment left" href="/blog/2013/01/04/new-rome/" title="Previous Post: 2013-1-4随笔">&laquo; 2013-1-4随笔</a>
       
       
+        <a class="basic-alignment right" href="/blog/2013/01/05/reflection/" title="Next Post: 反思目前的工作状况">反思目前的工作状况 &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -432,6 +665,10 @@ int list_rem_next(List *list, ListElement *element, void *data);
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/05/reflection/">反思目前的工作状况</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/04/set/">集合</a>
       </li>
     
@@ -445,10 +682,6 @@ int list_rem_next(List *list, ListElement *element, void *data);
     
       <li class="post">
         <a href="/blog/2013/01/02/write-markdown/">用Markdown写Markdown语法说明</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/02/blog-config/">博客主题的配置</a>
       </li>
     
   </ul>
