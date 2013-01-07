@@ -67,5 +67,5 @@ int cover(Set *members, Set *subsets, Set **covering) {
 	return -1;
 
 }
+```
 
- ```
