@@ -33,11 +33,13 @@ tags: ['算法与数据结构']
 转化为糖果的问题就是，每一次挑选的糖果包能覆盖的糖果种类最多，则选择这个糖果包，直到覆盖所有的糖果种类为止。
 
 
-//伪代码
+##实现文件
 ``` c
-int cover(set *members, set *subsets, set **covering) {
-	set *setd = (set*) malloc (sizeof(set));
-	wile (list_size(members) > 0 && list_size(subsets) >0) {
+#include "set.h"
+/* subsets里存的是Set* 指针数据。 （未测试，待完善）*/
+int cover(Set *members, Set *subsets, Set **covering) {
+	Set *setd = (Set*) malloc (sizeof(Set));
+	while (list_size(members) > 0 && list_size(subsets) >0) {
 		SetElement *pos = list_head(subsets);
 		SetElement *max_pos = NULL;
 		int max = 0;
@@ -45,7 +47,7 @@ int cover(set *members, set *subsets, set **covering) {
 			int temp = 0;
 			SetElement *mems = list_head(members);
 			for (; mems != NULL; mems = list_next(mems)) {
-				if (set_ismember((set*)(list_data(pos)), mems) == 0) {
+				if (set_ismember((Set*)(list_data(pos)), mems) == 0) {
 					++temp;
 				}
 			}
@@ -55,13 +57,15 @@ int cover(set *members, set *subsets, set **covering) {
 			}
 		}
 		if (set_insert(*covering, max_pos) == -1) return -1;
-		if (set_remove(subsets, max_pos) == -1) return -1;
-		if (set_difference(setd, members, (set*)(list_data(max_pos))) == -1) return -1;
+		if (set_remove(subsets, (void**)&max_pos) == -1) return -1;
+		if (set_difference(setd, members, (Set*)(list_data(max_pos))) == -1) return -1;
 		members = setd;
 	}
 	if (list_size(members) == 0)  { free(setd); return 0;}
 	if (list_size(members) > 0 && list_size(subsets) == 0) { free(setd); return 1; }
 	free(setd);
 	return -1;
- ```
+
 }
+
+ ```
