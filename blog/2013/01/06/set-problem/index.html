@@ -140,45 +140,74 @@
 
 <h2>实现文件</h2>
 
-<p>&#8220;` c</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;set.h&quot;</span>
+</span><span class='line'><span class="cm">/* subsets里存的是Set* 指针数据。 （未测试，待完善）*/</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">cover</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">members</span><span class="p">,</span> <span class="n">Set</span> <span class="o">*</span><span class="n">subsets</span><span class="p">,</span> <span class="n">Set</span> <span class="o">**</span><span class="n">covering</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">Set</span> <span class="o">*</span><span class="n">setd</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">SetElement</span> <span class="o">*</span><span class="n">pos</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">SetElement</span> <span class="o">*</span><span class="n">max_pos</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">(;</span> <span class="n">pos</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>          <span class="n">SetElement</span> <span class="o">*</span><span class="n">mems</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">members</span><span class="p">);</span>
+</span><span class='line'>          <span class="k">for</span> <span class="p">(;</span> <span class="n">mems</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">mems</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">mems</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">((</span><span class="n">Set</span><span class="o">*</span><span class="p">)(</span><span class="n">list_data</span><span class="p">(</span><span class="n">pos</span><span class="p">)),</span> <span class="n">mems</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                  <span class="o">++</span><span class="n">temp</span><span class="p">;</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">temp</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">max</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+</span><span class='line'>              <span class="n">max_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_insert</span><span class="p">(</span><span class="o">*</span><span class="n">covering</span><span class="p">,</span> <span class="n">max_pos</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_remove</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">max_pos</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_difference</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">members</span><span class="p">,</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)(</span><span class="n">list_data</span><span class="p">(</span><span class="n">max_pos</span><span class="p">)))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">members</span> <span class="o">=</span> <span class="n">setd</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>include &#8220;set.h&#8221;</h1>
 
-<p>/<em> subsets里存的是Set</em> 指针数据。 （未测试，待完善）<em>/
-int cover(Set </em>members, Set *subsets, Set **covering) {</p>
 
-<pre><code>Set *setd = (Set*) malloc (sizeof(Set));
-while (list_size(members) &gt; 0 &amp;&amp; list_size(subsets) &gt;0) {
-    SetElement *pos = list_head(subsets);
-    SetElement *max_pos = NULL;
-    int max = 0;
-    for (; pos != NULL; pos = list_next(pos)) {
-        int temp = 0;
-        SetElement *mems = list_head(members);
-        for (; mems != NULL; mems = list_next(mems)) {
-            if (set_ismember((Set*)(list_data(pos)), mems) == 0) {
-                ++temp;
-            }
-        }
-        if (temp &gt; max) {
-            max = temp;
-            max_pos = pos;
-        }
-    }
-    if (set_insert(*covering, max_pos) == -1) return -1;
-    if (set_remove(subsets, (void**)&amp;max_pos) == -1) return -1;
-    if (set_difference(setd, members, (Set*)(list_data(max_pos))) == -1) return -1;
-    members = setd;
-}
-if (list_size(members) == 0)  { free(setd); return 0;}
-if (list_size(members) &gt; 0 &amp;&amp; list_size(subsets) == 0) { free(setd); return 1; }
-free(setd);
-return -1;
-</code></pre>
-
-<p>}</p>
-
-<p> &#8220;`</p>
 </div>
 
 
