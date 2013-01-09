@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-01-09T22:42:40+08:00</updated>
+  <updated>2013-01-09T22:45:53+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -18,9 +18,7 @@
     <link href="http://sweetdark.github.com/blog/2013/01/09/html5/"/>
     <updated>2013-01-09T22:14:00+08:00</updated>
     <id>http://sweetdark.github.com/blog/2013/01/09/html5</id>
-    <content type="html"><![CDATA[<iframe height=600 width=800 src="http://www.florian-rappl.de/html5/projects/SuperMario/" frameborder=0 allowfullscreen></iframe>
-
-
+    <content type="html"><![CDATA[<iframe height=498 width=510 frameborder=0 src="http://player.youku.com/embed/XMzI2MTE1NDUy" allowfullscreen></iframe>
 
 ]]></content>
   </entry>
