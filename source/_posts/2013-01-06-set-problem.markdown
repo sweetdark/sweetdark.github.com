@@ -37,7 +37,7 @@ tags: ['算法与数据结构']
 ``` c
 #include "set.h"
 /* subsets里存的是Set* 指针数据。 （未测试，待完善）*/
-int cover(Set *members, Set *subsets, Set **covering) {
+int cover(Set *members, Set *subsets, Set *covering) {
 	Set *setd = (Set*) malloc (sizeof(Set));
 	while (list_size(members) > 0 && list_size(subsets) >0) {
 		SetElement *pos = list_head(subsets);
@@ -47,7 +47,7 @@ int cover(Set *members, Set *subsets, Set **covering) {
 			int temp = 0;
 			SetElement *mems = list_head(members);
 			for (; mems != NULL; mems = list_next(mems)) {
-				if (set_ismember((Set*)(list_data(pos)), mems) == 0) {
+				if (set_ismember((Set*)(list_data(pos)), list_data(mems)) == 1) {
 					++temp;
 				}
 			}
@@ -56,8 +56,8 @@ int cover(Set *members, Set *subsets, Set **covering) {
 				max_pos = pos;
 			}
 		}
-		if (set_insert(*covering, max_pos) == -1) return -1;
-		if (set_remove(subsets, (void**)&max_pos) == -1) return -1;
+		if (set_insert(covering, max_pos) == -1) return -1;
+		if (set_remove(subsets, (void**)&(max_pos->data)) == -1) return -1;
 		if (set_difference(setd, members, (Set*)(list_data(max_pos))) == -1) return -1;
 		members = setd;
 	}
@@ -65,6 +65,90 @@ int cover(Set *members, Set *subsets, Set **covering) {
 	if (list_size(members) > 0 && list_size(subsets) == 0) { free(setd); return 1; }
 	free(setd);
 	return -1;
+
+}
+
+
+void print(Set *set) {
+    SetElement *elem;
+    for (elem = list_head(set); elem != NULL; elem = list_next(elem)) {
+        printf("%p\t", *(int*)list_data(elem));
+    }
+    printf("\n");
+}
+
+
+int match(const void *data1, const void *data2) {
+    const int *id1 = (const int*)data1;
+    const int *id2 = (const int*)data2;
+    if (*id1 > *id2) return 1;
+    else if (*id1 < *id2) return -1;
+    return 0;
+}
+
+int matchptr(const void *data1, const void *data2) {
+    if (data1 == data2) return 0;
+    return -1;
+}
+
+int main()
+{
+    Set *set1 = (Set*)malloc(sizeof(Set));
+    Set *set2 = (Set*)malloc(sizeof(Set));
+    Set *set3 = (Set*)malloc(sizeof(Set));
+    Set *set4 = (Set*)malloc(sizeof(Set));
+    Set *covers = (Set*)malloc(sizeof(Set));
+    Set *allElem = (Set*)malloc(sizeof(Set));
+
+    set_init(set1, match, NULL);
+    set_init(set2, match, NULL);
+    set_init(set3, match, NULL);
+    set_init(set4, match, NULL);
+    set_init(allElem, match, NULL);
+    set_init(covers, match, free);
+    int all[] = {1,2,3,4,5,6};
+    int arr1[] = {3,4,1};
+    int arr2[] = {4,5,1};
+    int arr3[] = {2,6};
+    int arr4[] = {1,3,4,5};
+    int i;
+    for (i = 0; i < 6; i++) {
+        set_insert(allElem, (const void*)(all + i));
+    }
+    for (i = 0; i < 3; i++) {
+        set_insert(set1, (const void*)(arr1 + i));
+        set_insert(set2, (const void*)(arr2 + i));
+    }
+    for (i = 0; i < 2; i++) {
+        set_insert(set3, (const void*)(arr3 + i));
+    }
+    for (i = 0; i < 4; i++) {
+        set_insert(set4, (const void*)(arr4 + i));
+    }
+    print(set1);
+    print(set2);
+    print(set3);
+    print(set4);
+    print(allElem);
+
+    Set *subsets = (Set*)malloc(sizeof(Set));
+    set_init(subsets, matchptr, free);
+    printf("%d\n",set_insert(subsets, set1));
+    printf("%d\n",set_insert(subsets, set2));
+    printf("%d\n",set_insert(subsets, set3));
+    printf("%d\n",set_insert(subsets, set4));
+    print(subsets);
+    i = cover(allElem, subsets, covers);
+
+    set_destory(set1);
+    set_destory(set2);
+    set_destory(set3);
+    set_destory(set4);
+    set_destory(allElem);
+    set_destory(covers);
+    set_destory(subsets);
+
+    return 0;
 
 }
 ```
