@@ -24,6 +24,9 @@ single: true
       {% endif %}
     </p>
   </footer>
+  <p class="meta">
+  Tags: {% include post/tags.html %}
+ </p>
 </article>
 {% if site.disqus_short_name and page.comments == true %}
   <section>

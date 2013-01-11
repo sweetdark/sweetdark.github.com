@@ -33,57 +33,50 @@ tags: ['算法与数据结构']
 转化为糖果的问题就是，每一次挑选的糖果包能覆盖的糖果种类最多，则选择这个糖果包，直到覆盖所有的糖果种类为止。
 
 
-<<<<<<< HEAD
-//伪代码
-```  c
-int cover(set *members, set *subsets, set **covering) {
-	set *setd = (set*) malloc (sizeof(set));
-	wile (list_size(members) > 0 && list_size(subsets) >0) {
-=======
 ##实现文件
 ``` c
 #include "set.h"
-/* subsets里存的是Set* 指针数据。 （未测试，待完善）*/
+#include <stdio.h>
+/* subsets里存的是Set* 指针数据。 （已经测试）*/
 int cover(Set *members, Set *subsets, Set *covering) {
-	Set *setd = (Set*) malloc (sizeof(Set));
-	while (list_size(members) > 0 && list_size(subsets) >0) {
->>>>>>> d5722e03c59b447a7447a9a4217d25a0a7196918
-		SetElement *pos = list_head(subsets);
-		SetElement *max_pos = NULL;
-		int max = 0;
-		for (; pos != NULL; pos = list_next(pos)) {
-			int temp = 0;
-			SetElement *mems = list_head(members);
-			for (; mems != NULL; mems = list_next(mems)) {
-				if (set_ismember((Set*)(list_data(pos)), list_data(mems)) == 1) {
-					++temp;
-				}
-			}
-			if (temp > max) {
-				max = temp;
-				max_pos = pos;
-			}
-		}
-		if (set_insert(covering, max_pos) == -1) return -1;
-		if (set_remove(subsets, (void**)&(max_pos->data)) == -1) return -1;
-		if (set_difference(setd, members, (Set*)(list_data(max_pos))) == -1) return -1;
-		members = setd;
-	}
-	if (list_size(members) == 0)  { free(setd); return 0;}
-	if (list_size(members) > 0 && list_size(subsets) == 0) { free(setd); return 1; }
-	free(setd);
-	return -1;
+  Set *setd = (Set*) malloc (sizeof(Set));
+  while (list_size(members) > 0 && list_size(subsets) >0) {
+      SetElement *pos = list_head(subsets);
+      SetElement *max_pos = NULL;
+      int max = 0;
+      for (; pos != NULL; pos = list_next(pos)) {
+          int temp = 0;
+          SetElement *mems = list_head(members);
+          for (; mems != NULL; mems = list_next(mems)) {
+              if (set_ismember((Set*)(list_data(pos)), list_data(mems)) == 1) {
+                  ++temp;
+              }
+          }
+          if (temp > max) {
+              max = temp;
+              max_pos = pos;
+          }
+      }
+
+      if (set_insert(covering, max_pos->data) == -1) return -1;
+      void *data = max_pos->data;
+      if (set_remove(subsets, (void**)&data) == -1) return -1;//max_pos这个SetElement已经被释放，但data还在。不能再用max_pos->data了。
+      
+      if (set_difference(setd, members, (Set*)(data)) == -1) return -1;
+      members = setd;
+  }
+  if (list_size(members) == 0)  { free(setd); return 0;}
+  if (list_size(members) > 0 && list_size(subsets) == 0) { free(setd); return 1; }
+  free(setd);
+  return -1;
 
 }
-<<<<<<< HEAD
- ```
-=======
 
 
 void print(Set *set) {
     SetElement *elem;
     for (elem = list_head(set); elem != NULL; elem = list_next(elem)) {
-        printf("%p\t", *(int*)list_data(elem));
+        printf("%p\t", list_data(elem));
     }
     printf("\n");
 }
@@ -136,11 +129,6 @@ int main()
     for (i = 0; i < 4; i++) {
         set_insert(set4, (const void*)(arr4 + i));
     }
-    print(set1);
-    print(set2);
-    print(set3);
-    print(set4);
-    print(allElem);
 
     Set *subsets = (Set*)malloc(sizeof(Set));
     set_init(subsets, matchptr, free);
@@ -150,7 +138,9 @@ int main()
     printf("%d\n",set_insert(subsets, set4));
     print(subsets);
     i = cover(allElem, subsets, covers);
-
+    
+    print(covers);
+    
     set_destory(set1);
     set_destory(set2);
     set_destory(set3);
@@ -164,4 +154,28 @@ int main()
 }
 ```
 
->>>>>>> d5722e03c59b447a7447a9a4217d25a0a7196918
+集合的数据结构在此博文已给出 http://sweetdark.github.com/blog/2013/01/04/set/ 
+Makefile文件：
+``` makefile
+OBJS = list.o set.o set_cover.o
+CC = gcc
+CFLAGS =-Wall -O -g
+prog: $(OBJS)
+	gcc $(CFLAGS) $(OBJS) -o $@
+ 
+list.o: list.c list.h
+	gcc $(CFLAGS) -c $< -o $@
+	
+set.o: set.c set.h
+	gcc $(CFLAGS) -c $< -o $@
+	
+set_cover.o: set_cover.c
+	gcc $(CFLAGS) -c $< -o $@
+	
+.PHONY : clean
+clean: 
+	rm *.o
+	rm prog.exe
+```
+
+
