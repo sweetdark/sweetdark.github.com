@@ -34,7 +34,7 @@ tags: ['算法与数据结构']
 
 
 //伪代码
-``` c
+```  c
 int cover(set *members, set *subsets, set **covering) {
 	set *setd = (set*) malloc (sizeof(set));
 	wile (list_size(members) > 0 && list_size(subsets) >0) {
@@ -63,5 +63,6 @@ int cover(set *members, set *subsets, set **covering) {
 	if (list_size(members) > 0 && list_size(subsets) == 0) { free(setd); return 1; }
 	free(setd);
 	return -1;
- ```
+
 }
+ ```
