@@ -60,7 +60,8 @@ module Jekyll
 
 
       lists.each do | tag, counter |
-        url = tag_dir + tag.gsub(/_|\P{Word}/u, '-').gsub(/-{2,}/u, '-').downcase
+        #url = tag_dir + tag.gsub(/_|\P{Word}/u, '-').gsub(/-{2,}/u, '-').downcase
+		url = tag_dir + tag.to_url.downcase
         style = "font-size: #{10 + (40 * Float(counter)/max)}%"
 
         tagcloud << "<a href='#{url}' style='#{style}'>#{tag}"
