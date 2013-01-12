@@ -231,86 +231,112 @@ break file.c:100 thread all &hellip;">
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(gdb) set $i = 0
+</span><span class='line'>  
+</span><span class='line'>(gdb) p a[$i++]
+</span><span class='line'>
+</span><span class='line'>...  #然后就一路回车下去了</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当然，这里只是给一个示例，表示程序的变量和gdb的变量是可以交互的。</p>
+
+<p>七、x命令</p>
+
+<p>也许，你很喜欢用p命令。所以，当你不知道变量名的时候，你可能会手足无措，因为p命令总是需要一个变量名的。x命令是用来查看内存的，在gdb中 “help x” 你可以查看其帮助。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x/x 以十六进制输出
+</span><span class='line'>x/d 以十进制输出
+</span><span class='line'>x/c 以单字符输出
+</span><span class='line'>x/i  反汇编 - 通常，我们会使用 x/10i $ip-20 来查看当前的汇编（$ip是指令寄存器）
+</span><span class='line'>x/s 以字符串输出</span></code></pre></td></tr></table></div></figure>
+
+
+<p>八、command命令</p>
+
+<p>有一些朋友问我如何自动化调试。这里向大家介绍command命令，简单的理解一下，其就是把一组gdb的命令打包，有点像字处理软件的“宏”。下面是一个示例：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(gdb) break func
+</span><span class='line'>Breakpoint 1 at 0x3475678: file test.c, line 12.
+</span><span class='line'>(gdb) command 1
+</span><span class='line'>Type commands for when breakpoint 1 is hit, one per line.
+</span><span class='line'>End with a line saying just "end".
+</span><span class='line'>&gt;print arg1
+</span><span class='line'>&gt;print arg2
+</span><span class='line'>&gt;print arg3
+</span><span class='line'>&gt;end
+</span><span class='line'>(gdb)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当我们的断点到达时，自动执行command中的三个命令，把func的三个参数值打出来。</p>
+
+<p><strong>gdb基本命令</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(gdb) set $i = 0
-</span><span class='line'>  
-</span><span class='line'>(gdb) p a[$i++]
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>命令描述backtrace（或bt）查看各级函数调用及参数
+</span><span class='line'>finish连续运行到当前函数返回为止，然后停下来等待命令
+</span><span class='line'>frame（或f） 帧编号选择栈帧
+</span><span class='line'>info（或i） locals查看当前栈帧局部变量的值
+</span><span class='line'>list（或l）列出源代码，接着上次的位置往下列，每次列10行
+</span><span class='line'>list 行号 列出从第几行开始的源代码
+</span><span class='line'>list函数名 列出某个函数的源代码
+</span><span class='line'>next（或n）执行下一行语句
+</span><span class='line'>print（或p）打印表达式的值，通过表达式可以修改变量的值或者调用函数
+</span><span class='line'>quit（或q）退出gdb调试环境
+</span><span class='line'>set var修改变量的值
+</span><span class='line'>start开始执行程序，停在main函数第一行语句前面等待命令
+</span><span class='line'>step（或s）执行下一行语句，如果有函数调用则进入到函数中
 </span><span class='line'>
-</span><span class='line'>...  #然后就一路回车下去了
-</span><span class='line'> ```
-</span><span class='line'>当然，这里只是给一个示例，表示程序的变量和gdb的变量是可以交互的。
-</span><span class='line'>
-</span><span class='line'>七、x命令
-</span><span class='line'>
-</span><span class='line'>也许，你很喜欢用p命令。所以，当你不知道变量名的时候，你可能会手足无措，因为p命令总是需要一个变量名的。x命令是用来查看内存的，在gdb中 “help x” 你可以查看其帮助。</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>break（或b） 行号在某一行设置断点
+</span><span class='line'>break 函数名在某个函数开头设置断点
+</span><span class='line'>break ... if ...设置条件断点
+</span><span class='line'>continue（或c）从当前位置开始连续运行程序
+</span><span class='line'>delete breakpoints 断点号删除断点
+</span><span class='line'>display 变量名跟踪查看某个变量，每次停下来都显示它的值
+</span><span class='line'>disable breakpoints 断点号禁用断点
+</span><span class='line'>enable 断点号启用断点
+</span><span class='line'>info（或i） breakpoints查看当前设置了哪些断点
+</span><span class='line'>run（或r）从头开始连续运行程序
+</span><span class='line'>undisplay 跟踪显示号取消跟踪显示</span></code></pre></td></tr></table></div></figure>
 
-
-<p>x/x 以十六进制输出
-x/d 以十进制输出
-x/c 以单字符输出
-x/i  反汇编 - 通常，我们会使用 x/10i $ip-20 来查看当前的汇编（$ip是指令寄存器）
-x/s 以字符串输出</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>八、command命令
-</span><span class='line'>
-</span><span class='line'>有一些朋友问我如何自动化调试。这里向大家介绍command命令，简单的理解一下，其就是把一组gdb的命令打包，有点像字处理软件的“宏”。下面是一个示例：
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(gdb) break func
-Breakpoint 1 at 0x3475678: file test.c, line 12.
-(gdb) command 1
-Type commands for when breakpoint 1 is hit, one per line.
-End with a line saying just &#8220;end&#8221;.</p>
-
-<blockquote><p>print arg1
-print arg2
-print arg3
-end
-(gdb)</p></blockquote>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>当我们的断点到达时，自动执行command中的三个命令，把func的三个参数值打出来。
-</span><span class='line'>
-</span><span class='line'>**gdb基本命令**</span></code></pre></td></tr></table></div></figure>
-
-
-<p>命令描述backtrace（或bt）查看各级函数调用及参数
-finish连续运行到当前函数返回为止，然后停下来等待命令
-frame（或f） 帧编号选择栈帧
-info（或i） locals查看当前栈帧局部变量的值
-list（或l）列出源代码，接着上次的位置往下列，每次列10行
-list 行号 列出从第几行开始的源代码
-list函数名 列出某个函数的源代码
-next（或n）执行下一行语句
-print（或p）打印表达式的值，通过表达式可以修改变量的值或者调用函数
-quit（或q）退出gdb调试环境
-set var修改变量的值
-start开始执行程序，停在main函数第一行语句前面等待命令
-step（或s）执行下一行语句，如果有函数调用则进入到函数中</p>
-
-<p>break（或b） 行号在某一行设置断点
-break 函数名在某个函数开头设置断点
-break &#8230; if &#8230;设置条件断点
-continue（或c）从当前位置开始连续运行程序
-delete breakpoints 断点号删除断点
-display 变量名跟踪查看某个变量，每次停下来都显示它的值
-disable breakpoints 断点号禁用断点
-enable 断点号启用断点
-info（或i） breakpoints查看当前设置了哪些断点
-run（或r）从头开始连续运行程序
-undisplay 跟踪显示号取消跟踪显示
-&#8220;`</p>
 </div>
 
 
