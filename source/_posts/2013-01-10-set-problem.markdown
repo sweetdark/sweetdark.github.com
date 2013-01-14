@@ -4,7 +4,7 @@ title: "集合覆盖问题"
 date: 2013-01-06 21:17
 comments: true
 categories: 
-tags: ['算法与数据结构']
+tags: ['algorithm']
 ---
 ##概述
 集合覆盖问题(Set Covering Problem，简称SCP)是经典的NP一hard问题，同样也是运筹学研究中典型的组合优化问题，是一个计算机科学问题的典型代表。

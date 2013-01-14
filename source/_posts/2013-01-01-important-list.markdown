@@ -4,7 +4,7 @@ title: "2013年要点列表"
 date: 2013-01-01 23:36
 comments: true
 categories: 生活
-tags: ['生活']
+tags: ['Live']
 ---
 1. 锻炼身体  
 2. 认真工作，努力学习
