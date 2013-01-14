@@ -37,7 +37,8 @@ tags: ['algorithm']
 ``` c
 #include "set.h"
 #include <stdio.h>
-/* subsets里存的是Set* 指针数据。 （已经测试）*/
+#include <string.h>
+/* subsets里存的是Set* 指针数据。 （测试通过）*/
 int cover(Set *members, Set *subsets, Set *covering) {
   Set *setd = (Set*) malloc (sizeof(Set));
   while (list_size(members) > 0 && list_size(subsets) >0) {
@@ -57,16 +58,18 @@ int cover(Set *members, Set *subsets, Set *covering) {
               max_pos = pos;
           }
       }
-
+      if (max_pos == NULL) {
+        break;  //无法覆盖
+      }
       if (set_insert(covering, max_pos->data) == -1) return -1;
       void *data = max_pos->data;
       if (set_remove(subsets, (void**)&data) == -1) return -1;//max_pos这个SetElement已经被释放，但data还在。不能再用max_pos->data了。
       
-      if (set_difference(setd, members, (Set*)(data)) == -1) return -1;
-      members = setd;
+      if (set_difference(setd, members, (Set*)(data)) == -1) return -1;  
+      memcpy(members, setd, sizeof(Set)); 
   }
-  if (list_size(members) == 0)  { free(setd); return 0;}
-  if (list_size(members) > 0 && list_size(subsets) == 0) { free(setd); return 1; }
+  if (list_size(members) == 0)  { free(setd); return 0;} //有解
+  if (list_size(members) > 0 && list_size(subsets) == 0) { free(setd); return 1; } //无法覆盖
   free(setd);
   return -1;
 
@@ -77,6 +80,15 @@ void print(Set *set) {
     SetElement *elem;
     for (elem = list_head(set); elem != NULL; elem = list_next(elem)) {
         printf("%p\t", list_data(elem));
+    }
+    printf("\n");
+}
+
+void printint(Set *set, const char *set_name) {
+    SetElement *elem;
+    printf("%s : ", set_name);
+    for (elem = list_head(set); elem != NULL; elem = list_next(elem)) {
+        printf("%d\t", *(int*)list_data(elem));
     }
     printf("\n");
 }
@@ -101,7 +113,7 @@ int main()
     Set *set2 = (Set*)malloc(sizeof(Set));
     Set *set3 = (Set*)malloc(sizeof(Set));
     Set *set4 = (Set*)malloc(sizeof(Set));
-    Set *covers = (Set*)malloc(sizeof(Set));
+    
     Set *allElem = (Set*)malloc(sizeof(Set));
 
     set_init(set1, match, NULL);
@@ -109,11 +121,11 @@ int main()
     set_init(set3, match, NULL);
     set_init(set4, match, NULL);
     set_init(allElem, match, NULL);
-    set_init(covers, match, free);
+    
     int all[] = {1,2,3,4,5,6};
     int arr1[] = {3,4,1};
-    int arr2[] = {4,5,1};
-    int arr3[] = {2,6};
+    int arr3[] = {2,5,6};
+    int arr2[] = {2,1};
     int arr4[] = {1,3,4,5};
     int i;
     for (i = 0; i < 6; i++) {
@@ -129,17 +141,39 @@ int main()
     for (i = 0; i < 4; i++) {
         set_insert(set4, (const void*)(arr4 + i));
     }
-
+    printint(set1, "set1");
+    printint(set2, "set2");
+    printint(set3, "set3");
+    printint(set4, "set4");
+    printint(allElem, "all"); 
+    
     Set *subsets = (Set*)malloc(sizeof(Set));
     set_init(subsets, matchptr, free);
-    printf("%d\n",set_insert(subsets, set1));
-    printf("%d\n",set_insert(subsets, set2));
-    printf("%d\n",set_insert(subsets, set3));
-    printf("%d\n",set_insert(subsets, set4));
+    if (set_insert(subsets, set1) != 0 || set_insert(subsets, set2) != 0 ||
+        set_insert(subsets, set3) != 0 || set_insert(subsets, set4) != 0) {
+        set_destory(set1);
+        set_destory(set2);
+        set_destory(set3);
+        set_destory(set4);
+        set_destory(allElem);
+        set_destory(subsets);
+        printf("插入失败\n");
+        return -1;
+    }
     print(subsets);
-    i = cover(allElem, subsets, covers);
     
-    print(covers);
+    Set *covers = (Set*)malloc(sizeof(Set));
+    set_init(covers, match, free);
+    
+    i = cover(allElem, subsets, covers);
+    if (i == 0) {
+        printf("找到了可覆盖的子集序列\n");
+        print(covers);
+    } else {
+        printf("没能找到可覆盖的子集序列\n");
+    }
+    
+    
     
     set_destory(set1);
     set_destory(set2);
@@ -155,6 +189,8 @@ int main()
 ```
 
 集合的数据结构在此博文已给出 http://sweetdark.github.com/blog/2013/01/04/set/ 
+
+
 Makefile文件：
 ``` makefile
 OBJS = list.o set.o set_cover.o
