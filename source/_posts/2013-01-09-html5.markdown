@@ -1,0 +1,11 @@
+---
+layout: post
+title: "超级马里奥"
+date: 2013-01-09 22:14
+comments: true
+categories: 
+tags: ['html5']
+---
+
+
+<iframe height=498 width=510 frameborder=0 src="http://player.youku.com/embed/XMzI2MTE1NDUy" allowfullscreen></iframe>
