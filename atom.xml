@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-01-16T22:20:22+08:00</updated>
+  <updated>2013-01-16T22:29:33+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -449,9 +449,43 @@
 <span class='line-number'>115</span>
 <span class='line-number'>116</span>
 <span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;set.h&quot;</span>
 </span><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class='line'><span class="cm">/* subsets里存的是Set* 指针数据。 （已经测试）*/</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cm">/* subsets里存的是Set* 指针数据。 （未测试，待完善）*/</span>
 </span><span class='line'><span class="kt">int</span> <span class="nf">cover</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">members</span><span class="p">,</span> <span class="n">Set</span> <span class="o">*</span><span class="n">subsets</span><span class="p">,</span> <span class="n">Set</span> <span class="o">*</span><span class="n">covering</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="n">Set</span> <span class="o">*</span><span class="n">setd</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
 </span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
@@ -471,16 +505,18 @@
 </span><span class='line'>              <span class="n">max_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="p">;</span>
 </span><span class='line'>          <span class="p">}</span>
 </span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">max_pos</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">break</span><span class="p">;</span>  <span class="c1">//无法覆盖</span>
+</span><span class='line'>      <span class="p">}</span>
 </span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_insert</span><span class="p">(</span><span class="n">covering</span><span class="p">,</span> <span class="n">max_pos</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 </span><span class='line'>      <span class="kt">void</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">max_pos</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
 </span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_remove</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="c1">//max_pos这个SetElement已经被释放，但data还在。不能再用max_pos-&gt;data了。</span>
 </span><span class='line'>
 </span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_difference</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">members</span><span class="p">,</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)(</span><span class="n">data</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">members</span> <span class="o">=</span> <span class="n">setd</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">memcpy</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">setd</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
 </span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;}</span> <span class="c1">//有解</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span> <span class="c1">//无法覆盖</span>
 </span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span>
 </span><span class='line'>  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 </span><span class='line'>
@@ -495,6 +531,14 @@
 </span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">printint</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">set_name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">SetElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s : &quot;</span><span class="p">,</span> <span class="n">set_name</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">elem</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span> <span class="n">elem</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">list_data</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kt">int</span> <span class="nf">match</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">id1</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">data1</span><span class="p">;</span>
@@ -515,7 +559,7 @@
 </span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
 </span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set3</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
 </span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set4</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">covers</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>
 </span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">allElem</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
@@ -523,11 +567,11 @@
 </span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set3</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 </span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 </span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">covers</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">free</span><span class="p">);</span>
+</span><span class='line'>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">all</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">};</span>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">arr1</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">arr2</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">arr3</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">};</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr3</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">};</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr2</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">arr4</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
 </span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -543,17 +587,39 @@
 </span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr4</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
 </span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="s">&quot;set1&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="s">&quot;set2&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set3</span><span class="p">,</span> <span class="s">&quot;set3&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="s">&quot;set4&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="s">&quot;all&quot;</span><span class="p">);</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">subsets</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
 </span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">matchptr</span><span class="p">,</span> <span class="n">free</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set1</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set2</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set3</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set4</span><span class="p">));</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span>
+</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set3</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set4</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set3</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set4</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">allElem</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;插入失败</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="n">cover</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="n">covers</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">covers</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">covers</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">covers</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">free</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="n">cover</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="n">covers</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;找到了可覆盖的子集序列</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="n">covers</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;没能找到可覆盖的子集序列</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
 </span><span class='line'>
 </span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span>
 </span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span>
