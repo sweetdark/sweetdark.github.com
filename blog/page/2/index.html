@@ -9,8 +9,9 @@
   <meta name="author" content="Mario">
 
   
-  <meta name="description" content="首先我的博客主题下载。把mario目录拷贝到.themes目录下。执行rake install[&#8220;mario&#8221;] 由于categories不支持中文，我加了tags标签。
-装完之后，要改一下_config.yml的配置，在适当的位置添加一行tag_dir: blog/ &hellip;">
+  <meta name="description" content="有时出差，或者去别的地方。要在其他地方写博客怎么办呢。首先安装好机子上的本地环境。参考这里的搭建本地环境和更新本地环境。然后从github中clone 远程的仓库到本地。
+具体步骤：
+git clone git://github.com/sweetdark/sweetdark.github.com &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +67,184 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/04/how-to-pull/">非本机快速写博客</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T12:51:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+	  
+
+<span class="tags">
+  Tags:
+  
+    <a href='/blog/tags/github/'>Github</a>, <a href='/blog/tags/octopress/'>octopress</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=非本机快速写博客 - &amp;url=http://sweetdark.github.com/blog/2013/01/04/how-to-pull/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=非本机快速写博客 - &amp;url=http://sweetdark.github.com/blog/2013/01/04/how-to-pull/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=非本机快速写博客 - http://sweetdark.github.com/blog/2013/01/04/how-to-pull/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p>有时出差，或者去别的地方。要在其他地方写博客怎么办呢。首先安装好机子上的本地环境。参考<a href="http://xuhehuan.com/783.html">这里</a>的搭建本地环境和更新本地环境。然后从github中clone 远程的仓库到本地。
+具体步骤：
+git clone git://github.com/sweetdark/sweetdark.github.com.git octopress
+进入该目录
+cd octopress
+你用git branch -a命令查看分支
+你会发现只是clone了master的分支，没有克隆和创建source分支的。source的文件夹和文件没有克隆下来：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041302488150_0.jpg"></p>
+
+<p>那么我们要从本地区抓取远程的source分支。
+可以执行
+git checkout &#8211;track -b reps-branch origin/reps-branch  抓取 reps-branch, 並將此 branch 建立於 local 的 reps-branch
+再看一下你的目录：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041303593154_0.jpg">
+是不是可以了。
+附上全部命令截图：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041304293434_0.jpg"></p>
+
+<p>初始化你的github页面的地址
+rake setup_github_pages</p>
+
+<p>然后写完博客rake gen_deploy发布之后，别忘了。
+用git status检查哪些还没有提交，用git add . 和 git commit -m &#8220;yourmessage&#8221;提交更新
+最后要git push origin source</p>
+
+<p>一切搞定。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/02/write-markdown/">用Markdown写Markdown语法说明</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-02T20:16:00+08:00" pubdate data-updated="true">Jan 2<span>nd</span>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/markdown/'>markdown</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=用Markdown写Markdown语法说明 - &amp;url=http://sweetdark.github.com/blog/2013/01/02/write-markdown/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=用Markdown写Markdown语法说明 - &amp;url=http://sweetdark.github.com/blog/2013/01/02/write-markdown/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=用Markdown写Markdown语法说明 - http://sweetdark.github.com/blog/2013/01/02/write-markdown/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><h2><a href="http://wowubuntu.com/markdown/">原文markdown语法地址</a>  <a href="http://wowubuntu.com/markdown/basic.html">markdown快速入门</a></h2>
+
+<ul>
+<li><a href="#overview">概述</a>
+
+<ul>
+<li><a href="#philosophy">宗旨</a></li>
+<li><a href="#html">兼容HTML</a></li>
+<li><a href="#autoescape">特殊字符自动转换</a></li>
+</ul>
+</li>
+<li><a href="#block">区块元素</a>
+
+<ul>
+<li><a href="#p">段落和换行</a></li>
+<li><a href="#header">标题</a></li>
+<li><a href="#blockquote">区块引用</a></li>
+<li><a href="#list">列表</a></li>
+<li><a href="#precode">代码区块</a></li>
+<li><a href="#hr">分隔线</a></li>
+</ul>
+</li>
+<li><a href="#span">区段元素</a>
+
+<ul>
+<li><a href="#link">链接</a></li>
+<li><a href="#em">强调</a></li>
+<li><a href="#code">代码</a></li>
+<li><a href="#img">图片</a></li>
+</ul>
+</li>
+<li><a href="#misc">其他</a>
+
+<ul>
+<li><a href="#backslash">反斜杠</a></li>
+<li><a href="#autolink">自动链接</a></li>
+</ul>
+</li>
+</ul>
+
+
+<hr>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/02/write-markdown/">阅读全文 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -588,6 +767,14 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/01/23/new/">心理上的自我反省</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/18/heart/">修心</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/01/16/zen/">禅修</a>
       </li>
     
@@ -597,14 +784,6 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
     
       <li class="post">
         <a href="/blog/2013/01/12/sinian/">思念</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/06/set-problem/">集合覆盖问题</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/05/thinking/">日计划与总结</a>
       </li>
     
   </ul>
@@ -641,7 +820,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
 
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+20.0%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+20.0%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+40.0%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+50.0%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+20.0%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+40.0%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+40.0%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+20.0%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+20.0%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+20.0%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+20.0%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+20.0%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+40.0%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+50.0%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+20.0%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+40.0%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthink%27+style%3D%27font-size%3A+20.0%25%27%3Ethink%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+40.0%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+30.0%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+20.0%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+20.0%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 <section>
