@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-01-24T21:02:40+08:00</updated>
+  <updated>2013-01-24T21:05:55+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -82,13 +82,22 @@
 
 <p>5.阅读的几个重点</p>
 
-<p>   1）带问题和目的去读，不迷失。
-   2）做好脉络整理
-   3）和作者的反馈（读一章问自己，写的对不对，对在哪里，不对在哪里，对自己的问 题有没有帮助，有没有值得向作者学习的地方，有没有自己以后要避免的错误）
-   4）带入知识结构内
-6.增加阅读速度：中间指扫法。
-7.对理解困难的地方，中心词逻辑法。
-阅读需要：果断、勇敢、坚定。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1）带问题和目的去读，不迷失。
+</span><span class='line'>2）做好脉络整理
+</span><span class='line'>3）和作者的反馈（读一章问自己，写的对不对，对在哪里，不对在哪里，对自己的问 题有没有帮助，有没有值得向作者学习的地方，有没有自己以后要避免的错误）
+</span><span class='line'>4）带入知识结构内</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+6.增加阅读速度：中间指扫法。</p>
+
+<p>7.对理解困难的地方，中心词逻辑法。</p>
+
+<p><strong>阅读需要：果断、勇敢、坚定。</strong></p>
 ]]></content>
   </entry>
   
