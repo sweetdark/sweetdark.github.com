@@ -9,7 +9,9 @@
   <meta name="author" content="Mario">
 
   
-  <meta name="description" content="今天是2013年1月4号，201314即爱你一生一世，很有寓意的一天。无论精神多么独立的人，其情感都会寻找依附。爱情真是让人期盼，令人着迷。 对于爱，多么的期盼那是一份真情。自己一直在做得就是“去伪存真”。我虽然不能完全保证对方的真情实意，但必须保证自己是真情实意的，自己不欺人骗世也就心安了， &hellip;">
+  <meta name="description" content="这里的集合是用链表的方式来实现的。 单向链表的定义：list.h #ifndef LIST_H_
+#define LIST_H_
+#include &lt;stdlib.h&gt; typedef struct ListElement_ { void *data; struct &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,101 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/04/set/">集合</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T22:46:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/suan-fa-yu-shu-ju-jie-gou/'>算法与数据结构</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=集合 - &amp;url=http://sweetdark.github.com/blog/2013/01/04/set/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=集合 - &amp;url=http://sweetdark.github.com/blog/2013/01/04/set/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=集合 - http://sweetdark.github.com/blog/2013/01/04/set/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p>这里的集合是用链表的方式来实现的。</p>
+
+<p>单向链表的定义：list.h</p>
+
+<div><script src='https://gist.github.com/4259013.js'></script>
+<noscript><pre><code>#ifndef LIST_H_
+#define LIST_H_
+#include &lt;stdlib.h&gt;
+
+typedef struct ListElement_ {
+    void *data;
+    struct ListElement_ *next;
+} ListElement;
+
+typedef struct List_ {
+    int size;
+    int (*match) (const void *data1, const void *data2);
+    void (*destory) (void* data);
+    ListElement *head;
+    ListElement *tail;
+} List;
+
+void list_init(List *list, void (*destory) (void *data));
+void destory(List *list);
+int list_ins_next(List *list, ListElement *element, const void *data);
+int list_rem_next(List *list, ListElement *element, void *data);
+#define list_size(list) ((list)-&gt;size)
+#define list_head(list) ((list)-&gt;head)
+#define list_tail(list) ((list)-&gt;tail)
+#define list_is_head(list, element) ((element) == (list-&gt;head) ? 1 : 0)
+#define list_is_tail(element)       ((element)-&gt;next == NULL ? 1 : 0)
+#define list_data(element)          ((element)-&gt;data)
+#define list_next(element)          ((element)-&gt;next)
+
+#endif</code></pre></noscript></div>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/01/04/set/">阅读全文 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -743,73 +840,9 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
 
     </article>
   
-  
-    <article>
-      
-
-
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/27/test/">测试图片</a></h1>
-    
-    
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-27T10:13:00+08:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
-	  
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=测试图片 - &amp;url=http://sweetdark.github.com/blog/2012/12/27/test/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=测试图片 - &amp;url=http://sweetdark.github.com/blog/2012/12/27/test/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=测试图片 - http://sweetdark.github.com/blog/2012/12/27/test/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><p><img class="left" src="http://img.xshuma.com/201211/20525412112642806.jpg"></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="n">abc</span> <span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>File /readme.MD could not be found</p>
-
-<p>Use the <code>printf()</code> function.</p>
-
-<blockquote><p>在天愿作比翼鸟，在地愿为连理枝</p><footer><strong>@白居易</strong> <cite><a href='http://zhidao.baidu.com/question/72129166.html'>长恨歌</a></cite></footer></blockquote>
-
-
-
-
-<blockquote><p></p></blockquote>
-
-
-<p><embed src="http://player.youku.com/player.php/Type/Folder/Fid/18810229/Ob/1/sid/XNDk5NTEzNTU2/v.swf" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
-<link rel='stylesheet' type='text/css' href='http://www.osctools.net/js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css'/><div id="highlighter_476120" class="syntaxhighlighter  c"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="c comments">/<em>&nbsp;---示例代码----</em>/</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="c color1 bold">int</code>&nbsp;<code class="c plain">main&nbsp;()&nbsp;{</code></div><div class="line number4 index3 alt1"><code class="c spaces">&nbsp;&nbsp;</code><code class="c keyword bold">return</code>&nbsp;<code class="c plain">0;</code></div><div class="line number5 index4 alt2"><code class="c plain">}</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="c comments">/<em>&nbsp;---示例代码----</em>/</code></div><div class="line number8 index7 alt1"><code class="c spaces">&nbsp;&nbsp;&nbsp;</code>&nbsp;</div></div></td></tr></tbody></table></div></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -822,6 +855,10 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
     <section>
   <h1>最新发布</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/27/meet/">聚会</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/01/24/method/">如何阅读一本书（转）</a>
@@ -837,10 +874,6 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
     
       <li class="post">
         <a href="/blog/2013/01/16/zen/">禅修</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/12/gdb/">GDB调试命令</a>
       </li>
     
   </ul>
@@ -877,7 +910,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
 
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+20.0%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+20.0%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+40.0%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+50.0%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+20.0%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmethod%27+style%3D%27font-size%3A+20.0%25%27%3Emethod%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+40.0%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+50.0%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+30.0%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+20.0%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+20.0%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.0%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+18.0%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+34.0%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+50.0%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+18.0%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmethod%27+style%3D%27font-size%3A+18.0%25%27%3Emethod%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+34.0%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+42.0%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+26.0%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+18.0%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+18.0%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 <section>
