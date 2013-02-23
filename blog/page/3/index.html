@@ -9,10 +9,7 @@
   <meta name="author" content="Mario">
 
   
-  <meta name="description" content="科学的方法分为两种归纳法和演绎法。
-归纳法就是由通过一些个别现象归纳出普遍性的结论。是一种由个别到一般的论证方法。
-而演绎法则是从一般的原则推论出特定的结果。归纳法的例子：
-今天早上8点多去上班发现公司还没开门，等到9点才有人来开门。明天还是8点多去，还没开门，后天还是如此。你大概会归纳出， &hellip;">
+  <meta name="description" content="使用octorepss+github搭建博客，在这个过程中遇到了很多问题。其实根本原因是自己过于浮躁，没有详细的研究文档，很匆忙的搭建，并乱改乱折腾，所以到处碰壁。Linux下搭建参考官方文档 关于Windows下如何搭建octopress博客这篇文章讲的挺详细的。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +65,120 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/29/build-blog-problem/">搭建博客遇到的问题以及总结</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-29T19:55:00+08:00" pubdate data-updated="true">Dec 29<span>th</span>, 2012</time>
+	  
+
+<span class="tags">
+  Tags:
+  
+    <a href='/blog/tags/github/'>Github</a>, <a href='/blog/tags/octopress/'>octopress</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=搭建博客遇到的问题以及总结 - &amp;url=http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=搭建博客遇到的问题以及总结 - &amp;url=http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=搭建博客遇到的问题以及总结 - http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p> 使用octorepss+github搭建博客，在这个过程中遇到了很多问题。其实根本原因是自己过于浮躁，没有详细的研究文档，很匆忙的搭建，并乱改乱折腾，所以到处碰壁。Linux下搭建参考官方文档<br/>
+  关于Windows下如何搭建octopress博客这篇文章讲的挺详细的。<a href="http://xuhehuan.com/783.html" title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>
+  第一个遇到的问题：
+<img src="http://ww1.sinaimg.cn/mw690/7485f70fjw1e00h3kzw2cj.jpg"></p>
+
+<p>  我是在windows上装的，但是我按照octopress官网上的Linux的方式去装，装了ruby 1.9.3然后又按照<a href="http://xuhehuan.com/783.html"     title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>上介绍的windows的方式去装，结果导致了版本不一致的问题，建议版本最好是按照文章中建议的来装。如果装错了呢，怎么办。会提示版本对应不上的情况，可以修改Gemfile和Gemfile.lock下面的配置，设置到对应的版本号。</p>
+
+<figure class='code'><figcaption><span>Gemfile </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
+</span><span class='line'>  gem 'rake', '~> 10.0.3' #改为你所用的rake版本
+</span><span class='line'>  gem 'rack', '~> 1.4.1'
+</span><span class='line'>  gem 'jekyll', '~> 0.11.2'
+</span><span class='line'>  gem 'rdiscount', '~> 1.6.8'
+</span><span class='line'>  gem 'pygments.rb', '~> 0.2.12'
+</span><span class='line'>  gem 'RedCloth', '~> 4.2.9'
+</span><span class='line'>  gem 'haml', '~> 3.1.6'
+</span><span class='line'>  gem 'compass', '~> 0.12.1'
+</span><span class='line'>  gem 'rubypants', '~> 0.2.0'
+</span><span class='line'>  gem 'rb-fsevent', '~> 0.9'
+</span><span class='line'>  gem 'stringex', '~> 1.4.0'
+</span><span class='line'>  gem 'liquid', '~> 2.3.0'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake (10.0.3)  #改为你所用的rake版本</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  如果是发布不成功，没有权限报错如下：那么就是没有添加ssh key。详细解决办法是添加一个ssh key。</p>
+
+<p><img src="http://ww1.sinaimg.cn/mw690/7485f70fjw1e04hxitgftj.jpg"></p>
+
+<p>详细参考这里https://help.github.com/articles/generating-ssh-keys 。
+有一点要注意的是Octopress会有两个分支：source（编写博客）和master（生成好的博客）。一般我们用source编写博客，和使用rake generate生成博客。rake deploy是发布到远程的origin master主分支上的。请不要在本地仓库上对master进行编辑，添加，修改等操作，更不要使用git push origin master用本地仓库的master去同步远程的github仓库。你会遇到很多麻烦的，我就是瞎折腾，所以就弄得半死。我建议的操作方式是：步骤如下：</p>
+
+<pre><code>1. git checkout source 切换到source分支上，进行编辑
+2. pull origin source 从远程仓库获取最新的并与本地仓库进行合并(如果你是在其他的电脑上工作，这一步很重要），你也可以这样用git fetch orgin source,git merge 。
+3. 编辑好博客之后使用 rake gen_deploy可以生成并发布，但不建议这样做，你可以先rake generate，然后用rake preview先在本地预览一下，觉得没问题了在rake deploy发布。
+4. 发布完了，别忘记备份到github上。首先git status 检查本地仓库的状态，这时会打印列表并给出相应的指令，然后调用 git add 命令添加你新增的文件，或者合并解决冲突之后的文件。调用git commit -m "yourmessage" 提交。
+最后再用git status确认一下，确认无误之后git push origin source，备份到github上。
+</code></pre>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2012/12/29/build-blog-problem/">阅读全文 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -219,6 +330,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/02/17/newday/">2-17日记</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/02/05/article/">随笔</a>
       </li>
     
@@ -232,10 +347,6 @@
     
       <li class="post">
         <a href="/blog/2013/01/23/new/">心理上的自我反省</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/01/18/heart/">修心</a>
       </li>
     
   </ul>
@@ -272,7 +383,7 @@
 
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+16.666666666666668%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+16.666666666666668%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+30.0%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+50.0%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+16.666666666666668%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmethod%27+style%3D%27font-size%3A+16.666666666666668%25%27%3Emethod%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+30.0%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+36.66666666666667%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+16.666666666666668%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+16.666666666666668%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+15.714285714285715%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+15.714285714285715%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+27.142857142857142%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+50.0%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+15.714285714285715%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmethod%27+style%3D%27font-size%3A+15.714285714285715%25%27%3Emethod%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+27.142857142857142%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+32.85714285714286%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+21.42857142857143%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+15.714285714285715%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+15.714285714285715%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 <section>

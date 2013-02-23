@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-02-05T21:57:50+08:00</updated>
+  <updated>2013-02-23T17:35:21+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2-17日记]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/02/17/newday/"/>
+    <updated>2013-02-17T21:41:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/02/17/newday</id>
+    <content type="html"><![CDATA[<p>今天6点多就醒来了，还是很困，有蚊子一直在耳边“嗡嗡嗡”，睡不着了。起来闭眼静坐了一会。然后穿上衣服，开始晨写，想到啥就写，不要去评判和思考。晨写的目的是为了锻炼R型思维，锻炼自己的直觉。按照书本上的是要写三页的，但显然我没那么多充裕的时间，就花了15分钟，不停的写。虽然写的乱七八糟，但感觉还是蛮爽的，好像在山谷里大喊，把所有心声释放出去一样。</p>
+
+<p>春节在家期间，有很多事，好久没有进行禅修了。今天刻意提醒自己，放慢做事情的速度，练正念。提前点出门，以较慢的速度走去公司。这个过程，不去思考任何事情和东西，仅仅是感觉脚踩在地上的感觉，那种力从脚掌传上来。有眼睛去看周围的世界，飘落的树叶，路边的花，呼啸而过的公交车，女孩脸上的笑。</p>
+
+<p>生活中，我们总是忘记了去细心感受。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[随笔]]></title>
@@ -29,8 +42,6 @@
 <p>想念的是你，你在我心中。我愿写成文字，用博客承载思念。</p>
 
 <blockquote><p>你未看此花时，此花与汝心同归于寂；你来看此花时，此花颜色一时明白起来，便知此花不在你的心外。</p><footer><strong>王明阳</strong> <cite></cite></footer></blockquote>
-
-
 
 ]]></content>
   </entry>
@@ -3223,93 +3234,6 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
 <p>  今天是今年最冷的一天了，水很凉，一开始手浸下去觉得冷的刺骨。但后面活动起来，身子热了就不觉得冷了。我们细心的把房间的每个柜子，格子，窗，床都擦了一遍，看着房子变得亮堂起来，觉得很欣慰。姐总是唠叨着，这里擦干净点，那也擦干净点。张姐也称赞我们打扫的很干净。我说这是习俗吧，年前大扫除，新的一年希望有一个崭新的开始。新的一年为了自己的梦想，为了自己的未来，努力去把眼前的每一步做好。</p>
 
 <p> 新年就要来到了，好期待新的生活，对未来充满信心！！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[搭建博客遇到的问题以及总结]]></title>
-    <link href="http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/"/>
-    <updated>2012-12-29T19:55:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2012/12/29/build-blog-problem</id>
-    <content type="html"><![CDATA[<p> 使用octorepss+github搭建博客，在这个过程中遇到了很多问题。其实根本原因是自己过于浮躁，没有详细的研究文档，很匆忙的搭建，并乱改乱折腾，所以到处碰壁。Linux下搭建参考官方文档<br/>
-  关于Windows下如何搭建octopress博客这篇文章讲的挺详细的。<a href="http://xuhehuan.com/783.html" title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>
-  第一个遇到的问题：
-<img src="http://ww1.sinaimg.cn/mw690/7485f70fjw1e00h3kzw2cj.jpg"></p>
-
-<p>  我是在windows上装的，但是我按照octopress官网上的Linux的方式去装，装了ruby 1.9.3然后又按照<a href="http://xuhehuan.com/783.html"     title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>上介绍的windows的方式去装，结果导致了版本不一致的问题，建议版本最好是按照文章中建议的来装。如果装错了呢，怎么办。会提示版本对应不上的情况，可以修改Gemfile和Gemfile.lock下面的配置，设置到对应的版本号。</p>
-
-<figure class='code'><figcaption><span>Gemfile </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
-</span><span class='line'>  gem 'rake', '~> 10.0.3' #改为你所用的rake版本
-</span><span class='line'>  gem 'rack', '~> 1.4.1'
-</span><span class='line'>  gem 'jekyll', '~> 0.11.2'
-</span><span class='line'>  gem 'rdiscount', '~> 1.6.8'
-</span><span class='line'>  gem 'pygments.rb', '~> 0.2.12'
-</span><span class='line'>  gem 'RedCloth', '~> 4.2.9'
-</span><span class='line'>  gem 'haml', '~> 3.1.6'
-</span><span class='line'>  gem 'compass', '~> 0.12.1'
-</span><span class='line'>  gem 'rubypants', '~> 0.2.0'
-</span><span class='line'>  gem 'rb-fsevent', '~> 0.9'
-</span><span class='line'>  gem 'stringex', '~> 1.4.0'
-</span><span class='line'>  gem 'liquid', '~> 2.3.0'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake (10.0.3)  #改为你所用的rake版本</span></code></pre></td></tr></table></div></figure>
-
-
-<p>  如果是发布不成功，没有权限报错如下：那么就是没有添加ssh key。详细解决办法是添加一个ssh key。</p>
-
-<p><img src="http://ww1.sinaimg.cn/mw690/7485f70fjw1e04hxitgftj.jpg"></p>
-
-<p>详细参考这里https://help.github.com/articles/generating-ssh-keys 。
-有一点要注意的是Octopress会有两个分支：source（编写博客）和master（生成好的博客）。一般我们用source编写博客，和使用rake generate生成博客。rake deploy是发布到远程的origin master主分支上的。请不要在本地仓库上对master进行编辑，添加，修改等操作，更不要使用git push origin master用本地仓库的master去同步远程的github仓库。你会遇到很多麻烦的，我就是瞎折腾，所以就弄得半死。我建议的操作方式是：步骤如下：</p>
-
-<pre><code>1. git checkout source 切换到source分支上，进行编辑
-2. pull origin source 从远程仓库获取最新的并与本地仓库进行合并(如果你是在其他的电脑上工作，这一步很重要），你也可以这样用git fetch orgin source,git merge 。
-3. 编辑好博客之后使用 rake gen_deploy可以生成并发布，但不建议这样做，你可以先rake generate，然后用rake preview先在本地预览一下，觉得没问题了在rake deploy发布。
-4. 发布完了，别忘记备份到github上。首先git status 检查本地仓库的状态，这时会打印列表并给出相应的指令，然后调用 git add 命令添加你新增的文件，或者合并解决冲突之后的文件。调用git commit -m "yourmessage" 提交。
-最后再用git status确认一下，确认无误之后git push origin source，备份到github上。
-</code></pre>
-
-<!-- more -->
-
-
-<p>关于github的一系列教程，推荐几篇文章。
-git入门 http://rogerdudler.github.com/git-guide/index.zh.html</p>
-
-<p><a href= "http://blog.jobbole.com/25775/">git 详解系列</a></p>
-
-<p><a href="http://blog.longwin.com.tw/2009/05/git-learn-initial-command-2009/">git命令详解</a></p>
-
-<p>http://blog.jobbole.com/23398/ git管理策略。</p>
-
-<p>附加一些自己遇到的问题：</p>
-
-<p><img src="http://img.my.csdn.net/uploads/201212/29/1356783166_1307.png"></p>
-
-<p>解决办法stackoverflow有人给出。http://stackoverflow.com/questions/2452226/master-branch-and-origin-master-have-diverged-how-to-undiverge-branches</p>
-
-<p><img src="http://img.my.csdn.net/uploads/201212/29/1231245.jpg"></p>
-
-<p>改变远程的仓库的地址请看这里https://help.github.com/articles/changing-a-remote-s-url</p>
 ]]></content>
   </entry>
   
