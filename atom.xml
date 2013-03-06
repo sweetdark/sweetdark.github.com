@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-02-28T21:30:04+08:00</updated>
+  <updated>2013-03-06T22:49:25+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[体验当下]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/03/06/new/"/>
+    <updated>2013-03-06T22:42:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/03/06/new</id>
+    <content type="html"><![CDATA[<p>我们把概念看的比事实重要。而概念是死的，事实是活的。一颗心如果充满着各种各样的概念，你的心就变死了。尊重事实，别被概念所蒙骗，别被教条所束缚。要有把概念和教条当成玩物的勇气。</p>
+
+<p>我们脑海中有许许多多关于爱的概念，喜欢在他人身上套用，这无可厚非。但事实总是在变化着的。如果你死脑筋的执著那个概念，会给你带来痛苦。何不好好体验当下爱的感觉，而不是被你脑海中的概念所摆布。</p>
+
+<p>当你在追求快乐的时候，说明你现在快乐。当你达到目的时候，你快乐了一阵子，就过去了，你开始懊恼为什么快乐总是消失的那么快。于是又去追寻下一个快乐，你又变得不快乐了。不要说我现在不快乐。有了房有了车就会快乐了。你当下就可以快乐，为什么还要等到有房有车呢。当下你就能获得快乐，如果不能一定是心出了问题。</p>
+
+<p>过去的已经过去，未来真的存在吗。我不知道。未来只不过是自我的延伸和投射，你的想象，我执。当下才是最真实最重要，也可以是最美好的。你的心能安住于当下，也就减少了烦恼。你才能客观全面的看待事物，才能发现美。你的心像翻滚的江河，你无法倒影天空的美，无法倒影河边上的鲜花。心如止水，专注的做好当下的事，发现当下的美。有了方向要一步一步认真专心的走，过程比目的更重要。</p>
+
+<p>专注于当下你可以把握事物瞬间的变化。我们的总认为某些事物是恒常的。当有一天书变黄了，你就心生苦恼书怎么突然就变黄了。当有一天，你照着镜子发现自己变老了，你又开始苦恼，怎么突然老了好多，其实你每一刻都在变老，只是你没有注意到罢了。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[定]]></title>
@@ -3193,24 +3210,6 @@ I get 10 times more traffic from <a href="http://google.com/" title="Google">Goo
 default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina.html, asides/googleplus.html]  加上asides/weibo_sina.html即可。</p>
 
 <p>编写markdown文件的工具可以使用<a href="http://markdownpad.com/">markdownPad</a>，推荐使用notepad++编写博客，把经常使用的插件代码用宏录制好，避免重复性的工作。上传图片的工具可以使用http://www1.freep.cn/。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013年要点列表]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/01/important-list/"/>
-    <updated>2013-01-01T23:36:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/01/important-list</id>
-    <content type="html"><![CDATA[<ol>
-<li>锻炼身体</li>
-<li>认真工作，努力学习</li>
-<li>*******************（待填）</li>
-<li>端正自己的态度</li>
-<li>时刻反省自己</li>
-<li>保持自信心</li>
-<li>消除消极的和无用的杂念</li>
-</ol>
-
 ]]></content>
   </entry>
   
