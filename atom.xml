@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-03-06T22:49:25+08:00</updated>
+  <updated>2013-03-15T21:05:53+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[随想]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/03/15/new-post/"/>
+    <updated>2013-03-15T20:52:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/03/15/new-post</id>
+    <content type="html"><![CDATA[<p>手恢复之后的第一篇博客。短短的一个月，感觉发了好多好多事情。坠入爱河，在爱河中沉醉。特别是这个星期，人有点魂不守舍的，对工作的影响还是蛮大的。第一次体验到这么深的爱，迷失了自我。还没调整好自己的心态，在工作的时候也会胡思乱想。这个星期一直在摸索和思考，如何去分配好自己的时间在工作和爱情上。我会很用心的去经营这段感情，爱你时一定要专心爱你，全身心的投入爱你。但我希望工作时也一样能够全身心的投入工作。当然不是你的问题，是我自己还没调整好罢了，需要摸索一段时间。</p>
+
+<p>最近迷失在微博和知乎上，一直不停的刷。其实根本没这个必要，隔很长一段时间再去刷一下就好了。因为我的微博和知乎都关注的特别少，短时间内怎么刷都是那样。为了让自己戒了这个瘾下个星期就不上微博了。把上微博的时间用来学习和做重要的事情。知乎我也要控制一下，一天就中午和晚上刷一下就好。工作时间还是别上的好。最近时间被碎片化的很厉害。又有了微信和啪啪。所以要好好的管理一下自己的时间了。</p>
+
+<p><embed src="http://www.xiami.com/widget/3946428_10671967_235_346_FF8719_494949_0/shufflePlayer.swf" type="application/x-shockwave-flash" width="235" height="346" wmode="opaque"></embed></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[体验当下]]></title>
@@ -3190,26 +3203,6 @@ I get 10 times more traffic from <a href="http://google.com/" title="Google">Goo
 
 
 <p>此文件的源代码点击<a href="https://raw.github.com/sweetdark/sweetdark.github.com/source/source/_posts/2013-01-02-write-markdown.markdown">这里</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[博客主题的配置]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/02/blog-config/"/>
-    <updated>2013-01-02T12:17:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/02/blog-config</id>
-    <content type="html"><![CDATA[<p><strong>首先<a href="https://github.com/sweetdark/sweetdark.github.com/tree/source/.themes">我的博客主题</a>下载。把mario目录拷贝到.themes目录下。执行rake install[&#8220;mario&#8221;]</strong> 由于categories不支持中文，我加了tags标签。
-装完之后，要改一下_config.yml的配置，在适当的位置添加一行tag_dir: blog/tags  。然后在文章里，添加tags: 标签下面添你的标签名，例如：  tags: [&#8216;Github&#8217;,&#8217;octopress&#8217;]
-<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021334145207_0.png"></p>
-
-<p>我还在导航栏里 添加了关于我的页面，修改的话，请修改about目录下的index.html文件即可。</p>
-
-<p>关于在侧边栏添加微博插件的问题，我在_includes\asides 下增加了weibo_sina.html只要修改这个文件，替换为你的微博Html代码。微博的html代码的，只要登录你的微博，在设置里，点击我的工具可以产生。
-<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021321353343_0.png">
-然后再_config.yml修改一下配置
-default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina.html, asides/googleplus.html]  加上asides/weibo_sina.html即可。</p>
-
-<p>编写markdown文件的工具可以使用<a href="http://markdownpad.com/">markdownPad</a>，推荐使用notepad++编写博客，把经常使用的插件代码用宏录制好，避免重复性的工作。上传图片的工具可以使用http://www1.freep.cn/。</p>
 ]]></content>
   </entry>
   
