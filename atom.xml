@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-04-25T08:01:26+08:00</updated>
+  <updated>2013-04-25T21:11:20+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -18,7 +18,9 @@
     <link href="http://sweetdark.github.com/blog/2013/04/25/agg/"/>
     <updated>2013-04-25T07:20:00+08:00</updated>
     <id>http://sweetdark.github.com/blog/2013/04/25/agg</id>
-    <content type="html"><![CDATA[<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+    <content type="html"><![CDATA[<p>aa_demo</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -271,12 +273,6 @@
 <span class='line-number'>251</span>
 <span class='line-number'>252</span>
 <span class='line-number'>253</span>
-<span class='line-number'>254</span>
-<span class='line-number'>255</span>
-<span class='line-number'>256</span>
-<span class='line-number'>257</span>
-<span class='line-number'>258</span>
-<span class='line-number'>259</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;agg_basics.h&quot;</span>
 </span><span class='line'><span class="cp">#include &quot;agg_rendering_buffer.h&quot;</span>
 </span><span class='line'><span class="cp">#include &quot;agg_rasterizer_scanline_aa.h&quot;</span>
@@ -292,7 +288,6 @@
 </span><span class='line'><span class="k">static</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'><span class="n">namespace</span> <span class="n">agg</span>
 </span><span class='line'><span class="p">{</span>
-</span><span class='line'>
 </span><span class='line'>  <span class="n">class</span> <span class="n">square</span>   <span class="c1">//正方形</span>
 </span><span class='line'>  <span class="p">{</span>
 </span><span class='line'>  <span class="nl">public:</span>
@@ -317,8 +312,6 @@
 </span><span class='line'>      <span class="kt">double</span> <span class="n">m_size</span><span class="p">;</span>
 </span><span class='line'>  <span class="p">};</span>
 </span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
 </span><span class='line'>  <span class="c1">//自定义的渲染器,实现固定的几个方法。</span>
 </span><span class='line'>  <span class="n">template</span><span class="o">&lt;</span><span class="n">class</span> <span class="n">Renderer</span><span class="o">&gt;</span> <span class="n">class</span> <span class="n">renderer_enlarged</span>
 </span><span class='line'>  <span class="p">{</span>
@@ -327,13 +320,10 @@
 </span><span class='line'>        <span class="n">m_ren</span><span class="p">(</span><span class="n">ren</span><span class="p">),</span>
 </span><span class='line'>            <span class="n">m_square</span><span class="p">(</span><span class="n">size</span><span class="p">),</span>
 </span><span class='line'>            <span class="n">m_size</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="p">{}</span>
-</span><span class='line'>
 </span><span class='line'>        <span class="c1">//--------------------------------------------------------------------</span>
 </span><span class='line'>        <span class="kt">void</span> <span class="n">color</span><span class="p">(</span><span class="n">rgba8</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span> <span class="n">m_color</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span> <span class="p">}</span>
-</span><span class='line'>
 </span><span class='line'>        <span class="c1">//--------------------------------------------------------------------</span>
 </span><span class='line'>        <span class="kt">void</span> <span class="n">prepare</span><span class="p">()</span> <span class="p">{}</span>
-</span><span class='line'>
 </span><span class='line'>        <span class="c1">//--------------------------------------------------------------------渲染</span>
 </span><span class='line'>        <span class="n">template</span><span class="o">&lt;</span><span class="n">class</span> <span class="n">Scanline</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">render</span><span class="p">(</span><span class="k">const</span> <span class="n">Scanline</span><span class="o">&amp;</span> <span class="n">sl</span><span class="p">)</span>
 </span><span class='line'>        <span class="p">{</span>
@@ -364,14 +354,14 @@
 </span><span class='line'>
 </span><span class='line'>  <span class="nl">private:</span>
 </span><span class='line'>      <span class="n">rasterizer_scanline_aa</span><span class="o">&lt;&gt;</span> <span class="n">m_ras</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">scanline_u8</span> <span class="n">m_sl</span><span class="p">;</span>   <span class="c1">//容器 ,是m_ras和m_ren的中介，负责传递图形星系</span>
+</span><span class='line'>      <span class="c1">//容器 ,在光栅化器rasterizer_scanline_aa和渲染器scanline_render之间多了一个容器。负责信息的转换。</span>
+</span><span class='line'>      <span class="c1">//由很多水平不想交的span组成。这些span按x排序。</span>
+</span><span class='line'>      <span class="n">scanline_u8</span> <span class="n">m_sl</span><span class="p">;</span>
 </span><span class='line'>      <span class="n">Renderer</span><span class="o">&amp;</span>   <span class="n">m_ren</span><span class="p">;</span>
 </span><span class='line'>      <span class="n">square</span>      <span class="n">m_square</span><span class="p">;</span>
 </span><span class='line'>      <span class="n">rgba8</span>       <span class="n">m_color</span><span class="p">;</span>
 </span><span class='line'>      <span class="kt">double</span>      <span class="n">m_size</span><span class="p">;</span>
 </span><span class='line'>  <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>
 </span><span class='line'>
 </span><span class='line'><span class="p">};</span>
 </span><span class='line'>
@@ -539,7 +529,10 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-
+<p>效果图
+<a href="http://imgur.com/eC5sCqa" title=""><img src="http://i.imgur.com/eC5sCqa.jpg" title="Hosted by imgur.com" alt="" /></a>
+流程图
+<a href="http://imgur.com/sHAd1Nu" title=""><img src="http://i.imgur.com/sHAd1Nu.jpg" title="Hosted by imgur.com" alt="" /></a></p>
 ]]></content>
   </entry>
   
