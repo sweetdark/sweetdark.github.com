@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-04-25T21:11:20+08:00</updated>
+  <updated>2013-04-28T07:47:13+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,354 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[agg渲染内存]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/04/28/agg/"/>
+    <updated>2013-04-28T07:32:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/04/28/agg</id>
+    <content type="html"><![CDATA[<p>一、渲染内存
+在所有的agg控制台的例子中都使用了 p256的格式，即RGB格式，即每个字节存储一个颜色值，如下图所示的RGB_buffer的内存工作区。
+<img src="http://i.imgur.com/nNA1NsK.png"></p>
+
+<p>二、源代码
+rendering_buffer.h
+文件中 rendering_buffer有两种实现方式。
+可以根据你的实际需要，去选择。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef AGG_RENDERING_BUFFER</span>
+</span><span class='line'>    <span class="k">typedef</span> <span class="n">AGG_RENDERING_BUFFER</span> <span class="n">rendering_buffer</span><span class="p">;</span>
+</span><span class='line'><span class="cp">#else</span>
+</span><span class='line'><span class="c1">//  typedef row_ptr_cache&lt;int8u&gt; rendering_buffer;</span>
+</span><span class='line'>    <span class="k">typedef</span> <span class="n">row_accessor</span><span class="o">&lt;</span><span class="n">int8u</span><span class="o">&gt;</span> <span class="n">rendering_buffer</span><span class="p">;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>提供的接口很简单都是直接访问内存的操作</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="c1">//-------------------------------------------------------------------</span>
+</span><span class='line'><span class="n">row_accessor</span><span class="p">()</span> <span class="o">:</span>
+</span><span class='line'>  <span class="n">m_buf</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span class='line'>  <span class="n">m_start</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span class='line'>  <span class="n">m_width</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span class='line'>  <span class="n">m_height</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span class='line'>  <span class="n">m_stride</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//-------------------------------------------------------------------- 初始化 </span>
+</span><span class='line'><span class="n">row_accessor</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">buf</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">width</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">height</span><span class="p">,</span> <span class="kt">int</span> <span class="n">stride</span><span class="p">)</span> <span class="o">:</span>
+</span><span class='line'>  <span class="n">m_buf</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span class='line'>  <span class="n">m_start</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span class='line'>  <span class="n">m_width</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span class='line'>  <span class="n">m_height</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+</span><span class='line'>  <span class="n">m_stride</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">attach</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">stride</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//--------------------------------------------------------------------</span>
+</span><span class='line'><span class="kt">void</span> <span class="n">attach</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">buf</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">width</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">height</span><span class="p">,</span> <span class="kt">int</span> <span class="n">stride</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>     <span class="n">m_buf</span> <span class="o">=</span> <span class="n">m_start</span> <span class="o">=</span> <span class="n">buf</span><span class="p">;</span>
+</span><span class='line'>     <span class="n">m_width</span> <span class="o">=</span> <span class="n">width</span><span class="p">;</span>
+</span><span class='line'>     <span class="n">m_height</span> <span class="o">=</span> <span class="n">height</span><span class="p">;</span>
+</span><span class='line'>     <span class="n">m_stride</span> <span class="o">=</span> <span class="n">stride</span><span class="p">;</span>
+</span><span class='line'>     <span class="k">if</span><span class="p">(</span><span class="n">stride</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>          <span class="n">m_start</span> <span class="o">=</span> <span class="n">m_buf</span> <span class="o">-</span> <span class="kt">int</span><span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">stride</span><span class="p">;</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//--------------------------------------------------------------------</span>
+</span><span class='line'><span class="n">AGG_INLINE</span>       <span class="n">T</span><span class="o">*</span> <span class="n">buf</span><span class="p">()</span>          <span class="p">{</span> <span class="k">return</span> <span class="n">m_buf</span><span class="p">;</span>    <span class="p">}</span>
+</span><span class='line'><span class="n">AGG_INLINE</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">buf</span><span class="p">()</span>    <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_buf</span><span class="p">;</span>    <span class="p">}</span>
+</span><span class='line'><span class="n">AGG_INLINE</span> <span class="kt">unsigned</span> <span class="n">width</span><span class="p">()</span>  <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_width</span><span class="p">;</span>  <span class="p">}</span>
+</span><span class='line'><span class="n">AGG_INLINE</span> <span class="kt">unsigned</span> <span class="n">height</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_height</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'><span class="n">AGG_INLINE</span> <span class="kt">int</span>      <span class="n">stride</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_stride</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'><span class="n">AGG_INLINE</span> <span class="kt">unsigned</span> <span class="n">stride_abs</span><span class="p">()</span> <span class="k">const</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="n">m_stride</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="kt">unsigned</span><span class="p">(</span><span class="o">-</span><span class="n">m_stride</span><span class="p">)</span> <span class="o">:</span> <span class="kt">unsigned</span><span class="p">(</span><span class="n">m_stride</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//--------------------------------------------------------------------</span>
+</span><span class='line'>  <span class="n">AGG_INLINE</span>       <span class="n">T</span><span class="o">*</span> <span class="n">row_ptr</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">unsigned</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">m_start</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">m_stride</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>  <span class="n">AGG_INLINE</span>       <span class="n">T</span><span class="o">*</span> <span class="n">row_ptr</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="p">)</span>       <span class="p">{</span> <span class="k">return</span> <span class="n">m_start</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">m_stride</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">AGG_INLINE</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span> <span class="n">row_ptr</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_start</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">m_stride</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>  <span class="n">AGG_INLINE</span> <span class="n">row_data</span> <span class="n">row</span>    <span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="k">const</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">row_data</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">m_width</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">row_ptr</span><span class="p">(</span><span class="n">y</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//--------------------------------------------------------------------</span>
+</span><span class='line'><span class="n">template</span><span class="o">&lt;</span><span class="n">class</span> <span class="n">RenBuf</span><span class="o">&gt;</span>
+</span><span class='line'><span class="kt">void</span> <span class="n">copy_from</span><span class="p">(</span><span class="k">const</span> <span class="n">RenBuf</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">unsigned</span> <span class="n">h</span> <span class="o">=</span> <span class="n">height</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">h</span><span class="p">)</span> <span class="n">h</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">unsigned</span> <span class="n">l</span> <span class="o">=</span> <span class="n">stride_abs</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">stride_abs</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">l</span><span class="p">)</span> <span class="n">l</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">stride_abs</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">l</span> <span class="o">*=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">unsigned</span> <span class="n">y</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">unsigned</span> <span class="n">w</span> <span class="o">=</span> <span class="n">width</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">h</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">memcpy</span><span class="p">(</span><span class="n">row_ptr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">),</span> <span class="n">src</span><span class="p">.</span><span class="n">row_ptr</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">l</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//------------------------------用某个颜色值填充内存</span>
+</span><span class='line'><span class="kt">void</span> <span class="n">clear</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">unsigned</span> <span class="n">y</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">unsigned</span> <span class="n">w</span> <span class="o">=</span> <span class="n">width</span><span class="p">();</span>
+</span><span class='line'>  <span class="kt">unsigned</span> <span class="n">stride</span> <span class="o">=</span> <span class="n">stride_abs</span><span class="p">();</span>
+</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">height</span><span class="p">();</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">T</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">row_ptr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">);</span>
+</span><span class='line'>      <span class="kt">unsigned</span> <span class="n">x</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">for</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">stride</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="o">*</span><span class="n">p</span><span class="o">++</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>三、例子</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &quot;agg_renderer_base.h&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;agg_pixfmt_rgb.h&quot;</span>
+</span><span class='line'><span class="cp">#include &quot;agg_rendering_buffer.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">enum</span><span class="p">{</span>
+</span><span class='line'>     <span class="n">frame_width</span> <span class="o">=</span> <span class="mi">320</span><span class="p">,</span>
+</span><span class='line'>     <span class="n">frame_height</span> <span class="o">=</span> <span class="mi">200</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">bool</span> <span class="nf">write_to_ppm</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span>
+</span><span class='line'>                      <span class="kt">int</span> <span class="n">width</span><span class="p">,</span>
+</span><span class='line'>                      <span class="kt">int</span> <span class="n">height</span><span class="p">,</span>
+</span><span class='line'>                      <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fileName</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>     <span class="kt">FILE</span> <span class="o">*</span><span class="n">fd</span> <span class="o">=</span> <span class="o">::</span><span class="n">fopen</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s">&quot;w+&quot;</span><span class="p">);</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">{</span>
+</span><span class='line'>          <span class="o">::</span><span class="n">fprintf</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="s">&quot;P6</span><span class="se">\n</span><span class="s">%d, %d</span><span class="se">\n</span><span class="s">255&quot;</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+</span><span class='line'>          <span class="o">::</span><span class="n">fwrite</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">fd</span><span class="p">);</span>
+</span><span class='line'>          <span class="o">::</span><span class="n">fclose</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="k">typedef</span> <span class="n">agg</span><span class="o">::</span><span class="n">pixfmt_rgb24</span>          <span class="n">pixfmt_type</span><span class="p">;</span>
+</span><span class='line'>     <span class="k">typedef</span> <span class="n">agg</span><span class="o">::</span><span class="n">renderer_base</span><span class="o">&lt;</span><span class="n">agg</span><span class="o">::</span><span class="n">pixfmt_rgb24</span><span class="o">&gt;</span> <span class="n">renbase_type</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="k">enum</span> <span class="p">{</span><span class="n">bytes_per_pixel</span> <span class="o">=</span> <span class="mi">3</span><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span> <span class="o">=</span> <span class="n">new</span> <span class="kt">unsigned</span> <span class="kt">char</span><span class="p">[</span><span class="n">frame_width</span> <span class="o">*</span> <span class="n">frame_height</span> <span class="o">*</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'>     <span class="c1">//memset(buffer, 255, frame_height * frame_width * 3);</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">agg</span><span class="o">::</span><span class="n">rendering_buffer</span> <span class="n">rbuf</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">frame_width</span><span class="p">,</span> <span class="n">frame_height</span><span class="p">,</span> <span class="n">frame_width</span> <span class="o">*</span> <span class="mi">3</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">pixfmt_type</span> <span class="n">pixf</span><span class="p">(</span><span class="n">rbuf</span><span class="p">);</span>
+</span><span class='line'>     <span class="n">renbase_type</span> <span class="n">rbase</span><span class="p">(</span><span class="n">pixf</span><span class="p">);</span>
+</span><span class='line'>     <span class="n">renbase_type</span><span class="o">::</span><span class="n">color_type</span> <span class="n">clear_color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">);</span>
+</span><span class='line'>     <span class="n">rbase</span><span class="p">.</span><span class="n">clear</span><span class="p">(</span><span class="n">clear_color</span><span class="p">);</span> <span class="c1">//使用此颜色画背景色。</span>
+</span><span class='line'>     <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">rbuf</span><span class="p">.</span><span class="n">height</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">{</span>
+</span><span class='line'>          <span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">rbuf</span><span class="p">.</span><span class="n">row_ptr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">//rgb三个像素的跨度，所以乘以三来取</span>
+</span><span class='line'>          <span class="o">*</span><span class="n">p</span><span class="o">++</span> <span class="o">=</span> <span class="mi">127</span><span class="p">;</span> <span class="c1">//R</span>
+</span><span class='line'>          <span class="o">*</span><span class="n">p</span><span class="o">++</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span> <span class="c1">//G</span>
+</span><span class='line'>          <span class="o">*</span><span class="n">p</span><span class="o">++</span> <span class="o">=</span> <span class="mi">98</span><span class="p">;</span> <span class="c1">//B</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'>     <span class="n">write_to_ppm</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">frame_width</span><span class="p">,</span> <span class="n">frame_height</span><span class="p">,</span> <span class="s">&quot;agg_test.ppm&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">delete</span> <span class="p">[]</span><span class="n">buffer</span><span class="p">;</span>
+</span><span class='line'>     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>打开此文件，效果如下。
+<img src="http://i.imgur.com/5zmUntx.png"></p>
+
+<p>rendering_buffer本身不知道内存中的像素格式的任何信息，都是通过纯手工来设置每一个自己的值。提供了一系列访问内存的方法。它只是保存了一个数组，数组的元素指向没一行的开头。申请和释放存储区是使用者的责任，你可以用任何形式来申请和释放内存。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[agg例子解析]]></title>
@@ -2496,21 +2844,6 @@ Please, don't. https://github.com/styleguide/templates/2.0
 
 
 <p><img src="http://www.imagebam.com/image/b94355230761965"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013-1-4随笔]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/04/new-rome/"/>
-    <updated>2013-01-04T22:07:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/04/new-rome</id>
-    <content type="html"><![CDATA[<p>今天是2013年1月4号，201314即爱你一生一世，很有寓意的一天。无论精神多么独立的人，其情感都会寻找依附。爱情真是让人期盼，令人着迷。</p>
-
-<p>对于爱，多么的期盼那是一份真情。自己一直在做得就是“去伪存真”。我虽然不能完全保证对方的真情实意，但必须保证自己是真情实意的，自己不欺人骗世也就心安了，对于他人的虚情假意，实在没必要为之而气愤和痛苦，拿比人的错误来惩罚自己。我也不希望自己爱上的只是爱的表象，是自己虚幻构造出来的。我变得小心谨慎，特别是在夜深的时候，不要因为寂寞而爱上一个人。我希望我说的每一句话都是真心的，都是发自于当时的真实情感。<strong>感情不能随便拿来开玩笑，时光易逝人很快就会老去，能拥有一份真情是多么幸福的事情，时间唯有真情才能长久</strong>。爱不是一种束缚，不要去争那些无所谓的对与错，输和赢，不要去比较谁付出的更多。我希望她也有她的生活，她的朋友，她的自由，我们能彼此互相理解，宽容，关心和爱护，这就很美好。</p>
-
-<p>如果决定了去爱一个人，就要好好爱她。如果在这个过程中失去了你，我会心痛，但不允许自己去后悔。<strong>“能够失去的东西就不是属于自己的”</strong>，Follow Your Heart！做好自己就是了，其他的一切会随之而来的。</p>
-
-<p>从动心的那一刻开始，我就会去准备，需要耐心~。</p>
 ]]></content>
   </entry>
   
