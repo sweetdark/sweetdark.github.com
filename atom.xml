@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-06-17T22:00:47+08:00</updated>
+  <updated>2013-06-17T22:02:12+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -28,7 +28,9 @@
 
 
 <p>我觉得第三种是费力不讨好。我拒绝者三种形式的懒惰。我要坚定地相信自己。我总觉得自己太浮躁了，所以我喜欢阅读一些佛经。佛经可以让我静心地去做事情。我也很喜欢老子。
-Surround your pullquote like this {&#8221; text to be quoted &#8220;}</p>
+{”
+Nature does not hurry, yet everything is accomplished ——Lao Tzu
+“}</p>
 
 <p>戒躁专心地去做事情是目前我最应该做的事。</p>
 ]]></content>
