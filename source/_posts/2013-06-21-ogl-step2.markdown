@@ -1,0 +1,9 @@
+---
+layout: post
+title: "ogl step2"
+date: 2013-06-21 07:40
+comments: true
+categories: 
+tags: opengl
+---
+未完待续
