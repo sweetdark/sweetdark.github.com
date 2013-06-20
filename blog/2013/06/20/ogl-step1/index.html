@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>定 - Mario's Blog</title>
+  <title>opengl step1 - Mario's Blog</title>
   <meta name="author" content="Mario">
 
   
-  <meta name="description" content="人的思绪总是漂浮在两种状态中，一是散乱，二是昏沉。普通人就在散乱和昏沉中度过一生，连一秒钟的定都达不到。因为平常极少反省，又少观察，故不能自知。散乱的思想像河流一样，一分一秒不停地在流。如何将念头止住唯一的方法就是修定。修定有许许多多的法门，其实就是一个方法“一念之间”。一念之间有八万四千烦恼， &hellip;">
+  <meta name="description" content="背景 Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://sweetdark.github.com/blog/2013/02/28/ding/">
+  <link rel="canonical" href="http://sweetdark.github.com/blog/2013/06/20/ogl-step1/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -70,7 +70,7 @@
 
   <header>
     
-      <h1 class="entry-title">定</h1>
+      <h1 class="entry-title">Opengl Step1</h1>
     
     
     <p class="meta">
@@ -86,31 +86,61 @@
   
 
 
-<time datetime="2013-02-28T21:27:00+08:00" pubdate data-updated="true">Feb 28<span>th</span>, 2013</time>
+<time datetime="2013-06-20T21:54:00+08:00" pubdate data-updated="true">Jun 20<span>th</span>, 2013</time>
 	  
 
 <span class="tags">
   Tag:
   
-    <a href='/blog/tags/zen/'>Zen</a>
+    <a href='/blog/tags/ogl/'>ogl</a>
   
 </span>
 
       <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=&amp;title=定 - &amp;url=http://sweetdark.github.com/blog/2013/02/28/ding/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=&amp;title=Opengl Step1 - &amp;url=http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
 
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=定 - &amp;url=http://sweetdark.github.com/blog/2013/02/28/ding/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Opengl Step1 - &amp;url=http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
 
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=定 - http://sweetdark.github.com/blog/2013/02/28/ding/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Opengl Step1 - http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
       </span>
     </p>
   
   </header>
 
 
-<div class="entry-content"><p>人的思绪总是漂浮在两种状态中，一是散乱，二是昏沉。普通人就在散乱和昏沉中度过一生，连一秒钟的定都达不到。因为平常极少反省，又少观察，故不能自知。散乱的思想像河流一样，一分一秒不停地在流。如何将念头止住唯一的方法就是修定。修定有许许多多的法门，其实就是一个方法“一念之间”。一念之间有八万四千烦恼，甚至更多。如何将这一念定住，使八万四千烦恼停止。</p>
+<div class="entry-content"><h1>背景</h1>
 
-<p>任何的思想，任何的情绪，中间都有空隙，可以用“观心”的方法发现这个空隙。能够找到心中心波起伏的空隙，则念头可以转变，较容易获得清明安定。如果把一空隙的时间延长再延长，而停留再在这种状态，则心境变得安定宁静。既无啊悲哀也无忧伤，安详平静。净土宗的念佛，禅宗的打坐，天台宗的打坐，都是在求定都是要把连续的念头打断，集中于一，以达到一心不乱的境界。定的法门很多，没有一个法门适用于任何人，要找到适合自己的法门。至于练气，练瑜伽，观呼吸，听声音，也都是一种方法。</p>
+<p>Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
+我们这里使用的是OpenGl utility library 简称“GLUT&#8221;.GLUT去操作窗体更加简便，同时它也是跨平台的。</p>
+
+<h1>源代码走读</h1>
+
+<blockquote><p>glutInit(&amp;argc, argv);</p></blockquote>
+
+<p>这里初始化GLUT，</p>
+
+<p><code>
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA)
+</code><br/>
+这里我们配置一些GLUT的选项。GLUT_DOUBLE开启双缓冲。GLUT_RGBA代表颜色的格式。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glutInitWindowSize(1024, 768);
+</span><span class='line'>glutInitWindowPosition(100, 100);
+</span><span class='line'>glutCreateWindow("Tutorial 01");</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这些调用指定窗体的参数，并创建它</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glutDisplayFunc(RenderSceneCB);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大多数的窗体系统都是通过回调函数来交互的。GLUT处理与底层系统的交互。在这里我们仅需要一个主回调函数。这个函数会在GLUT的内部循环不断地调用。</p>
+
+<p><em>未完待续&#8230;.</em></p>
 </div>
 
 
@@ -133,7 +163,7 @@
   
 
 
-<time datetime="2013-02-28T21:27:00+08:00" pubdate data-updated="true">Feb 28<span>th</span>, 2013</time>
+<time datetime="2013-06-20T21:54:00+08:00" pubdate data-updated="true">Jun 20<span>th</span>, 2013</time>
       
 
 
@@ -148,10 +178,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/02/26/impo/" title="Previous Post: 重要的事">&laquo; 重要的事</a>
+        <a class="basic-alignment left" href="/blog/2013/06/17/less-pepole/" title="Previous Post: less pepole">&laquo; less pepole</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/03/06/new/" title="Next Post: 体验当下">体验当下 &raquo;</a>
       
     </p>
   </footer>
@@ -249,8 +277,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://sweetdark.github.com/blog/2013/02/28/ding/';
-        var disqus_url = 'http://sweetdark.github.com/blog/2013/02/28/ding/';
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2013/06/20/ogl-step1/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2013/06/20/ogl-step1/';
         var disqus_script = 'embed.js';
       
     (function () {

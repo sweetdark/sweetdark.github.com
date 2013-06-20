@@ -9,7 +9,7 @@
   <meta name="author" content="Mario">
 
   
-  <meta name="description" content="我突然有一个简单的愿望：我想当少数人，而不是和大多数人一样。大多数人都在玩微博，微信，聊QQ。 我不想和他们一样。我要走自己的路。或许我可以当一个山顶洞人。 越来越明白什么对自己是重要的，什么事情是自己应该去做的。做事之前要问应不应该做，而不是可以不可以做。什么事都可以做，但并不是什么事都应该去做 &hellip;">
+  <meta name="description" content="背景 Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,91 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/20/ogl-step1/">Opengl Step1</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-20T21:54:00+08:00" pubdate data-updated="true">Jun 20<span>th</span>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/ogl/'>ogl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=&amp;title=Opengl Step1 - &amp;url=http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Opengl Step1 - &amp;url=http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Opengl Step1 - http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><h1>背景</h1>
+
+<p>Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
+我们这里使用的是OpenGl utility library 简称“GLUT&#8221;.GLUT去操作窗体更加简便，同时它也是跨平台的。</p>
+
+<h1>源代码走读</h1>
+
+<blockquote><p>glutInit(&amp;argc, argv);</p></blockquote>
+
+<p>这里初始化GLUT，</p>
+
+<p><code>
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA)
+</code><br/>
+这里我们配置一些GLUT的选项。GLUT_DOUBLE开启双缓冲。GLUT_RGBA代表颜色的格式。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glutInitWindowSize(1024, 768);
+</span><span class='line'>glutInitWindowPosition(100, 100);
+</span><span class='line'>glutCreateWindow("Tutorial 01");</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这些调用指定窗体的参数，并创建它</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glutDisplayFunc(RenderSceneCB);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大多数的窗体系统都是通过回调函数来交互的。GLUT处理与底层系统的交互。在这里我们仅需要一个主回调函数。这个函数会在GLUT的内部循环不断地调用。</p>
+
+<p><em>未完待续&#8230;.</em></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1447,70 +1532,6 @@ rendering_buffer.h
 
     </article>
   
-  
-    <article>
-      
-
-
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/05/article/">随笔</a></h1>
-    
-    
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-05T18:47:00+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2013</time>
-	  
-
-<span class="tags">
-  Tag:
-  
-    <a href='/blog/tags/live/'>Live</a>
-  
-</span>
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=&amp;title=随笔 - &amp;url=http://sweetdark.github.com/blog/2013/02/05/article/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=随笔 - &amp;url=http://sweetdark.github.com/blog/2013/02/05/article/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=随笔 - http://sweetdark.github.com/blog/2013/02/05/article/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><p>思念似水，</p>
-
-<p>流入我的心房。</p>
-
-<p>拧开心房的阀门，</p>
-
-<p>用晶莹的玻璃瓶承装，愿永久存放。</p>
-
-<p>想念的是你，你在我心中。我愿写成文字，用博客承载思念。</p>
-
-<blockquote><p>你未看此花时，此花与汝心同归于寂；你来看此花时，此花颜色一时明白起来，便知此花不在你的心外。</p><footer><strong>王明阳</strong> <cite></cite></footer></blockquote>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1526,6 +1547,10 @@ rendering_buffer.h
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/20/ogl-step1/">opengl step1</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/17/less-pepole/">less pepole</a>
       </li>
     
@@ -1539,10 +1564,6 @@ rendering_buffer.h
     
       <li class="post">
         <a href="/blog/2013/04/07/refrect/">晨写</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/03/15/new-post/">随想</a>
       </li>
     
   </ul>
@@ -1579,7 +1600,7 @@ rendering_buffer.h
 
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fagg%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Eagg%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+50.0%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmethod%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emethod%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+41.111111111111114%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+14.444444444444445%25%27%3EZen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fagg%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Eagg%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+50.0%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmethod%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emethod%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fogl%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eogl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+41.111111111111114%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+14.444444444444445%25%27%3EZen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 
