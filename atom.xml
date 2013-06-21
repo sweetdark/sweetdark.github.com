@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2013-06-17T22:25:20+08:00</updated>
+  <updated>2013-06-20T22:59:43+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,51 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[opengl step1]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/06/20/ogl-step1/"/>
+    <updated>2013-06-20T21:54:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/06/20/ogl-step1</id>
+    <content type="html"><![CDATA[<h1>背景</h1>
+
+<p>Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
+我们这里使用的是OpenGl utility library 简称“GLUT&#8221;.GLUT去操作窗体更加简便，同时它也是跨平台的。</p>
+
+<h1>源代码走读</h1>
+
+<blockquote><p>glutInit(&amp;argc, argv);</p></blockquote>
+
+<p>这里初始化GLUT，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitDisplayMode</span><span class="p">(</span><span class="n">GLUT_DOUBLE</span> <span class="o">|</span> <span class="n">GLUT_RGBA</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们配置一些GLUT的选项。GLUT_DOUBLE开启双缓冲。GLUT_RGBA代表颜色的格式。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitWindowSize</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutInitWindowPosition</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutCreateWindow</span><span class="p">(</span><span class="s">&quot;Tutorial 01&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这些调用指定窗体的参数，并创建它</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutDisplayFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大多数的窗体系统都是通过回调函数来交互的。GLUT处理与底层系统的交互。在这里我们仅需要一个主回调函数。这个函数会在GLUT的内部循环不断地调用。</p>
+
+<p><em>未完待续&#8230;.</em></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[less pepole]]></title>
@@ -1854,26 +1899,6 @@ Makefile文件：</p>
 <p>仅仅做每日工作记录是不够的，每周每月都要进行计划和总结。原理大同小异，都是在月初、周初的时候，对本期的工作目标、内容作总体的计划安排，设置优先级，然后每天记录。到月末、周末的时候，再进行总结，看看计划的工作是否完成，效果如何等等。</p>
 
 <p>以后要多上知乎混，知乎是个好东西，自己一直没有好好利用啊。以后晚上坚决不上微博了，留下整块的时间，不要被微博上的信息所打扰。好好的学习和思考，不懂就上知乎问好了 :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[反思目前的工作状况]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/05/reflection/"/>
-    <updated>2013-01-05T15:52:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/05/reflection</id>
-    <content type="html"><![CDATA[<p>现在的工作很多都是自己安排的，手头只是交了一个任务给自己。并没有很具体详细的说你应该怎么做，甚至什么时候要完成。其实分配给我的任务比较少，或者比较难，要么就是那种这边无法修改的东西，需要内核去修改。就导致了我现在比较闲的状态，闲下来之后，就不知道自己应该去干吗了，这种状态很可怕。浪费了时间，没做事情。</p>
-
-<p>想做点额外的事吧，例如看看书，逛一下论坛什么的。但觉得这样好像又有点过意不去，何况被上司看到也不好。就在这种纠结的状态中，无聊纳闷时就上QQ去派遣（应当控制），浪费了好多时间。按理说，工作的时候就应该只做工作相关的事情，其他无关的事情，最好是别做的。发现自己面对着这一份烂代码，提不起丝毫的兴趣，总是想着学点别的东西。</p>
-
-<p>我的态度出现了问题，我对工作丧失了热忱。我想我应该不急着去做事情，好像在应付任务一样，在做事情之前调整好自己的态度吧。最大的问题是我没有把这个产品当成自己的作品来看待，总觉得它和我是隔离开来的，与我没有任何关系（毕竟内核是别人做的，我们只是在上面修改），既然这个产品与我没什么关系，我怎么可能把它做好呢。</p>
-
-<p><span class='pullquote-right' data-pullquote='如果在这里学不到太多技术上的东西，至少应该学会解决难题的科学方法，学会正确的工作态度。'>
-不希望自己在这种状态中，虚度光阴。日子一天天的过去，一年一眨眼就过去了，回想自己到底学到了什么。如果在这里学不到太多技术上的东西，至少应该学会解决难题的科学方法，学会正确的工作态度。毕竟这是到哪里都通用的东西~。
-</span>
-努力思考自己处于这种状态下的时候，应该怎么处理。最好是能避免这种状态的出现。这时候或许能从书中找到答案，或者从前辈那里学到东西。他们肯定也经历过这种状态。</p>
-
-<blockquote><p>闲着无事，在公司乱写。</p></blockquote>
 ]]></content>
   </entry>
   
