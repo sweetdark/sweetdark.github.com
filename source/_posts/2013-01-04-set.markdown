@@ -1,0 +1,238 @@
+---
+layout: post
+title: "集合"
+date: 2013-01-04 22:46
+comments: true
+categories: 
+tags: ['算法与数据结构']
+---
+这里的集合是用链表的方式来实现的。
+
+单向链表的定义：list.h
+{% gist 4259013 %}
+<!-- more -->
+单向链表的实现：
+
+``` c list的实现list.c
+#include "list.h"
+#include <string.h>
+
+void list_init(List *list, void (*destory)(void *data)) {
+	if (list == NULL) return;
+	list->size = 0;
+	list->match = NULL;
+	list->destory = destory;
+	list->head = NULL;
+	list->tail = NULL;
+}
+
+void list_destory(List *list) {
+	if (list == NULL) return;
+	void *data;
+	while (list_size(list) > 0) {
+		if (list_rem_next(list, NULL, (void **)&data) == 0 && list->destory != NULL) {
+			list->destory(data);
+		}
+	}
+	memset(list, 0, sizeof(list));
+}
+
+int list_ins_next(List *list, ListElement *elem, const void *data) {
+	if (!list) return -1;
+	ListElement *ins_elem = (ListElement*)malloc(sizeof(ListElement));
+	list_data(ins_elem) = data;
+	list_next(ins_elem) = NULL;
+	if (!elem) {
+		if (list_size(list) == 0)  list_tail(list) = ins_elem;
+		list_next(ins_elem) = list_head(list);
+		list_head(list) = ins_elem;
+	} else {
+		if (list_next(elem) == NULL) list_tail(list) = ins_elem;
+		list_next(ins_elem) = list_next(elem);
+		list_next(elem) = ins_elem;
+	}
+	list->size++;
+	return 0;
+}
+
+int list_rem_next(List *list, ListElement *elem, void **data) {
+	if (!list || list_size(list) == 0) return -1;
+	ListElement *old_element;
+	if (!elem) {
+		*data = list_data(list_head(list));
+		old_element = list_head(list);
+		list_head(list) = list_next(list_head(list));
+
+		if (list_size(list) == 1) list->tail = NULL;
+	} else {
+		if (elem->next == NULL) return -1;
+		*data = list_data(list_next(elem));
+		old_element = (list_next(elem));
+		list_next(elem) = list_next(list_next(elem));
+
+		if (elem->next == NULL) list->tail = elem;
+	}
+	free(old_element);
+	list_size(list)--;
+	return 0;
+}
+
+
+```
+
+集合用链表的方式实现的，通过typedef来实现简单的多态，集合的操作包括，求交集，并集，差集，判断一个元素是否在集合中，判断一个集合是否是另外一个集合的子集。
+``` c set.h
+#ifndef SET_H
+#define SET_H
+
+#include <stdlib.h>
+#include "list.h"
+
+typedef List Set;
+
+typedef ListElement SetElement;
+
+void set_init(Set *set, int (*match) (const void *data1, const void *data2), void (*destory)(void *data));
+
+#define set_destory list_destory
+int set_insert(Set *set, const void *data);
+
+int set_remove(Set *set, void **data);
+
+int set_union(Set *setu, const Set *set1, const Set *set2);
+
+int set_insertion(Set *seti, const Set *set1, const Set *set2);
+
+int set_deffirence(Set *setd, const Set *set1, const Set *set2);
+
+int set_ismember(const Set *set, const void *data);
+
+int set_issubset(const Set *set1, const Set *set2);
+
+int set_is_equal(const Set *set1, const Set *set2);
+#define set_size(set) list_size(set)
+#define set_data(element) list_data(element)
+
+#endif
+
+```
+
+``` c set.c set实现文件
+void set_init(Set *set, int (*match) (const void *data1, const void *data2), void (*destory)(void *data)) {
+	list_init(set, destory);
+	set->match = match;
+	return;
+}
+
+
+int set_insert(Set *set, const void *data){
+	if (set_ismember(set, data)) return 1;
+	return list_ins_next(set, list_tail(set), data);
+}
+
+int set_remove(Set *set, void **data) {
+	SetElement *h;
+	SetElement *pre = NULL;
+	for (h = list_head(set); h != NULL; h = list_next(h)) {
+		if (set->match(h->data, *data) == 0) {
+			break;
+		}
+
+		pre = h;
+	}
+	if (h == NULL)
+		return -1;
+	return list_rem_next(set, pre, data);
+}
+
+int set_union(Set *setu, const Set *set1, const Set *set2) {
+	SetElement *h1 = set1->head;
+	SetElement *h2 = set2->head;
+	void *data;
+	set_init(setu, set1->match, NULL);
+	for (h1 = list_head(set1); h1 != NULL; h1 = list_next(h1)) {
+		data = list_data(h1);
+		if (list_ins_next(setu, list_tail(setu), data) != 0) {
+			set_destory(setu);
+			return -1;
+		}
+	}
+	for (h2 = list_head(set2); h2 != NULL; h2 = list_next(h2)) {
+		data = list_data(h2);
+		if (set_ismember(set1, data)) {
+			continue;
+		} else {
+			if (list_ins_next(setu, list_tail(setu), data) != 0) {
+				set_destory(setu);
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
+
+int set_intersection(Set *seti, const Set *set1, const Set *set2){
+	SetElement *member;
+	void 	   *data;
+
+	set_init(seti, set1->match, NULL);
+	for (member = list_head(set1); member != NULL; member = list_next(member)) {
+		if (set_ismember(set2, list_data(member))) {
+			data = list_data(member);
+
+			if (list_ins_next(seti, list_tail(seti), data) != 0) {
+				set_destory(seti);
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
+
+int set_difference(Set *setd, const Set *set1, const Set *set2) {
+	SetElement *member;
+	void 	   *data;
+
+	set_init(setd, set1->match, NULL);
+
+	for (member = list_head(set1); member != NULL; member = list_next(member)) {
+		if (!set_ismember(set2, list_data(member))) {
+			data = list_data(member);
+			if (list_ins_next(setd, list_tail(setd), data) != 0) {
+				set_destory(setd);
+				return -1;
+			}
+		}
+	}
+
+	return 0;
+}
+
+int set_ismember(const Set *set, const void *data) {
+	SetElement *p = list_head(set);
+	for (; p != NULL; p = list_next(p)) {
+		if (set->match(list_data(p), data) == 0) return 1;
+	}
+	return 0;
+}
+
+int set_issubset(const Set *set1, const Set *set2) {
+	SetElement *p;
+	if (set_size(set1) > set_size(set2)) return 0;
+	for (p = list_head(set2); p != NULL; p = list_next(p)) {
+		if (set_ismember(set2, list_data(p)) == 0) return 0;
+	}
+	return 1;
+}
+
+int set_is_equal(const Set *set1, const Set *set2) {
+	if (set_size(set1) != set_size(set2)) return 0;
+
+	return set_issubset(set1, set2);
+
+
+```
+测试文件：
+{% gist c4720e6e20e8ed09dad4 %}
+
+{% img http://www.imagebam.com/image/b94355230761965 %}
