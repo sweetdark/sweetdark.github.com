@@ -1,11 +1,12 @@
 ---
 layout: post
-title: "opengl step1"
+title: "opengl step1 Create a window"
 date: 2013-06-20 21:54
 comments: true
 categories: 
 tags: ogl
 ---
+[原文地址](http://ogldev.atspace.co.uk/www/tutorial01/tutorial01.html)
 #背景
 
 Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
@@ -31,5 +32,21 @@ glutCreateWindow("Tutorial 01");
 glutDisplayFunc(RenderSceneCB);
 ```
 大多数的窗体系统都是通过回调函数来交互的。GLUT处理与底层系统的交互。在这里我们仅需要一个主回调函数。这个函数会在GLUT的内部循环不断地调用。
+``` 
+glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+```
+这是第一次接触到OpenGL 状态的概念。由于状态非常多，难以通过调用函数的时候直接传参过去。所以所以你需要指定
+着色器，缓冲区，各种各样的标志告诉opengl，渲染是如何发生的。另外，你也可能经常会使用到相同的参数去渲染多个图像。
+所以大部分的渲染操作都是通过设置标志和值的方式去指定的。上面的函数调用，设置了情况 帧缓存（framebuffer)时使用到的颜色。这个颜色是（RGBA）格式的，参数值的范围在
+0.0到1.0之间。
+``` 
+glutMainLoop();
+```
+此函数调用，让GLUT开始他的内部循环。这个循环会监听系统时间，并传给我们刚才设置的回调函数进行处理。我们只注册了一个用于显示的回调函数（RenderSceneCB）去画帧。
+```
+glClear(GL_COLOR_BUFFER_BIT);
+glutSwapBuffers();
+```
+第一个函数是清空帧缓存，使用上面glClearColor设置的元素进行清空。第二个函数调用是交换前缓冲和后缓冲。
 
-_未完待续...._
+_VS源代码地址：_https://github.com/sweetdark/openglex/tree/master/oglstep1
