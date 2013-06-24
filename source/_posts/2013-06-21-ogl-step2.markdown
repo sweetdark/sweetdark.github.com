@@ -1,9 +1,13 @@
 ---
 layout: post
-title: "ogl step2"
+title: "ogl step2 Hello Dot!"
 date: 2013-06-21 07:40
 comments: true
 categories: 
 tags: opengl
 ---
-未完待续
+#背景
+在这个课题我们需要使用到[GLEW](http://en.wikipedia.org/wiki/Glew)。可以在这里下载http://sourceforge.net/projects/glew/files/glew/1.8.0/。下载之后解压，解压之后把
+把bin目录下的dll放到System32的目录下。lib的目录和include目录拷到你当前的项目中，并在vs的项目中进行引用。
+
+在这篇指南中。我们将会第一次使用到*顶点缓冲区对象*（vertex buffer objects VBOs）。顾名思义，它们是用来存储顶点源的。在3D世界中的怪物，城堡或者一个简单的四方形，都是通过一组顶点源构造出来的。
