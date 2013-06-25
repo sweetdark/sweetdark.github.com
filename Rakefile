@@ -135,6 +135,7 @@ task :new_ogl_post, :title do |t, args|
     post.puts "categories: "
 	post.puts "tags: opengl"
     post.puts "---"
+	post.puts "[Get The Source](https://github.com/sweetdark/openglex)"
 	post.puts "#背景"
 	post.puts "#代码漫游"
   end
