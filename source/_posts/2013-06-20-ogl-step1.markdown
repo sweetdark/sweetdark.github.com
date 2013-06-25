@@ -4,7 +4,7 @@ title: "opengl step1 Create a window"
 date: 2013-06-20 21:54
 comments: true
 categories: 
-tags: ogl
+tags: opengl
 ---
 [原文地址](http://ogldev.atspace.co.uk/www/tutorial01/tutorial01.html)
 #背景
@@ -12,7 +12,7 @@ tags: ogl
 Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
 我们这里使用的是OpenGl utility library 简称“GLUT".GLUT去操作窗体更加简便，同时它也是跨平台的。
 
-#源代码走读 
+#代码漫游 
 > glutInit(&argc, argv);
 
 这里初始化GLUT，

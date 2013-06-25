@@ -1,0 +1,28 @@
+---
+layout: post
+title: "ogl step3 First Triangle"
+date: 2013-06-25 12:34
+comments: true
+categories: 
+tags: opengl
+---
+#背景
+这篇指南非常短，只是简单的画一个三角形。
+
+在此篇指南中，我们依赖于标准化的盒子。可见的顶点必须在这个盒子内
+这样视图转换是才能够把它映射到屏幕坐标上。从z轴的负极往里面看。opengl的盒子如下：
+{% img http://ogldev.atspace.co.uk/www/tutorial03/coord_system.png %}
+Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围，那么图形将会被剪切。
+
+#代码漫游
+``` c
+Vector3f Vertices[3];
+Vertices[0] = Vector3f(-1.0f, -1.0f, 0.0f);
+Vertices[1] = Vector3f(0.0f, 1.0f, 0.0f);
+Vertices[2] = Vector3f(1.0f, -1.0f, 0.0f);
+```
+扩展顶点数组包含3个顶点。
+``` c
+glDrawArrays(GL_TRIANGLES, 0, 3);
+```
+与上一篇相比两个参数变了，我们画三角形而不是画点。我们画三个顶点而不是一个顶点了。

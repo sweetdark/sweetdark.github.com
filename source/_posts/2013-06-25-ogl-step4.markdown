@@ -1,0 +1,11 @@
+---
+layout: post
+title: "ogl step4"
+date: 2013-06-25 12:51
+comments: true
+categories: 
+tags: opengl
+---
+#背景
+#代码漫游
+__留坑__
