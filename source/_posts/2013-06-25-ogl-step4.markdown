@@ -6,7 +6,7 @@ comments: true
 categories: 
 tags: opengl
 ---
-[Get the source](https://github.com/sweetdark/openglex)
+[Get the source](https://github.com/sweetdark/openglex)  [原文链接](http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html)
 #背景
 从这一节开始我们将会用到着色器绘图。着色器是绘制3D图像的潮流。从另一个角度说着色器取代了固定函数管道的方式，需要开发者自己配置参数（如：光源属性，旋转值等）。然而可编程的方式提供了更好的灵活性和创造性。
 
@@ -16,5 +16,92 @@ vertex processor负责执行顶点着色器去处理每一个通过管道的顶�
 
 下一阶段是几何处理器（geometry processor）。在这个阶段着色器知道所有的几何体以及他们的相邻关系。此时需要考虑除了顶点本身之外的信息。几何着色器可以变换输出的拓扑顺序。例如：你可以提供一组点的信息然后产生两个三角形或者产生一个四边形。另外，你还可以像几何着色器传入多个顶点，并根据你所选择的拓扑顺序产生多个几何体.
 
-下一个阶段是裁剪器。这是一个固定的函数单元处理简单的任务，裁剪几何图形到标准化格子中。它也裁剪到near Z和far Z的平面中。有相应的参数惨叫他们。经过裁剪后，顶点会被映射到屏幕坐标中，然后根据他们的拓扑顺序渲染出来。    光栅化程序为每个顶点调用片段处理器。你还可以指定像素点的颜色。
+下一个阶段是裁剪器。这是一个固定的函数单元处理简单的任务，裁剪几何图形到标准化格子中。它也裁剪到near Z和far Z的平面中。有相应的参数惨叫他们。经过裁剪后，顶点会被映射到屏幕坐标中，然后根据他们的拓扑顺序渲染出来。  例如：在三角形中找出所有的点在这个三角内的，光栅化程序为每个点调用片段处理器。你还可以指定像素点的颜色。
+
+着色器的管理方式类似于C\C++的程序的创建一样。 首先你编写着色的代码供你的程序使用。可以简单的再源代码里直接写字符穿或者从外部文件加载进来，然后编译成一个个的着色器目标对象，链接这些着色器到单个程序加载到GPU中。链接着色器提供机会给驱动去裁剪他们和优化他们之间的关系。例如你可以打包一个顶点着色器，然后用一个片段着色器忽略它。在这种情况下，GLSL的编译器会删除相关功能的着色器使得顶点着色器执行的更快。
+
 #代码漫游
+``` c
+GLuint ShaderProgram = glCreateProgram();
+```
+在设置着色器之前先创建一个程序对象。我们将连接所有的着色器到这个程序中。
+``` c
+GLunit ShaderObj = glCreateShader(ShaderType);
+```
+创建着色器对象。一个使用GL_VERTEX_SHADER类型创建顶点着色器，另一个是GL_FRAGMENT_SHADER类型创建片段着色器。用来编译指定的着色器代码。
+``` c
+const GLchar* p[1];
+p[0] = pShaderText;
+GLint Lengths[1];
+Lengths[0] = strlen(pShaderText);
+glShaderSource(ShaderObj, 1, p, Lengths);
+```
+指定要编译的源代码。glShaderSource传入一个着色器对象去编译你指定的代码。代码可以由字符串数组提供并相应的指定保持各个字符串长度的数组。简单起见我们用只包含一个元素的字符串数组和长度数组。第二参数指定了这两个数组的元素个数。
+``` c
+glCompileShader(ShaderObj);
+```
+编译着色器对象。
+``` c
+GLint success;
+glGetShaderiv(ShaderObj, GL_COMPILE_STATUS, &success);
+if (!success) {
+	GLchar InfoLog[1024];
+	glGetShaderInfoLog(ShaderObj, sizeof(InfoLog), NULL, InfoLog);
+	fprintf(stderr, "Error compiling shader type %d: '%s'\n", ShaderType, InfoLog);
+}
+```
+捕获编译时产生的错误并显示。
+``` c
+glAttachShader(ShaderProgram, ShaderObj);
+```
+把编译好的着色器对象附加到程序中。类似于Makefile链接一列目标对象。真正的链接目标对象发生在链接阶段。
+``` c
+glLinkProgram(ShaderProgram);
+```
+在编译了所有的着色器对象然后附加到着色器程序中，最后需要链接它们。链接完之后，你可以删除产生的中间对象。通过glDeleteShader删除它们。
+``` c
+glGetProgramiv(ShaderProgram, GL_LINK_STATUS, &Success);
+if (Sourcess == 0) {
+	glGetProgramInfoLog(ShaderProgram, sizeof(ErrorLog), NULL, ErrorLog);
+	fprintf(stderr, "Error Linking shader program : '%s'\n", ErrorLog);
+}
+```
+与此前处理编译错误不同的是，这里通过通过glGetProgramiv和glGetProgramInfoLog去捕获和处理链接产生的错误信息。
+``` c
+glValidateProgram(ShaderProgram);
+```
+这个调用是用来检测在当前的管道状态下这个着色程序是否能够执行。在复杂的程序中包含着多个着色器和许多的状态，在使用之前最好检查一下，提高代码的健壮性。当然你可以再最终产品发布时去掉这些检测，避免这些性能开销。
+``` c
+glUseProgram(ShaderProgram);
+```
+最终把这个着色器程序设置成管道的状态。这个着色器程序会影响所有的绘制调用，知道你用另外一个替换掉。或者通过glUseProgram(NULL)的方式使其不可用(同时开启固定函数管道)。如果你只创建了一个类型的着色器，那么其他阶段的操作按默认的固定函数进行处理。
+
+到此已经讲完了着色器管理的OpenGL调用。下面是顶点着色器和片段着色器的相关内容。
+``` c
+#version 330
+```
+告诉编译器我们使用的是GLSL3.3. 如果编译器不支持就会报错
+``` c
+layout (location = 0) in vec3 Position;
+```
+这条语句出现在顶点着色器中。它声明了顶点的属性。3个浮点数在着色器中被当做‘Position'.'Vertex specifi'意味着为每一次GPU中着色器的调用，都从缓冲中取出一个新的顶点值。layout (location = 0) 创建属性名称和缓冲中属性的绑定。当顶点包含多个属性（position（位置）， normal（法线）， texture（纹理）)时这一语句是必须的。我们要让编译器知道缓冲区中的每一个顶点的属性映射到着色器中的哪一个属性。 有两种方式，一种是显示的指定像上面的设置为0.然后我们可以再程序中使用这个硬编码。或者我们可以留空（简单滴'in vec3 Position')然后再运行时用glGetAttribLocation去检索位置。此中情况下我们需要通过glVertexAttributePointer定义顶点属性数组。在这里我们使用简单的方式，但在复杂的程序中最好是让编译器决定属性的索引然后在运行时去检索他们。
+``` c
+void main()
+```
+每一个着色阶段(VS,GS,FS)都有且仅有一个main函数,是着色器的入口。
+``` c
+gl_Position = vec4(0.5 * Position.x, 0.5 * Position.y, Position.z, 1.0);
+```
+这里我们为每一个进入顶点着色阶段的顶点位置做硬编码的转换。X和Y的值减半，Z值不变。gl_Postion是一个特殊的内建类型支持齐次的顶点位置。在经过一系列的转换之后，光栅化程序会遍历这些变量并在屏幕空间中使用它们。X，Y值减半意味着这个三角形只有上一次的四分之一。把W设置为1确保三角形能正确显示。把3D投影到2D需要分两步完成。首先需要把所有的顶点乘以投影矩阵，GPU自动使用透视分割进行处理，然后再传给光栅化程序。（原理原文讲了很多）。
+
+如果一切正常，则这三个顶掉会被转换为(-0.5, -0.5), (0.5, -0.5),(0.0, 0.5)，再传给光栅化程序进行处理。这里裁剪器不需要做任何处理，因为每一个点都在归一化的盒子里。这些值被映射到屏幕坐标上。片段着色器再针对每一个点进行着色。如下：
+``` c
+out vec4 FragColor
+```
+一般情况下片段着色器决定片段的颜色。另外，它还可以改变像素的Z值。输出的颜色是上面变量的值。这个变量由光栅化程序接受并话到帧缓存中。
+``` c
+FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+```
+指定一个红色的值。
+{% img http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html "效果图" %}
+
