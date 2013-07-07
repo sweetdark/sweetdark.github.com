@@ -1,0 +1,47 @@
+---
+layout: post
+title: "ogl step7 旋转Rotation Transformation"
+date: 2013-07-07 19:18
+comments: true
+categories: 
+tags: opengl
+---
+[Get The Source](https://github.com/sweetdark/openglex)
+#背景
+这节主要讲旋转变换。给定一个点和一个角度，绕一个坐标轴旋转。在X，Y，Z中保持一个值不变（绕该轴旋转的值不变），另外两个坐标改变。我们可以绕Z轴，Y轴，X轴旋转。甚至可以绕任意向量进行宣召。
+考虑下面的图形：
+{% img http://ogldev.atspace.co.uk/www/tutorial07/rotation.png %}
+我们沿着圆从(x1, yz)旋转到(x2,y2)。换句话说，我们把(x1, y1)旋转α角。假设半径是1.有如下的等式：
+```
+x1 = cos(α1)
+y1 = sin(α1)
+x2 = cos(α1+α2)
+y2 = sin(α1+α2)
+```
+三角函数
+```
+cos(α+β) = cosαcosβ-sinαsinβ
+sin(α+β) = sinαcosβ+cosαsinβ
+```
+使用上面的公式对x2和y2进行扩展得
+```
+x2 = cosα1costα2 - sinα1sinα2
+y2 = sinα1cosα2 + cosα1sinα2
+```
+上面的图形是，Z轴指向屏幕里面，从屏幕外向里看XY平面。如果X&Y 是4维向量的一部分，绕Z轴旋转的矩阵的形式如下：
+{% img http://ogldev.atspace.co.uk/www/tutorial07/07_01.png %}
+绕Y轴旋转的矩阵：
+{% img http://ogldev.atspace.co.uk/www/tutorial07/07_02.png %}
+绕X轴旋转的矩阵：
+{% img http://ogldev.atspace.co.uk/www/tutorial07/07_03.png %}
+
+#代码漫游
+
+我们只需要把上一次的代码做稍微的修改，就可以实现旋转了。
+``` c
+World.m[0][0] = cos(Scale); World.m[0][1] = -sin(Scale); World.m[0][2] = 0.0f; World.m[0][3] = 0.0f;
+World.m[1][0] = sin(Scale); World.m[1][1] = cos(Scale); World.m[1][2] = 0.0f; World.m[1][3] = 0.0f;
+World.m[2][0] = 0.0f; World.m[2][1] = 0.0f; World.m[2][2] = 0.0f; World.m[2][3] = 0.0f;
+World.m[3][0] = 0.0f; World.m[3][1] = 0.0f; World.m[3][2] = 0.0f; World.m[3][3] = 0.0f;
+```
+现在是绕z轴旋转。你可以尝试着绕其他轴旋转。但绕其他轴旋转没有3d到2d的投影变换，显得多余。接下来将会介绍所有的变换。
