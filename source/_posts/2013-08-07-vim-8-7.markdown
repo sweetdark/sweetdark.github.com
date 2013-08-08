@@ -1,0 +1,121 @@
+---
+layout: post
+title: "vim 移动命令"
+date: 2013-08-07 21:27
+comments: true
+categories: 
+tags: vim
+---
+##Vim移动命令小结：
+###word和WORD 字和长字的介绍
+word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
+A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, <EOL>). An empty line is also considered to be a word.
+Use 'w', 'e', and 'b' to navigate words.
+Special case: "cw" is treated like "ce" if the cursor is on a non-blank. This is because "cw" is interpreted as change-word, and a word does not include the following white space.
+
+Example: (each word is surrounded by a rectangle)
+
+|while| |(|next_line1| |!==| |"|The END|!")| |do| |{|
+
+  |next_line1| |=| |readNextLine|();|
+  
+|}|
+
+WORD 长字代表一系列的字符串。 由blank tab 换行区分
+A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
+Use 'W', 'E', and 'B' to navigate WORDs.
+Special case: "cW" is treated like "cE" if the cursor is on a non-blank. This is because "cW" is interpreted as change-WORD, and a WORD does not include the following white space.
+Example: (each WORD is surrounded by a rectangle)
+
+|while| |(next_line1| |!==| |"The END!")| |do| |{|
+  
+  |next_line1| |=| |readNextLine();|
+  
+|}|
+
+ 
+#vim移动命令Normal模式下
+##文件滚动
+```
+<C-u> 上滚动半屏
+
+<C-d> 下滚动半屏
+
+<C-f> 下滚动全屏
+
+<C-b> 上滚动全屏
+
+H 跳到当前页首行
+
+M 跳到当前页中间
+
+L 跳到当前页尾行
+
+N% 按百分比跳
+
+% 单独一个%代表在(),[],{}寻找匹配移动
+
+[{ 跳转到匹配当前}的 {位置
+
+]} 跳转到匹配当前{的 }位置。
+
+NG 或:n 跳转到N行
+
+n n为数字，从当前行往下移动n行
+
+nf* 跳转到第n个出现*字符的位置，包含*字符  大写F 为反向
+
+nt* 跳转到第n个出现*字符的前面，不包含*字符 如t, 跳转到第一个,的前面。大写T为反向
+```
+
+##大段移动
+```
+[[ 跳转到下一段的{处
+
+]] 跳转打下一段的}处
+```
+##标记移动
+```
+m[a-z|A-Z] 来标记位置 ，然后通过'[a-z|A-Z]来移动到标记的行，行首。使用\`[a-z|A-Z]则移动精确的行和列
+```
+##相对于光标滚屏 
+```
+在阅读代码时，有时我们需要根据光标所在的位置滚屏，把光标所在行移动窗口的顶端、中间或底部，这时就可以用到”zt“、”zz“和”zb“。
+```
+<!--more-->
+##不同窗口间的移动
+```
+<C-w> + hjkl 在上下左右分屏的窗口移动
+
+<C-w> + w 一次跳到下一个窗口
+```
+##文件间切换命令
+```
+:bn 在当前窗口打开下一个文件
+
+:bp 在当前窗口打开前一个文件
+
+:sp filename 用分屏的方式打开另一个文件
+```
+##折叠行并移动
+···
+	zo – 打开光标下的折叠
+    zO – 循环打开光标下的折叠，也就是说，如果存在多级折叠，每一级都会被打开
+    zc – 关闭光标下的折叠
+    zC – 循环关闭光标下的折叠 
+···
+更多的命令，请参阅手册(:help folding)。
+
+vim提供了一些命令在折叠间快速移动：
+···
+    [z – 到当前打开折叠的开始
+    ]z – 到当前打开折叠的结束
+    zj – 向下移动到下一个折叠的开始处
+    zk – 向上移动到上一个折叠的结束处 
+···
+##跳转
+```
+<C-o> 跳转到前一次跳转的位置
+<C-i> 跳转到后一次跳转的位置
+'.  跳转到上一次编辑修改过的位置
+```
