@@ -37,7 +37,12 @@ tag_dir: blog/tags
 category_dir: blog/tags
 category_title_prefix: "tags: "
 markdown: rdiscount
-pygments: false # default python pygments have been replaced by pygments.rb
+rdiscount:
+  extensions:
+    - autolink
+    - footnotes
+    - smart
+highlighter: pygments # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
 pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/

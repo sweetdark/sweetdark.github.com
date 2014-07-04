@@ -1,9 +1,8 @@
- st---
+---
 layout: post
 title: "ogl step6 Translation Transformation"
 date: 2013-07-05 12:34
 comments: true
-categories: 
 tags: opengl
 ---
 [Get The Source](https://github.com/sweetdark/openglex)
