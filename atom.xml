@@ -1,0 +1,2171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Mario's Blog]]></title>
+  <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
+  <link href="http://sweetdark.github.com/"/>
+  <updated>2014-07-04T13:12:54+08:00</updated>
+  <id>http://sweetdark.github.com/</id>
+  <author>
+    <name><![CDATA[Mario]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[如何部署已有的octopress Blog]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/07/03/how-to-install-octproess/"/>
+    <updated>2014-07-03T17:06:14+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/07/03/how-to-install-octproess</id>
+    <content type="html"><![CDATA[<ol>
+<li>下载和安装git， 把git安装目录的bin和cmd文件目录加到path中。</li>
+<li>下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby &mdash;version来测试是否安装成功</li>
+<li>去网上下载一个<a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a> 解压到一个目录。dos cd 到这个目录。执行如下命令:</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ruby dk.rb init 
+</span><span class='line'>ruby dk.rb install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>博客的代码高亮需要python环境的支持。去下个python2.7安装。python 安装完成后。执行下面的命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>easy_install pygments</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>设置本地环境</h2>
+
+<p>为了支持中文UTF-8编码，在Windows的环境变量中增加下面的选项。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>LANG = zh_CN.UTF-8
+</span><span class='line'>LC_ALL = zh_CN.UTF-8</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>配置git</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global user.name "yourname"
+</span><span class='line'>git config --global user.email "youremail"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更新gem的更新源，ruby的官方网站经常被和谐。换成国内的更新源，这样速度就快多了，变更如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem sources -a http://ruby.taobao.org/
+</span><span class='line'>gem sources -r http://rubygems.org/</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>下载并配置Blog</h2>
+
+<p>在某个目录下，DOS命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git@github.com:sweetdark/sweetdark.github.com.git sweetdark
+</span><span class='line'>
+</span><span class='line'>如果clone下来只有master分支，那可以新建个source分支，
+</span><span class='line'>git checkout -b source 
+</span><span class='line'>这个命令会新建source分支并切换到source分支。
+</span><span class='line'>再执行git pull origin source 把远程的github上source分支拉到本地source分支。
+</span><span class='line'>
+</span><span class='line'>cd sweetdark
+</span><span class='line'>gem install bundler
+</span><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>配置好之后，DOS cd 到sweetdark目录下就可以写blog了。请确保你在source 分支下，通过git branch 命令可以查看。你在哪个分支下。 git checkout source 可以切换到source分支</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["title"] #创建个新的文章，在source/_post目录下，打开它，就可以编辑了。
+</span><span class='line'>
+</span><span class='line'>编辑完保存之后。
+</span><span class='line'>rake generate #生成网页
+</span><span class='line'>rake preview #预览 打开127.0.0.1:4000 可以看到。
+</span><span class='line'>rake deploy #发布
+</span><span class='line'>
+</span><span class='line'>然后记得提交，须要权限，要ssh的private key。
+</span><span class='line'>git add .
+</span><span class='line'>git commit -m "your commit message"
+</span><span class='line'>git push origin source
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>git remote -v 命令可以查远程的地址。
+<img src="../images/gitremote.png" alt="" />
+有不懂的git命令都可以用git command &mdash;help 来查这个command。</p>
+
+<p>为了确保安全不造成混乱，以后每次写blog之前，都要检查，你是否是在source分支下，是否跟服务器上是一致的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout source #切换到source分支
+</span><span class='line'>git pull origin source #更新服务器上的内容到本地</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>注意事项</h2>
+
+<ul>
+<li>图片最好是上传到一些可以保存图片的网站上，然后用 octopress 的Image 标签来引用， 相关用法<a href="http://octopress.org/docs/plugins/image-tag/%E3%80%82">http://octopress.org/docs/plugins/image-tag/%E3%80%82</a>
+用markdown语法也是可以的，不要写本地的相对路径（如上面的那张图片，会导致在Tag目录下看不到</li>
+</ul>
+
+
+<p>相关的文章
+octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上搭建Octopress博客</a></p>
+
+<p><a href="http://octopress.org/">http://octopress.org/</a> 官方文档必看。这里有许多官方的plugin介绍。包括代码高亮，插入网络上图片等。</p>
+
+<p><a href="http://qingbo.net/picky/502-markdown-syntax.html">MarkDonw的语法，文章就是用markdown语法的，很简单。</a></p>
+
+<p>-git的学习</p>
+
+<p>英文10本
+<a href="http://sixrevisions.com/resources/git-tutorials-beginners/#comments">http://sixrevisions.com/resources/git-tutorials-beginners/#comments</a></p>
+
+<p>中文</p>
+
+<p><a href="http://gitbook.liuhui998.com/index.html">http://gitbook.liuhui998.com/index.html</a></p>
+
+<p>详解系列
+<a href="http://blog.jobbole.com/24379/">http://blog.jobbole.com/24379/</a>
+<a href="http://blog.jobbole.com/25808/">http://blog.jobbole.com/25808/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ogl step9 插值]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/07/10/ogl-step9/"/>
+    <updated>2013-07-10T07:27:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/07/10/ogl-step9</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这节主要演示3D管道的重要部分————插值是光栅化处理程序处理从顶点缓冲区取出来的变量。正如你所看到的，为了能在屏幕上显示，你需要指明VS的输出变量是&#8217;gl_Position&#8217;. 这是一个4维的向量包含着顶点的齐次坐标。向量的XYZ分量除以W分量（透视分割），XY分量超出范围[-1,1]的Z分量超出[0,1]的都将被裁剪。结果被转换到屏幕空间坐标，然后几何图元通过光栅化程序被渲染到屏幕上。光栅化程序在三角形的三个顶点间进行插值，然后访问每一个在三角形内的像素执行片段着色器进行处理。
+片段着色器返回一个颜色缓冲区中的像素颜色。如果片段着色器没处理该变量那么驱动器会进行优化，放弃VS中影响该变量的指令（在这种情况下着色程序会合并VS和FS）</p>
+
+<p>两个非常常见的依赖于插值的变量是三角形的法线和纹理坐标。顶点的法线会在所有包含这个顶点的三角形中法线计算一个平均值。 如果对象不是完全平滑的那就意味着每个三角形的三个顶点的法线是各不相同的。 法线用于光照计算产生更真实的光照影响。纹理坐标也是相似的。这些纹理是模型的一部分有每个顶点指定。 为了用纹理覆盖三角形，需要对每个像素进行采样操作。为么个像素选择正确的纹理坐标。这些坐标是由插值产生的。</p>
+
+<p>在这一节我们会看到使用插值产生不同的颜色覆盖三角形的表面。 由于我很懒，我们直接在VS里产生颜色。一个更乏味的方法是从顶点缓冲区中提供。一般你不会通过顶点缓冲区提供，你会提供一个纹理坐标然后从纹理中采样一个颜色。这个颜色在后面会进行光照计算。</p>
+
+<hr />
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在管道之间传输的参数要声明为&#8217;out&#8217;，在着色器中定义为全局变量。这个颜色是一个4-vector，XYZ分量代表RGB值，W分量代表alpha值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Color</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">clamp</span><span class="p">(</span><span class="n">Position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>颜色在图形管道中通常用范围为[0.0, 1.0]的浮点数进行表示。该值随后会被映射到0~255的颜色通道上。我们设置顶点的位置作为颜色值。首先我们使用内建的函数clamp();确保值在0.0-1.0的范围内。这是因为三角形的左下角的点位于(-1,-1)，且小于等于0的值都会被渲染为黑色。这样的话左下角的角都会是黑色的。我们通过夹紧使得左下角的颜色值大于0.</p>
+
+<p>clamp函数并不会改变向量的维数，智慧改变它的值。但我们输出的变量是4-vector的形式。所以我们使用GLSL的符号&#8217;vec4(vec3,W)&lsquo;来创建一个4-vector包含了3-vector并增加了一个w值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">in</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>VS输出的变量，在FS中接受输入的变量。因为这个变量会被光栅化程序进行插值处理，所以每一个FS会对应一个不同的颜色值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们使用插值的颜色作为片段的颜色。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ogl step8 缩放Scaling Transformation]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/07/07/ogl-step8/"/>
+    <updated>2013-07-07T22:02:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/07/07/ogl-step8</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简。</p>
+
+<p>你想要缩放哪一维，只需对应的改变矩阵对角线上的值就可以了。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与上一节不同的只是这个矩阵。三角形会随着正弦值(0,1]由小变大，为0时缩放到最小三角形消失。在[-1, 0)时只是反过来而已。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ogl step7 旋转Rotation Transformation]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/07/07/ogl-step7/"/>
+    <updated>2013-07-07T19:18:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/07/07/ogl-step7</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这节主要讲旋转变换。给定一个点和一个角度，绕一个坐标轴旋转。在X，Y，Z中保持一个值不变（绕该轴旋转的值不变），另外两个坐标改变。我们可以绕Z轴，Y轴，X轴旋转。甚至可以绕任意向量进行宣召。
+考虑下面的图形：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/rotation.png">
+我们沿着圆从(x1, yz)旋转到(x2,y2)。换句话说，我们把(x1, y1)旋转α角。假设半径是1.有如下的等式：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x1 = cos(α1)
+</span><span class='line'>y1 = sin(α1)
+</span><span class='line'>x2 = cos(α1+α2)
+</span><span class='line'>y2 = sin(α1+α2)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>三角函数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cos(α+β) = cosαcosβ-sinαsinβ
+</span><span class='line'>sin(α+β) = sinαcosβ+cosαsinβ</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用上面的公式对x2和y2进行扩展得</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x2 = cosα1costα2 - sinα1sinα2
+</span><span class='line'>y2 = sinα1cosα2 + cosα1sinα2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的图形是，Z轴指向屏幕里面，从屏幕外向里看XY平面。如果X&amp;Y 是4维向量的一部分，绕Z轴旋转的矩阵的形式如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_01.png">
+绕Y轴旋转的矩阵：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_02.png">
+绕X轴旋转的矩阵：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_03.png"></p>
+
+<h1>代码漫游</h1>
+
+<p>我们只需要把上一次的代码做稍微的修改，就可以实现旋转了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在是绕z轴旋转。你可以尝试着绕其他轴旋转。但绕其他轴旋转没有3d到2d的投影变换，显得多余。接下来将会介绍所有的变换。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ogl step6 Translation Transformation]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/07/05/ogl-step6/"/>
+    <updated>2013-07-05T12:34:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/07/05/ogl-step6</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这一节开始介绍3D环境下物体的转换。通用的方式是用矩阵或多个矩阵连乘最后乘以顶点坐标来实现转换。后面的每一节都会详解一种转换。</p>
+
+<p>下图是把左图的三角形平移到右图的位置。
+<img src="http://ogldev.atspace.co.uk/www/tutorial06/translation.png">
+一种方式是提供向量的位置作为一个一致变量给着色器然后在处理每一个顶点是加上这个向量来实现平移的效果。然而，这种方式不是通用的转换方式。另外的，如果这个顶点值改变了，那么后面的转换就是基于这个被改变的顶点进行转换了，而不是平移前的转换了。这很麻烦。一个更好的方式是用一个矩阵代表平移乘以其他的转换矩阵。但是你无法找到一个矩阵乘以左图三角形的左下角的点(0,0),能够得到（1,1）。实际情况是你无法在二维矩阵实现这种转换。通用的公式是M * P = P1(x + v1, y + v2, z + v3).我们需要的是一个矩阵M和一个点P(x, y, z)和一个向量V(v1, v2, v3)。矩阵M平移P到P+V的位置。在P1中我们观察到P1每一维的值是对应的P的值和V的值相加的结果。左边的值可以认为是与单位阵相乘的结果：I * P = P(x, y, z)。所以我们从单位阵开始去寻找一个能够实现右边的每一维的相加结果(&hellip;+V1, &hellip;+V2, &hellip;+V3)的矩阵。 如下图：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation1.png">
+由上可以得出两个结论：
+1.  a, b, c, d, e 和 f 其中的任意两个会对每一维度有影响，所以它们必须为0，如此又变为单位矩阵。
+2.  因为x，y，z会影响三个维度的值，所以也必须为0.这样的话向量变为零向量，而零向量转换之后还是零向量。</p>
+
+<p>我们必须找到一个矩阵能够提供如下的运算：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation2.png">
+所以我们必须找到一种方式加上v1-v3，上面的a到f必须为0.我们把矩阵增加一行和一列。变为4X4的矩阵。把向量也增加一个维度w变为四维的。最终得到我们的平移矩阵如下：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation3.png">
+现在即使x,y,z都为0.我们也可以实现平移了。</p>
+
+<h2>用4维向量来表示3维的向量也成为齐次坐标，在3D图形中是非常流行的方式。第四维称作&#8217;w&#8217;。在之前的着色器中gl_Position也是齐次坐标。w维在3D投影到2D中扮演着十分重要的角色。在一般情况下点使用w=1,向量则用w=0.原因是点可以被平移而向量不行。你可以改变向量的长度和方向，所有长度和方向一样的向量被认为是一样的，向量是相对的。所以如果w=0，向量乘以平移矩阵结果是一样的向量。</h2>
+
+<!-- more -->
+
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">Matrix4f</span> <span class="p">{</span>
+</span><span class='line'><span class="kt">float</span> <span class="n">m</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们把4x4矩阵的定义放在math_3.h中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLuint</span> <span class="n">gWorldLocation</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们用这个句柄去访问着色器中的一致变量world matrix。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Matrix4f</span> <span class="n">World</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面定义的矩阵会在X坐标[-1 1]之间平移。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glUniformMatrix4fv</span><span class="p">(</span><span class="n">gWorldLocation</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">GL_TRUE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这是glUniform*函数的一种形式加载一致变量到着色器中。这里指定了加载4x4的矩阵，当然还有其他的版本2x2, 3x3 &hellip;。第一个参数是一直变量的位置（我们可以通过glGetUniformLocation()获取)。第二个参数表示我们要更新的矩阵的个数，第三个参数代表数组的方位顺序，GL_TRUE代表行主顺序的数组，C语言就是用这种顺序的。GL_FALSE代表列主顺序的数组，典型的是Fortran语言。</p>
+
+<p>下面的是着色器的代码。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">uniform</span> <span class="n">mat4</span> <span class="n">gWorld</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这是一个4x4矩阵的一致变量，还有mat2 和 mat3分别代表2x2 和 3x3的矩阵。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">gWorld</span> <span class="o">*</span> <span class="n">vec4</span><span class="p">(</span><span class="n">Position</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在顶点缓冲区中三角顶点是3维的，上面的语句是把它扩充到4维，用1填充。有两种方式来表示4维的顶点，一种是像上面那样，先定义一个3维的顶点，然后在顶点缓冲区中去扩充。第二种是直接定义一个4维的顶点。很明显第二种方式比较浪费空间，因为第4维的值一直是1. 更好的方式是第一种，保留原先的3维的顶点然后在着色器中去连接第四维w。在GLSL中的语法是&#8217;vec4(Position, 1.0)&lsquo;。
+总结：在每一帧中我们都生成一个平移矩阵，实现X坐标在[-1 1]之间平移。三角形被平移的归一化盒子外面的将被裁剪。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ogl step5 Uniform Variables]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/07/01/ogl-step5/"/>
+    <updated>2013-07-01T13:19:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/07/01/ogl-step5</id>
+    <content type="html"><![CDATA[<h1>背景</h1>
+
+<p>在这一节中我们将会使用到一个新的着色器变量————一致变量。属性变量与一致变量的不同在于，属性变量是由顶点指定的并在每一次的着色器调用中都会去从顶点缓冲区中读取。然而一致变量是在整个绘制调用保持一致。这也就意味着你在绘制调用前赋了一个值，然后你在每一次调用顶点着色器的时候使用的都是同一个值。着色器有两种类型的参数：一致变量（Uniform variables）指得是在一帧当中保持恒定的数值，典型的参数包括视口的方向和灯光的方向。而易变变量（Varying variables）对于每一个执行单元（包括顶点着色器中的顶点，以及片元着色器中的片元）都是变化的。</p>
+
+<p>在这一节中我们将会用一组一致变量在每一帧中都进行改变，通过GLUT提供的idle回调函数来实现。GLUT只有在窗体改变了尺寸和被其他窗体覆盖的时候会调用回调函数。如果在程序加载之后，我们什么都不做那么回调函数只会被调用一次。我们通过注册一个idle的回调函数来实现循环绘制画面，idle函数会在窗体系统没有接收到任何消息的时候被调用。</p>
+
+<hr />
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutIdleFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在这里我们注册一个idle函数。如果你想要使用一个有用的idle回调函数，你需要在它结束是添加一个glutPostRedisplay()函数。否则idle函数会被一直调用，但是渲染函数却不会。glutPostRedisplay()标志了当前窗体需要被重新显示，在下一个GLUT的main循环中绘制回调函数将会被调用。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gScaleLocation</span> <span class="o">=</span> <span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="s">&quot;gScale&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">assert</span><span class="p">(</span><span class="n">gScaleLocation</span> <span class="o">!=</span> <span class="mh">0xFFFFFFFF</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在链接了程序之后，我们通过glGetUniformLocation方法去获得gScale一致变量的地址。这是一种C\C++程序执行环境映射到着色器的执行环境。你不能直接访问着色器里的内容也不能直接修改里面的变量。当你编译着色器是，GLSL的编译器就为每一个一致变量建立了一个索引。着色器器内部是通过这个索引对变量进行操作。我们也可以通过glGetUniformLocation获得某个程序内部的变量名的索引。这个函数返回索引，出错时返回-1。检查错误非常重要，着色器内部不存在这个变量（<font color="red">你的变量名拼写错误</font>）或者编译器对这个变量进行了优化（<font color="red">为被使用的变量</font>)都会导致glGetUniformLocation调用失败。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="kt">float</span> <span class="n">Scale</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">Scale</span> <span class="o">+=</span> <span class="mf">0.001f</span><span class="p">;</span>
+</span><span class='line'><span class="n">glUniform1f</span><span class="p">(</span><span class="n">gScaleLocation</span><span class="p">,</span> <span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用一个静态变量Scale，在每次渲染调用是递增。传给着色器的值是Scale的正弦值。会产生一个在-1.0到1.0之间的值。 通过glUniform1f传给着色器。OpenGl提供了多种形式glUniform{1234}{if}。glUniform2i glUniform3f&hellip;etc. glUniform传的第一个参数是索引。</p>
+
+<p>我们只对上一教程的VS段进行修改，FS保持不变</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">uniform</span> <span class="kt">float</span> <span class="n">gScale</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>定义一个一致变量。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们队X和Y的值进行转换。你知道为什么三角形会在循环到一半时倒过来吗？</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ogl step4 Shaders]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/06/25/ogl-step4/"/>
+    <updated>2013-06-25T12:51:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/06/25/ogl-step4</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get the source</a>  <a href="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html">原文链接</a></p>
+
+<h1>背景</h1>
+
+<p>从这一节开始我们将会用到着色器绘图。着色器是绘制3D图像的潮流。从另一个角度说着色器取代了固定函数管道的方式，需要开发者自己配置参数（如：光源属性，旋转值等）。然而可编程的方式提供了更好的灵活性和创造性。</p>
+
+<p>OpenGL可编程管道如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial04/pipeline.png">
+vertex processor负责执行顶点着色器去处理每一个通过管道的顶点数据（处理的个数取决与绘制函数调用时传的参数）。顶点着色器对被渲染的几何体的拓扑图一无所知。另外你不能再vertex processor删除顶点的数据。每一个顶点仅且经过vertex processor一次，被转换之后传到下一个管道中。</p>
+
+<p>下一阶段是几何处理器（geometry processor）。在这个阶段着色器知道所有的几何体以及他们的相邻关系。此时需要考虑除了顶点本身之外的信息。几何着色器可以变换输出的拓扑顺序。例如：你可以提供一组点的信息然后产生两个三角形或者产生一个四边形。另外，你还可以像几何着色器传入多个顶点，并根据你所选择的拓扑顺序产生多个几何体.</p>
+
+<p>下一个阶段是裁剪器。这是一个固定的函数单元处理简单的任务，裁剪几何图形到标准化格子中。它也裁剪到near Z和far Z的平面中。有相应的参数惨叫他们。经过裁剪后，顶点会被映射到屏幕坐标中，然后根据他们的拓扑顺序渲染出来。  例如：在三角形中找出所有的点在这个三角内的，光栅化程序为每个点调用片段处理器。你还可以指定像素点的颜色。</p>
+
+<p>着色器的管理方式类似于C\C++的程序的创建一样。 首先你编写着色的代码供你的程序使用。可以简单的再源代码里直接写字符穿或者从外部文件加载进来，然后编译成一个个的着色器目标对象，链接这些着色器到单个程序加载到GPU中。链接着色器提供机会给驱动去裁剪他们和优化他们之间的关系。例如：（感谢小翼的翻译）如果顶点着色器(vs)里输出法线，但是和不用法线的片段着色器(fs)链接，那么vs的法线操作会被删除来优化vs的速度。如果后来那个vs又和用到法线的fs链接，那么链接另外一个程序会产生不同的vs（有法线输出计算的）在这种情况下，GLSL的编译器会删除相关功能的着色器使得顶点着色器执行的更快。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLuint</span> <span class="n">ShaderProgram</span> <span class="o">=</span> <span class="n">glCreateProgram</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在设置着色器之前先创建一个程序对象。我们将连接所有的着色器到这个程序中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLunit</span> <span class="n">ShaderObj</span> <span class="o">=</span> <span class="n">glCreateShader</span><span class="p">(</span><span class="n">ShaderType</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建着色器对象。一个使用GL_VERTEX_SHADER类型创建顶点着色器，另一个是GL_FRAGMENT_SHADER类型创建片段着色器。用来编译指定的着色器代码。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">const</span> <span class="n">GLchar</span><span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pShaderText</span><span class="p">;</span>
+</span><span class='line'><span class="n">GLint</span> <span class="n">Lengths</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">Lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">pShaderText</span><span class="p">);</span>
+</span><span class='line'><span class="n">glShaderSource</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">Lengths</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定要编译的源代码。glShaderSource传入一个着色器对象去编译你指定的代码。代码可以由字符串数组提供并相应的指定保持各个字符串长度的数组。简单起见我们用只包含一个元素的字符串数组和长度数组。第二参数指定了这两个数组的元素个数。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glCompileShader</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编译着色器对象。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLint</span> <span class="n">success</span><span class="p">;</span>
+</span><span class='line'><span class="n">glGetShaderiv</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="n">GL_COMPILE_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">success</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">GLchar</span> <span class="n">InfoLog</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">glGetShaderInfoLog</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">InfoLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error compiling shader type %d: &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ShaderType</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>捕获编译时产生的错误并显示。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glAttachShader</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">ShaderObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把编译好的着色器对象附加到程序中。类似于Makefile链接一列目标对象。真正的链接目标对象发生在链接阶段。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glLinkProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在编译了所有的着色器对象然后附加到着色器程序中，最后需要链接它们。链接完之后，你可以删除产生的中间对象。通过glDeleteShader删除它们。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glGetProgramiv</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">GL_LINK_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Success</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">Sourcess</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">glGetProgramInfoLog</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">ErrorLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error Linking shader program : &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与此前处理编译错误不同的是，这里通过通过glGetProgramiv和glGetProgramInfoLog去捕获和处理链接产生的错误信息。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glValidateProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个调用是用来检测在当前的管道状态下这个着色程序是否能够执行。在复杂的程序中包含着多个着色器和许多的状态，在使用之前最好检查一下，提高代码的健壮性。当然你可以再最终产品发布时去掉这些检测，避免这些性能开销。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glUseProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最终把这个着色器程序设置成管道的状态。这个着色器程序会影响所有的绘制调用，知道你用另外一个替换掉。或者通过glUseProgram(NULL)的方式使其不可用(同时开启固定函数管道)。如果你只创建了一个类型的着色器，那么其他阶段的操作按默认的固定函数进行处理。</p>
+
+<p>到此已经讲完了着色器管理的OpenGL调用。下面是顶点着色器和片段着色器的相关内容。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#version 330</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>告诉编译器我们使用的是GLSL3.3. 如果编译器不支持就会报错</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">in</span> <span class="n">vec3</span> <span class="n">Position</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这条语句出现在顶点着色器中。它声明了顶点的属性。3个浮点数在着色器中被当做‘Position&#8217;.&lsquo;Vertex specifi&#8217;意味着为每一次GPU中着色器的调用，都从缓冲中取出一个新的顶点值。layout (location = 0) 创建属性名称和缓冲中属性的绑定。当顶点包含多个属性（position（位置）， normal（法线）， texture（纹理）)时这一语句是必须的。我们要让编译器知道缓冲区中的每一个顶点的属性映射到着色器中的哪一个属性。 有两种方式，一种是显示的指定像上面的设置为0.然后我们可以再程序中使用这个硬编码。或者我们可以留空（简单滴&#8217;in vec3 Position&rsquo;)然后再运行时用glGetAttribLocation去检索位置。此中情况下我们需要通过glVertexAttributePointer定义顶点属性数组,第一个参数是顶点属性位置的索引，同样的我们设置为0<strong>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</strong>。在这里我们使用简单的方式，但在复杂的程序中最好是让编译器决定属性的索引然后在运行时去检索他们。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每一个着色阶段(VS,GS,FS)都有且仅有一个main函数,是着色器的入口。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们为每一个进入顶点着色阶段的顶点位置做硬编码的转换。X和Y的值减半，Z值不变。gl_Postion是一个特殊的内建类型支持齐次的顶点位置。在经过一系列的转换之后，光栅化程序会遍历这些变量并在屏幕空间中使用它们。X，Y值减半意味着这个三角形只有上一次的四分之一。把W设置为1确保三角形能正确显示。把3D投影到2D需要分两步完成。首先需要把所有的顶点乘以投影矩阵，GPU自动使用透视分割进行处理，然后再传给光栅化程序。（原理原文讲了很多）。</p>
+
+<p>如果一切正常，则这三个顶掉会被转换为(-0.5, -0.5), (0.5, -0.5),(0.0, 0.5)，再传给光栅化程序进行处理。这里裁剪器不需要做任何处理，因为每一个点都在归一化的盒子里。这些值被映射到屏幕坐标上。片段着色器再针对每一个点进行着色。如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">FragColor</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一般情况下片段着色器决定片段的颜色。另外，它还可以改变像素的Z值。输出的颜色是上面变量的值。这个变量由光栅化程序接受并话到帧缓存中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定一个红色的值。
+<img src="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html" title="&#34;效果图&#34;" alt="&#34;效果图&#34;"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ogl step3 First Triangle]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/06/25/ogl-step3/"/>
+    <updated>2013-06-25T12:34:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/06/25/ogl-step3</id>
+    <content type="html"><![CDATA[<h1>背景</h1>
+
+<p>这篇指南非常短，只是简单的画一个三角形。</p>
+
+<p>在此篇指南中，我们依赖于标准化的盒子。可见的顶点必须在这个盒子内
+这样视图转换是才能够把它映射到屏幕坐标上。从z轴的负极往里面看。opengl的盒子如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial03/coord_system.png">
+Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围，那么图形将会被剪切。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Vector3f</span> <span class="n">Vertices</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>扩展顶点数组包含3个顶点。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与上一篇相比两个参数变了，我们画三角形而不是画点。我们画三个顶点而不是一个顶点了。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ogl step2 Hello Dot!]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/06/21/ogl-step2/"/>
+    <updated>2013-06-21T07:40:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/06/21/ogl-step2</id>
+    <content type="html"><![CDATA[<p><a href="http://ogldev.atspace.co.uk/www/tutorial02/tutorial02.html">原文地址</a>
+<em>PS：我是使用VS来编译这些项目。并非纯粹的翻译，翻译中带有个人观点和文章。如有错误请指正。</em></p>
+
+<h1>背景</h1>
+
+<p>在这个课题我们需要使用到<a href="http://en.wikipedia.org/wiki/Glew" title="OpenGL Extension Wrangler Library ">GLEW</a>。可以在这里下载<a href="http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A">http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A</a>
+把bin目录下的dll放到System32的目录下。lib的目录和include目录拷到你当前的项目中，并在vs的项目中进行引用。在此声明此篇文章需要opengl1.5以上的版本，如果你的显卡不支持就没办法编译通过（只要不是集显都会支持）。独显的如果你好久没更新驱动了，赶紧去更新驱动吧。</p>
+
+<p>在这篇指南中。我们将会第一次使用到<em>顶点缓冲区对象</em>（vertex buffer objects VBOs）。顾名思义，它们是用来存储顶点源的。在3D世界中的怪物，城堡或者一个简单的四方形，都是通过一组顶点源构造出来的。VBOs是把顶点源加载到GPU的最有效方式。VBOs可以被存储在图像存储器中，提供最短的访问GPU的时间。</p>
+
+<p>这一篇指南和下一篇是此系列中唯一依赖于固定管线模式，而不是可编程模式的例子。在这些例子中没有变换发生。我们仅仅是简单的方式让数据流过管道。后面的例子会带您深入的了解管道。但在此处我们还没有必要去深入<em>光栅化程序</em>。 可视化的顶点源中有[x,y,z]坐标，范围在[-1.0, 1.0]。光栅化程序负责把这些坐标映射到屏幕空间中（例如，如果屏幕宽度是1024.则X坐标-1.0对应的是0,1.0对应的是1023）。最后光栅化程序才更具制定的拓扑顺序去渲染元素。由于我们没有绑定任何的渲染器到管道中，也没有用到变换。所以我们只是简单地给出坐标，并让这些坐标点可见。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;GL/glew.h&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>包含GLEW的头文件。如果你需要包含其他的OpenGl头文件，你要小心。把这个头文件放在后面包含进去。编译时，记得引入glew的lib文件。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include "math_3d.h"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个头文件定义了辅助的结构体。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>GLenum res = glewInit();
+</span><span class='line'>if (res != GLEW_OK)
+</span><span class='line'>{
+</span><span class='line'>  fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
+</span><span class='line'>  return 1;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的代码要放在glut初始化之后，用于初始化GLEW并检查错误。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Vector3f Vertices[1];
+</span><span class='line'>Vertices[0] = Vector3f(0.0f, 0.0f, 0.0f);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建一个Vector3f的结构体数组，并初始化为0。这个点是屏幕的中心点。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>GLuint VBO;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们用一个全局变量来存储<em>顶点缓冲区对象</em>。大部分的OpenGL对象是通过GLunit类型的变量来访问的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glGenBuffers(1, &VBO);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OpenGL定义了一些glGen* 函数用于产生各种类型的对象。它们通常带两个参数——第一个代表你要创建多少个对象。第二个参数是存储这些对象的句柄是 驱动给你分配的一组GLuint类型的数组。之后再调用这个函数不会产生相同的句柄，除非你嫌调用glDeleteBuffers删除它们。目前产生的这个缓冲区被视为默认的缓冲区，供下面的函数使用。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OpenGL用一个相当独特的方式来使用这些句柄。在许多的API中都是直接操作句柄，把句柄作为参数传给函数进行使用。在OpenGL中我们需要为句柄绑定一个<em>目标名称</em>（target name）然后再基于这个目标名称执行命令。这些命令会一直影响被绑定的句柄，直到有另外一个句柄替换它或者使用glBindBuffer(*,0)来释放绑定。参数GL_ARRAY_BUFFER意味着缓冲区将包含一组顶点源。另一个有用的目标名称GL_ELEMENT_ARRAY_BUFFER则是使用另一个缓冲区存储着顶点源的索引，通过这些索引来使用顶点源。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在绑定这些对象之后，我们往里面填充数据。第一个参数是目标名称（我们刚才绑定的），第二个参数是绑定顶点源的数据大小以字节为单位，第三个参数是顶点源数组的地址。最后一个参数指明我们对此数据使用什么样的DRAW模式。因为我们没必要修改缓冲区的内容所以我们指定了GL_STATIC_DRAW模式。相反地，是GL_DYNAMIC_DRAW模式。这只是给OpenGL一个指示，如何使用这些缓冲区。显卡驱动会根据这些标志进行优化。（例如：在内存中找到最佳位置存储该缓冲区）。</p>
+
+<p><!-- more --!>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glEnableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
+在渲染器的指南中，你将会看到顶点的属性用于渲染。在渲染器中，这些属性有对应的索引值建立c\C++数据与属性名称的绑定。另外你需要让这些顶点的属性可用通过一些Enalbe的方法。在此例中，我们没有用到任何渲染器，我们只是把顶点的位置加载到缓冲区中。在固定函数管道（当没有渲染器被绑定时，默认激活）中默认的顶点属性索引为0。你必须让每个顶点属性可用否则数据将不能被管道访问。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
+调用绘画函数之前我们需要重新绑定缓冲。在我们这个简单的程序中略显多余，但在复杂的程序中，将有多个缓冲区存储着多样的数据模型。你必须指定你要使用的缓冲区，更新管道的状态。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</span></code></pre></td></tr></table></div></figure>
+这个函数告诉管道如何解释缓冲区里的数据。第一个参数指定属性的索引，我们只使用了0. 第二个参数指明属性的组织形式（3 for X，Y and Z)。第三个参数代表没一维的数据类型。第四个参数指明在被管道使用之前是否将属性标准化。我们的数据不需要标准化。第五个参数代表在缓冲区中两个属性实例之间的步幅。而此例中只有一个属性参数。最后一个参数指定属性在数据中的偏移量。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glDrawArrays(GL_POINTS, 0, 1);</span></code></pre></td></tr></table></div></figure>
+最终，我们调用glDrawArrays函数画几何图形。之前的命令都是为了这个函数调用做准备。到这里GPU才开始工作。GPU会结合已经通过参数设置好的状态，在屏幕上渲染点。</p>
+
+<p>OpenGL提供了许多种函数调用，每一种适用于不同的情况。一般你可以把它们分为两类，<em>顺序绘制</em>和<em>索引绘制</em>。顺序绘制很简单就是遍历你的顶点缓冲区，逐一绘制。例如：如果你指定的是GL_TRIANGLES，则顶点缓冲区里的0-2绘制第一个三角形。</p>
+
+<p>索引绘制更复杂需要引入额外的缓冲区（索引缓冲区）。该索引缓冲区包含所有顶点的索引，我们可以通过索引来取的顶点。编辑索引缓冲区，我们可以重复绘制顶点。实现更复杂的绘制效果。</p>
+
+<p>在这篇指南中我们只是简单的调用了glDrawArray.顺序绘制。第一个参数指定点的拓扑结构，GL_POINTS代表每个顶点都是单独的点。第二个代表第一个顶点的索引。最后一个参数代表要绘制的顶点的个数。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glDisableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
+在不使用时，disable顶点属性是良好的编程习惯。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[opengl step1 Create a window]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/06/20/ogl-step1/"/>
+    <updated>2013-06-20T21:54:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/06/20/ogl-step1</id>
+    <content type="html"><![CDATA[<p><a href="http://ogldev.atspace.co.uk/www/tutorial01/tutorial01.html">原文地址</a></p>
+
+<h1>背景</h1>
+
+<p>Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
+我们这里使用的是OpenGl utility library 简称“GLUT&#8221;.GLUT去操作窗体更加简便，同时它也是跨平台的。</p>
+
+<h1>代码漫游</h1>
+
+<blockquote><p>glutInit(&amp;argc, argv);</p></blockquote>
+
+<p>这里初始化GLUT，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitDisplayMode</span><span class="p">(</span><span class="n">GLUT_DOUBLE</span> <span class="o">|</span> <span class="n">GLUT_RGBA</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们配置一些GLUT的选项。GLUT_DOUBLE开启双缓冲。GLUT_RGBA代表颜色的格式。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitWindowSize</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutInitWindowPosition</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutCreateWindow</span><span class="p">(</span><span class="s">&quot;Tutorial 01&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这些调用指定窗体的参数，并创建它</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutDisplayFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大多数的窗体系统都是通过回调函数来交互的。GLUT处理与底层系统的交互。在这里我们仅需要一个主回调函数。这个函数会在GLUT的内部循环不断地调用。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glClearColor</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这是第一次接触到OpenGL 状态的概念。由于状态非常多，难以通过调用函数的时候直接传参过去。所以所以你需要指定
+着色器，缓冲区，各种各样的标志告诉opengl，渲染是如何发生的。另外，你也可能经常会使用到相同的参数去渲染多个图像。
+所以大部分的渲染操作都是通过设置标志和值的方式去指定的。上面的函数调用，设置了情况 帧缓存（framebuffer)时使用到的颜色。这个颜色是（RGBA）格式的，参数值的范围在
+0.0到1.0之间。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutMainLoop</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此函数调用，让GLUT开始他的内部循环。这个循环会监听系统时间，并传给我们刚才设置的回调函数进行处理。我们只注册了一个用于显示的回调函数（RenderSceneCB）去画帧。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutSwapBuffers</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>第一个函数是清空帧缓存，使用上面glClearColor设置的元素进行清空。第二个函数调用是交换前缓冲和后缓冲。</p>
+
+<p><em>VS源代码地址：</em><a href="https://github.com/sweetdark/openglex/tree/master/oglstep1">https://github.com/sweetdark/openglex/tree/master/oglstep1</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[修心]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/18/heart/"/>
+    <updated>2013-01-18T21:32:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/18/heart</id>
+    <content type="html"><![CDATA[<p>其实一个人所追求的仅仅是安稳和快乐而已。一个人饿了，想吃饭。”你为什么要吃饭“，”因为我饿了，感觉难受，吃饱了，我就感觉的好了“。是的，感觉好了，感觉安稳了。其实这种安稳和快乐，我们也可以通过修心来达到。并且修心达到的安稳和快乐，是持久的。我们总是被事物的表象所迷惑，不停的要，不停的追，追求的其实还是心灵的安稳与快乐。有了房，有了车你也仅仅是暂时的安稳和快乐。因为你的心又开始不安，你又会想要更多的东西。</p>
+
+<p>修心达到的安稳与快乐相比追求物质以达到安稳与快乐，更高级一点，而且是持久的，一劳永逸的。并且“修心”是便宜实惠的，性价比非常高的产品。修心最基本就是多看好书，书是最实惠的投资。修心不是即刻见效的，相对于眼前一些唾手可得的快乐，浮躁的人就会选择前者。浮躁的人总是追着事物跑，追着快乐跑，所得的永远是短暂的。而修心的人，快乐与安稳自会去找上门来。</p>
+
+<p>人痛苦的原因是贪瞋痴，修慈心可以治瞋，行布施可以治贪，学智慧可以治痴。要修慈心，首先要先对自己修慈心，再对他人修慈心。问问自己，你真的爱自己吗？终日为了自己的贪念奔波劳碌，对别人的过错生气伤害自己的身体。讨厌自己身上的缺点，厌恶自己。觉得自己太差，嫌弃自己。你有没有同情过自己，对自己都没有慈悲心的人，对其他人怎么会有慈悲心呢。佛陀说：“他还没见过爱别人胜过爱自己的人”。爱别人胜过爱自己，即使有也是短暂的，难以持久。首先要学会爱自己，接受自己的缺点，对自己宽容一些，慈悲一些，才能对别人宽容一些，慈悲一些。常对自己说“虽然自己现在做的不够好，但我接受现在的自己，并我会试着努力做的更好。不要自怨自艾，自暴自弃，那除了让自己痛苦之外，一点用处都没有。” 。然后遇到他人做的不好的时候，也这么想。“他虽然现在做的不够好，但相信他会努力做的更好的”。这是对他人修慈心了。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[禅修]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/16/zen/"/>
+    <updated>2013-01-16T21:49:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/16/zen</id>
+    <content type="html"><![CDATA[<p>近期对禅产生了兴趣，在知乎上关注了禅的话题。有人推荐了一本书德宝法师《观呼吸》。我就上网搜，下了电子书来看。读完发现的确是一本好书，里面把禅讲的通俗易懂，没有什么高深的东西。很适合作为禅修入门的书籍。</p>
+
+<p>书中讲了禅修不是什么？回答了大众对禅修的疑问和不解，禅修不是什么高深的东西，任何一个普通人都能够修炼。还讲了禅修是什么？这本书讲的是内观禅修，讲的入出息念的禅修方式。内观禅修是上座部佛教的最普遍的一种禅修。内观禅修，修禅定和正念，如果再辅以慈心效果会更好。</p>
+
+<p>禅定是什么。禅定从科学的角度来讲，就是把所有注意力集中到一处。这样我们就能了解事物的全貌。禅定可以通过打坐，观呼吸来练习。禅定能够帮助我们延长念头与念头之间的那一刻时间，从而有办法使我们去观察一个念头。例如，忧虑是一个过程，它有步骤。忧虑并非只是一种存在的状态， 而是一组程序。你必须做的是，观看那个程序的开头，那些过程萌生的最初阶段。忧虑的第一个环节是“执着/排斥”的反应。只要现象一在心中跃现，我们便在心理上尝试去捕捉它或推开它，那就开启了忧虑的一连串反应。 我们可以通过内观禅修，让这种机制崩盘。而禅定就是让这种机制崩盘的工具，当忧虑这种念头，由潜意识发出要上升到意识层面是，我们用禅定来延长这一时刻，并用正念来观察它。看着它起，它灭，不加任何评判，思考，因为任何的思考都是在喂养这个念头，给予这个念头力量。你越是排斥它，它就越有力。我们做的仅仅是观察，看它是什么，它做了什么，它如何消失的。</p>
+
+<p>正念是选择禅定关注的对象，正念所做的就是观察。正念是一种觉知，对念头的觉知，是一种毫无遮蔽的注意力。</p>
+
+<ul>
+<li>正念提醒我们应该做什么；</li>
+<li>正念如实地观察事物；</li>
+<li>正念看见一切现象的真实本质。</li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>（一）正念提醒我们应该做什么。在禅修中，你把注意力放在一个地方。当你的心偏离这个焦点时，正念会提醒你，你的心正在徘徊，以及你应该做什么。是正念把你的心拉回禅修的目标，这一切都在瞬间发生，没有内在对话。</p>
+
+<p>（二）正念如实地观察事物。正念既不会对认知加油添醋，也不会删减任何东西。它不会做任何扭曲。它是毫无遮蔽的注意力，只观察任何出现的事物。</p>
+
+<p>（三）正念看见一切现象的真实本质。正念，而且只有正念，才能理解佛教所教导实相的三个主要特征：无常、苦与无我。这三个特征不是盲目的教条式信仰，佛教徒认为任何人只要以正确的方式研究，就会发现它们是普遍与自明的实相。正念是研究的方法，正念本身有能力揭露人类所能观察到最深层的实相。在这个检视的层面，人们了解到：（1）一切因缘法本质上都是短暂的；（2）所有世间法到头来都是无法令人满足的；（3）其实没有永恒不变的实体，只有过程。</p>
+
+<p>总结：
+这几天也利用了晚上比较安静的时间段，进行内观禅修。由于我身体柔韧性不好，我选择坐在椅子上观呼吸。这个过程一开始是有点困难的，精神老是不集中，脑海里有太多杂念了。但慢慢的这些杂念沉淀下去，你可以细心的去观察呼吸。呼吸的每一个细节，很奇妙。自己以前从没发现呼吸也是个很奇妙的东西。虽然才练了几天，但还是有一点点效果的，对事物的看法变得更客观了。<strong>我会继续努力练习禅修，让自己摆脱烦恼。</strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GDB调试命令]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/12/gdb/"/>
+    <updated>2013-01-12T20:24:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/12/gdb</id>
+    <content type="html"><![CDATA[<p>GDB调试命令：</p>
+
+<p>一、多线程调试</p>
+
+<p>多线程调试可能是问得最多的。其实，重要就是下面几个命令：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>info thread 查看当前进程的线程。
+</span><span class='line'>thread &lt;ID&gt; 切换调试的线程为指定ID的线程。
+</span><span class='line'>break file.c:100 thread all  在file.c文件第100行处为所有经过这里的线程设置断点。
+</span><span class='line'>set scheduler-locking off|on|step，这个是问得最多的。在使用step或者continue命令调试当前被调试线程的时候，其他线程也是同时执行的，怎么只让被调试程序执行呢？通过这个命令就可以实现这个需求。
+</span><span class='line'>off 不锁定任何线程，也就是所有线程都执行，这是默认值。
+</span><span class='line'>on 只有当前被调试程序会执行。
+</span><span class='line'>step 在单步的时候，除了next过一个函数的情况(熟悉情况的人可能知道，这其实是一个设置断点然后continue的行为)以外，只有当前线程会执行。</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<p>二、调试宏</p>
+
+<p>这个问题超多。在GDB下，我们无法print宏定义，因为宏是预编译的。但是我们还是有办法来调试宏，这个需要GCC的配合。</p>
+
+<p>在GCC编译程序的时候，加上-ggdb3参数，这样，你就可以调试宏了。</p>
+
+<p>另外，你可以使用下述的GDB的宏调试命令 来查看相关的宏。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>info macro - 你可以查看这个宏在哪些文件里被引用了，以及宏定义是什么样的。
+</span><span class='line'>macro - 你可以查看宏展开的样子。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>三、源文件</p>
+
+<p>这个问题问的也是很多的，太多的朋友都说找不到源文件。在这里我想提醒大家做下面的检查：</p>
+
+<p>编译程序员是否加上了-g参数以包含debug信息。
+路径是否设置正确了。使用GDB的directory命令来设置源文件的目录。
+下面给一个调试/bin/ls的示例（ubuntu下）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ apt-get source coreutils
+</span><span class='line'>$ sudo apt-get install coreutils-dbgsym
+</span><span class='line'>$ gdb /bin/ls
+</span><span class='line'>GNU gdb (GDB) 7.1-ubuntu
+</span><span class='line'>(gdb) list main
+</span><span class='line'>1192    ls.c: No such file or directory.
+</span><span class='line'>in ls.c
+</span><span class='line'>(gdb) directory ~/src/coreutils-7.4/src/
+</span><span class='line'>Source directories searched: /home/hchen/src/coreutils-7.4:$cdir:$cwd
+</span><span class='line'>(gdb) list main
+</span><span class='line'>1192        }
+</span><span class='line'>1193    }
+</span><span class='line'>1194
+</span><span class='line'>1195    int
+</span><span class='line'>1196    main (int argc, char **argv)
+</span><span class='line'>1197    {
+</span><span class='line'>1198      int i;
+</span><span class='line'>1199      struct pending *thispend;
+</span><span class='line'>1200      int n_files;
+</span><span class='line'>1201</span></code></pre></td></tr></table></div></figure>
+
+
+<p>四、条件断点</p>
+
+<p>条件断点是语法是：break  [where] if [condition]，这种断点真是非常管用。尤其是在一个循环或递归中，或是要监视某个变量。注意，这个设置是在GDB中的，只不过每经过那个断点时GDB会帮你检查一下条件是否满足。</p>
+
+<p>五、命令行参数</p>
+
+<p>有时候，我们需要调试的程序需要有命令行参数，很多朋友都不知道怎么设置调试的程序的命令行参数。其实，有两种方法：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gdb命令行的 -args 参数
+</span><span class='line'>gdb环境中 set args命令。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>六、gdb的变量</p>
+
+<p>有时候，在调试程序时，我们不单单只是查看运行时的变量，我们还可以直接设置程序中的变量，以模拟一些很难在测试中出现的情况，比较一些出错，或是switch的分支语句。使用set命令可以修改程序中的变量。</p>
+
+<p>另外，你知道gdb中也可以有变量吗？就像shell一样，gdb中的变量以$开头，比如你想打印一个数组中的个个元素，你可以这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(gdb) set $i = 0
+</span><span class='line'>  
+</span><span class='line'>(gdb) p a[$i++]
+</span><span class='line'>
+</span><span class='line'>...  #然后就一路回车下去了</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当然，这里只是给一个示例，表示程序的变量和gdb的变量是可以交互的。</p>
+
+<p>七、x命令</p>
+
+<p>也许，你很喜欢用p命令。所以，当你不知道变量名的时候，你可能会手足无措，因为p命令总是需要一个变量名的。x命令是用来查看内存的，在gdb中 “help x” 你可以查看其帮助。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x/x 以十六进制输出
+</span><span class='line'>x/d 以十进制输出
+</span><span class='line'>x/c 以单字符输出
+</span><span class='line'>x/i  反汇编 - 通常，我们会使用 x/10i $ip-20 来查看当前的汇编（$ip是指令寄存器）
+</span><span class='line'>x/s 以字符串输出</span></code></pre></td></tr></table></div></figure>
+
+
+<p>八、command命令</p>
+
+<p>有一些朋友问我如何自动化调试。这里向大家介绍command命令，简单的理解一下，其就是把一组gdb的命令打包，有点像字处理软件的“宏”。下面是一个示例：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(gdb) break func
+</span><span class='line'>Breakpoint 1 at 0x3475678: file test.c, line 12.
+</span><span class='line'>(gdb) command 1
+</span><span class='line'>Type commands for when breakpoint 1 is hit, one per line.
+</span><span class='line'>End with a line saying just "end".
+</span><span class='line'>&gt;print arg1
+</span><span class='line'>&gt;print arg2
+</span><span class='line'>&gt;print arg3
+</span><span class='line'>&gt;end
+</span><span class='line'>(gdb)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当我们的断点到达时，自动执行command中的三个命令，把func的三个参数值打出来。</p>
+
+<p><strong>gdb基本命令</strong></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>命令描述backtrace（或bt）查看各级函数调用及参数
+</span><span class='line'>finish连续运行到当前函数返回为止，然后停下来等待命令
+</span><span class='line'>frame（或f） 帧编号选择栈帧
+</span><span class='line'>info（或i） locals查看当前栈帧局部变量的值
+</span><span class='line'>list（或l）列出源代码，接着上次的位置往下列，每次列10行
+</span><span class='line'>list 行号 列出从第几行开始的源代码
+</span><span class='line'>list函数名 列出某个函数的源代码
+</span><span class='line'>next（或n）执行下一行语句
+</span><span class='line'>print（或p）打印表达式的值，通过表达式可以修改变量的值或者调用函数
+</span><span class='line'>quit（或q）退出gdb调试环境
+</span><span class='line'>set var修改变量的值
+</span><span class='line'>start开始执行程序，停在main函数第一行语句前面等待命令
+</span><span class='line'>step（或s）执行下一行语句，如果有函数调用则进入到函数中
+</span><span class='line'>
+</span><span class='line'>break（或b） 行号在某一行设置断点
+</span><span class='line'>break 函数名在某个函数开头设置断点
+</span><span class='line'>break ... if ...设置条件断点
+</span><span class='line'>continue（或c）从当前位置开始连续运行程序
+</span><span class='line'>delete breakpoints 断点号删除断点
+</span><span class='line'>display 变量名跟踪查看某个变量，每次停下来都显示它的值
+</span><span class='line'>disable breakpoints 断点号禁用断点
+</span><span class='line'>enable 断点号启用断点
+</span><span class='line'>info（或i） breakpoints查看当前设置了哪些断点
+</span><span class='line'>run（或r）从头开始连续运行程序
+</span><span class='line'>undisplay 跟踪显示号取消跟踪显示</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[思念]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/12/sinian/"/>
+    <updated>2013-01-12T19:58:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/12/sinian</id>
+    <content type="html"><![CDATA[<p>早上醒来，赖床开始思考。思考着自己这一段的心理历程。一想起你，脑海中有无数的想法。</p>
+
+<p>从那次唱K，我不自觉的第一次偷拍你开始，然后第一次感觉到吃醋，当我意识到自己在吃醋的时候，觉得很奇怪。我还因为快递让你等了很久的事情而生气，还生了很久，自己也觉得不可思议，很久没这么生气过了。你名字已开始经常出现在我的晨间日记里，你是那个特殊的人。随后你开始不断的出现在我脑海中，进入我梦里，在梦里给你送花。</p>
+
+<p><span class='pullquote-right' data-pullquote='我问自己是不是喜欢上你了。'>
+我问自己是不是喜欢上你了。我不自觉的想对你好，看到你开心的时候，心里就觉得很满足，很温暖。就单单为这种满足，我也想对你好。自己能这样一直对你好，你也能欣然接受我对你的好，这种感觉真的太棒了。
+</span></p>
+
+<p>现在在看完书，写完代码的时候，心就会变得平静了，那时才可以把头脑里的杂念排空。但过不了多久，思念又会袭来。我想我不应该单独呆在房间里，我应该出去走走~。很多时候，差点就脱口而出要告诉你我的感受，但脑海中总有一个声音说”要忍耐，要控制，现在不是时候”。我也不知道什么才是时候。只有把这种情绪写下来，我的内心才会得到安宁。<strong>你已在我心里！！！！</strong></p>
+
+<hr />
+
+<p><strong>不论世界变成怎么样，都要勇敢的做自己！Follow My Heart！</strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[集合覆盖问题]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/06/set-problem/"/>
+    <updated>2013-01-06T21:17:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/06/set-problem</id>
+    <content type="html"><![CDATA[<h2>概述</h2>
+
+<p>集合覆盖问题(Set Covering Problem，简称SCP)是经典的NP一hard问题，同样也是运筹学研究中典型的组合优化问题，是一个计算机科学问题的典型代表。
+问题如下定义：首先有一个元素集合U，给定一系列集合，各集合之中含可能有一些共同的元素（如图所示）。要求访问最少的集合，可以得到U中所有的元素，求出满足要求的最少数量的集合，它是Karp’s 21个NP-complete问题之一。</p>
+
+<p>可以给出公式定义：</p>
+
+<p>给定一个元素集合{U}和集合{﻿﻿﻿S}，Si中的元素属于U，即S是U的子集集合。我们要求的一个覆盖就是一个集合C，C是由si组成的 其元素集合之并等于U即
+<img class="right" src="http://datasearch.ruc.edu.cn/~boliangfeng/blog/wp-content/uploads/2010/01/1.gif"></p>
+
+<p>用图示表明：
+输入：元素集合{U},包含各个子集的集合{S}</p>
+
+<p><img src="http://datasearch.ruc.edu.cn/~boliangfeng/blog/wp-content/uploads/2010/01/set-cover-L.gif"></p>
+
+<p>输出：一个集合C（C的子集是S的子集一种组合方案），覆盖了所有集合U中的元素。</p>
+
+<p><img src="http://datasearch.ruc.edu.cn/~boliangfeng/blog/wp-content/uploads/2010/01/set-cover-R.gif"></p>
+
+<h2>问题实例</h2>
+
+<p>现在有好多不同种类的糖果，不过它们并不是单独出售的，它们按照不同的搭配被包装成不同的糖果包，并且不同的糖果包有不同的价格。若要得到所有类型的糖果，找到一个解决购买方案很容易，我们可以把所有的糖果包都购买一个。然而找到购买最少的糖果包或者找到花钱最少的购买方案将比较困难。找出较优的方案，尽可能的购买少量的糖果包，又能把所有种类的糖果都买到。</p>
+
+<h2>贪婪近似算法</h2>
+
+<p>贪心算法（又称贪婪算法）是指，在对问题求解时，总是做出在当前看来是最好的选择。也就是说，不从整体最优上加以考虑，他所做出的仅是在某种意义上的局部最优解。贪心算法不是对所有问题都能得到整体最优解，但对范围相当广泛的许多问题他能产生整体最优解或者是整体最优解的近似解。</p>
+
+<p>转化为糖果的问题就是，每一次挑选的糖果包能覆盖的糖果种类最多，则选择这个糖果包，直到覆盖所有的糖果种类为止。</p>
+
+<h2>实现文件</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;set.h&quot;</span>
+</span><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'><span class="cm">/* subsets里存的是Set* 指针数据。 （未测试，待完善）*/</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">cover</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">members</span><span class="p">,</span> <span class="n">Set</span> <span class="o">*</span><span class="n">subsets</span><span class="p">,</span> <span class="n">Set</span> <span class="o">*</span><span class="n">covering</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">Set</span> <span class="o">*</span><span class="n">setd</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">SetElement</span> <span class="o">*</span><span class="n">pos</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">SetElement</span> <span class="o">*</span><span class="n">max_pos</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">(;</span> <span class="n">pos</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>          <span class="n">SetElement</span> <span class="o">*</span><span class="n">mems</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">members</span><span class="p">);</span>
+</span><span class='line'>          <span class="k">for</span> <span class="p">(;</span> <span class="n">mems</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">mems</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">mems</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">((</span><span class="n">Set</span><span class="o">*</span><span class="p">)(</span><span class="n">list_data</span><span class="p">(</span><span class="n">pos</span><span class="p">)),</span> <span class="n">list_data</span><span class="p">(</span><span class="n">mems</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                  <span class="o">++</span><span class="n">temp</span><span class="p">;</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">temp</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">max</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
+</span><span class='line'>              <span class="n">max_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">max_pos</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">break</span><span class="p">;</span>  <span class="c1">//无法覆盖</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_insert</span><span class="p">(</span><span class="n">covering</span><span class="p">,</span> <span class="n">max_pos</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="kt">void</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">max_pos</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_remove</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="c1">//max_pos这个SetElement已经被释放，但data还在。不能再用max_pos-&gt;data了。</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_difference</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">members</span><span class="p">,</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)(</span><span class="n">data</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">memcpy</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">setd</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;}</span> <span class="c1">//有解</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span> <span class="c1">//无法覆盖</span>
+</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">SetElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">elem</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span> <span class="n">elem</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%p</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">printint</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">set_name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">SetElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s : &quot;</span><span class="p">,</span> <span class="n">set_name</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">elem</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span> <span class="n">elem</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">list_data</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">match</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">id1</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">data1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">id2</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">data2</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">id1</span> <span class="o">&gt;</span> <span class="o">*</span><span class="n">id2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">id1</span> <span class="o">&lt;</span> <span class="o">*</span><span class="n">id2</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">matchptr</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">data1</span> <span class="o">==</span> <span class="n">data2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set3</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set4</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">allElem</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set3</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">all</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">};</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr1</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr3</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">};</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr2</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr4</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">all</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr1</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
+</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr2</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set3</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr3</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr4</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="s">&quot;set1&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="s">&quot;set2&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set3</span><span class="p">,</span> <span class="s">&quot;set3&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="s">&quot;set4&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="s">&quot;all&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">subsets</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">matchptr</span><span class="p">,</span> <span class="n">free</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span>
+</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set3</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set4</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set3</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set4</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">allElem</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;插入失败</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">covers</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">covers</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">free</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="n">cover</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="n">covers</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;找到了可覆盖的子集序列</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="n">covers</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;没能找到可覆盖的子集序列</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set3</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set4</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">allElem</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">covers</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>集合的数据结构在此博文已给出 <a href="http://sweetdark.github.com/blog/2013/01/04/set/">http://sweetdark.github.com/blog/2013/01/04/set/</a>
+Makefile文件：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='makefile'><span class='line'><span class="nv">OBJS</span> <span class="o">=</span> list.o set.o set_cover.o
+</span><span class='line'><span class="nv">CC</span> <span class="o">=</span> gcc
+</span><span class='line'><span class="nv">CFLAGS</span> <span class="o">=</span>-Wall -O -g
+</span><span class='line'><span class="nf">prog</span><span class="o">:</span> <span class="m">$(OBJS)</span>
+</span><span class='line'>  gcc <span class="k">$(</span>CFLAGS<span class="k">)</span> <span class="k">$(</span>OBJS<span class="k">)</span> -o <span class="nv">$@</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">list.o</span><span class="o">:</span> <span class="m">list.c list.h</span>
+</span><span class='line'>  gcc <span class="k">$(</span>CFLAGS<span class="k">)</span> -c <span class="nv">$&lt;</span> -o <span class="nv">$@</span>
+</span><span class='line'>  
+</span><span class='line'><span class="nf">set.o</span><span class="o">:</span> <span class="m">set.c set.h</span>
+</span><span class='line'>  gcc <span class="k">$(</span>CFLAGS<span class="k">)</span> -c <span class="nv">$&lt;</span> -o <span class="nv">$@</span>
+</span><span class='line'>  
+</span><span class='line'><span class="nf">set_cover.o</span><span class="o">:</span> <span class="m">set_cover.c</span>
+</span><span class='line'>  gcc <span class="k">$(</span>CFLAGS<span class="k">)</span> -c <span class="nv">$&lt;</span> -o <span class="nv">$@</span>
+</span><span class='line'>  
+</span><span class='line'><span class="nf">.PHONY </span><span class="o">:</span> <span class="m">clean</span>
+</span><span class='line'><span class="nf">clean</span><span class="o">:</span>
+</span><span class='line'>  rm *.o
+</span><span class='line'>  rm prog.exe
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[日计划与总结]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/05/thinking/"/>
+    <updated>2013-01-05T22:35:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/05/thinking</id>
+    <content type="html"><![CDATA[<p>今天真的是无所事事，想了好多东西。觉得自己对计划和时间的安排不够合理，没有明确的短期目标。一旦没有什么任务下来的时候，自己就像无头苍蝇一样不知道该干嘛。于是上知乎，搜了一下关于高效工作的一些问题，找到了一份不错的回答。先拿来实验一下。</p>
+
+<blockquote><p>工作日志简单的说就是把你每天做了哪些事情都记录下来，以下是我的工作日志表。在每天下班前我都要安排好下一个工作日的工作计划，并要求细化到小时。</p><footer><strong>@酷拉皮卡,如何记工作笔记以提高工作效率?</strong> <cite><a href='http://blog.sina.com.cn/s/blog_605b0e2e0100iw6v.html'>blog.sina.com.cn/s/&hellip;</a></cite></footer></blockquote>
+
+
+<p>每天的工作计划
+<img src="http://p2.zhimg.com/a3/5e/a35e5f8bf2c520f1d47e51cd5abb4790_m.jpg">
+等一天的工作完毕后，以上的表格就变成了下面的样子：
+每天的工作总结
+<img src="http://p3.zhimg.com/f4/61/f461e981d8193305c1265cc4858fc061_m.jpg"></p>
+
+<p>解释一下表格填写要求：
+1、按照PDCA循环（戴明环），将工作日志分为4个部分：计划、完成、检查、总结；
+1、在“今日计划”里，标红的工作项目是当日重要的工作任务，必须优先完成；
+2、每完成一项工作，就在“今日计划”里将该项工作上划删除线，同时在“今日完成”区进行填写，表示该项工作完成；
+3、在“今日完成”区里的“ [临] ”代表临时的工作任务，不在“今日计划”中；
+4、如果某项工作当日未完成，就用红字标注，下班后统一放置在后期的工作计划里；
+5、每天在“检查”区里给自己打分，A为优秀，完成全部工作任务；B为良好，完成大部分工作任务；C为合格；D为最差。定期汇总分析，如果发现近期打分较低，就要考虑是否工作任务过重还是临时任务过多等原因，找到原因后就要想办法解决，免得压垮自己不说，工作任务也完成不了。
+6、每天在“总结”区对今天的工作进行总结，成功的经验要加以记录并在后期的工作里推行，失败的教训要加以总结，避免以后再犯。</p>
+
+<p>仅仅做每日工作记录是不够的，每周每月都要进行计划和总结。原理大同小异，都是在月初、周初的时候，对本期的工作目标、内容作总体的计划安排，设置优先级，然后每天记录。到月末、周末的时候，再进行总结，看看计划的工作是否完成，效果如何等等。</p>
+
+<p>以后要多上知乎混，知乎是个好东西，自己一直没有好好利用啊。以后晚上坚决不上微博了，留下整块的时间，不要被微博上的信息所打扰。好好的学习和思考，不懂就上知乎问好了 :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[反思目前的工作状况]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/05/reflection/"/>
+    <updated>2013-01-05T15:52:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/05/reflection</id>
+    <content type="html"><![CDATA[<p>现在的工作很多都是自己安排的，手头只是交了一个任务给自己。并没有很具体详细的说你应该怎么做，甚至什么时候要完成。其实分配给我的任务比较少，或者比较难，要么就是那种这边无法修改的东西，需要内核去修改。就导致了我现在比较闲的状态，闲下来之后，就不知道自己应该去干吗了，这种状态很可怕。浪费了时间，没做事情。</p>
+
+<p>想做点额外的事吧，例如看看书，逛一下论坛什么的。但觉得这样好像又有点过意不去，何况被上司看到也不好。就在这种纠结的状态中，无聊纳闷时就上QQ去派遣（应当控制），浪费了好多时间。按理说，工作的时候就应该只做工作相关的事情，其他无关的事情，最好是别做的。发现自己面对着这一份烂代码，提不起丝毫的兴趣，总是想着学点别的东西。</p>
+
+<p>我的态度出现了问题，我对工作丧失了热忱。我想我应该不急着去做事情，好像在应付任务一样，在做事情之前调整好自己的态度吧。最大的问题是我没有把这个产品当成自己的作品来看待，总觉得它和我是隔离开来的，与我没有任何关系（毕竟内核是别人做的，我们只是在上面修改），既然这个产品与我没什么关系，我怎么可能把它做好呢。</p>
+
+<p><span class='pullquote-right' data-pullquote='如果在这里学不到太多技术上的东西，至少应该学会解决难题的科学方法，学会正确的工作态度。'>
+不希望自己在这种状态中，虚度光阴。日子一天天的过去，一年一眨眼就过去了，回想自己到底学到了什么。如果在这里学不到太多技术上的东西，至少应该学会解决难题的科学方法，学会正确的工作态度。毕竟这是到哪里都通用的东西~。
+</span>
+努力思考自己处于这种状态下的时候，应该怎么处理。最好是能避免这种状态的出现。这时候或许能从书中找到答案，或者从前辈那里学到东西。他们肯定也经历过这种状态。</p>
+
+<blockquote><p>闲着无事，在公司乱写。</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[集合]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/04/set/"/>
+    <updated>2013-01-04T22:46:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/04/set</id>
+    <content type="html"><![CDATA[<p>这里的集合是用链表的方式来实现的。</p>
+
+<p>单向链表的定义：list.h</p>
+
+<div><script src='https://gist.github.com/4259013.js'></script>
+<noscript><pre><code>#ifndef LIST_H_
+#define LIST_H_
+#include &lt;stdlib.h&gt;
+
+typedef struct ListElement_ {
+    void *data;
+    struct ListElement_ *next;
+} ListElement;
+
+typedef struct List_ {
+    int size;
+    int (*match) (const void *data1, const void *data2);
+    void (*destory) (void* data);
+    ListElement *head;
+    ListElement *tail;
+} List;
+
+void list_init(List *list, void (*destory) (void *data));
+void destory(List *list);
+int list_ins_next(List *list, ListElement *element, const void *data);
+int list_rem_next(List *list, ListElement *element, void *data);
+#define list_size(list) ((list)-&gt;size)
+#define list_head(list) ((list)-&gt;head)
+#define list_tail(list) ((list)-&gt;tail)
+#define list_is_head(list, element) ((element) == (list-&gt;head) ? 1 : 0)
+#define list_is_tail(element)       ((element)-&gt;next == NULL ? 1 : 0)
+#define list_data(element)          ((element)-&gt;data)
+#define list_next(element)          ((element)-&gt;next)
+
+#endif</code></pre></noscript></div>
+
+
+
+
+<!-- more -->
+
+
+<p>单向链表的实现：</p>
+
+<figure class='code'><figcaption><span>list的实现list.c</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;list.h&quot;</span>
+</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">list_init</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">match</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span> <span class="o">=</span> <span class="n">destory</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">head</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">list_destory</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_rem_next</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">memset</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">list_ins_next</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="n">ListElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">ListElement</span> <span class="o">*</span><span class="n">ins_elem</span> <span class="o">=</span> <span class="p">(</span><span class="n">ListElement</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ListElement</span><span class="p">));</span>
+</span><span class='line'>  <span class="n">list_data</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="n">list_tail</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">size</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">list_rem_next</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="n">ListElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list</span> <span class="o">||</span> <span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">ListElement</span> <span class="o">*</span><span class="n">old_element</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
+</span><span class='line'>      <span class="n">old_element</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">elem</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>      <span class="n">old_element</span> <span class="o">=</span> <span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">elem</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="n">elem</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">old_element</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">--</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>集合用链表的方式实现的，通过typedef来实现简单的多态，集合的操作包括，求交集，并集，差集，判断一个元素是否在集合中，判断一个集合是否是另外一个集合的子集。</p>
+
+<figure class='code'><figcaption><span>set.h</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef SET_H</span>
+</span><span class='line'><span class="cp">#define SET_H</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
+</span><span class='line'><span class="cp">#include &quot;list.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">typedef</span> <span class="n">List</span> <span class="n">Set</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">typedef</span> <span class="n">ListElement</span> <span class="n">SetElement</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">set_init</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">),</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#define set_destory list_destory</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_insert</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_remove</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_union</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setu</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_insertion</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">seti</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_deffirence</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setd</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_ismember</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_issubset</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_is_equal</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
+</span><span class='line'><span class="cp">#define set_size(set) list_size(set)</span>
+</span><span class='line'><span class="cp">#define set_data(element) list_data(element)</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#endif</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>set.c set实现文件</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">set_init</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">),</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">list_init</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">destory</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span> <span class="o">=</span> <span class="n">match</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_insert</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">){</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">list_ins_next</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">set</span><span class="p">),</span> <span class="n">data</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_remove</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">pre</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span> <span class="n">h</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">(</span><span class="n">h</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">pre</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">h</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">list_rem_next</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">pre</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_union</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setu</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h1</span> <span class="o">=</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">head</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h2</span> <span class="o">=</span> <span class="n">set2</span><span class="o">-&gt;</span><span class="n">head</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">set_init</span><span class="p">(</span><span class="n">setu</span><span class="p">,</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h1</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">h1</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h1</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h1</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">h1</span><span class="p">);</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setu</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setu</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">set_destory</span><span class="p">(</span><span class="n">setu</span><span class="p">);</span>
+</span><span class='line'>          <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h2</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span> <span class="n">h2</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h2</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">h2</span><span class="p">);</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setu</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setu</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">setu</span><span class="p">);</span>
+</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_intersection</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">seti</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">){</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">member</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span>       <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">set_init</span><span class="p">(</span><span class="n">seti</span><span class="p">,</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">member</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">member</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">member</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">member</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">)))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">seti</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">seti</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">seti</span><span class="p">);</span>
+</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_difference</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setd</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">member</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">void</span>       <span class="o">*</span><span class="n">data</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">set_init</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">member</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">member</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">member</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">member</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">)))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">);</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setd</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span>
+</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_ismember</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">(</span><span class="n">list_data</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_issubset</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_size</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">set_size</span><span class="p">(</span><span class="n">set2</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span> <span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">set_is_equal</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_size</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span> <span class="o">!=</span> <span class="n">set_size</span><span class="p">(</span><span class="n">set2</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="n">set_issubset</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">set2</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>测试文件：</p>
+
+<div><script src='https://gist.github.com/c4720e6e20e8ed09dad4.js'></script>
+<noscript><pre><code>#include &quot;set.h&quot;
+#include &lt;stdio.h&gt;
+void print(Set *set) {
+    SetElement *elem;
+    for (elem = list_head(set); elem != NULL; elem = list_next(elem)) {
+        printf(&quot;%d\t&quot;, *(int*)list_data(elem));
+    }
+    printf(&quot;\n&quot;);
+}
+
+int match(const void *data1, const void *data2) {
+    const int *id1 = (const int*)data1;
+    const int *id2 = (const int*)data2;
+    if (*id1 &gt; *id2) return 1;
+    else if (*id1 &lt; *id2) return -1;
+    return 0;
+}
+
+int main()
+{
+    Set *set1 = (Set*)malloc(sizeof(Set));
+    Set *set2 = (Set*)malloc(sizeof(Set));
+    set_init(set1, match, NULL);
+    set_init(set2, match, NULL);
+    int arr1[] = {3,4,1};
+    int arr2[] = {4,7,1};
+    int i = 0;
+    for (; i &lt; 3; i++) {
+        set_insert(set1, (const void*)(arr1 + i));
+        set_insert(set2, (const void*)(arr2 + i));
+    }
+
+
+
+    print(set1);
+    print(set2);
+    Set *seti = (Set*)malloc(sizeof(Set));
+    //set_init(seti, match, NULL);
+    set_intersection(seti, set1, set2);
+    print(seti);
+   set_difference(seti, set1, set2);
+    print(seti);
+    Set *setu = (Set*)malloc(sizeof(Set));
+
+    set_union(setu, set1, set2);
+    print(setu);
+    set_destory(set1);
+    set_destory(set2);
+    set_destory(seti);
+    set_destory(setu);
+    free(set1);
+    free(set2);
+    free(seti);
+    return 0;
+
+}</code></pre></noscript></div>
+
+
+<p><img src="http://www.imagebam.com/image/b94355230761965"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[2013-1-4随笔]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/04/new-rome/"/>
+    <updated>2013-01-04T22:07:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/04/new-rome</id>
+    <content type="html"><![CDATA[<p>今天是2013年1月4号，201314即爱你一生一世，很有寓意的一天。无论精神多么独立的人，其情感都会寻找依附。爱情真是让人期盼，令人着迷。</p>
+
+<p>对于爱，多么的期盼那是一份真情。自己一直在做得就是“去伪存真”。我虽然不能完全保证对方的真情实意，但必须保证自己是真情实意的，自己不欺人骗世也就心安了，对于他人的虚情假意，实在没必要为之而气愤和痛苦，拿比人的错误来惩罚自己。我也不希望自己爱上的只是爱的表象，是自己虚幻构造出来的。我变得小心谨慎，特别是在夜深的时候，不要因为寂寞而爱上一个人。我希望我说的每一句话都是真心的，都是发自于当时的真实情感。<strong>感情不能随便拿来开玩笑，时光易逝人很快就会老去，能拥有一份真情是多么幸福的事情，时间唯有真情才能长久</strong>。爱不是一种束缚，不要去争那些无所谓的对与错，输和赢，不要去比较谁付出的更多。我希望她也有她的生活，她的朋友，她的自由，我们能彼此互相理解，宽容，关心和爱护，这就很美好。</p>
+
+<p>如果决定了去爱一个人，就要好好爱她。如果在这个过程中失去了你，我会心痛，但不允许自己去后悔。<strong>“能够失去的东西就不是属于自己的”</strong>，Follow Your Heart！做好自己就是了，其他的一切会随之而来的。</p>
+
+<p>从动心的那一刻开始，我就会去准备，需要耐心~。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[非本机快速写博客]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/01/04/how-to-pull/"/>
+    <updated>2013-01-04T12:51:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/01/04/how-to-pull</id>
+    <content type="html"><![CDATA[<p>有时出差，或者去别的地方。要在其他地方写博客怎么办呢。首先安装好机子上的本地环境。参考<a href="http://xuhehuan.com/783.html">这里</a>的搭建本地环境和更新本地环境。然后从github中clone 远程的仓库到本地。
+具体步骤：
+git clone git://github.com/sweetdark/sweetdark.github.com.git octopress
+进入该目录
+cd octopress
+你用git branch -a命令查看分支
+你会发现只是clone了master的分支，没有克隆和创建source分支的。source的文件夹和文件没有克隆下来：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041302488150_0.jpg"></p>
+
+<p>那么我们要从本地区抓取远程的source分支。
+可以执行
+git checkout &mdash;track -b reps-branch origin/reps-branch  抓取 reps-branch, 並將此 branch 建立於 local 的 reps-branch
+再看一下你的目录：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041303593154_0.jpg">
+是不是可以了。
+附上全部命令截图：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041304293434_0.jpg"></p>
+
+<p>初始化你的github页面的地址
+rake setup_github_pages</p>
+
+<p>然后写完博客rake gen_deploy发布之后，别忘了。
+用git status检查哪些还没有提交，用git add . 和 git commit -m &ldquo;yourmessage&#8221;提交更新
+最后要git push origin source</p>
+
+<p>一切搞定。</p>
+]]></content>
+  </entry>
+  
+</feed>

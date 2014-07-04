@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://sweetdark.github.com/sitemap.xml 

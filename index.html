@@ -1,0 +1,1398 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Mario's Blog</title>
+  <meta name="author" content="Mario">
+
+  
+  <meta name="description" content="下载和安装git， 把git安装目录的bin和cmd文件目录加到path中。
+下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby &mdash;version来测试是否安装成功
+去网上下载一个DevKit-tdm-32-4.5.2-20111229- &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sweetdark.github.com/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Mario's Blog</a></h1>
+  
+    <h2>学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sweetdark.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">目录</a></li>
+  <li><a href="/about">关于我</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/03/how-to-install-octproess/">如何部署已有的octopress Blog</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-03T17:06:14+08:00" pubdate data-updated="true">Jul 3<sup>rd</sup>, 2014</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/tools/'>tools</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=如何部署已有的octopress Blog - &amp;url=http://sweetdark.github.com/blog/2014/07/03/how-to-install-octproess/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=如何部署已有的octopress Blog - &amp;url=http://sweetdark.github.com/blog/2014/07/03/how-to-install-octproess/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=如何部署已有的octopress Blog - http://sweetdark.github.com/blog/2014/07/03/how-to-install-octproess/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><ol>
+<li>下载和安装git， 把git安装目录的bin和cmd文件目录加到path中。</li>
+<li>下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby &mdash;version来测试是否安装成功</li>
+<li>去网上下载一个<a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a> 解压到一个目录。dos cd 到这个目录。执行如下命令:</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ruby dk.rb init 
+</span><span class='line'>ruby dk.rb install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>博客的代码高亮需要python环境的支持。去下个python2.7安装。python 安装完成后。执行下面的命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>easy_install pygments</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>设置本地环境</h2>
+
+<p>为了支持中文UTF-8编码，在Windows的环境变量中增加下面的选项。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>LANG = zh_CN.UTF-8
+</span><span class='line'>LC_ALL = zh_CN.UTF-8</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>配置git</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global user.name "yourname"
+</span><span class='line'>git config --global user.email "youremail"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更新gem的更新源，ruby的官方网站经常被和谐。换成国内的更新源，这样速度就快多了，变更如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem sources -a http://ruby.taobao.org/
+</span><span class='line'>gem sources -r http://rubygems.org/</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>下载并配置Blog</h2>
+
+<p>在某个目录下，DOS命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git@github.com:sweetdark/sweetdark.github.com.git sweetdark
+</span><span class='line'>
+</span><span class='line'>如果clone下来只有master分支，那可以新建个source分支，
+</span><span class='line'>git checkout -b source 
+</span><span class='line'>这个命令会新建source分支并切换到source分支。
+</span><span class='line'>再执行git pull origin source 把远程的github上source分支拉到本地source分支。
+</span><span class='line'>
+</span><span class='line'>cd sweetdark
+</span><span class='line'>gem install bundler
+</span><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>配置好之后，DOS cd 到sweetdark目录下就可以写blog了。请确保你在source 分支下，通过git branch 命令可以查看。你在哪个分支下。 git checkout source 可以切换到source分支</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["title"] #创建个新的文章，在source/_post目录下，打开它，就可以编辑了。
+</span><span class='line'>
+</span><span class='line'>编辑完保存之后。
+</span><span class='line'>rake generate #生成网页
+</span><span class='line'>rake preview #预览 打开127.0.0.1:4000 可以看到。
+</span><span class='line'>rake deploy #发布
+</span><span class='line'>
+</span><span class='line'>然后记得提交，须要权限，要ssh的private key。
+</span><span class='line'>git add .
+</span><span class='line'>git commit -m "your commit message"
+</span><span class='line'>git push origin source
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>git remote -v 命令可以查远程的地址。
+<img src="../images/gitremote.png" alt="" />
+有不懂的git命令都可以用git command &mdash;help 来查这个command。</p>
+
+<p>为了确保安全不造成混乱，以后每次写blog之前，都要检查，你是否是在source分支下，是否跟服务器上是一致的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout source #切换到source分支
+</span><span class='line'>git pull origin source #更新服务器上的内容到本地</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>注意事项</h2>
+
+<ul>
+<li>图片最好是上传到一些可以保存图片的网站上，然后用 octopress 的Image 标签来引用， 相关用法<a href="http://octopress.org/docs/plugins/image-tag/%E3%80%82">http://octopress.org/docs/plugins/image-tag/%E3%80%82</a>
+用markdown语法也是可以的，不要写本地的相对路径（如上面的那张图片，会导致在Tag目录下看不到</li>
+</ul>
+
+
+<p>相关的文章
+octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上搭建Octopress博客</a></p>
+
+<p><a href="http://octopress.org/">http://octopress.org/</a> 官方文档必看。这里有许多官方的plugin介绍。包括代码高亮，插入网络上图片等。</p>
+
+<p><a href="http://qingbo.net/picky/502-markdown-syntax.html">MarkDonw的语法，文章就是用markdown语法的，很简单。</a></p>
+
+<p>-git的学习</p>
+
+<p>英文10本
+<a href="http://sixrevisions.com/resources/git-tutorials-beginners/#comments">http://sixrevisions.com/resources/git-tutorials-beginners/#comments</a></p>
+
+<p>中文</p>
+
+<p><a href="http://gitbook.liuhui998.com/index.html">http://gitbook.liuhui998.com/index.html</a></p>
+
+<p>详解系列
+<a href="http://blog.jobbole.com/24379/">http://blog.jobbole.com/24379/</a>
+<a href="http://blog.jobbole.com/25808/">http://blog.jobbole.com/25808/</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/10/ogl-step9/">Ogl Step9 插值</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T07:27:00+08:00" pubdate data-updated="true">Jul 10<sup>th</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step9 插值 - &amp;url=http://sweetdark.github.com/blog/2013/07/10/ogl-step9/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step9 插值 - &amp;url=http://sweetdark.github.com/blog/2013/07/10/ogl-step9/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step9 插值 - http://sweetdark.github.com/blog/2013/07/10/ogl-step9/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这节主要演示3D管道的重要部分————插值是光栅化处理程序处理从顶点缓冲区取出来的变量。正如你所看到的，为了能在屏幕上显示，你需要指明VS的输出变量是&#8217;gl_Position&#8217;. 这是一个4维的向量包含着顶点的齐次坐标。向量的XYZ分量除以W分量（透视分割），XY分量超出范围[-1,1]的Z分量超出[0,1]的都将被裁剪。结果被转换到屏幕空间坐标，然后几何图元通过光栅化程序被渲染到屏幕上。光栅化程序在三角形的三个顶点间进行插值，然后访问每一个在三角形内的像素执行片段着色器进行处理。
+片段着色器返回一个颜色缓冲区中的像素颜色。如果片段着色器没处理该变量那么驱动器会进行优化，放弃VS中影响该变量的指令（在这种情况下着色程序会合并VS和FS）</p>
+
+<p>两个非常常见的依赖于插值的变量是三角形的法线和纹理坐标。顶点的法线会在所有包含这个顶点的三角形中法线计算一个平均值。 如果对象不是完全平滑的那就意味着每个三角形的三个顶点的法线是各不相同的。 法线用于光照计算产生更真实的光照影响。纹理坐标也是相似的。这些纹理是模型的一部分有每个顶点指定。 为了用纹理覆盖三角形，需要对每个像素进行采样操作。为么个像素选择正确的纹理坐标。这些坐标是由插值产生的。</p>
+
+<p>在这一节我们会看到使用插值产生不同的颜色覆盖三角形的表面。 由于我很懒，我们直接在VS里产生颜色。一个更乏味的方法是从顶点缓冲区中提供。一般你不会通过顶点缓冲区提供，你会提供一个纹理坐标然后从纹理中采样一个颜色。这个颜色在后面会进行光照计算。</p>
+
+<hr />
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在管道之间传输的参数要声明为&#8217;out&#8217;，在着色器中定义为全局变量。这个颜色是一个4-vector，XYZ分量代表RGB值，W分量代表alpha值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Color</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">clamp</span><span class="p">(</span><span class="n">Position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>颜色在图形管道中通常用范围为[0.0, 1.0]的浮点数进行表示。该值随后会被映射到0~255的颜色通道上。我们设置顶点的位置作为颜色值。首先我们使用内建的函数clamp();确保值在0.0-1.0的范围内。这是因为三角形的左下角的点位于(-1,-1)，且小于等于0的值都会被渲染为黑色。这样的话左下角的角都会是黑色的。我们通过夹紧使得左下角的颜色值大于0.</p>
+
+<p>clamp函数并不会改变向量的维数，智慧改变它的值。但我们输出的变量是4-vector的形式。所以我们使用GLSL的符号&#8217;vec4(vec3,W)&lsquo;来创建一个4-vector包含了3-vector并增加了一个w值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">in</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>VS输出的变量，在FS中接受输入的变量。因为这个变量会被光栅化程序进行插值处理，所以每一个FS会对应一个不同的颜色值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们使用插值的颜色作为片段的颜色。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/07/ogl-step8/">Ogl Step8 缩放Scaling Transformation</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-07T22:02:00+08:00" pubdate data-updated="true">Jul 7<sup>th</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step8 缩放Scaling Transformation - &amp;url=http://sweetdark.github.com/blog/2013/07/07/ogl-step8/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step8 缩放Scaling Transformation - &amp;url=http://sweetdark.github.com/blog/2013/07/07/ogl-step8/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step8 缩放Scaling Transformation - http://sweetdark.github.com/blog/2013/07/07/ogl-step8/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简。</p>
+
+<p>你想要缩放哪一维，只需对应的改变矩阵对角线上的值就可以了。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与上一节不同的只是这个矩阵。三角形会随着正弦值(0,1]由小变大，为0时缩放到最小三角形消失。在[-1, 0)时只是反过来而已。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/07/ogl-step7/">Ogl Step7 旋转Rotation Transformation</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-07T19:18:00+08:00" pubdate data-updated="true">Jul 7<sup>th</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step7 旋转Rotation Transformation - &amp;url=http://sweetdark.github.com/blog/2013/07/07/ogl-step7/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step7 旋转Rotation Transformation - &amp;url=http://sweetdark.github.com/blog/2013/07/07/ogl-step7/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step7 旋转Rotation Transformation - http://sweetdark.github.com/blog/2013/07/07/ogl-step7/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这节主要讲旋转变换。给定一个点和一个角度，绕一个坐标轴旋转。在X，Y，Z中保持一个值不变（绕该轴旋转的值不变），另外两个坐标改变。我们可以绕Z轴，Y轴，X轴旋转。甚至可以绕任意向量进行宣召。
+考虑下面的图形：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/rotation.png">
+我们沿着圆从(x1, yz)旋转到(x2,y2)。换句话说，我们把(x1, y1)旋转α角。假设半径是1.有如下的等式：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x1 = cos(α1)
+</span><span class='line'>y1 = sin(α1)
+</span><span class='line'>x2 = cos(α1+α2)
+</span><span class='line'>y2 = sin(α1+α2)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>三角函数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cos(α+β) = cosαcosβ-sinαsinβ
+</span><span class='line'>sin(α+β) = sinαcosβ+cosαsinβ</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用上面的公式对x2和y2进行扩展得</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x2 = cosα1costα2 - sinα1sinα2
+</span><span class='line'>y2 = sinα1cosα2 + cosα1sinα2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的图形是，Z轴指向屏幕里面，从屏幕外向里看XY平面。如果X&amp;Y 是4维向量的一部分，绕Z轴旋转的矩阵的形式如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_01.png">
+绕Y轴旋转的矩阵：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_02.png">
+绕X轴旋转的矩阵：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_03.png"></p>
+
+<h1>代码漫游</h1>
+
+<p>我们只需要把上一次的代码做稍微的修改，就可以实现旋转了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在是绕z轴旋转。你可以尝试着绕其他轴旋转。但绕其他轴旋转没有3d到2d的投影变换，显得多余。接下来将会介绍所有的变换。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/05/ogl-step6/">Ogl Step6 Translation Transformation</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-05T12:34:00+08:00" pubdate data-updated="true">Jul 5<sup>th</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step6 Translation Transformation - &amp;url=http://sweetdark.github.com/blog/2013/07/05/ogl-step6/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step6 Translation Transformation - &amp;url=http://sweetdark.github.com/blog/2013/07/05/ogl-step6/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step6 Translation Transformation - http://sweetdark.github.com/blog/2013/07/05/ogl-step6/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这一节开始介绍3D环境下物体的转换。通用的方式是用矩阵或多个矩阵连乘最后乘以顶点坐标来实现转换。后面的每一节都会详解一种转换。</p>
+
+<p>下图是把左图的三角形平移到右图的位置。
+<img src="http://ogldev.atspace.co.uk/www/tutorial06/translation.png">
+一种方式是提供向量的位置作为一个一致变量给着色器然后在处理每一个顶点是加上这个向量来实现平移的效果。然而，这种方式不是通用的转换方式。另外的，如果这个顶点值改变了，那么后面的转换就是基于这个被改变的顶点进行转换了，而不是平移前的转换了。这很麻烦。一个更好的方式是用一个矩阵代表平移乘以其他的转换矩阵。但是你无法找到一个矩阵乘以左图三角形的左下角的点(0,0),能够得到（1,1）。实际情况是你无法在二维矩阵实现这种转换。通用的公式是M * P = P1(x + v1, y + v2, z + v3).我们需要的是一个矩阵M和一个点P(x, y, z)和一个向量V(v1, v2, v3)。矩阵M平移P到P+V的位置。在P1中我们观察到P1每一维的值是对应的P的值和V的值相加的结果。左边的值可以认为是与单位阵相乘的结果：I * P = P(x, y, z)。所以我们从单位阵开始去寻找一个能够实现右边的每一维的相加结果(&hellip;+V1, &hellip;+V2, &hellip;+V3)的矩阵。 如下图：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation1.png">
+由上可以得出两个结论：
+1.  a, b, c, d, e 和 f 其中的任意两个会对每一维度有影响，所以它们必须为0，如此又变为单位矩阵。
+2.  因为x，y，z会影响三个维度的值，所以也必须为0.这样的话向量变为零向量，而零向量转换之后还是零向量。</p>
+
+<p>我们必须找到一个矩阵能够提供如下的运算：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation2.png">
+所以我们必须找到一种方式加上v1-v3，上面的a到f必须为0.我们把矩阵增加一行和一列。变为4X4的矩阵。把向量也增加一个维度w变为四维的。最终得到我们的平移矩阵如下：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation3.png">
+现在即使x,y,z都为0.我们也可以实现平移了。</p>
+
+<h2>用4维向量来表示3维的向量也成为齐次坐标，在3D图形中是非常流行的方式。第四维称作&#8217;w&#8217;。在之前的着色器中gl_Position也是齐次坐标。w维在3D投影到2D中扮演着十分重要的角色。在一般情况下点使用w=1,向量则用w=0.原因是点可以被平移而向量不行。你可以改变向量的长度和方向，所有长度和方向一样的向量被认为是一样的，向量是相对的。所以如果w=0，向量乘以平移矩阵结果是一样的向量。</h2>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/07/05/ogl-step6/">阅读全文 &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/07/01/ogl-step5/">Ogl Step5 Uniform Variables</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-01T13:19:00+08:00" pubdate data-updated="true">Jul 1<sup>st</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step5 Uniform Variables - &amp;url=http://sweetdark.github.com/blog/2013/07/01/ogl-step5/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step5 Uniform Variables - &amp;url=http://sweetdark.github.com/blog/2013/07/01/ogl-step5/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step5 Uniform Variables - http://sweetdark.github.com/blog/2013/07/01/ogl-step5/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><h1>背景</h1>
+
+<p>在这一节中我们将会使用到一个新的着色器变量————一致变量。属性变量与一致变量的不同在于，属性变量是由顶点指定的并在每一次的着色器调用中都会去从顶点缓冲区中读取。然而一致变量是在整个绘制调用保持一致。这也就意味着你在绘制调用前赋了一个值，然后你在每一次调用顶点着色器的时候使用的都是同一个值。着色器有两种类型的参数：一致变量（Uniform variables）指得是在一帧当中保持恒定的数值，典型的参数包括视口的方向和灯光的方向。而易变变量（Varying variables）对于每一个执行单元（包括顶点着色器中的顶点，以及片元着色器中的片元）都是变化的。</p>
+
+<p>在这一节中我们将会用一组一致变量在每一帧中都进行改变，通过GLUT提供的idle回调函数来实现。GLUT只有在窗体改变了尺寸和被其他窗体覆盖的时候会调用回调函数。如果在程序加载之后，我们什么都不做那么回调函数只会被调用一次。我们通过注册一个idle的回调函数来实现循环绘制画面，idle函数会在窗体系统没有接收到任何消息的时候被调用。</p>
+
+<hr />
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutIdleFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在这里我们注册一个idle函数。如果你想要使用一个有用的idle回调函数，你需要在它结束是添加一个glutPostRedisplay()函数。否则idle函数会被一直调用，但是渲染函数却不会。glutPostRedisplay()标志了当前窗体需要被重新显示，在下一个GLUT的main循环中绘制回调函数将会被调用。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gScaleLocation</span> <span class="o">=</span> <span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="s">&quot;gScale&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">assert</span><span class="p">(</span><span class="n">gScaleLocation</span> <span class="o">!=</span> <span class="mh">0xFFFFFFFF</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在链接了程序之后，我们通过glGetUniformLocation方法去获得gScale一致变量的地址。这是一种C\C++程序执行环境映射到着色器的执行环境。你不能直接访问着色器里的内容也不能直接修改里面的变量。当你编译着色器是，GLSL的编译器就为每一个一致变量建立了一个索引。着色器器内部是通过这个索引对变量进行操作。我们也可以通过glGetUniformLocation获得某个程序内部的变量名的索引。这个函数返回索引，出错时返回-1。检查错误非常重要，着色器内部不存在这个变量（<font color="red">你的变量名拼写错误</font>）或者编译器对这个变量进行了优化（<font color="red">为被使用的变量</font>)都会导致glGetUniformLocation调用失败。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="kt">float</span> <span class="n">Scale</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">Scale</span> <span class="o">+=</span> <span class="mf">0.001f</span><span class="p">;</span>
+</span><span class='line'><span class="n">glUniform1f</span><span class="p">(</span><span class="n">gScaleLocation</span><span class="p">,</span> <span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用一个静态变量Scale，在每次渲染调用是递增。传给着色器的值是Scale的正弦值。会产生一个在-1.0到1.0之间的值。 通过glUniform1f传给着色器。OpenGl提供了多种形式glUniform{1234}{if}。glUniform2i glUniform3f&hellip;etc. glUniform传的第一个参数是索引。</p>
+
+<p>我们只对上一教程的VS段进行修改，FS保持不变</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">uniform</span> <span class="kt">float</span> <span class="n">gScale</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>定义一个一致变量。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们队X和Y的值进行转换。你知道为什么三角形会在循环到一半时倒过来吗？</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/25/ogl-step4/">Ogl Step4 Shaders</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-25T12:51:00+08:00" pubdate data-updated="true">Jun 25<sup>th</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step4 Shaders - &amp;url=http://sweetdark.github.com/blog/2013/06/25/ogl-step4/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step4 Shaders - &amp;url=http://sweetdark.github.com/blog/2013/06/25/ogl-step4/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step4 Shaders - http://sweetdark.github.com/blog/2013/06/25/ogl-step4/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://github.com/sweetdark/openglex">Get the source</a>  <a href="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html">原文链接</a></p>
+
+<h1>背景</h1>
+
+<p>从这一节开始我们将会用到着色器绘图。着色器是绘制3D图像的潮流。从另一个角度说着色器取代了固定函数管道的方式，需要开发者自己配置参数（如：光源属性，旋转值等）。然而可编程的方式提供了更好的灵活性和创造性。</p>
+
+<p>OpenGL可编程管道如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial04/pipeline.png">
+vertex processor负责执行顶点着色器去处理每一个通过管道的顶点数据（处理的个数取决与绘制函数调用时传的参数）。顶点着色器对被渲染的几何体的拓扑图一无所知。另外你不能再vertex processor删除顶点的数据。每一个顶点仅且经过vertex processor一次，被转换之后传到下一个管道中。</p>
+
+<p>下一阶段是几何处理器（geometry processor）。在这个阶段着色器知道所有的几何体以及他们的相邻关系。此时需要考虑除了顶点本身之外的信息。几何着色器可以变换输出的拓扑顺序。例如：你可以提供一组点的信息然后产生两个三角形或者产生一个四边形。另外，你还可以像几何着色器传入多个顶点，并根据你所选择的拓扑顺序产生多个几何体.</p>
+
+<p>下一个阶段是裁剪器。这是一个固定的函数单元处理简单的任务，裁剪几何图形到标准化格子中。它也裁剪到near Z和far Z的平面中。有相应的参数惨叫他们。经过裁剪后，顶点会被映射到屏幕坐标中，然后根据他们的拓扑顺序渲染出来。  例如：在三角形中找出所有的点在这个三角内的，光栅化程序为每个点调用片段处理器。你还可以指定像素点的颜色。</p>
+
+<p>着色器的管理方式类似于C\C++的程序的创建一样。 首先你编写着色的代码供你的程序使用。可以简单的再源代码里直接写字符穿或者从外部文件加载进来，然后编译成一个个的着色器目标对象，链接这些着色器到单个程序加载到GPU中。链接着色器提供机会给驱动去裁剪他们和优化他们之间的关系。例如：（感谢小翼的翻译）如果顶点着色器(vs)里输出法线，但是和不用法线的片段着色器(fs)链接，那么vs的法线操作会被删除来优化vs的速度。如果后来那个vs又和用到法线的fs链接，那么链接另外一个程序会产生不同的vs（有法线输出计算的）在这种情况下，GLSL的编译器会删除相关功能的着色器使得顶点着色器执行的更快。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLuint</span> <span class="n">ShaderProgram</span> <span class="o">=</span> <span class="n">glCreateProgram</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在设置着色器之前先创建一个程序对象。我们将连接所有的着色器到这个程序中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLunit</span> <span class="n">ShaderObj</span> <span class="o">=</span> <span class="n">glCreateShader</span><span class="p">(</span><span class="n">ShaderType</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建着色器对象。一个使用GL_VERTEX_SHADER类型创建顶点着色器，另一个是GL_FRAGMENT_SHADER类型创建片段着色器。用来编译指定的着色器代码。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">const</span> <span class="n">GLchar</span><span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pShaderText</span><span class="p">;</span>
+</span><span class='line'><span class="n">GLint</span> <span class="n">Lengths</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">Lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">pShaderText</span><span class="p">);</span>
+</span><span class='line'><span class="n">glShaderSource</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">Lengths</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定要编译的源代码。glShaderSource传入一个着色器对象去编译你指定的代码。代码可以由字符串数组提供并相应的指定保持各个字符串长度的数组。简单起见我们用只包含一个元素的字符串数组和长度数组。第二参数指定了这两个数组的元素个数。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glCompileShader</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编译着色器对象。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLint</span> <span class="n">success</span><span class="p">;</span>
+</span><span class='line'><span class="n">glGetShaderiv</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="n">GL_COMPILE_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">success</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">GLchar</span> <span class="n">InfoLog</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">glGetShaderInfoLog</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">InfoLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error compiling shader type %d: &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ShaderType</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>捕获编译时产生的错误并显示。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glAttachShader</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">ShaderObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把编译好的着色器对象附加到程序中。类似于Makefile链接一列目标对象。真正的链接目标对象发生在链接阶段。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glLinkProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在编译了所有的着色器对象然后附加到着色器程序中，最后需要链接它们。链接完之后，你可以删除产生的中间对象。通过glDeleteShader删除它们。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glGetProgramiv</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">GL_LINK_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Success</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">Sourcess</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">glGetProgramInfoLog</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">ErrorLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error Linking shader program : &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与此前处理编译错误不同的是，这里通过通过glGetProgramiv和glGetProgramInfoLog去捕获和处理链接产生的错误信息。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glValidateProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个调用是用来检测在当前的管道状态下这个着色程序是否能够执行。在复杂的程序中包含着多个着色器和许多的状态，在使用之前最好检查一下，提高代码的健壮性。当然你可以再最终产品发布时去掉这些检测，避免这些性能开销。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glUseProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最终把这个着色器程序设置成管道的状态。这个着色器程序会影响所有的绘制调用，知道你用另外一个替换掉。或者通过glUseProgram(NULL)的方式使其不可用(同时开启固定函数管道)。如果你只创建了一个类型的着色器，那么其他阶段的操作按默认的固定函数进行处理。</p>
+
+<p>到此已经讲完了着色器管理的OpenGL调用。下面是顶点着色器和片段着色器的相关内容。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#version 330</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>告诉编译器我们使用的是GLSL3.3. 如果编译器不支持就会报错</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">in</span> <span class="n">vec3</span> <span class="n">Position</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这条语句出现在顶点着色器中。它声明了顶点的属性。3个浮点数在着色器中被当做‘Position&#8217;.&lsquo;Vertex specifi&#8217;意味着为每一次GPU中着色器的调用，都从缓冲中取出一个新的顶点值。layout (location = 0) 创建属性名称和缓冲中属性的绑定。当顶点包含多个属性（position（位置）， normal（法线）， texture（纹理）)时这一语句是必须的。我们要让编译器知道缓冲区中的每一个顶点的属性映射到着色器中的哪一个属性。 有两种方式，一种是显示的指定像上面的设置为0.然后我们可以再程序中使用这个硬编码。或者我们可以留空（简单滴&#8217;in vec3 Position&rsquo;)然后再运行时用glGetAttribLocation去检索位置。此中情况下我们需要通过glVertexAttributePointer定义顶点属性数组,第一个参数是顶点属性位置的索引，同样的我们设置为0<strong>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</strong>。在这里我们使用简单的方式，但在复杂的程序中最好是让编译器决定属性的索引然后在运行时去检索他们。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每一个着色阶段(VS,GS,FS)都有且仅有一个main函数,是着色器的入口。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们为每一个进入顶点着色阶段的顶点位置做硬编码的转换。X和Y的值减半，Z值不变。gl_Postion是一个特殊的内建类型支持齐次的顶点位置。在经过一系列的转换之后，光栅化程序会遍历这些变量并在屏幕空间中使用它们。X，Y值减半意味着这个三角形只有上一次的四分之一。把W设置为1确保三角形能正确显示。把3D投影到2D需要分两步完成。首先需要把所有的顶点乘以投影矩阵，GPU自动使用透视分割进行处理，然后再传给光栅化程序。（原理原文讲了很多）。</p>
+
+<p>如果一切正常，则这三个顶掉会被转换为(-0.5, -0.5), (0.5, -0.5),(0.0, 0.5)，再传给光栅化程序进行处理。这里裁剪器不需要做任何处理，因为每一个点都在归一化的盒子里。这些值被映射到屏幕坐标上。片段着色器再针对每一个点进行着色。如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">FragColor</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一般情况下片段着色器决定片段的颜色。另外，它还可以改变像素的Z值。输出的颜色是上面变量的值。这个变量由光栅化程序接受并话到帧缓存中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定一个红色的值。
+<img src="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html" title="&#34;效果图&#34;" alt="&#34;效果图&#34;"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/25/ogl-step3/">Ogl Step3 First Triangle</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-25T12:34:00+08:00" pubdate data-updated="true">Jun 25<sup>th</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step3 First Triangle - &amp;url=http://sweetdark.github.com/blog/2013/06/25/ogl-step3/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step3 First Triangle - &amp;url=http://sweetdark.github.com/blog/2013/06/25/ogl-step3/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step3 First Triangle - http://sweetdark.github.com/blog/2013/06/25/ogl-step3/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><h1>背景</h1>
+
+<p>这篇指南非常短，只是简单的画一个三角形。</p>
+
+<p>在此篇指南中，我们依赖于标准化的盒子。可见的顶点必须在这个盒子内
+这样视图转换是才能够把它映射到屏幕坐标上。从z轴的负极往里面看。opengl的盒子如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial03/coord_system.png">
+Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围，那么图形将会被剪切。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Vector3f</span> <span class="n">Vertices</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>扩展顶点数组包含3个顶点。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与上一篇相比两个参数变了，我们画三角形而不是画点。我们画三个顶点而不是一个顶点了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/21/ogl-step2/">Ogl Step2 Hello Dot!</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-21T07:40:00+08:00" pubdate data-updated="true">Jun 21<sup>st</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step2 Hello Dot! - &amp;url=http://sweetdark.github.com/blog/2013/06/21/ogl-step2/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step2 Hello Dot! - &amp;url=http://sweetdark.github.com/blog/2013/06/21/ogl-step2/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step2 Hello Dot! - http://sweetdark.github.com/blog/2013/06/21/ogl-step2/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://ogldev.atspace.co.uk/www/tutorial02/tutorial02.html">原文地址</a>
+<em>PS：我是使用VS来编译这些项目。并非纯粹的翻译，翻译中带有个人观点和文章。如有错误请指正。</em></p>
+
+<h1>背景</h1>
+
+<p>在这个课题我们需要使用到<a href="http://en.wikipedia.org/wiki/Glew" title="OpenGL Extension Wrangler Library ">GLEW</a>。可以在这里下载<a href="http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A">http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A</a>
+把bin目录下的dll放到System32的目录下。lib的目录和include目录拷到你当前的项目中，并在vs的项目中进行引用。在此声明此篇文章需要opengl1.5以上的版本，如果你的显卡不支持就没办法编译通过（只要不是集显都会支持）。独显的如果你好久没更新驱动了，赶紧去更新驱动吧。</p>
+
+<p>在这篇指南中。我们将会第一次使用到<em>顶点缓冲区对象</em>（vertex buffer objects VBOs）。顾名思义，它们是用来存储顶点源的。在3D世界中的怪物，城堡或者一个简单的四方形，都是通过一组顶点源构造出来的。VBOs是把顶点源加载到GPU的最有效方式。VBOs可以被存储在图像存储器中，提供最短的访问GPU的时间。</p>
+
+<p>这一篇指南和下一篇是此系列中唯一依赖于固定管线模式，而不是可编程模式的例子。在这些例子中没有变换发生。我们仅仅是简单的方式让数据流过管道。后面的例子会带您深入的了解管道。但在此处我们还没有必要去深入<em>光栅化程序</em>。 可视化的顶点源中有[x,y,z]坐标，范围在[-1.0, 1.0]。光栅化程序负责把这些坐标映射到屏幕空间中（例如，如果屏幕宽度是1024.则X坐标-1.0对应的是0,1.0对应的是1023）。最后光栅化程序才更具制定的拓扑顺序去渲染元素。由于我们没有绑定任何的渲染器到管道中，也没有用到变换。所以我们只是简单地给出坐标，并让这些坐标点可见。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;GL/glew.h&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>包含GLEW的头文件。如果你需要包含其他的OpenGl头文件，你要小心。把这个头文件放在后面包含进去。编译时，记得引入glew的lib文件。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include "math_3d.h"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个头文件定义了辅助的结构体。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>GLenum res = glewInit();
+</span><span class='line'>if (res != GLEW_OK)
+</span><span class='line'>{
+</span><span class='line'>  fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
+</span><span class='line'>  return 1;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的代码要放在glut初始化之后，用于初始化GLEW并检查错误。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Vector3f Vertices[1];
+</span><span class='line'>Vertices[0] = Vector3f(0.0f, 0.0f, 0.0f);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建一个Vector3f的结构体数组，并初始化为0。这个点是屏幕的中心点。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>GLuint VBO;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们用一个全局变量来存储<em>顶点缓冲区对象</em>。大部分的OpenGL对象是通过GLunit类型的变量来访问的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glGenBuffers(1, &VBO);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OpenGL定义了一些glGen* 函数用于产生各种类型的对象。它们通常带两个参数——第一个代表你要创建多少个对象。第二个参数是存储这些对象的句柄是 驱动给你分配的一组GLuint类型的数组。之后再调用这个函数不会产生相同的句柄，除非你嫌调用glDeleteBuffers删除它们。目前产生的这个缓冲区被视为默认的缓冲区，供下面的函数使用。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OpenGL用一个相当独特的方式来使用这些句柄。在许多的API中都是直接操作句柄，把句柄作为参数传给函数进行使用。在OpenGL中我们需要为句柄绑定一个<em>目标名称</em>（target name）然后再基于这个目标名称执行命令。这些命令会一直影响被绑定的句柄，直到有另外一个句柄替换它或者使用glBindBuffer(*,0)来释放绑定。参数GL_ARRAY_BUFFER意味着缓冲区将包含一组顶点源。另一个有用的目标名称GL_ELEMENT_ARRAY_BUFFER则是使用另一个缓冲区存储着顶点源的索引，通过这些索引来使用顶点源。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在绑定这些对象之后，我们往里面填充数据。第一个参数是目标名称（我们刚才绑定的），第二个参数是绑定顶点源的数据大小以字节为单位，第三个参数是顶点源数组的地址。最后一个参数指明我们对此数据使用什么样的DRAW模式。因为我们没必要修改缓冲区的内容所以我们指定了GL_STATIC_DRAW模式。相反地，是GL_DYNAMIC_DRAW模式。这只是给OpenGL一个指示，如何使用这些缓冲区。显卡驱动会根据这些标志进行优化。（例如：在内存中找到最佳位置存储该缓冲区）。</p>
+
+<p><!-- more --!>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glEnableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
+在渲染器的指南中，你将会看到顶点的属性用于渲染。在渲染器中，这些属性有对应的索引值建立c\C++数据与属性名称的绑定。另外你需要让这些顶点的属性可用通过一些Enalbe的方法。在此例中，我们没有用到任何渲染器，我们只是把顶点的位置加载到缓冲区中。在固定函数管道（当没有渲染器被绑定时，默认激活）中默认的顶点属性索引为0。你必须让每个顶点属性可用否则数据将不能被管道访问。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
+调用绘画函数之前我们需要重新绑定缓冲。在我们这个简单的程序中略显多余，但在复杂的程序中，将有多个缓冲区存储着多样的数据模型。你必须指定你要使用的缓冲区，更新管道的状态。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</span></code></pre></td></tr></table></div></figure>
+这个函数告诉管道如何解释缓冲区里的数据。第一个参数指定属性的索引，我们只使用了0. 第二个参数指明属性的组织形式（3 for X，Y and Z)。第三个参数代表没一维的数据类型。第四个参数指明在被管道使用之前是否将属性标准化。我们的数据不需要标准化。第五个参数代表在缓冲区中两个属性实例之间的步幅。而此例中只有一个属性参数。最后一个参数指定属性在数据中的偏移量。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glDrawArrays(GL_POINTS, 0, 1);</span></code></pre></td></tr></table></div></figure>
+最终，我们调用glDrawArrays函数画几何图形。之前的命令都是为了这个函数调用做准备。到这里GPU才开始工作。GPU会结合已经通过参数设置好的状态，在屏幕上渲染点。</p>
+
+<p>OpenGL提供了许多种函数调用，每一种适用于不同的情况。一般你可以把它们分为两类，<em>顺序绘制</em>和<em>索引绘制</em>。顺序绘制很简单就是遍历你的顶点缓冲区，逐一绘制。例如：如果你指定的是GL_TRIANGLES，则顶点缓冲区里的0-2绘制第一个三角形。</p>
+
+<p>索引绘制更复杂需要引入额外的缓冲区（索引缓冲区）。该索引缓冲区包含所有顶点的索引，我们可以通过索引来取的顶点。编辑索引缓冲区，我们可以重复绘制顶点。实现更复杂的绘制效果。</p>
+
+<p>在这篇指南中我们只是简单的调用了glDrawArray.顺序绘制。第一个参数指定点的拓扑结构，GL_POINTS代表每个顶点都是单独的点。第二个代表第一个顶点的索引。最后一个参数代表要绘制的顶点的个数。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glDisableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
+在不使用时，disable顶点属性是良好的编程习惯。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+
+
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/20/ogl-step1/">Opengl Step1 Create a Window</a></h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-20T21:54:00+08:00" pubdate data-updated="true">Jun 20<sup>th</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Opengl Step1 Create a Window - &amp;url=http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Opengl Step1 Create a Window - &amp;url=http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Opengl Step1 Create a Window - http://sweetdark.github.com/blog/2013/06/20/ogl-step1/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://ogldev.atspace.co.uk/www/tutorial01/tutorial01.html">原文地址</a></p>
+
+<h1>背景</h1>
+
+<p>Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
+我们这里使用的是OpenGl utility library 简称“GLUT&#8221;.GLUT去操作窗体更加简便，同时它也是跨平台的。</p>
+
+<h1>代码漫游</h1>
+
+<blockquote><p>glutInit(&amp;argc, argv);</p></blockquote>
+
+<p>这里初始化GLUT，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitDisplayMode</span><span class="p">(</span><span class="n">GLUT_DOUBLE</span> <span class="o">|</span> <span class="n">GLUT_RGBA</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们配置一些GLUT的选项。GLUT_DOUBLE开启双缓冲。GLUT_RGBA代表颜色的格式。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitWindowSize</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutInitWindowPosition</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutCreateWindow</span><span class="p">(</span><span class="s">&quot;Tutorial 01&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这些调用指定窗体的参数，并创建它</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutDisplayFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大多数的窗体系统都是通过回调函数来交互的。GLUT处理与底层系统的交互。在这里我们仅需要一个主回调函数。这个函数会在GLUT的内部循环不断地调用。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glClearColor</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这是第一次接触到OpenGL 状态的概念。由于状态非常多，难以通过调用函数的时候直接传参过去。所以所以你需要指定
+着色器，缓冲区，各种各样的标志告诉opengl，渲染是如何发生的。另外，你也可能经常会使用到相同的参数去渲染多个图像。
+所以大部分的渲染操作都是通过设置标志和值的方式去指定的。上面的函数调用，设置了情况 帧缓存（framebuffer)时使用到的颜色。这个颜色是（RGBA）格式的，参数值的范围在
+0.0到1.0之间。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutMainLoop</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此函数调用，让GLUT开始他的内部循环。这个循环会监听系统时间，并传给我们刚才设置的回调函数进行处理。我们只注册了一个用于显示的回调函数（RenderSceneCB）去画帧。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutSwapBuffers</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>第一个函数是清空帧缓存，使用上面glClearColor设置的元素进行清空。第二个函数调用是交换前缓冲和后缓冲。</p>
+
+<p><em>VS源代码地址：</em><a href="https://github.com/sweetdark/openglex/tree/master/oglstep1">https://github.com/sweetdark/openglex/tree/master/oglstep1</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="2">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>最新发布</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/how-to-install-octproess/">如何部署已有的octopress Blog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/ogl-step9/">ogl step9 插值</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/ogl-step8/">ogl step8 缩放Scaling Transformation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/ogl-step7/">ogl step7 旋转Rotation Transformation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/05/ogl-step6/">ogl step6 Translation Transformation</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sweetdark">@sweetdark</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sweetdark',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Mario -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

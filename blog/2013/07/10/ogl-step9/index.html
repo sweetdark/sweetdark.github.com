@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>ogl step9 插值 - Mario's Blog</title>
+  <meta name="author" content="Mario">
+
+  
+  <meta name="description" content="Get The Source 背景 这节主要演示3D管道的重要部分————插值是光栅化处理程序处理从顶点缓冲区取出来的变量。正如你所看到的，为了能在屏幕上显示，你需要指明VS的输出变量是&#8217;gl_Position&#8217;. 这是一个4维的向量包含着顶点的齐次坐标。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sweetdark.github.com/blog/2013/07/10/ogl-step9/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Mario's Blog</a></h1>
+  
+    <h2>学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sweetdark.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">目录</a></li>
+  <li><a href="/about">关于我</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+
+
+  <header>
+    
+      <h1 class="entry-title">Ogl Step9 插值</h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T07:27:00+08:00" pubdate data-updated="true">Jul 10<sup>th</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step9 插值 - &amp;url=http://sweetdark.github.com/blog/2013/07/10/ogl-step9/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step9 插值 - &amp;url=http://sweetdark.github.com/blog/2013/07/10/ogl-step9/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step9 插值 - http://sweetdark.github.com/blog/2013/07/10/ogl-step9/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+<div class="entry-content"><p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这节主要演示3D管道的重要部分————插值是光栅化处理程序处理从顶点缓冲区取出来的变量。正如你所看到的，为了能在屏幕上显示，你需要指明VS的输出变量是&#8217;gl_Position&#8217;. 这是一个4维的向量包含着顶点的齐次坐标。向量的XYZ分量除以W分量（透视分割），XY分量超出范围[-1,1]的Z分量超出[0,1]的都将被裁剪。结果被转换到屏幕空间坐标，然后几何图元通过光栅化程序被渲染到屏幕上。光栅化程序在三角形的三个顶点间进行插值，然后访问每一个在三角形内的像素执行片段着色器进行处理。
+片段着色器返回一个颜色缓冲区中的像素颜色。如果片段着色器没处理该变量那么驱动器会进行优化，放弃VS中影响该变量的指令（在这种情况下着色程序会合并VS和FS）</p>
+
+<p>两个非常常见的依赖于插值的变量是三角形的法线和纹理坐标。顶点的法线会在所有包含这个顶点的三角形中法线计算一个平均值。 如果对象不是完全平滑的那就意味着每个三角形的三个顶点的法线是各不相同的。 法线用于光照计算产生更真实的光照影响。纹理坐标也是相似的。这些纹理是模型的一部分有每个顶点指定。 为了用纹理覆盖三角形，需要对每个像素进行采样操作。为么个像素选择正确的纹理坐标。这些坐标是由插值产生的。</p>
+
+<p>在这一节我们会看到使用插值产生不同的颜色覆盖三角形的表面。 由于我很懒，我们直接在VS里产生颜色。一个更乏味的方法是从顶点缓冲区中提供。一般你不会通过顶点缓冲区提供，你会提供一个纹理坐标然后从纹理中采样一个颜色。这个颜色在后面会进行光照计算。</p>
+
+<hr />
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在管道之间传输的参数要声明为&#8217;out&#8217;，在着色器中定义为全局变量。这个颜色是一个4-vector，XYZ分量代表RGB值，W分量代表alpha值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Color</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">clamp</span><span class="p">(</span><span class="n">Position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>颜色在图形管道中通常用范围为[0.0, 1.0]的浮点数进行表示。该值随后会被映射到0~255的颜色通道上。我们设置顶点的位置作为颜色值。首先我们使用内建的函数clamp();确保值在0.0-1.0的范围内。这是因为三角形的左下角的点位于(-1,-1)，且小于等于0的值都会被渲染为黑色。这样的话左下角的角都会是黑色的。我们通过夹紧使得左下角的颜色值大于0.</p>
+
+<p>clamp函数并不会改变向量的维数，智慧改变它的值。但我们输出的变量是4-vector的形式。所以我们使用GLSL的符号&#8217;vec4(vec3,W)&lsquo;来创建一个4-vector包含了3-vector并增加了一个w值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">in</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>VS输出的变量，在FS中接受输入的变量。因为这个变量会被光栅化程序进行插值处理，所以每一个FS会对应一个不同的颜色值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们使用插值的颜色作为片段的颜色。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mario</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T07:27:00+08:00" pubdate data-updated="true">Jul 10<sup>th</sup>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/07/07/ogl-step8/" title="Previous Post: ogl step8 缩放Scaling Transformation">&laquo; ogl step8 缩放Scaling Transformation</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/03/how-to-install-octproess/" title="Next Post: 如何部署已有的octopress Blog">如何部署已有的octopress Blog &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>最新发布</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/how-to-install-octproess/">如何部署已有的octopress Blog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/ogl-step9/">ogl step9 插值</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/ogl-step8/">ogl step8 缩放Scaling Transformation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/ogl-step7/">ogl step7 旋转Rotation Transformation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/05/ogl-step6/">ogl step6 Translation Transformation</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sweetdark">@sweetdark</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sweetdark',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Mario -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2013/07/10/ogl-step9/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2013/07/10/ogl-step9/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

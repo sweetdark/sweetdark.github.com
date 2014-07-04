@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>ogl step2 Hello Dot! - Mario's Blog</title>
+  <meta name="author" content="Mario">
+
+  
+  <meta name="description" content="原文地址
+PS：我是使用VS来编译这些项目。并非纯粹的翻译，翻译中带有个人观点和文章。如有错误请指正。 背景 在这个课题我们需要使用到GLEW。可以在这里下载http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8% &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sweetdark.github.com/blog/2013/06/21/ogl-step2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Mario's Blog</a></h1>
+  
+    <h2>学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sweetdark.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">目录</a></li>
+  <li><a href="/about">关于我</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+
+
+  <header>
+    
+      <h1 class="entry-title">Ogl Step2 Hello Dot!</h1>
+    
+    
+    <p class="meta">
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-21T07:40:00+08:00" pubdate data-updated="true">Jun 21<sup>st</sup>, 2013</time>
+	  
+
+<span class="tags">
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</span>
+
+      <span class="share-to-weibo">
+        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=Ogl Step2 Hello Dot! - &amp;url=http://sweetdark.github.com/blog/2013/06/21/ogl-step2/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=Ogl Step2 Hello Dot! - &amp;url=http://sweetdark.github.com/blog/2013/06/21/ogl-step2/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+
+        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=Ogl Step2 Hello Dot! - http://sweetdark.github.com/blog/2013/06/21/ogl-step2/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
+      </span>
+    </p>
+  
+  </header>
+
+
+<div class="entry-content"><p><a href="http://ogldev.atspace.co.uk/www/tutorial02/tutorial02.html">原文地址</a>
+<em>PS：我是使用VS来编译这些项目。并非纯粹的翻译，翻译中带有个人观点和文章。如有错误请指正。</em></p>
+
+<h1>背景</h1>
+
+<p>在这个课题我们需要使用到<a href="http://en.wikipedia.org/wiki/Glew" title="OpenGL Extension Wrangler Library ">GLEW</a>。可以在这里下载<a href="http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A">http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A</a>
+把bin目录下的dll放到System32的目录下。lib的目录和include目录拷到你当前的项目中，并在vs的项目中进行引用。在此声明此篇文章需要opengl1.5以上的版本，如果你的显卡不支持就没办法编译通过（只要不是集显都会支持）。独显的如果你好久没更新驱动了，赶紧去更新驱动吧。</p>
+
+<p>在这篇指南中。我们将会第一次使用到<em>顶点缓冲区对象</em>（vertex buffer objects VBOs）。顾名思义，它们是用来存储顶点源的。在3D世界中的怪物，城堡或者一个简单的四方形，都是通过一组顶点源构造出来的。VBOs是把顶点源加载到GPU的最有效方式。VBOs可以被存储在图像存储器中，提供最短的访问GPU的时间。</p>
+
+<p>这一篇指南和下一篇是此系列中唯一依赖于固定管线模式，而不是可编程模式的例子。在这些例子中没有变换发生。我们仅仅是简单的方式让数据流过管道。后面的例子会带您深入的了解管道。但在此处我们还没有必要去深入<em>光栅化程序</em>。 可视化的顶点源中有[x,y,z]坐标，范围在[-1.0, 1.0]。光栅化程序负责把这些坐标映射到屏幕空间中（例如，如果屏幕宽度是1024.则X坐标-1.0对应的是0,1.0对应的是1023）。最后光栅化程序才更具制定的拓扑顺序去渲染元素。由于我们没有绑定任何的渲染器到管道中，也没有用到变换。所以我们只是简单地给出坐标，并让这些坐标点可见。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;GL/glew.h&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>包含GLEW的头文件。如果你需要包含其他的OpenGl头文件，你要小心。把这个头文件放在后面包含进去。编译时，记得引入glew的lib文件。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include "math_3d.h"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个头文件定义了辅助的结构体。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>GLenum res = glewInit();
+</span><span class='line'>if (res != GLEW_OK)
+</span><span class='line'>{
+</span><span class='line'>  fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
+</span><span class='line'>  return 1;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的代码要放在glut初始化之后，用于初始化GLEW并检查错误。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Vector3f Vertices[1];
+</span><span class='line'>Vertices[0] = Vector3f(0.0f, 0.0f, 0.0f);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建一个Vector3f的结构体数组，并初始化为0。这个点是屏幕的中心点。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>GLuint VBO;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们用一个全局变量来存储<em>顶点缓冲区对象</em>。大部分的OpenGL对象是通过GLunit类型的变量来访问的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glGenBuffers(1, &VBO);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OpenGL定义了一些glGen* 函数用于产生各种类型的对象。它们通常带两个参数——第一个代表你要创建多少个对象。第二个参数是存储这些对象的句柄是 驱动给你分配的一组GLuint类型的数组。之后再调用这个函数不会产生相同的句柄，除非你嫌调用glDeleteBuffers删除它们。目前产生的这个缓冲区被视为默认的缓冲区，供下面的函数使用。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OpenGL用一个相当独特的方式来使用这些句柄。在许多的API中都是直接操作句柄，把句柄作为参数传给函数进行使用。在OpenGL中我们需要为句柄绑定一个<em>目标名称</em>（target name）然后再基于这个目标名称执行命令。这些命令会一直影响被绑定的句柄，直到有另外一个句柄替换它或者使用glBindBuffer(*,0)来释放绑定。参数GL_ARRAY_BUFFER意味着缓冲区将包含一组顶点源。另一个有用的目标名称GL_ELEMENT_ARRAY_BUFFER则是使用另一个缓冲区存储着顶点源的索引，通过这些索引来使用顶点源。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在绑定这些对象之后，我们往里面填充数据。第一个参数是目标名称（我们刚才绑定的），第二个参数是绑定顶点源的数据大小以字节为单位，第三个参数是顶点源数组的地址。最后一个参数指明我们对此数据使用什么样的DRAW模式。因为我们没必要修改缓冲区的内容所以我们指定了GL_STATIC_DRAW模式。相反地，是GL_DYNAMIC_DRAW模式。这只是给OpenGL一个指示，如何使用这些缓冲区。显卡驱动会根据这些标志进行优化。（例如：在内存中找到最佳位置存储该缓冲区）。</p>
+
+<p><!-- more --!>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glEnableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
+在渲染器的指南中，你将会看到顶点的属性用于渲染。在渲染器中，这些属性有对应的索引值建立c\C++数据与属性名称的绑定。另外你需要让这些顶点的属性可用通过一些Enalbe的方法。在此例中，我们没有用到任何渲染器，我们只是把顶点的位置加载到缓冲区中。在固定函数管道（当没有渲染器被绑定时，默认激活）中默认的顶点属性索引为0。你必须让每个顶点属性可用否则数据将不能被管道访问。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
+调用绘画函数之前我们需要重新绑定缓冲。在我们这个简单的程序中略显多余，但在复杂的程序中，将有多个缓冲区存储着多样的数据模型。你必须指定你要使用的缓冲区，更新管道的状态。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</span></code></pre></td></tr></table></div></figure>
+这个函数告诉管道如何解释缓冲区里的数据。第一个参数指定属性的索引，我们只使用了0. 第二个参数指明属性的组织形式（3 for X，Y and Z)。第三个参数代表没一维的数据类型。第四个参数指明在被管道使用之前是否将属性标准化。我们的数据不需要标准化。第五个参数代表在缓冲区中两个属性实例之间的步幅。而此例中只有一个属性参数。最后一个参数指定属性在数据中的偏移量。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glDrawArrays(GL_POINTS, 0, 1);</span></code></pre></td></tr></table></div></figure>
+最终，我们调用glDrawArrays函数画几何图形。之前的命令都是为了这个函数调用做准备。到这里GPU才开始工作。GPU会结合已经通过参数设置好的状态，在屏幕上渲染点。</p>
+
+<p>OpenGL提供了许多种函数调用，每一种适用于不同的情况。一般你可以把它们分为两类，<em>顺序绘制</em>和<em>索引绘制</em>。顺序绘制很简单就是遍历你的顶点缓冲区，逐一绘制。例如：如果你指定的是GL_TRIANGLES，则顶点缓冲区里的0-2绘制第一个三角形。</p>
+
+<p>索引绘制更复杂需要引入额外的缓冲区（索引缓冲区）。该索引缓冲区包含所有顶点的索引，我们可以通过索引来取的顶点。编辑索引缓冲区，我们可以重复绘制顶点。实现更复杂的绘制效果。</p>
+
+<p>在这篇指南中我们只是简单的调用了glDrawArray.顺序绘制。第一个参数指定点的拓扑结构，GL_POINTS代表每个顶点都是单独的点。第二个代表第一个顶点的索引。最后一个参数代表要绘制的顶点的个数。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glDisableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
+在不使用时，disable顶点属性是良好的编程习惯。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Mario</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-21T07:40:00+08:00" pubdate data-updated="true">Jun 21<sup>st</sup>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/20/ogl-step1/" title="Previous Post: opengl step1 Create a window">&laquo; opengl step1 Create a window</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/06/25/ogl-step3/" title="Next Post: ogl step3 First Triangle">ogl step3 First Triangle &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>最新发布</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/03/how-to-install-octproess/">如何部署已有的octopress Blog</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/10/ogl-step9/">ogl step9 插值</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/ogl-step8/">ogl step8 缩放Scaling Transformation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/07/ogl-step7/">ogl step7 旋转Rotation Transformation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/05/ogl-step6/">ogl step6 Translation Transformation</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sweetdark">@sweetdark</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sweetdark',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Mario -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2013/06/21/ogl-step2/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2013/06/21/ogl-step2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
