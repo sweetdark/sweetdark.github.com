@@ -1,16 +1,8 @@
 ---
-layout: page
-title: 博文目录
-footer: false
+layout: default
+title: Blog Archives
 ---
 
-<dl class="archives">
-  {% for post in site.posts reverse %}
-  {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
-  {% unless year == this_year %}
-    {% assign year = this_year %}
-    <dt>{{ year }}</dt>
-  {% endunless %}
-  <dd>{% include archive-post.html %}</dd>
-  {% endfor %}
-</dl>
+{% for post in site.posts reverse %}
+	{% include archive_post.html %}
+{% endfor %}
