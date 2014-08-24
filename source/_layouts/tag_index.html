@@ -9,6 +9,7 @@ isArchive: true
     {% assign year = this_year %}
     <dt><h2>{{ year }}</h2></dt>
   {% endunless %}
-  <dd>{% include archive-post.html %}</dd>
+  <dd>{% include archive_post.html %}</dd>
   {% endfor %}
+  {% include tag_cloud.html%}
 </dl>
