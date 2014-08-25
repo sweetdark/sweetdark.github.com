@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[My Octopress Blog]]></title>
-  <link href="http://rtwf.github.io/atom.xml" rel="self"/>
-  <link href="http://rtwf.github.io/"/>
+  <link href="http://sweetdark.github.io/atom.xml" rel="self"/>
+  <link href="http://sweetdark.github.io/"/>
   <updated>2014-07-02T13:29:42+08:00</updated>
-  <id>http://rtwf.github.io/</id>
+  <id>http://sweetdark.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
     

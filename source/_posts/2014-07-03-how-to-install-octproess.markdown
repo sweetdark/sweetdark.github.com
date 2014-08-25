@@ -5,13 +5,19 @@ date: 2014-07-03 17:06:14 +0800
 comments: true
 tags: tools
 ---
+**注意 你的系统的环境变量一定不要有中文, 如果Rake中提示 invalid byte sequence in UTF-8 (ArgumentError) 请检查你的所有的系统环境变量**
+
 1. 下载和安装git， 把git安装目录的bin和cmd文件目录加到path中。
 2. 下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby --version来测试是否安装成功
-3. 去网上下载一个[DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe](https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe) 解压到一个目录。dos cd 到这个目录。执行如下命令:
+3. 去网上下载一个[DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe](https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe) 解压到一个目录如E:/Devkit。dos cd 到这个目录。执行如下命令:
 ```
 ruby dk.rb init 
 ruby dk.rb install
 ```
+**
+安装之后，要把这个 E:/Devkit/mingw/bin这个目录加到你的系统环境path，如果已经安装了MinGw并且在path中配置好的，要把这个mingw拷贝过去覆盖掉。
+**
+
 博客的代码高亮需要python环境的支持。去下个python2.7安装。python 安装完成后。执行下面的命令
 
 ```

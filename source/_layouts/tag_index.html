@@ -1,12 +1,15 @@
-<div id="blog-archives" class="category">
-{% for post in site.tags[page.tag] %}
-{% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
-{% unless year == this_year %}
-  {% assign year = this_year %}
-  <h2>{{ year }}</h2>
-{% endunless %}
-<article>
-  {% include archive_post.html %}
-</article>
-{% endfor %}
-</div>
+---
+layout: page
+isArchive: true
+---
+<dl class="archives">
+  {% for post in site.tags[page.tag] %}
+  {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+  {% unless year == this_year %}
+    {% assign year = this_year %}
+    <dt><h2>{{ year }}</h2></dt>
+  {% endunless %}
+  <dd>{% include archive_post.html %}</dd>
+  {% endfor %}
+  {% include tag_cloud.html%}
+</dl>
