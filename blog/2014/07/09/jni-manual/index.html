@@ -1,0 +1,235 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JNI Manual GetFieldID - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="在JNI中要访问结构体中的字段，首先要获得这个字段的FieldID。然后通过GetField和SetField来访问和修改。 1
+2
+3
+4
+5
+6
+//C的接口
+jfieldID GetFieldID(JNIEnv *env, jclass clazz, const char *name, &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">JNI Manual GetFieldID</h2>
+	<div class="entry-content"><p>在JNI中要访问结构体中的字段，首先要获得这个字段的FieldID。然后通过Get<Type>Field和Set<Type>Field来访问和修改。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="c1">//C的接口</span>
+</span><span class='line'><span class="n">jfieldID</span> <span class="nf">GetFieldID</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jclass</span> <span class="n">clazz</span><span class="p">,</span>
+</span><span class='line'>      <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//C++的接口</span>
+</span><span class='line'><span class="n">jfieldID</span> <span class="nf">GetFieldID</span><span class="p">(</span><span class="n">jclass</span> <span class="n">clazz</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>描述</strong></p>
+
+<blockquote><p>返回一个字段的FieldID或者为NULL（如果操作失败），这个字段是用字段和描述串来指定的。然后把FieldID作为Get<Type>Field和Set<Type>Field的参数来访问这个字段。这个字段必须是可以通过clazz来访问的. 当然这个字段可以是clazz类的父类, clazz必须是非空的。
+GetFieldID会初始化未初始化的类
+GetFieldID不可以用来获取数组的长度。应该用GetArrayLength来获取数组的长度。</p></blockquote>
+
+<p><strong>异常</strong></p>
+
+<blockquote><p>NoSuchFiledError: 如果指定的字段没有找到
+ExceptionInInitializeError: 如果类初始化失败。
+OutOfMemoryError：系统内存不够</p></blockquote>
+
+<figure class='code'><figcaption><span>Java结构体Person.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">ID</span><span class="o">;</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">native</span> <span class="n">Person</span> <span class="nf">OnePerson</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span>本地方法的实现</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jobject</span> <span class="n">JNICALL</span> <span class="nf">Java_Person_OnePerson</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/07/09/jni-manual/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/07/09/jni-manual/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/07/09/jni-manual/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

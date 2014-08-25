@@ -1,0 +1,302 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>buildbot的搭建总结 - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="PlatForm win32 64bit
+python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以按照官方这个步骤去做。官方说Windows也差不多，但在我的环境下有问题，（我安装了Cygwin，在Cygwin环境下运行的）。 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Buildbot的搭建总结</h2>
+	<div class="entry-content"><p><strong>PlatForm</strong>                    <em>win32 64bit</em>
+<strong>python version</strong>              <em>python2.7 32bit</em></p>
+
+<h2>入门</h2>
+
+<p>如果是Linux系统的<a href="http://docs.buildbot.net/current/tutorial/firstrun.html">FirstRun</a>，可以按照官方这个步骤去做。官方说Windows也差不多，但在我的环境下有问题，（我安装了Cygwin，在Cygwin环境下运行的）。 virtualenv  这个的easy_install太旧了。我用sandbox运行 easy_install buildbot总是提示缺少库。更新easy_install 也没用。 关于用easy_install -U setuptool的产生的Perssion Denied问题可以看<a href="http://stackoverflow.com/questions/17601020/easy-install-exe-permission-denied-on-windows-8">这里</a></p>
+
+<p>Windows 下的安装步骤。参考<a href="http://trac.buildbot.net/wiki/RunningBuildbotOnWindows">这里</a> 下面说一下我遇到的问题。
+我的建议是都安装x86的版本。python  PyWin32版本。 有一些需要编译的python库很麻烦如pysqlite 。python2.7的大部分库是用VS2008编译的，可以去下个VS2008的Express。如果是Windows 64bit出现问题参考<a href="http://stackoverflow.com/questions/4676728/value-error-trying-to-install-python-for-windows-extensions">这里</a>
+因为我装了好几个版本的VS。我的问题弄了好久没解决。还好网上有编译好的版本。
+<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32">http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32</a> 我在这里下了个pysqlite的exe.
+如果下载的是.zip文件，则解压，然后dos进入该目录，执行<code>python setup.py install</code>命令即可
+也在网上找了个OpenSSL windwos版的下载安装好了。
+大部分需要的组件我都上传的网盘了地址<a href="http://pan.baidu.com/s/1dD7tlUp">http://pan.baidu.com/s/1dD7tlUp</a>
+检查是否buildbot和buildbot-slave是否安装好了。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>buildbot --version
+</span><span class='line'>buildslave --version</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果一切正常那可以按照<a href="http://docs.buildbot.net/current/tutorial/firstrun.html">FirstRun</a> 这里后面的继续去做了。</p>
+
+<!--more-->
+
+
+<h2>Creating a master</h2>
+
+<p>At the terminal, type:</p>
+
+<p>buildbot create-master master
+mv master/master.cfg.sample master/master.cfg
+Now start it:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>buildbot start master
+</span><span class='line'>tail -f master/twistd.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You will now see all of the log information from the master in this terminal. You should see lines like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>2011-12-04 10:04:40-0600 [-] Starting factory &lt;buildbot.status.web.baseweb.RotateLogSite instance at 0x2e36638&gt;
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] Setting up http.log rotating 10 files of 10000000 bytes each
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] WebStatus using (/home/dustin/tmp/buildbot/master/public_html)
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] removing 0 old schedulers, updating 0, and adding 1
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] adding 1 new changesources, removing 0
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] gitpoller: using workdir '/home/dustin/tmp/buildbot/master/gitpoller-workdir'
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] gitpoller: initializing working dir from git://github.com/buildbot/pyflakes.git
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] configuration update complete
+</span><span class='line'>2011-12-04 10:04:41-0600 [-] gitpoller: checking out master
+</span><span class='line'>2011-12-04 10:04:41-0600 [-] gitpoller: finished initializing working dir from git://github.com/buildbot/pyflakes.git at rev 1a4af6ec1dbb724b884ea14f439b272f30439e4d</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Creating a slave</h2>
+
+<p>Open a new terminal and enter the same sandbox you created before:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd
+</span><span class='line'>cd tmp/buildbot
+</span><span class='line'>source sandbox/bin/activate
+</span><span class='line'>Install the buildslave command:</span></code></pre></td></tr></table></div></figure>
+
+
+<p>easy_install buildbot-slave
+Now, create the slave:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>buildslave create-slave slave localhost:9989 example-slave pass</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The user:host pair, username, and password should be the same as the ones in master.cfg; verify this is the case by looking at the section for c[&lsquo;slaves&rsquo;] and c[&lsquo;slavePortnum&rsquo;]:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat master/master.cfg</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, start the slave:</p>
+
+<p>buildslave start slave
+Check the slave&rsquo;s log:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tail -f slave/twistd.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should see lines like the following at the end of the worker log:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>2009-07-29 20:59:18+0200 [Broker,client] message from master: attached
+</span><span class='line'>2009-07-29 20:59:18+0200 [Broker,client] SlaveBuilder.remote_print(buildbot-full): message from master: attached
+</span><span class='line'>2009-07-29 20:59:18+0200 [Broker,client] sending application-level keepalives every 600 seconds
+</span><span class='line'>Meanwhile, in the other terminal, in the master log, if you tail the log you should see lines like this:
+</span><span class='line'>
+</span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] slave 'example-slave' attaching from IPv4Address(TCP, '127.0.0.1', 41306)
+</span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] Got slaveinfo from 'example-slave'
+</span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] bot attached
+</span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] Buildslave example-slave attached to runtests</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should now be able to go to <a href="http://localhost:8010,">http://localhost:8010,</a> where you will see a web page similar to:
+<img src="http://docs.buildbot.net/current/_images/index.png"></p>
+
+<p>Click on the Waterfall Display link and you get this:</p>
+
+<p><img src="http://docs.buildbot.net/current/_images/waterfall-empty.png"></p>
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/07/23/buildbot-build/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/07/23/buildbot-build/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/07/23/buildbot-build/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

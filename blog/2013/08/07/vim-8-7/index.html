@@ -1,0 +1,348 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vim 移动命令 - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="Vim移动命令小结： word和WORD 字和长字的介绍 word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
+A word consists of a sequence of letters, digits and underscores, &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Vim 移动命令</h2>
+	<div class="entry-content"><h2>Vim移动命令小结：</h2>
+
+<h3>word和WORD 字和长字的介绍</h3>
+
+<p>word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
+A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, <EOL>). An empty line is also considered to be a word.
+Use &lsquo;w&rsquo;, &lsquo;e&rsquo;, and &lsquo;b&rsquo; to navigate words.
+Special case: &ldquo;cw&rdquo; is treated like &ldquo;ce&rdquo; if the cursor is on a non-blank. This is because &ldquo;cw&rdquo; is interpreted as change-word, and a word does not include the following white space.</p>
+
+<p>Example: (each word is surrounded by a rectangle)</p>
+
+<p>|while| |(|next_line1| |!==| |&ldquo;|The END|!&rdquo;)| |do| |{|</p>
+
+<p>  |next_line1| |=| |readNextLine|();|</p>
+
+<p>|}|</p>
+
+<p>WORD 长字代表一系列的字符串。 由blank tab 换行区分
+A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
+Use &lsquo;W&rsquo;, &lsquo;E&rsquo;, and &lsquo;B&rsquo; to navigate WORDs.
+Special case: &ldquo;cW&rdquo; is treated like &ldquo;cE&rdquo; if the cursor is on a non-blank. This is because &ldquo;cW&rdquo; is interpreted as change-WORD, and a WORD does not include the following white space.
+Example: (each WORD is surrounded by a rectangle)</p>
+
+<p>|while| |(next_line1| |!==| |&ldquo;The END!&rdquo;)| |do| |{|</p>
+
+<p>  |next_line1| |=| |readNextLine();|</p>
+
+<p>|}|</p>
+
+<h1>vim移动命令Normal模式下</h1>
+
+<h2>文件滚动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-u&gt; 上滚动半屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-d&gt; 下滚动半屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-f&gt; 下滚动全屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-b&gt; 上滚动全屏
+</span><span class='line'>
+</span><span class='line'>H 跳到当前页首行
+</span><span class='line'>
+</span><span class='line'>M 跳到当前页中间
+</span><span class='line'>
+</span><span class='line'>L 跳到当前页尾行
+</span><span class='line'>
+</span><span class='line'>N% 按百分比跳
+</span><span class='line'>
+</span><span class='line'>% 单独一个%代表在(),[],{}寻找匹配移动
+</span><span class='line'>
+</span><span class='line'>[{ 跳转到匹配当前}的 {位置
+</span><span class='line'>
+</span><span class='line'>]} 跳转到匹配当前{的 }位置。
+</span><span class='line'>
+</span><span class='line'>NG 或:n 跳转到N行
+</span><span class='line'>
+</span><span class='line'>n n为数字，从当前行往下移动n行
+</span><span class='line'>
+</span><span class='line'>nf* 跳转到第n个出现*字符的位置，包含*字符  大写F 为反向
+</span><span class='line'>
+</span><span class='line'>nt* 跳转到第n个出现*字符的前面，不包含*字符 如t, 跳转到第一个,的前面。大写T为反向</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>大段移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[[ 跳转到下一段的{处
+</span><span class='line'>
+</span><span class='line'>]] 跳转打下一段的}处</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>标记移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>m[a-z|A-Z] 来标记位置 ，然后通过'[a-z|A-Z]来移动到标记的行，行首。使用\`[a-z|A-Z]则移动精确的行和列</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>相对于光标滚屏</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>在阅读代码时，有时我们需要根据光标所在的位置滚屏，把光标所在行移动窗口的顶端、中间或底部，这时就可以用到”zt“、”zz“和”zb“。</span></code></pre></td></tr></table></div></figure>
+
+
+<!--more-->
+
+
+<h2>不同窗口间的移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-w&gt; + hjkl 在上下左右分屏的窗口移动
+</span><span class='line'>
+</span><span class='line'>&lt;C-w&gt; + w 一次跳到下一个窗口</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>文件间切换命令</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>:bn 在当前窗口打开下一个文件
+</span><span class='line'>
+</span><span class='line'>:bp 在当前窗口打开前一个文件
+</span><span class='line'>
+</span><span class='line'>:sp filename 用分屏的方式打开另一个文件</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>折叠行并移动</h2>
+
+<p>···</p>
+
+<pre><code>zo – 打开光标下的折叠
+zO – 循环打开光标下的折叠，也就是说，如果存在多级折叠，每一级都会被打开
+zc – 关闭光标下的折叠
+zC – 循环关闭光标下的折叠 
+</code></pre>
+
+<p>···
+更多的命令，请参阅手册(:help folding)。</p>
+
+<p>vim提供了一些命令在折叠间快速移动：
+···</p>
+
+<pre><code>[z – 到当前打开折叠的开始
+]z – 到当前打开折叠的结束
+zj – 向下移动到下一个折叠的开始处
+zk – 向上移动到上一个折叠的结束处 
+</code></pre>
+
+<p>···</p>
+
+<h2>跳转</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-o&gt; 跳转到前一次跳转的位置
+</span><span class='line'>&lt;C-i&gt; 跳转到后一次跳转的位置
+</span><span class='line'>'.  跳转到上一次编辑修改过的位置</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/08/07/vim-8-7/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2013/08/07/vim-8-7/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2013/08/07/vim-8-7/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

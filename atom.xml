@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2014-07-04T13:12:54+08:00</updated>
+  <updated>2014-08-25T14:42:02+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -14,14 +14,657 @@
 
   
   <entry>
+    <title type="html"><![CDATA[buildbot的搭建总结]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/07/23/buildbot-build/"/>
+    <updated>2014-07-23T18:56:27+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/07/23/buildbot-build</id>
+    <content type="html"><![CDATA[<p><strong>PlatForm</strong>                    <em>win32 64bit</em>
+<strong>python version</strong>              <em>python2.7 32bit</em></p>
+
+<h2>入门</h2>
+
+<p>如果是Linux系统的<a href="http://docs.buildbot.net/current/tutorial/firstrun.html">FirstRun</a>，可以按照官方这个步骤去做。官方说Windows也差不多，但在我的环境下有问题，（我安装了Cygwin，在Cygwin环境下运行的）。 virtualenv  这个的easy_install太旧了。我用sandbox运行 easy_install buildbot总是提示缺少库。更新easy_install 也没用。 关于用easy_install -U setuptool的产生的Perssion Denied问题可以看<a href="http://stackoverflow.com/questions/17601020/easy-install-exe-permission-denied-on-windows-8">这里</a></p>
+
+<p>Windows 下的安装步骤。参考<a href="http://trac.buildbot.net/wiki/RunningBuildbotOnWindows">这里</a> 下面说一下我遇到的问题。
+我的建议是都安装x86的版本。python  PyWin32版本。 有一些需要编译的python库很麻烦如pysqlite 。python2.7的大部分库是用VS2008编译的，可以去下个VS2008的Express。如果是Windows 64bit出现问题参考<a href="http://stackoverflow.com/questions/4676728/value-error-trying-to-install-python-for-windows-extensions">这里</a>
+因为我装了好几个版本的VS。我的问题弄了好久没解决。还好网上有编译好的版本。
+<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32">http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32</a> 我在这里下了个pysqlite的exe.
+如果下载的是.zip文件，则解压，然后dos进入该目录，执行<code>python setup.py install</code>命令即可
+也在网上找了个OpenSSL windwos版的下载安装好了。
+大部分需要的组件我都上传的网盘了地址<a href="http://pan.baidu.com/s/1dD7tlUp">http://pan.baidu.com/s/1dD7tlUp</a>
+检查是否buildbot和buildbot-slave是否安装好了。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>buildbot --version
+</span><span class='line'>buildslave --version</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果一切正常那可以按照<a href="http://docs.buildbot.net/current/tutorial/firstrun.html">FirstRun</a> 这里后面的继续去做了。</p>
+
+<!--more-->
+
+
+<h2>Creating a master</h2>
+
+<p>At the terminal, type:</p>
+
+<p>buildbot create-master master
+mv master/master.cfg.sample master/master.cfg
+Now start it:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>buildbot start master
+</span><span class='line'>tail -f master/twistd.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You will now see all of the log information from the master in this terminal. You should see lines like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>2011-12-04 10:04:40-0600 [-] Starting factory &lt;buildbot.status.web.baseweb.RotateLogSite instance at 0x2e36638&gt;
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] Setting up http.log rotating 10 files of 10000000 bytes each
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] WebStatus using (/home/dustin/tmp/buildbot/master/public_html)
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] removing 0 old schedulers, updating 0, and adding 1
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] adding 1 new changesources, removing 0
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] gitpoller: using workdir '/home/dustin/tmp/buildbot/master/gitpoller-workdir'
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] gitpoller: initializing working dir from git://github.com/buildbot/pyflakes.git
+</span><span class='line'>2011-12-04 10:04:40-0600 [-] configuration update complete
+</span><span class='line'>2011-12-04 10:04:41-0600 [-] gitpoller: checking out master
+</span><span class='line'>2011-12-04 10:04:41-0600 [-] gitpoller: finished initializing working dir from git://github.com/buildbot/pyflakes.git at rev 1a4af6ec1dbb724b884ea14f439b272f30439e4d</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Creating a slave</h2>
+
+<p>Open a new terminal and enter the same sandbox you created before:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd
+</span><span class='line'>cd tmp/buildbot
+</span><span class='line'>source sandbox/bin/activate
+</span><span class='line'>Install the buildslave command:</span></code></pre></td></tr></table></div></figure>
+
+
+<p>easy_install buildbot-slave
+Now, create the slave:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>buildslave create-slave slave localhost:9989 example-slave pass</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The user:host pair, username, and password should be the same as the ones in master.cfg; verify this is the case by looking at the section for c[&lsquo;slaves&rsquo;] and c[&lsquo;slavePortnum&rsquo;]:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat master/master.cfg</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, start the slave:</p>
+
+<p>buildslave start slave
+Check the slave&rsquo;s log:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tail -f slave/twistd.log</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should see lines like the following at the end of the worker log:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>2009-07-29 20:59:18+0200 [Broker,client] message from master: attached
+</span><span class='line'>2009-07-29 20:59:18+0200 [Broker,client] SlaveBuilder.remote_print(buildbot-full): message from master: attached
+</span><span class='line'>2009-07-29 20:59:18+0200 [Broker,client] sending application-level keepalives every 600 seconds
+</span><span class='line'>Meanwhile, in the other terminal, in the master log, if you tail the log you should see lines like this:
+</span><span class='line'>
+</span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] slave 'example-slave' attaching from IPv4Address(TCP, '127.0.0.1', 41306)
+</span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] Got slaveinfo from 'example-slave'
+</span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] bot attached
+</span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] Buildslave example-slave attached to runtests</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should now be able to go to <a href="http://localhost:8010,">http://localhost:8010,</a> where you will see a web page similar to:
+<img src="http://docs.buildbot.net/current/_images/index.png"></p>
+
+<p>Click on the Waterfall Display link and you get this:</p>
+
+<p><img src="http://docs.buildbot.net/current/_images/waterfall-empty.png"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[vs编译错误及解决办法]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/07/17/vs-error-collection/"/>
+    <updated>2014-07-17T18:18:48+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/07/17/vs-error-collection</id>
+    <content type="html"><![CDATA[<h3>error C2220: 警告被视为错误 &ndash; 没有生成“object”文件</h3>
+
+<p>这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
+解决方案：
+1. 在VS2010以后在文件->高级保存选项，设置UTF-8的格式，重新保存一次。 或者用其它的程序保存成UTF-8的格式。</p>
+
+<ol>
+<li>如果上述不能去掉错误，还可以点击项目，右击选择属性->配置属性->c/c++&ndash;>常规，将“警告视为错误”的选项改为“否”。就可以！</li>
+</ol>
+
+
+<h3>error C2143: 语法错误 : 缺少“;”(在“类型”的前面)</h3>
+
+<p>C99之前都要求，函数内的局部变量要在开始处定义。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">f</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;j is %d&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这可能出现在c文件编译的时候，VS2012都不完全支持C99。须要调整一下代码。把函数内的局部变量放到函数开头去定义。或者改成cpp后缀的文件</p>
+
+<p>VS2010之后开始支持C99，所以在VS2008之前如果出现 找不到 stdint.h 文件的话。可以升级到VS2010之后。</p>
+
+<h3>LNK2001: 无法解析的外部符号 __iob 问题的解决方法</h3>
+
+<ol>
+<li><p>缺少libc.lib
+解决这个问题的方法是去掉链接到libc.lib，具体地点：项目-〉属性-〉配置属性-〉链接器-〉忽略特定库。</p></li>
+<li><p>unresolved external symbol <code>__iob</code>
+这个<code>__iob</code>找不到的问题费了我大部分的时间。跟踪到stdio.h文件，发现那里有个关于iob的宏，终于搞定。加入一句话到.cpp文件中：<code>extern "C" { FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]}; }</code></p></li>
+<li><p>NULL iterator
+STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器上进行++或&mdash;之类的是不成立的。</p></li>
+<li><p>结构体默认函数
+在VC6中，结构体的默认运算符==或者&lt;之类的如果不实现也可以作为STL元素放入list等容器中。但VC8不行了，因为它已经不再为结构体生成缺省的操作符函数。</p></li>
+</ol>
+
+
+<p>该错误主要是由于静态库在VC6编译而主程序在VC2005编译，大家用的CRT不同。解决办法，代码中增加</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef __cplusplus</span>
+</span><span class='line'><span class="k">extern</span> <span class="s">&quot;C&quot;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span><span class='line'><span class="kt">FILE</span> <span class="n">_iob</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">__iob_func</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">__iob_func</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="n">__iob_func</span><span class="p">()[</span><span class="mi">2</span><span class="p">]};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此错误的产生根源：
+在VC6的stdio.h之中有如下定义</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">_CRTIMP</span> <span class="k">extern</span> <span class="kt">FILE</span> <span class="n">_iob</span><span class="p">[];</span>
+</span><span class='line'><span class="cp">#define stdin (&amp;_iob[0])</span>
+</span><span class='line'><span class="cp">#define stdout (&amp;_iob[1])</span>
+</span><span class='line'><span class="cp">#define stderr (&amp;_iob[2])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>stdin、stdout、stderr是通过查<em>iob数组得到的。所以，VC6编译的程序、静态库只要用到了printf、scanf之类的函数，都要链接</em>iob数组。</p>
+
+<p>而在vc2005中，stdio.h中变成了</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">_CRTIMP</span> <span class="kt">FILE</span> <span class="o">*</span> <span class="kr">__cdecl</span> <span class="nf">__iob_func</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</span><span class='line'><span class="cp">#define stdin (&amp;__iob_func()[0])</span>
+</span><span class='line'><span class="cp">#define stdout (&amp;__iob_func()[1])</span>
+</span><span class='line'><span class="cp">#define stderr (&amp;__iob_func()[2])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>_iob</code>数组不再是显式的暴露出来了，需要调用<em><em>iob_func()函数获得。所以vc6的静态库链接VC2005的C运行库就会找不到</em>iob数组.
+通过重新定义
+<code>FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]};</code>
+就把vc6需要用到的</em>iob数组搞出来了</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JNI Manual GetFieldID]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/07/09/jni-manual/"/>
+    <updated>2014-07-09T21:32:08+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/07/09/jni-manual</id>
+    <content type="html"><![CDATA[<p>在JNI中要访问结构体中的字段，首先要获得这个字段的FieldID。然后通过Get<Type>Field和Set<Type>Field来访问和修改。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="c1">//C的接口</span>
+</span><span class='line'><span class="n">jfieldID</span> <span class="nf">GetFieldID</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jclass</span> <span class="n">clazz</span><span class="p">,</span>
+</span><span class='line'>      <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//C++的接口</span>
+</span><span class='line'><span class="n">jfieldID</span> <span class="nf">GetFieldID</span><span class="p">(</span><span class="n">jclass</span> <span class="n">clazz</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>描述</strong></p>
+
+<blockquote><p>返回一个字段的FieldID或者为NULL（如果操作失败），这个字段是用字段和描述串来指定的。然后把FieldID作为Get<Type>Field和Set<Type>Field的参数来访问这个字段。这个字段必须是可以通过clazz来访问的. 当然这个字段可以是clazz类的父类, clazz必须是非空的。
+GetFieldID会初始化未初始化的类
+GetFieldID不可以用来获取数组的长度。应该用GetArrayLength来获取数组的长度。</p></blockquote>
+
+<p><strong>异常</strong></p>
+
+<blockquote><p>NoSuchFiledError: 如果指定的字段没有找到
+ExceptionInInitializeError: 如果类初始化失败。
+OutOfMemoryError：系统内存不够</p></blockquote>
+
+<figure class='code'><figcaption><span>Java结构体Person.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">ID</span><span class="o">;</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">native</span> <span class="n">Person</span> <span class="nf">OnePerson</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span>本地方法的实现</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jobject</span> <span class="n">JNICALL</span> <span class="nf">Java_Person_OnePerson</span>
+</span><span class='line'>  <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Eclipse 工具]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/07/09/eclipse-tools/"/>
+    <updated>2014-07-09T19:33:01+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/07/09/eclipse-tools</id>
+    <content type="html"><![CDATA[<h2>配置Javap工具</h2>
+
+<p>在Eclipse的Menu中打开Run->External Tools->External Tools Configurations
+添加一个新的项。
+<img src="https://farm3.staticflickr.com/2928/14617040064_088658d740_o.png">
+<img src="https://farm3.staticflickr.com/2912/14639067183_6776a117b8_b.jpg">
+javap这个工具可以用来输出java类 对应jni的描述。
+<img src="http://farm3.staticflickr.com/2939/14619183735_dfb1841c44_b.jpg">
+把Signature 后面的字符串拷贝就行了（<strong>后面的分号也要拷贝</strong>）。这样可以在GetField中使用了。
+env->GetField(cls, &ldquo;fieldName&rdquo;, &ldquo;Signature&rdquo;);
+javah的工具配置类似。</p>
+
+<h2>定位文件目录</h2>
+
+<p>跟VS一样，VS在标签中右键打开文件目录一样。Eclipse须要配置。也是在External Tool中。
+新建一个
+<img src="http://farm3.staticflickr.com/2931/14618685852_2340a8acab_b.jpg">
+Build选项下面就不要勾上build before launch了。</p>
+
+<p><a href="http://www.open-open.com/bbs/view/1320934157953/">Eclipse快捷键 10个最有用的快捷键</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Andriod ndk error local reference table overflow Max 512]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/07/09/local-reference-table-overflow/"/>
+    <updated>2014-07-09T12:57:43+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/07/09/local-reference-table-overflow</id>
+    <content type="html"><![CDATA[<h1>引言</h1>
+
+<p>在Android开发中，常会遇到 local reference table overflow的错误。原因是从java代码进入jni层的本地代码调用时，Dalvik就会创建一张local reference表来存储local reference， 这张表的表项数有最大限制。一般为512个。当表项数超过最大值限制时，Dalvik就会抛出异常。</p>
+
+<figure class='code'><figcaption><span>下面这段代码就会导致溢出</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">jclass</span> <span class="n">strinClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">800</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">stringClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">.....</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>什么是Local References？</h1>
+
+<p>大多数的JNI函数都创建了Local reference（以下简称为<em>LR</em>）。 比如 NewObject, NewString&hellip;. 和 FindClass 等。</p>
+
+<p>一个<em>LR</em>只有在创建它的的一个局部作用域内有效。在超出这个作用域之后，就可能会被释放。 所有的<em>LR</em>在本地函数调用时创建的，在这个本地函数返回时就会被释放。</p>
+
+<p>你不能把一个Local reference 保存在静态变量中，然后在后面继续调用，这是不安全的。</p>
+
+<figure class='code'><figcaption><span>错误的例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* This code is illegal */</span>
+</span><span class='line'><span class="n">jstring</span>
+</span><span class='line'><span class="nf">MyNewString</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jchar</span> <span class="o">*</span><span class="n">chars</span><span class="p">,</span> <span class="n">jint</span> <span class="n">len</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">jclass</span> <span class="n">stringClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jmethodID</span> <span class="n">cid</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jcharArray</span> <span class="n">elemArr</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jstring</span> <span class="n">result</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">stringClass</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="n">env</span><span class="p">,</span>
+</span><span class='line'>                                        <span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* exception thrown */</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="cm">/* It is wrong to use the cached stringClass here,</span>
+</span><span class='line'><span class="cm">       because it may be invalid. */</span>
+</span><span class='line'>    <span class="n">cid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span>
+</span><span class='line'>                              <span class="s">&quot;&lt;init&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;([C)V&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="n">elemArr</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewCharArray</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>  <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewObject</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span>
+</span><span class='line'><span class="nf">Java_C_f</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">this</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="o">*</span><span class="n">c_str</span> <span class="o">=</span> <span class="p">...;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">MyNewString</span><span class="p">(</span><span class="n">c_str</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//Java 中</span>
+</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
+</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>假设我调用了两次Java_C_f。 其中调用了MyNewString， MyNewString的想法是把stringClass这个<em>LR</em> 初始化一次后保存起来，下次可以继续用。但根据JNI的规则。在MyNewString返回时，所有的<em>LR</em>都会被释放。所以第二次调用时stringClass就是Invalid的。</p>
+
+<p>虽然VM会在本地函数返回时，释放所有的<em>LR</em>，但我们也可以显示的控制<em>LR</em>的释放。<em>LR</em>引用的对象只有在，<em>LR</em>无效的时候才会被GC回收，在MyNewString函数中调用的DeleteLocalRef 释放中间的变量elemArr，这样GC可以立即回收这个<em>LR</em> 不然elemArr这个<em>LR</em>会等到本地函数MyNewString返回时才被回收。</p>
+
+<p><em>LR</em>只能在创建它的线程中使用，在其它的线程中使用它是错误的。所以用一个全局变量保存在其它线程中用是不可行的。</p>
+
+<!--more-->
+
+
+<h2>释放引用</h2>
+
+<figure class='code'><figcaption><span>错误的例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="c1">//1.FindClass </span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//例如，</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jclass</span> <span class="n">ref</span><span class="o">=</span> <span class="p">(</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">env</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">ref</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="mf">2.</span><span class="n">NewString</span><span class="o">/</span> <span class="n">NewStringUTF</span><span class="o">/</span><span class="n">NewObject</span><span class="o">/</span><span class="n">NewByteArray</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//例如，</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jstring</span>     <span class="p">(</span><span class="o">*</span><span class="n">NewString</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="n">jchar</span><span class="o">*</span><span class="p">,</span> <span class="n">jsize</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">const</span> <span class="n">jchar</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="n">GetStringChars</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="n">jstring</span><span class="p">,</span> <span class="n">jboolean</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span>        <span class="p">(</span><span class="o">*</span><span class="n">ReleaseStringChars</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="n">jstring</span><span class="p">,</span> <span class="k">const</span> <span class="n">jchar</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jstring</span>     <span class="p">(</span><span class="o">*</span><span class="n">NewStringUTF</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="n">GetStringUTFChars</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="n">jstring</span><span class="p">,</span> <span class="n">jboolean</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span>        <span class="p">(</span><span class="o">*</span><span class="n">ReleaseStringUTFChars</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="n">jstring</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">env</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">ref</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="mf">3.</span> <span class="n">GetObjectField</span><span class="o">/</span><span class="n">GetObjectClass</span><span class="o">/</span><span class="n">GetObjectArrayElement</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jclass</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetObjectClass</span><span class="p">(</span><span class="n">robj</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">env</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">ref</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="mf">4.</span><span class="n">GetByteArrayElements</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jbyte</span><span class="o">*</span> <span class="n">array</span><span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetByteArrayElements</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="n">jarray</span><span class="p">,</span><span class="o">&amp;</span><span class="n">isCopy</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseByteArrayElements</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="n">jarray</span><span class="p">,</span><span class="n">array</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">input</span> <span class="o">=</span><span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="n">jinput</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">isCopy</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="n">jinput</span><span class="p">,</span><span class="n">input</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考</h2>
+
+<ol>
+<li><p><a href="http://journals.ecs.soton.ac.uk/java/tutorial/native1.1/implementing/refs.html">Local and Global References</a></p></li>
+<li><p><a href="http://www.soi.city.ac.uk/~kloukin/IN2P3/material/jni.pdf">The Java ™  Native Interface Programmer’s Guide and Specification</a></p></li>
+<li><p><a href="http://mysuperbaby.iteye.com/blog/1603817">http://mysuperbaby.iteye.com/blog/1603817</a></p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[多个github用户配置SSH KEY的切换]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/07/05/config-mutil-ssh-key-user/"/>
+    <updated>2014-07-05T17:01:53+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/07/05/config-mutil-ssh-key-user</id>
+    <content type="html"><![CDATA[<p>如果你在github有多个帐户。那要在不同的帐户之间切换SSH Key。可以config来配置SSH key
+假设你有两个private key文件为 id_rsa1 和 id_rsa2
+生成ssh key的命令如下:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh-keygen -t rsa -C "youremail"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在git bash下</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.ssh
+</span><span class='line'>touch config
+</span><span class='line'>#打开config 如果你用的是vim 可以 vim config 
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>打开后编辑如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host firstkey 
+</span><span class='line'>  HostName github.com
+</span><span class='line'>  User git
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa1
+</span><span class='line'>Host secondkey
+</span><span class='line'>  HostName github.com
+</span><span class='line'>  User git
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa2</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
+只需要把原先的<a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#103;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;">&#103;&#105;&#x74;&#x40;&#x67;&#105;&#x74;&#104;&#x75;&#98;&#x2e;&#99;&#111;&#109;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url [name] [url]
+</span><span class='line'>git remote set-url --push [name] [url]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>还要把key加入到ssh-agent中，命令如下:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh-add ~/.ssh/id_rsa1
+</span><span class='line'>ssh-add ~/.ssh/id_rsa2
+</span><span class='line'>#该命令如果报错：Could not open a connection to your authentication agent.无法连接到ssh agent
+</span><span class='line'>#可先执行
+</span><span class='line'>eval "ssh-agent -s" 或者 ssh-agent bash</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例子：</p>
+
+<figure class='code'><figcaption><span>在同一机器不同目录下克隆远程同一个repo</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>git clone git@firstkey:xxx.git
+</span><span class='line'>
+</span><span class='line'>git clone git@secondkey:xxx.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的两条clone命令，虽然关联到同一个repo，却是通过不同ssh连接，当然也是不同的git账号。</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[如何部署已有的octopress Blog]]></title>
     <link href="http://sweetdark.github.com/blog/2014/07/03/how-to-install-octproess/"/>
     <updated>2014-07-03T17:06:14+08:00</updated>
     <id>http://sweetdark.github.com/blog/2014/07/03/how-to-install-octproess</id>
-    <content type="html"><![CDATA[<ol>
+    <content type="html"><![CDATA[<p><strong>注意 你的系统的环境变量一定不要有中文, 如果Rake中提示 invalid byte sequence in UTF-8 (ArgumentError) 请检查你的所有的系统环境变量</strong></p>
+
+<ol>
 <li>下载和安装git， 把git安装目录的bin和cmd文件目录加到path中。</li>
 <li>下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby &mdash;version来测试是否安装成功</li>
-<li>去网上下载一个<a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a> 解压到一个目录。dos cd 到这个目录。执行如下命令:</li>
+<li>去网上下载一个<a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a> 解压到一个目录如E:/Devkit。dos cd 到这个目录。执行如下命令:</li>
 </ol>
 
 
@@ -30,6 +673,10 @@
 </pre></td><td class='code'><pre><code class=''><span class='line'>ruby dk.rb init 
 </span><span class='line'>ruby dk.rb install</span></code></pre></td></tr></table></div></figure>
 
+
+<p><strong>
+安装之后，要把这个 E:/Devkit/mingw/bin这个目录加到你的系统环境path，如果已经安装了MinGw并且在path中配置好的，要把这个mingw拷贝过去覆盖掉。
+</strong></p>
 
 <p>博客的代码高亮需要python环境的支持。去下个python2.7安装。python 安装完成后。执行下面的命令</p>
 
@@ -158,6 +805,287 @@ octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上�
 <p>详解系列
 <a href="http://blog.jobbole.com/24379/">http://blog.jobbole.com/24379/</a>
 <a href="http://blog.jobbole.com/25808/">http://blog.jobbole.com/25808/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[vim 命令组合]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/08/08/vim-component/"/>
+    <updated>2013-08-08T21:14:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/08/08/vim-component</id>
+    <content type="html"><![CDATA[<h4>以下的命令都是在非insert模式下执行的</h4>
+
+<h1>vim 与跳转命令的组合</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dw 从光标处开始往后删除一个字
+</span><span class='line'>dW 从光标处开始往后删除一个长字
+</span><span class='line'>d$ 从光标处开始往后删除到行尾
+</span><span class='line'>d0 从光标处开始往前删除到行头
+</span><span class='line'>d^ 从光标处开始往前删除到第一个字符头
+</span><span class='line'>D  删除一整行
+</span><span class='line'>dnw 往后删除多个字符
+</span><span class='line'>dd 删除一行包含换行符
+</span><span class='line'>df* 删除到第一个出现*包括*字符的字符串.
+</span><span class='line'>
+</span><span class='line'>&lt;action&gt;i&lt;object&gt; 对在object范围中的内容进行action操作
+</span><span class='line'>如：
+</span><span class='line'>di) 在删除当前光标匹配的括号中的字符
+</span><span class='line'>(i &gt;= 3 && i &lt; 5)  此时将删除括号内的内容，只留下括号
+</span><span class='line'>&lt;action&gt;a&lt;object&gt; 对object范围包含object进行action操作
+</span><span class='line'>da) 把括号也删除
+</span><span class='line'>
+</span><span class='line'>同理适用于 yank的一切
+</span><span class='line'>yw 复制一个字
+</span><span class='line'>yy, ydw, yW, yf* ynf* yi) ya) 等等
+</span><span class='line'>
+</span><span class='line'>同理也适用于v 可视模式
+</span><span class='line'>vw vW vf* vi) 等等
+</span><span class='line'>......
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>与寄存器的组合</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"byy 把一行复制到寄存器b
+</span><span class='line'>"bp 粘贴寄存器b的内容
+</span><span class='line'>同理适用于 [a-zA-Z]的寄存器</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>重复命令</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>. 重复执行上一次操作
+</span><span class='line'>@a 执行寄存器a记录的操作
+</span><span class='line'>@@ 执行寄存器的操作
+</span><span class='line'>n@@ 执行多次</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>录制宏</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>qa 开始记录操作 保存到寄存器a
+</span><span class='line'>....
+</span><span class='line'>q 在非insert 模式下完成记录
+</span><span class='line'>
+</span><span class='line'>@a 执行寄存器a中的操作</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[vim 移动命令]]></title>
+    <link href="http://sweetdark.github.com/blog/2013/08/07/vim-8-7/"/>
+    <updated>2013-08-07T21:27:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2013/08/07/vim-8-7</id>
+    <content type="html"><![CDATA[<h2>Vim移动命令小结：</h2>
+
+<h3>word和WORD 字和长字的介绍</h3>
+
+<p>word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
+A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, <EOL>). An empty line is also considered to be a word.
+Use &lsquo;w&rsquo;, &lsquo;e&rsquo;, and &lsquo;b&rsquo; to navigate words.
+Special case: &ldquo;cw&rdquo; is treated like &ldquo;ce&rdquo; if the cursor is on a non-blank. This is because &ldquo;cw&rdquo; is interpreted as change-word, and a word does not include the following white space.</p>
+
+<p>Example: (each word is surrounded by a rectangle)</p>
+
+<p>|while| |(|next_line1| |!==| |&ldquo;|The END|!&rdquo;)| |do| |{|</p>
+
+<p>  |next_line1| |=| |readNextLine|();|</p>
+
+<p>|}|</p>
+
+<p>WORD 长字代表一系列的字符串。 由blank tab 换行区分
+A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
+Use &lsquo;W&rsquo;, &lsquo;E&rsquo;, and &lsquo;B&rsquo; to navigate WORDs.
+Special case: &ldquo;cW&rdquo; is treated like &ldquo;cE&rdquo; if the cursor is on a non-blank. This is because &ldquo;cW&rdquo; is interpreted as change-WORD, and a WORD does not include the following white space.
+Example: (each WORD is surrounded by a rectangle)</p>
+
+<p>|while| |(next_line1| |!==| |&ldquo;The END!&rdquo;)| |do| |{|</p>
+
+<p>  |next_line1| |=| |readNextLine();|</p>
+
+<p>|}|</p>
+
+<h1>vim移动命令Normal模式下</h1>
+
+<h2>文件滚动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-u&gt; 上滚动半屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-d&gt; 下滚动半屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-f&gt; 下滚动全屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-b&gt; 上滚动全屏
+</span><span class='line'>
+</span><span class='line'>H 跳到当前页首行
+</span><span class='line'>
+</span><span class='line'>M 跳到当前页中间
+</span><span class='line'>
+</span><span class='line'>L 跳到当前页尾行
+</span><span class='line'>
+</span><span class='line'>N% 按百分比跳
+</span><span class='line'>
+</span><span class='line'>% 单独一个%代表在(),[],{}寻找匹配移动
+</span><span class='line'>
+</span><span class='line'>[{ 跳转到匹配当前}的 {位置
+</span><span class='line'>
+</span><span class='line'>]} 跳转到匹配当前{的 }位置。
+</span><span class='line'>
+</span><span class='line'>NG 或:n 跳转到N行
+</span><span class='line'>
+</span><span class='line'>n n为数字，从当前行往下移动n行
+</span><span class='line'>
+</span><span class='line'>nf* 跳转到第n个出现*字符的位置，包含*字符  大写F 为反向
+</span><span class='line'>
+</span><span class='line'>nt* 跳转到第n个出现*字符的前面，不包含*字符 如t, 跳转到第一个,的前面。大写T为反向</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>大段移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[[ 跳转到下一段的{处
+</span><span class='line'>
+</span><span class='line'>]] 跳转打下一段的}处</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>标记移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>m[a-z|A-Z] 来标记位置 ，然后通过'[a-z|A-Z]来移动到标记的行，行首。使用\`[a-z|A-Z]则移动精确的行和列</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>相对于光标滚屏</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>在阅读代码时，有时我们需要根据光标所在的位置滚屏，把光标所在行移动窗口的顶端、中间或底部，这时就可以用到”zt“、”zz“和”zb“。</span></code></pre></td></tr></table></div></figure>
+
+
+<!--more-->
+
+
+<h2>不同窗口间的移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-w&gt; + hjkl 在上下左右分屏的窗口移动
+</span><span class='line'>
+</span><span class='line'>&lt;C-w&gt; + w 一次跳到下一个窗口</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>文件间切换命令</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>:bn 在当前窗口打开下一个文件
+</span><span class='line'>
+</span><span class='line'>:bp 在当前窗口打开前一个文件
+</span><span class='line'>
+</span><span class='line'>:sp filename 用分屏的方式打开另一个文件</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>折叠行并移动</h2>
+
+<p>···</p>
+
+<pre><code>zo – 打开光标下的折叠
+zO – 循环打开光标下的折叠，也就是说，如果存在多级折叠，每一级都会被打开
+zc – 关闭光标下的折叠
+zC – 循环关闭光标下的折叠 
+</code></pre>
+
+<p>···
+更多的命令，请参阅手册(:help folding)。</p>
+
+<p>vim提供了一些命令在折叠间快速移动：
+···</p>
+
+<pre><code>[z – 到当前打开折叠的开始
+]z – 到当前打开折叠的结束
+zj – 向下移动到下一个折叠的开始处
+zk – 向上移动到上一个折叠的结束处 
+</code></pre>
+
+<p>···</p>
+
+<h2>跳转</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-o&gt; 跳转到前一次跳转的位置
+</span><span class='line'>&lt;C-i&gt; 跳转到后一次跳转的位置
+</span><span class='line'>'.  跳转到上一次编辑修改过的位置</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
@@ -892,1279 +1820,6 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 
 <p>总结：
 这几天也利用了晚上比较安静的时间段，进行内观禅修。由于我身体柔韧性不好，我选择坐在椅子上观呼吸。这个过程一开始是有点困难的，精神老是不集中，脑海里有太多杂念了。但慢慢的这些杂念沉淀下去，你可以细心的去观察呼吸。呼吸的每一个细节，很奇妙。自己以前从没发现呼吸也是个很奇妙的东西。虽然才练了几天，但还是有一点点效果的，对事物的看法变得更客观了。<strong>我会继续努力练习禅修，让自己摆脱烦恼。</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[GDB调试命令]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/12/gdb/"/>
-    <updated>2013-01-12T20:24:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/12/gdb</id>
-    <content type="html"><![CDATA[<p>GDB调试命令：</p>
-
-<p>一、多线程调试</p>
-
-<p>多线程调试可能是问得最多的。其实，重要就是下面几个命令：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>info thread 查看当前进程的线程。
-</span><span class='line'>thread &lt;ID&gt; 切换调试的线程为指定ID的线程。
-</span><span class='line'>break file.c:100 thread all  在file.c文件第100行处为所有经过这里的线程设置断点。
-</span><span class='line'>set scheduler-locking off|on|step，这个是问得最多的。在使用step或者continue命令调试当前被调试线程的时候，其他线程也是同时执行的，怎么只让被调试程序执行呢？通过这个命令就可以实现这个需求。
-</span><span class='line'>off 不锁定任何线程，也就是所有线程都执行，这是默认值。
-</span><span class='line'>on 只有当前被调试程序会执行。
-</span><span class='line'>step 在单步的时候，除了next过一个函数的情况(熟悉情况的人可能知道，这其实是一个设置断点然后continue的行为)以外，只有当前线程会执行。</span></code></pre></td></tr></table></div></figure>
-
-
-<!-- more -->
-
-
-<p>二、调试宏</p>
-
-<p>这个问题超多。在GDB下，我们无法print宏定义，因为宏是预编译的。但是我们还是有办法来调试宏，这个需要GCC的配合。</p>
-
-<p>在GCC编译程序的时候，加上-ggdb3参数，这样，你就可以调试宏了。</p>
-
-<p>另外，你可以使用下述的GDB的宏调试命令 来查看相关的宏。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>info macro - 你可以查看这个宏在哪些文件里被引用了，以及宏定义是什么样的。
-</span><span class='line'>macro - 你可以查看宏展开的样子。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>三、源文件</p>
-
-<p>这个问题问的也是很多的，太多的朋友都说找不到源文件。在这里我想提醒大家做下面的检查：</p>
-
-<p>编译程序员是否加上了-g参数以包含debug信息。
-路径是否设置正确了。使用GDB的directory命令来设置源文件的目录。
-下面给一个调试/bin/ls的示例（ubuntu下）</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ apt-get source coreutils
-</span><span class='line'>$ sudo apt-get install coreutils-dbgsym
-</span><span class='line'>$ gdb /bin/ls
-</span><span class='line'>GNU gdb (GDB) 7.1-ubuntu
-</span><span class='line'>(gdb) list main
-</span><span class='line'>1192    ls.c: No such file or directory.
-</span><span class='line'>in ls.c
-</span><span class='line'>(gdb) directory ~/src/coreutils-7.4/src/
-</span><span class='line'>Source directories searched: /home/hchen/src/coreutils-7.4:$cdir:$cwd
-</span><span class='line'>(gdb) list main
-</span><span class='line'>1192        }
-</span><span class='line'>1193    }
-</span><span class='line'>1194
-</span><span class='line'>1195    int
-</span><span class='line'>1196    main (int argc, char **argv)
-</span><span class='line'>1197    {
-</span><span class='line'>1198      int i;
-</span><span class='line'>1199      struct pending *thispend;
-</span><span class='line'>1200      int n_files;
-</span><span class='line'>1201</span></code></pre></td></tr></table></div></figure>
-
-
-<p>四、条件断点</p>
-
-<p>条件断点是语法是：break  [where] if [condition]，这种断点真是非常管用。尤其是在一个循环或递归中，或是要监视某个变量。注意，这个设置是在GDB中的，只不过每经过那个断点时GDB会帮你检查一下条件是否满足。</p>
-
-<p>五、命令行参数</p>
-
-<p>有时候，我们需要调试的程序需要有命令行参数，很多朋友都不知道怎么设置调试的程序的命令行参数。其实，有两种方法：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>gdb命令行的 -args 参数
-</span><span class='line'>gdb环境中 set args命令。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>六、gdb的变量</p>
-
-<p>有时候，在调试程序时，我们不单单只是查看运行时的变量，我们还可以直接设置程序中的变量，以模拟一些很难在测试中出现的情况，比较一些出错，或是switch的分支语句。使用set命令可以修改程序中的变量。</p>
-
-<p>另外，你知道gdb中也可以有变量吗？就像shell一样，gdb中的变量以$开头，比如你想打印一个数组中的个个元素，你可以这样：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(gdb) set $i = 0
-</span><span class='line'>  
-</span><span class='line'>(gdb) p a[$i++]
-</span><span class='line'>
-</span><span class='line'>...  #然后就一路回车下去了</span></code></pre></td></tr></table></div></figure>
-
-
-<p>当然，这里只是给一个示例，表示程序的变量和gdb的变量是可以交互的。</p>
-
-<p>七、x命令</p>
-
-<p>也许，你很喜欢用p命令。所以，当你不知道变量名的时候，你可能会手足无措，因为p命令总是需要一个变量名的。x命令是用来查看内存的，在gdb中 “help x” 你可以查看其帮助。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>x/x 以十六进制输出
-</span><span class='line'>x/d 以十进制输出
-</span><span class='line'>x/c 以单字符输出
-</span><span class='line'>x/i  反汇编 - 通常，我们会使用 x/10i $ip-20 来查看当前的汇编（$ip是指令寄存器）
-</span><span class='line'>x/s 以字符串输出</span></code></pre></td></tr></table></div></figure>
-
-
-<p>八、command命令</p>
-
-<p>有一些朋友问我如何自动化调试。这里向大家介绍command命令，简单的理解一下，其就是把一组gdb的命令打包，有点像字处理软件的“宏”。下面是一个示例：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(gdb) break func
-</span><span class='line'>Breakpoint 1 at 0x3475678: file test.c, line 12.
-</span><span class='line'>(gdb) command 1
-</span><span class='line'>Type commands for when breakpoint 1 is hit, one per line.
-</span><span class='line'>End with a line saying just "end".
-</span><span class='line'>&gt;print arg1
-</span><span class='line'>&gt;print arg2
-</span><span class='line'>&gt;print arg3
-</span><span class='line'>&gt;end
-</span><span class='line'>(gdb)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>当我们的断点到达时，自动执行command中的三个命令，把func的三个参数值打出来。</p>
-
-<p><strong>gdb基本命令</strong></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>命令描述backtrace（或bt）查看各级函数调用及参数
-</span><span class='line'>finish连续运行到当前函数返回为止，然后停下来等待命令
-</span><span class='line'>frame（或f） 帧编号选择栈帧
-</span><span class='line'>info（或i） locals查看当前栈帧局部变量的值
-</span><span class='line'>list（或l）列出源代码，接着上次的位置往下列，每次列10行
-</span><span class='line'>list 行号 列出从第几行开始的源代码
-</span><span class='line'>list函数名 列出某个函数的源代码
-</span><span class='line'>next（或n）执行下一行语句
-</span><span class='line'>print（或p）打印表达式的值，通过表达式可以修改变量的值或者调用函数
-</span><span class='line'>quit（或q）退出gdb调试环境
-</span><span class='line'>set var修改变量的值
-</span><span class='line'>start开始执行程序，停在main函数第一行语句前面等待命令
-</span><span class='line'>step（或s）执行下一行语句，如果有函数调用则进入到函数中
-</span><span class='line'>
-</span><span class='line'>break（或b） 行号在某一行设置断点
-</span><span class='line'>break 函数名在某个函数开头设置断点
-</span><span class='line'>break ... if ...设置条件断点
-</span><span class='line'>continue（或c）从当前位置开始连续运行程序
-</span><span class='line'>delete breakpoints 断点号删除断点
-</span><span class='line'>display 变量名跟踪查看某个变量，每次停下来都显示它的值
-</span><span class='line'>disable breakpoints 断点号禁用断点
-</span><span class='line'>enable 断点号启用断点
-</span><span class='line'>info（或i） breakpoints查看当前设置了哪些断点
-</span><span class='line'>run（或r）从头开始连续运行程序
-</span><span class='line'>undisplay 跟踪显示号取消跟踪显示</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[思念]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/12/sinian/"/>
-    <updated>2013-01-12T19:58:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/12/sinian</id>
-    <content type="html"><![CDATA[<p>早上醒来，赖床开始思考。思考着自己这一段的心理历程。一想起你，脑海中有无数的想法。</p>
-
-<p>从那次唱K，我不自觉的第一次偷拍你开始，然后第一次感觉到吃醋，当我意识到自己在吃醋的时候，觉得很奇怪。我还因为快递让你等了很久的事情而生气，还生了很久，自己也觉得不可思议，很久没这么生气过了。你名字已开始经常出现在我的晨间日记里，你是那个特殊的人。随后你开始不断的出现在我脑海中，进入我梦里，在梦里给你送花。</p>
-
-<p><span class='pullquote-right' data-pullquote='我问自己是不是喜欢上你了。'>
-我问自己是不是喜欢上你了。我不自觉的想对你好，看到你开心的时候，心里就觉得很满足，很温暖。就单单为这种满足，我也想对你好。自己能这样一直对你好，你也能欣然接受我对你的好，这种感觉真的太棒了。
-</span></p>
-
-<p>现在在看完书，写完代码的时候，心就会变得平静了，那时才可以把头脑里的杂念排空。但过不了多久，思念又会袭来。我想我不应该单独呆在房间里，我应该出去走走~。很多时候，差点就脱口而出要告诉你我的感受，但脑海中总有一个声音说”要忍耐，要控制，现在不是时候”。我也不知道什么才是时候。只有把这种情绪写下来，我的内心才会得到安宁。<strong>你已在我心里！！！！</strong></p>
-
-<hr />
-
-<p><strong>不论世界变成怎么样，都要勇敢的做自己！Follow My Heart！</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[集合覆盖问题]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/06/set-problem/"/>
-    <updated>2013-01-06T21:17:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/06/set-problem</id>
-    <content type="html"><![CDATA[<h2>概述</h2>
-
-<p>集合覆盖问题(Set Covering Problem，简称SCP)是经典的NP一hard问题，同样也是运筹学研究中典型的组合优化问题，是一个计算机科学问题的典型代表。
-问题如下定义：首先有一个元素集合U，给定一系列集合，各集合之中含可能有一些共同的元素（如图所示）。要求访问最少的集合，可以得到U中所有的元素，求出满足要求的最少数量的集合，它是Karp’s 21个NP-complete问题之一。</p>
-
-<p>可以给出公式定义：</p>
-
-<p>给定一个元素集合{U}和集合{﻿﻿﻿S}，Si中的元素属于U，即S是U的子集集合。我们要求的一个覆盖就是一个集合C，C是由si组成的 其元素集合之并等于U即
-<img class="right" src="http://datasearch.ruc.edu.cn/~boliangfeng/blog/wp-content/uploads/2010/01/1.gif"></p>
-
-<p>用图示表明：
-输入：元素集合{U},包含各个子集的集合{S}</p>
-
-<p><img src="http://datasearch.ruc.edu.cn/~boliangfeng/blog/wp-content/uploads/2010/01/set-cover-L.gif"></p>
-
-<p>输出：一个集合C（C的子集是S的子集一种组合方案），覆盖了所有集合U中的元素。</p>
-
-<p><img src="http://datasearch.ruc.edu.cn/~boliangfeng/blog/wp-content/uploads/2010/01/set-cover-R.gif"></p>
-
-<h2>问题实例</h2>
-
-<p>现在有好多不同种类的糖果，不过它们并不是单独出售的，它们按照不同的搭配被包装成不同的糖果包，并且不同的糖果包有不同的价格。若要得到所有类型的糖果，找到一个解决购买方案很容易，我们可以把所有的糖果包都购买一个。然而找到购买最少的糖果包或者找到花钱最少的购买方案将比较困难。找出较优的方案，尽可能的购买少量的糖果包，又能把所有种类的糖果都买到。</p>
-
-<h2>贪婪近似算法</h2>
-
-<p>贪心算法（又称贪婪算法）是指，在对问题求解时，总是做出在当前看来是最好的选择。也就是说，不从整体最优上加以考虑，他所做出的仅是在某种意义上的局部最优解。贪心算法不是对所有问题都能得到整体最优解，但对范围相当广泛的许多问题他能产生整体最优解或者是整体最优解的近似解。</p>
-
-<p>转化为糖果的问题就是，每一次挑选的糖果包能覆盖的糖果种类最多，则选择这个糖果包，直到覆盖所有的糖果种类为止。</p>
-
-<h2>实现文件</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;set.h&quot;</span>
-</span><span class='line'><span class="cp">#include &lt;stdio.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
-</span><span class='line'><span class="cm">/* subsets里存的是Set* 指针数据。 （未测试，待完善）*/</span>
-</span><span class='line'><span class="kt">int</span> <span class="nf">cover</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">members</span><span class="p">,</span> <span class="n">Set</span> <span class="o">*</span><span class="n">subsets</span><span class="p">,</span> <span class="n">Set</span> <span class="o">*</span><span class="n">covering</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">Set</span> <span class="o">*</span><span class="n">setd</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span> <span class="n">malloc</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">SetElement</span> <span class="o">*</span><span class="n">pos</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
-</span><span class='line'>      <span class="n">SetElement</span> <span class="o">*</span><span class="n">max_pos</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">(;</span> <span class="n">pos</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>          <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>          <span class="n">SetElement</span> <span class="o">*</span><span class="n">mems</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">members</span><span class="p">);</span>
-</span><span class='line'>          <span class="k">for</span> <span class="p">(;</span> <span class="n">mems</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">mems</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">mems</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">((</span><span class="n">Set</span><span class="o">*</span><span class="p">)(</span><span class="n">list_data</span><span class="p">(</span><span class="n">pos</span><span class="p">)),</span> <span class="n">list_data</span><span class="p">(</span><span class="n">mems</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                  <span class="o">++</span><span class="n">temp</span><span class="p">;</span>
-</span><span class='line'>              <span class="p">}</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">temp</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>              <span class="n">max</span> <span class="o">=</span> <span class="n">temp</span><span class="p">;</span>
-</span><span class='line'>              <span class="n">max_pos</span> <span class="o">=</span> <span class="n">pos</span><span class="p">;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">max_pos</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">break</span><span class="p">;</span>  <span class="c1">//无法覆盖</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_insert</span><span class="p">(</span><span class="n">covering</span><span class="p">,</span> <span class="n">max_pos</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>      <span class="kt">void</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">max_pos</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_remove</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="c1">//max_pos这个SetElement已经被释放，但data还在。不能再用max_pos-&gt;data了。</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_difference</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">members</span><span class="p">,</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)(</span><span class="n">data</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">memcpy</span><span class="p">(</span><span class="n">members</span><span class="p">,</span> <span class="n">setd</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;}</span> <span class="c1">//有解</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">members</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list_size</span><span class="p">(</span><span class="n">subsets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span> <span class="c1">//无法覆盖</span>
-</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">SetElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">elem</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span> <span class="n">elem</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%p</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">printint</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">set_name</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">SetElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%s : &quot;</span><span class="p">,</span> <span class="n">set_name</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">elem</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span> <span class="n">elem</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d</span><span class="se">\t</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">list_data</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">match</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">id1</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">data1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">const</span> <span class="kt">int</span> <span class="o">*</span><span class="n">id2</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">data2</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">id1</span> <span class="o">&gt;</span> <span class="o">*</span><span class="n">id2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">id1</span> <span class="o">&lt;</span> <span class="o">*</span><span class="n">id2</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">matchptr</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">data1</span> <span class="o">==</span> <span class="n">data2</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set3</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">set4</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">allElem</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set3</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">all</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">};</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">arr1</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">arr3</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">};</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">arr2</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">arr4</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">all</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr1</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
-</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr2</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set3</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr3</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">)(</span><span class="n">arr4</span> <span class="o">+</span> <span class="n">i</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="s">&quot;set1&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="s">&quot;set2&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set3</span><span class="p">,</span> <span class="s">&quot;set3&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">set4</span><span class="p">,</span> <span class="s">&quot;set4&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">printint</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="s">&quot;all&quot;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">subsets</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">matchptr</span><span class="p">,</span> <span class="n">free</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span>
-</span><span class='line'>        <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set3</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">set_insert</span><span class="p">(</span><span class="n">subsets</span><span class="p">,</span> <span class="n">set4</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set3</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">set4</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">allElem</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">set_destory</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;插入失败</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Set</span> <span class="o">*</span><span class="n">covers</span> <span class="o">=</span> <span class="p">(</span><span class="n">Set</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Set</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">set_init</span><span class="p">(</span><span class="n">covers</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">free</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="n">cover</span><span class="p">(</span><span class="n">allElem</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="n">covers</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;找到了可覆盖的子集序列</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="n">covers</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;没能找到可覆盖的子集序列</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set3</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">set4</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">allElem</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">covers</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">set_destory</span><span class="p">(</span><span class="n">subsets</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>集合的数据结构在此博文已给出 <a href="http://sweetdark.github.com/blog/2013/01/04/set/">http://sweetdark.github.com/blog/2013/01/04/set/</a>
-Makefile文件：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='makefile'><span class='line'><span class="nv">OBJS</span> <span class="o">=</span> list.o set.o set_cover.o
-</span><span class='line'><span class="nv">CC</span> <span class="o">=</span> gcc
-</span><span class='line'><span class="nv">CFLAGS</span> <span class="o">=</span>-Wall -O -g
-</span><span class='line'><span class="nf">prog</span><span class="o">:</span> <span class="m">$(OBJS)</span>
-</span><span class='line'>  gcc <span class="k">$(</span>CFLAGS<span class="k">)</span> <span class="k">$(</span>OBJS<span class="k">)</span> -o <span class="nv">$@</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">list.o</span><span class="o">:</span> <span class="m">list.c list.h</span>
-</span><span class='line'>  gcc <span class="k">$(</span>CFLAGS<span class="k">)</span> -c <span class="nv">$&lt;</span> -o <span class="nv">$@</span>
-</span><span class='line'>  
-</span><span class='line'><span class="nf">set.o</span><span class="o">:</span> <span class="m">set.c set.h</span>
-</span><span class='line'>  gcc <span class="k">$(</span>CFLAGS<span class="k">)</span> -c <span class="nv">$&lt;</span> -o <span class="nv">$@</span>
-</span><span class='line'>  
-</span><span class='line'><span class="nf">set_cover.o</span><span class="o">:</span> <span class="m">set_cover.c</span>
-</span><span class='line'>  gcc <span class="k">$(</span>CFLAGS<span class="k">)</span> -c <span class="nv">$&lt;</span> -o <span class="nv">$@</span>
-</span><span class='line'>  
-</span><span class='line'><span class="nf">.PHONY </span><span class="o">:</span> <span class="m">clean</span>
-</span><span class='line'><span class="nf">clean</span><span class="o">:</span>
-</span><span class='line'>  rm *.o
-</span><span class='line'>  rm prog.exe
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[日计划与总结]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/05/thinking/"/>
-    <updated>2013-01-05T22:35:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/05/thinking</id>
-    <content type="html"><![CDATA[<p>今天真的是无所事事，想了好多东西。觉得自己对计划和时间的安排不够合理，没有明确的短期目标。一旦没有什么任务下来的时候，自己就像无头苍蝇一样不知道该干嘛。于是上知乎，搜了一下关于高效工作的一些问题，找到了一份不错的回答。先拿来实验一下。</p>
-
-<blockquote><p>工作日志简单的说就是把你每天做了哪些事情都记录下来，以下是我的工作日志表。在每天下班前我都要安排好下一个工作日的工作计划，并要求细化到小时。</p><footer><strong>@酷拉皮卡,如何记工作笔记以提高工作效率?</strong> <cite><a href='http://blog.sina.com.cn/s/blog_605b0e2e0100iw6v.html'>blog.sina.com.cn/s/&hellip;</a></cite></footer></blockquote>
-
-
-<p>每天的工作计划
-<img src="http://p2.zhimg.com/a3/5e/a35e5f8bf2c520f1d47e51cd5abb4790_m.jpg">
-等一天的工作完毕后，以上的表格就变成了下面的样子：
-每天的工作总结
-<img src="http://p3.zhimg.com/f4/61/f461e981d8193305c1265cc4858fc061_m.jpg"></p>
-
-<p>解释一下表格填写要求：
-1、按照PDCA循环（戴明环），将工作日志分为4个部分：计划、完成、检查、总结；
-1、在“今日计划”里，标红的工作项目是当日重要的工作任务，必须优先完成；
-2、每完成一项工作，就在“今日计划”里将该项工作上划删除线，同时在“今日完成”区进行填写，表示该项工作完成；
-3、在“今日完成”区里的“ [临] ”代表临时的工作任务，不在“今日计划”中；
-4、如果某项工作当日未完成，就用红字标注，下班后统一放置在后期的工作计划里；
-5、每天在“检查”区里给自己打分，A为优秀，完成全部工作任务；B为良好，完成大部分工作任务；C为合格；D为最差。定期汇总分析，如果发现近期打分较低，就要考虑是否工作任务过重还是临时任务过多等原因，找到原因后就要想办法解决，免得压垮自己不说，工作任务也完成不了。
-6、每天在“总结”区对今天的工作进行总结，成功的经验要加以记录并在后期的工作里推行，失败的教训要加以总结，避免以后再犯。</p>
-
-<p>仅仅做每日工作记录是不够的，每周每月都要进行计划和总结。原理大同小异，都是在月初、周初的时候，对本期的工作目标、内容作总体的计划安排，设置优先级，然后每天记录。到月末、周末的时候，再进行总结，看看计划的工作是否完成，效果如何等等。</p>
-
-<p>以后要多上知乎混，知乎是个好东西，自己一直没有好好利用啊。以后晚上坚决不上微博了，留下整块的时间，不要被微博上的信息所打扰。好好的学习和思考，不懂就上知乎问好了 :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[反思目前的工作状况]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/05/reflection/"/>
-    <updated>2013-01-05T15:52:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/05/reflection</id>
-    <content type="html"><![CDATA[<p>现在的工作很多都是自己安排的，手头只是交了一个任务给自己。并没有很具体详细的说你应该怎么做，甚至什么时候要完成。其实分配给我的任务比较少，或者比较难，要么就是那种这边无法修改的东西，需要内核去修改。就导致了我现在比较闲的状态，闲下来之后，就不知道自己应该去干吗了，这种状态很可怕。浪费了时间，没做事情。</p>
-
-<p>想做点额外的事吧，例如看看书，逛一下论坛什么的。但觉得这样好像又有点过意不去，何况被上司看到也不好。就在这种纠结的状态中，无聊纳闷时就上QQ去派遣（应当控制），浪费了好多时间。按理说，工作的时候就应该只做工作相关的事情，其他无关的事情，最好是别做的。发现自己面对着这一份烂代码，提不起丝毫的兴趣，总是想着学点别的东西。</p>
-
-<p>我的态度出现了问题，我对工作丧失了热忱。我想我应该不急着去做事情，好像在应付任务一样，在做事情之前调整好自己的态度吧。最大的问题是我没有把这个产品当成自己的作品来看待，总觉得它和我是隔离开来的，与我没有任何关系（毕竟内核是别人做的，我们只是在上面修改），既然这个产品与我没什么关系，我怎么可能把它做好呢。</p>
-
-<p><span class='pullquote-right' data-pullquote='如果在这里学不到太多技术上的东西，至少应该学会解决难题的科学方法，学会正确的工作态度。'>
-不希望自己在这种状态中，虚度光阴。日子一天天的过去，一年一眨眼就过去了，回想自己到底学到了什么。如果在这里学不到太多技术上的东西，至少应该学会解决难题的科学方法，学会正确的工作态度。毕竟这是到哪里都通用的东西~。
-</span>
-努力思考自己处于这种状态下的时候，应该怎么处理。最好是能避免这种状态的出现。这时候或许能从书中找到答案，或者从前辈那里学到东西。他们肯定也经历过这种状态。</p>
-
-<blockquote><p>闲着无事，在公司乱写。</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[集合]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/04/set/"/>
-    <updated>2013-01-04T22:46:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/04/set</id>
-    <content type="html"><![CDATA[<p>这里的集合是用链表的方式来实现的。</p>
-
-<p>单向链表的定义：list.h</p>
-
-<div><script src='https://gist.github.com/4259013.js'></script>
-<noscript><pre><code>#ifndef LIST_H_
-#define LIST_H_
-#include &lt;stdlib.h&gt;
-
-typedef struct ListElement_ {
-    void *data;
-    struct ListElement_ *next;
-} ListElement;
-
-typedef struct List_ {
-    int size;
-    int (*match) (const void *data1, const void *data2);
-    void (*destory) (void* data);
-    ListElement *head;
-    ListElement *tail;
-} List;
-
-void list_init(List *list, void (*destory) (void *data));
-void destory(List *list);
-int list_ins_next(List *list, ListElement *element, const void *data);
-int list_rem_next(List *list, ListElement *element, void *data);
-#define list_size(list) ((list)-&gt;size)
-#define list_head(list) ((list)-&gt;head)
-#define list_tail(list) ((list)-&gt;tail)
-#define list_is_head(list, element) ((element) == (list-&gt;head) ? 1 : 0)
-#define list_is_tail(element)       ((element)-&gt;next == NULL ? 1 : 0)
-#define list_data(element)          ((element)-&gt;data)
-#define list_next(element)          ((element)-&gt;next)
-
-#endif</code></pre></noscript></div>
-
-
-
-
-<!-- more -->
-
-
-<p>单向链表的实现：</p>
-
-<figure class='code'><figcaption><span>list的实现list.c</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &quot;list.h&quot;</span>
-</span><span class='line'><span class="cp">#include &lt;string.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">list_init</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">match</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span> <span class="o">=</span> <span class="n">destory</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">head</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">list_destory</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">list</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_rem_next</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">list</span><span class="o">-&gt;</span><span class="n">destory</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">memset</span><span class="p">(</span><span class="n">list</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">list_ins_next</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="n">ListElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">ListElement</span> <span class="o">*</span><span class="n">ins_elem</span> <span class="o">=</span> <span class="p">(</span><span class="n">ListElement</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">ListElement</span><span class="p">));</span>
-</span><span class='line'>  <span class="n">list_data</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>  <span class="n">list_tail</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
-</span><span class='line'>      <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">ins_elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
-</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">ins_elem</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">list</span><span class="o">-&gt;</span><span class="n">size</span><span class="o">++</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">list_rem_next</span><span class="p">(</span><span class="n">List</span> <span class="o">*</span><span class="n">list</span><span class="p">,</span> <span class="n">ListElement</span> <span class="o">*</span><span class="n">elem</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">list</span> <span class="o">||</span> <span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">ListElement</span> <span class="o">*</span><span class="n">old_element</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">elem</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
-</span><span class='line'>      <span class="n">old_element</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">);</span>
-</span><span class='line'>      <span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">list_head</span><span class="p">(</span><span class="n">list</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">elem</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>      <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
-</span><span class='line'>      <span class="n">old_element</span> <span class="o">=</span> <span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
-</span><span class='line'>      <span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">list_next</span><span class="p">(</span><span class="n">elem</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">elem</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="n">list</span><span class="o">-&gt;</span><span class="n">tail</span> <span class="o">=</span> <span class="n">elem</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">free</span><span class="p">(</span><span class="n">old_element</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">list_size</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="o">--</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>集合用链表的方式实现的，通过typedef来实现简单的多态，集合的操作包括，求交集，并集，差集，判断一个元素是否在集合中，判断一个集合是否是另外一个集合的子集。</p>
-
-<figure class='code'><figcaption><span>set.h</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifndef SET_H</span>
-</span><span class='line'><span class="cp">#define SET_H</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#include &lt;stdlib.h&gt;</span>
-</span><span class='line'><span class="cp">#include &quot;list.h&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">typedef</span> <span class="n">List</span> <span class="n">Set</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">typedef</span> <span class="n">ListElement</span> <span class="n">SetElement</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">set_init</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">),</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#define set_destory list_destory</span>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_insert</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_remove</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_union</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setu</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_insertion</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">seti</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_deffirence</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setd</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_ismember</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_issubset</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_is_equal</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">);</span>
-</span><span class='line'><span class="cp">#define set_size(set) list_size(set)</span>
-</span><span class='line'><span class="cp">#define set_data(element) list_data(element)</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#endif</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>set.c set实现文件</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="nf">set_init</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">match</span><span class="p">)</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data2</span><span class="p">),</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">destory</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">list_init</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">destory</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span> <span class="o">=</span> <span class="n">match</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_insert</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">){</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">list_ins_next</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">set</span><span class="p">),</span> <span class="n">data</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_remove</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">pre</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span> <span class="n">h</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">(</span><span class="n">h</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="n">pre</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">h</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">list_rem_next</span><span class="p">(</span><span class="n">set</span><span class="p">,</span> <span class="n">pre</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_union</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setu</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h1</span> <span class="o">=</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">head</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">h2</span> <span class="o">=</span> <span class="n">set2</span><span class="o">-&gt;</span><span class="n">head</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">set_init</span><span class="p">(</span><span class="n">setu</span><span class="p">,</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h1</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">h1</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h1</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h1</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">h1</span><span class="p">);</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setu</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setu</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">set_destory</span><span class="p">(</span><span class="n">setu</span><span class="p">);</span>
-</span><span class='line'>          <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">h2</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span> <span class="n">h2</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">h2</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">h2</span><span class="p">);</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">continue</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setu</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setu</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">setu</span><span class="p">);</span>
-</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_intersection</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">seti</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">){</span>
-</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">member</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">void</span>       <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">set_init</span><span class="p">(</span><span class="n">seti</span><span class="p">,</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">member</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">member</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">member</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">member</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">)))</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">seti</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">seti</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">seti</span><span class="p">);</span>
-</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_difference</span><span class="p">(</span><span class="n">Set</span> <span class="o">*</span><span class="n">setd</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">member</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">void</span>       <span class="o">*</span><span class="n">data</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">set_init</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">set1</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">member</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set1</span><span class="p">);</span> <span class="n">member</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">member</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">member</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">)))</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">data</span> <span class="o">=</span> <span class="n">list_data</span><span class="p">(</span><span class="n">member</span><span class="p">);</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">list_ins_next</span><span class="p">(</span><span class="n">setd</span><span class="p">,</span> <span class="n">list_tail</span><span class="p">(</span><span class="n">setd</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>              <span class="n">set_destory</span><span class="p">(</span><span class="n">setd</span><span class="p">);</span>
-</span><span class='line'>              <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_ismember</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(;</span> <span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set</span><span class="o">-&gt;</span><span class="n">match</span><span class="p">(</span><span class="n">list_data</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_issubset</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">SetElement</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_size</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">set_size</span><span class="p">(</span><span class="n">set2</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">list_head</span><span class="p">(</span><span class="n">set2</span><span class="p">);</span> <span class="n">p</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">list_next</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">set_ismember</span><span class="p">(</span><span class="n">set2</span><span class="p">,</span> <span class="n">list_data</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">set_is_equal</span><span class="p">(</span><span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Set</span> <span class="o">*</span><span class="n">set2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">set_size</span><span class="p">(</span><span class="n">set1</span><span class="p">)</span> <span class="o">!=</span> <span class="n">set_size</span><span class="p">(</span><span class="n">set2</span><span class="p">))</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="n">set_issubset</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">set2</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>测试文件：</p>
-
-<div><script src='https://gist.github.com/c4720e6e20e8ed09dad4.js'></script>
-<noscript><pre><code>#include &quot;set.h&quot;
-#include &lt;stdio.h&gt;
-void print(Set *set) {
-    SetElement *elem;
-    for (elem = list_head(set); elem != NULL; elem = list_next(elem)) {
-        printf(&quot;%d\t&quot;, *(int*)list_data(elem));
-    }
-    printf(&quot;\n&quot;);
-}
-
-int match(const void *data1, const void *data2) {
-    const int *id1 = (const int*)data1;
-    const int *id2 = (const int*)data2;
-    if (*id1 &gt; *id2) return 1;
-    else if (*id1 &lt; *id2) return -1;
-    return 0;
-}
-
-int main()
-{
-    Set *set1 = (Set*)malloc(sizeof(Set));
-    Set *set2 = (Set*)malloc(sizeof(Set));
-    set_init(set1, match, NULL);
-    set_init(set2, match, NULL);
-    int arr1[] = {3,4,1};
-    int arr2[] = {4,7,1};
-    int i = 0;
-    for (; i &lt; 3; i++) {
-        set_insert(set1, (const void*)(arr1 + i));
-        set_insert(set2, (const void*)(arr2 + i));
-    }
-
-
-
-    print(set1);
-    print(set2);
-    Set *seti = (Set*)malloc(sizeof(Set));
-    //set_init(seti, match, NULL);
-    set_intersection(seti, set1, set2);
-    print(seti);
-   set_difference(seti, set1, set2);
-    print(seti);
-    Set *setu = (Set*)malloc(sizeof(Set));
-
-    set_union(setu, set1, set2);
-    print(setu);
-    set_destory(set1);
-    set_destory(set2);
-    set_destory(seti);
-    set_destory(setu);
-    free(set1);
-    free(set2);
-    free(seti);
-    return 0;
-
-}</code></pre></noscript></div>
-
-
-<p><img src="http://www.imagebam.com/image/b94355230761965"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[2013-1-4随笔]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/04/new-rome/"/>
-    <updated>2013-01-04T22:07:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/04/new-rome</id>
-    <content type="html"><![CDATA[<p>今天是2013年1月4号，201314即爱你一生一世，很有寓意的一天。无论精神多么独立的人，其情感都会寻找依附。爱情真是让人期盼，令人着迷。</p>
-
-<p>对于爱，多么的期盼那是一份真情。自己一直在做得就是“去伪存真”。我虽然不能完全保证对方的真情实意，但必须保证自己是真情实意的，自己不欺人骗世也就心安了，对于他人的虚情假意，实在没必要为之而气愤和痛苦，拿比人的错误来惩罚自己。我也不希望自己爱上的只是爱的表象，是自己虚幻构造出来的。我变得小心谨慎，特别是在夜深的时候，不要因为寂寞而爱上一个人。我希望我说的每一句话都是真心的，都是发自于当时的真实情感。<strong>感情不能随便拿来开玩笑，时光易逝人很快就会老去，能拥有一份真情是多么幸福的事情，时间唯有真情才能长久</strong>。爱不是一种束缚，不要去争那些无所谓的对与错，输和赢，不要去比较谁付出的更多。我希望她也有她的生活，她的朋友，她的自由，我们能彼此互相理解，宽容，关心和爱护，这就很美好。</p>
-
-<p>如果决定了去爱一个人，就要好好爱她。如果在这个过程中失去了你，我会心痛，但不允许自己去后悔。<strong>“能够失去的东西就不是属于自己的”</strong>，Follow Your Heart！做好自己就是了，其他的一切会随之而来的。</p>
-
-<p>从动心的那一刻开始，我就会去准备，需要耐心~。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[非本机快速写博客]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/04/how-to-pull/"/>
-    <updated>2013-01-04T12:51:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/04/how-to-pull</id>
-    <content type="html"><![CDATA[<p>有时出差，或者去别的地方。要在其他地方写博客怎么办呢。首先安装好机子上的本地环境。参考<a href="http://xuhehuan.com/783.html">这里</a>的搭建本地环境和更新本地环境。然后从github中clone 远程的仓库到本地。
-具体步骤：
-git clone git://github.com/sweetdark/sweetdark.github.com.git octopress
-进入该目录
-cd octopress
-你用git branch -a命令查看分支
-你会发现只是clone了master的分支，没有克隆和创建source分支的。source的文件夹和文件没有克隆下来：
-<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041302488150_0.jpg"></p>
-
-<p>那么我们要从本地区抓取远程的source分支。
-可以执行
-git checkout &mdash;track -b reps-branch origin/reps-branch  抓取 reps-branch, 並將此 branch 建立於 local 的 reps-branch
-再看一下你的目录：
-<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041303593154_0.jpg">
-是不是可以了。
-附上全部命令截图：
-<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041304293434_0.jpg"></p>
-
-<p>初始化你的github页面的地址
-rake setup_github_pages</p>
-
-<p>然后写完博客rake gen_deploy发布之后，别忘了。
-用git status检查哪些还没有提交，用git add . 和 git commit -m &ldquo;yourmessage&#8221;提交更新
-最后要git push origin source</p>
-
-<p>一切搞定。</p>
 ]]></content>
   </entry>
   

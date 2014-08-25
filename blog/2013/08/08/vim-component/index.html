@@ -1,0 +1,288 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vim 命令组合 - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="以下的命令都是在非insert模式下执行的 vim 与跳转命令的组合 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+dw 从光标处开始往后删除一个字
+dW 从光标处开始往后删除一个长字
+d$ 从光标处开始往后删除到行尾 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Vim 命令组合</h2>
+	<div class="entry-content"><h4>以下的命令都是在非insert模式下执行的</h4>
+
+<h1>vim 与跳转命令的组合</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dw 从光标处开始往后删除一个字
+</span><span class='line'>dW 从光标处开始往后删除一个长字
+</span><span class='line'>d$ 从光标处开始往后删除到行尾
+</span><span class='line'>d0 从光标处开始往前删除到行头
+</span><span class='line'>d^ 从光标处开始往前删除到第一个字符头
+</span><span class='line'>D  删除一整行
+</span><span class='line'>dnw 往后删除多个字符
+</span><span class='line'>dd 删除一行包含换行符
+</span><span class='line'>df* 删除到第一个出现*包括*字符的字符串.
+</span><span class='line'>
+</span><span class='line'>&lt;action&gt;i&lt;object&gt; 对在object范围中的内容进行action操作
+</span><span class='line'>如：
+</span><span class='line'>di) 在删除当前光标匹配的括号中的字符
+</span><span class='line'>(i &gt;= 3 && i &lt; 5)  此时将删除括号内的内容，只留下括号
+</span><span class='line'>&lt;action&gt;a&lt;object&gt; 对object范围包含object进行action操作
+</span><span class='line'>da) 把括号也删除
+</span><span class='line'>
+</span><span class='line'>同理适用于 yank的一切
+</span><span class='line'>yw 复制一个字
+</span><span class='line'>yy, ydw, yW, yf* ynf* yi) ya) 等等
+</span><span class='line'>
+</span><span class='line'>同理也适用于v 可视模式
+</span><span class='line'>vw vW vf* vi) 等等
+</span><span class='line'>......
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>与寄存器的组合</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"byy 把一行复制到寄存器b
+</span><span class='line'>"bp 粘贴寄存器b的内容
+</span><span class='line'>同理适用于 [a-zA-Z]的寄存器</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>重复命令</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>. 重复执行上一次操作
+</span><span class='line'>@a 执行寄存器a记录的操作
+</span><span class='line'>@@ 执行寄存器的操作
+</span><span class='line'>n@@ 执行多次</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>录制宏</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>qa 开始记录操作 保存到寄存器a
+</span><span class='line'>....
+</span><span class='line'>q 在非insert 模式下完成记录
+</span><span class='line'>
+</span><span class='line'>@a 执行寄存器a中的操作</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/08/08/vim-component/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2013/08/08/vim-component/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2013/08/08/vim-component/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

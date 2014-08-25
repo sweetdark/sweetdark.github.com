@@ -1,0 +1,392 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Andriod ndk error local reference table overflow Max 512 - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="引言 在Android开发中，常会遇到 local reference table overflow的错误。原因是从java代码进入jni层的本地代码调用时，Dalvik就会创建一张local reference表来存储local reference， 这张表的表项数有最大限制。一般为512个。 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Andriod Ndk Error Local Reference Table Overflow Max 512</h2>
+	<div class="entry-content"><h1>引言</h1>
+
+<p>在Android开发中，常会遇到 local reference table overflow的错误。原因是从java代码进入jni层的本地代码调用时，Dalvik就会创建一张local reference表来存储local reference， 这张表的表项数有最大限制。一般为512个。当表项数超过最大值限制时，Dalvik就会抛出异常。</p>
+
+<figure class='code'><figcaption><span>下面这段代码就会导致溢出</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">jclass</span> <span class="n">strinClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">800</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">stringClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">.....</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>什么是Local References？</h1>
+
+<p>大多数的JNI函数都创建了Local reference（以下简称为<em>LR</em>）。 比如 NewObject, NewString&hellip;. 和 FindClass 等。</p>
+
+<p>一个<em>LR</em>只有在创建它的的一个局部作用域内有效。在超出这个作用域之后，就可能会被释放。 所有的<em>LR</em>在本地函数调用时创建的，在这个本地函数返回时就会被释放。</p>
+
+<p>你不能把一个Local reference 保存在静态变量中，然后在后面继续调用，这是不安全的。</p>
+
+<figure class='code'><figcaption><span>错误的例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* This code is illegal */</span>
+</span><span class='line'><span class="n">jstring</span>
+</span><span class='line'><span class="nf">MyNewString</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jchar</span> <span class="o">*</span><span class="n">chars</span><span class="p">,</span> <span class="n">jint</span> <span class="n">len</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">jclass</span> <span class="n">stringClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jmethodID</span> <span class="n">cid</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jcharArray</span> <span class="n">elemArr</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jstring</span> <span class="n">result</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">stringClass</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="n">env</span><span class="p">,</span>
+</span><span class='line'>                                        <span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* exception thrown */</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="cm">/* It is wrong to use the cached stringClass here,</span>
+</span><span class='line'><span class="cm">       because it may be invalid. */</span>
+</span><span class='line'>    <span class="n">cid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span>
+</span><span class='line'>                              <span class="s">&quot;&lt;init&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;([C)V&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="n">elemArr</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewCharArray</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>  <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewObject</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span>
+</span><span class='line'><span class="nf">Java_C_f</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">this</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="o">*</span><span class="n">c_str</span> <span class="o">=</span> <span class="p">...;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">MyNewString</span><span class="p">(</span><span class="n">c_str</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//Java 中</span>
+</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
+</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>假设我调用了两次Java_C_f。 其中调用了MyNewString， MyNewString的想法是把stringClass这个<em>LR</em> 初始化一次后保存起来，下次可以继续用。但根据JNI的规则。在MyNewString返回时，所有的<em>LR</em>都会被释放。所以第二次调用时stringClass就是Invalid的。</p>
+
+<p>虽然VM会在本地函数返回时，释放所有的<em>LR</em>，但我们也可以显示的控制<em>LR</em>的释放。<em>LR</em>引用的对象只有在，<em>LR</em>无效的时候才会被GC回收，在MyNewString函数中调用的DeleteLocalRef 释放中间的变量elemArr，这样GC可以立即回收这个<em>LR</em> 不然elemArr这个<em>LR</em>会等到本地函数MyNewString返回时才被回收。</p>
+
+<p><em>LR</em>只能在创建它的线程中使用，在其它的线程中使用它是错误的。所以用一个全局变量保存在其它线程中用是不可行的。</p>
+
+<!--more-->
+
+
+<h2>释放引用</h2>
+
+<figure class='code'><figcaption><span>错误的例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="c1">//1.FindClass </span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//例如，</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jclass</span> <span class="n">ref</span><span class="o">=</span> <span class="p">(</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">env</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">ref</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="mf">2.</span><span class="n">NewString</span><span class="o">/</span> <span class="n">NewStringUTF</span><span class="o">/</span><span class="n">NewObject</span><span class="o">/</span><span class="n">NewByteArray</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//例如，</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jstring</span>     <span class="p">(</span><span class="o">*</span><span class="n">NewString</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="n">jchar</span><span class="o">*</span><span class="p">,</span> <span class="n">jsize</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">const</span> <span class="n">jchar</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="n">GetStringChars</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="n">jstring</span><span class="p">,</span> <span class="n">jboolean</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span>        <span class="p">(</span><span class="o">*</span><span class="n">ReleaseStringChars</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="n">jstring</span><span class="p">,</span> <span class="k">const</span> <span class="n">jchar</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jstring</span>     <span class="p">(</span><span class="o">*</span><span class="n">NewStringUTF</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="p">(</span><span class="o">*</span><span class="n">GetStringUTFChars</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="n">jstring</span><span class="p">,</span> <span class="n">jboolean</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span>        <span class="p">(</span><span class="o">*</span><span class="n">ReleaseStringUTFChars</span><span class="p">)(</span><span class="n">JNIEnv</span><span class="o">*</span><span class="p">,</span> <span class="n">jstring</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">env</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">ref</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="mf">3.</span> <span class="n">GetObjectField</span><span class="o">/</span><span class="n">GetObjectClass</span><span class="o">/</span><span class="n">GetObjectArrayElement</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jclass</span> <span class="n">ref</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetObjectClass</span><span class="p">(</span><span class="n">robj</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">env</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">ref</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="mf">4.</span><span class="n">GetByteArrayElements</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jbyte</span><span class="o">*</span> <span class="n">array</span><span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetByteArrayElements</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="n">jarray</span><span class="p">,</span><span class="o">&amp;</span><span class="n">isCopy</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseByteArrayElements</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="n">jarray</span><span class="p">,</span><span class="n">array</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">input</span> <span class="o">=</span><span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="n">jinput</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">isCopy</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">ReleaseStringUTFChars</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="n">jinput</span><span class="p">,</span><span class="n">input</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考</h2>
+
+<ol>
+<li><p><a href="http://journals.ecs.soton.ac.uk/java/tutorial/native1.1/implementing/refs.html">Local and Global References</a></p></li>
+<li><p><a href="http://www.soi.city.ac.uk/~kloukin/IN2P3/material/jni.pdf">The Java ™  Native Interface Programmer’s Guide and Specification</a></p></li>
+<li><p><a href="http://mysuperbaby.iteye.com/blog/1603817">http://mysuperbaby.iteye.com/blog/1603817</a></p></li>
+</ol>
+
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/07/09/local-reference-table-overflow/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/07/09/local-reference-table-overflow/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/07/09/local-reference-table-overflow/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

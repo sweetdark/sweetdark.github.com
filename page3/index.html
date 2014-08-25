@@ -1,94 +1,108 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Mario's Blog</title>
-  <meta name="author" content="Mario">
+	<meta charset="utf-8">
+	<title>Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="Published on: Jul 7th, 2013 Tag: opengl Get The Source 背景 缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
-  <meta name="description" content="原文markdown语法地址 markdown快速入门 概述 宗旨
-兼容HTML
-特殊字符自动转换 区块元素 段落和换行
-标题
-区块引用
-列表
-代码区块
-分隔线 区段元素 链接
-强调
-代码
-图片 其他 反斜杠
-自动链接 ">
-  
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-  
-  <link rel="canonical" href="http://sweetdark.github.com/page3/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="/javascripts/ender.js"></script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
 
-  
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
 
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Mario's Blog</a></h1>
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
   
-    <h2>学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！</h2>
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
   
-</hgroup>
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:sweetdark.github.com" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">首页</a></li>
-  <li><a href="/blog/archives">目录</a></li>
-  <li><a href="/about">关于我</a></li>
-</ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <div class="blog-index">
 
 
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/02/write-markdown/">用Markdown写Markdown语法说明</a></h1>
-    
-    
-    <p class="meta">
-      
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/07/ogl-step8/">
+		
+			Ogl Step8 缩放Scaling Transformation</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
 
 
 
@@ -100,159 +114,60 @@
   
 
 
-<time datetime="2013-01-02T20:16:00+08:00" pubdate data-updated="true">Jan 2<sup>nd</sup>, 2013</time>
-	  
+<time datetime="2013-07-07T22:02:00+08:00" pubdate data-updated="true">Jul 7<sup>th</sup>, 2013</time></div>
+      <div class="tags">
 
-<span class="tags">
   Tag:
   
-    <a href='/blog/tags/markdown/'>markdown</a>
+    <a href='/blog/tags/opengl/'>opengl</a>
   
-</span>
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=用Markdown写Markdown语法说明 - &amp;url=http://sweetdark.github.com/blog/2013/01/02/write-markdown/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=用Markdown写Markdown语法说明 - &amp;url=http://sweetdark.github.com/blog/2013/01/02/write-markdown/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=用Markdown写Markdown语法说明 - http://sweetdark.github.com/blog/2013/01/02/write-markdown/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><h2><a href="http://wowubuntu.com/markdown/">原文markdown语法地址</a>  <a href="http://wowubuntu.com/markdown/basic.html">markdown快速入门</a></h2>
-
-<ul>
-<li><a href="#overview">概述</a>
-
-<ul>
-<li><a href="#philosophy">宗旨</a></li>
-<li><a href="#html">兼容HTML</a></li>
-<li><a href="#autoescape">特殊字符自动转换</a></li>
-</ul>
-</li>
-<li><a href="#block">区块元素</a>
-
-<ul>
-<li><a href="#p">段落和换行</a></li>
-<li><a href="#header">标题</a></li>
-<li><a href="#blockquote">区块引用</a></li>
-<li><a href="#list">列表</a></li>
-<li><a href="#precode">代码区块</a></li>
-<li><a href="#hr">分隔线</a></li>
-</ul>
-</li>
-<li><a href="#span">区段元素</a>
-
-<ul>
-<li><a href="#link">链接</a></li>
-<li><a href="#em">强调</a></li>
-<li><a href="#code">代码</a></li>
-<li><a href="#img">图片</a></li>
-</ul>
-</li>
-<li><a href="#misc">其他</a>
-
-<ul>
-<li><a href="#backslash">反斜杠</a></li>
-<li><a href="#autolink">自动链接</a></li>
-</ul>
-</li>
-</ul>
-
-
-<hr>
-
-
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/01/02/write-markdown/">阅读全文 &rarr;</a>
-    </footer>
-  
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简。</p>
+
+<p>你想要缩放哪一维，只需对应的改变矩阵对角线上的值就可以了。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-    </article>
-  
-  
-    <article>
-      
+<p>与上一节不同的只是这个矩阵。三角形会随着正弦值(0,1]由小变大，为0时缩放到最小三角形消失。在[-1, 0)时只是反过来而已。</p>
 
+		
+		
+	</div>
 
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/02/blog-config/">博客主题的配置</a></h1>
-    
-    
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-02T12:17:00+08:00" pubdate data-updated="true">Jan 2<sup>nd</sup>, 2013</time>
-	  
-
-<span class="tags">
-  Tags:
-  
-    <a href='/blog/tags/github/'>Github</a>, <a href='/blog/tags/octopress/'>octopress</a>
-  
-</span>
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=博客主题的配置 - &amp;url=http://sweetdark.github.com/blog/2013/01/02/blog-config/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=博客主题的配置 - &amp;url=http://sweetdark.github.com/blog/2013/01/02/blog-config/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=博客主题的配置 - http://sweetdark.github.com/blog/2013/01/02/blog-config/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><p><strong>首先<a href="https://github.com/sweetdark/sweetdark.github.com/tree/source/.themes">我的博客主题</a>下载。把mario目录拷贝到.themes目录下。执行rake install[&ldquo;mario&rdquo;]</strong> 由于categories不支持中文，我加了tags标签。
-装完之后，要改一下_config.yml的配置，在适当的位置添加一行tag_dir: blog/tags  。然后在文章里，添加tags: 标签下面添你的标签名，例如：  tags: [&lsquo;Github&rsquo;,&lsquo;octopress&rsquo;]
-<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021334145207_0.png"></p>
-
-<p>我还在导航栏里 添加了关于我的页面，修改的话，请修改about目录下的index.html文件即可。</p>
-
-<p>关于在侧边栏添加微博插件的问题，我在_includes\asides 下增加了weibo_sina.html只要修改这个文件，替换为你的微博Html代码。微博的html代码的，只要登录你的微博，在设置里，点击我的工具可以产生。
-<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021321353343_0.png">
-然后再_config.yml修改一下配置
-default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina.html, asides/googleplus.html]  加上asides/weibo_sina.html即可。</p>
-
-<p>编写markdown文件的工具可以使用<a href="http://markdownpad.com/">markdownPad</a>，推荐使用notepad++编写博客，把经常使用的插件代码用宏录制好，避免重复性的工作。上传图片的工具可以使用<a href="http://www1.freep.cn/%E3%80%82">http://www1.freep.cn/%E3%80%82</a></p>
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/07/ogl-step8//page3/index.html#disqus_thread">Comments</a></span>
+	
 </div>
-  
-  
+</article>
 
 
-    </article>
-  
-  
-    <article>
-      
-
-
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/01/important-list/">2013年要点列表</a></h1>
-    
-    
-    <p class="meta">
-      
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/07/ogl-step7/">
+		
+			Ogl Step7 旋转Rotation Transformation</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
 
 
 
@@ -264,131 +179,259 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
   
 
 
-<time datetime="2013-01-01T23:36:00+08:00" pubdate data-updated="true">Jan 1<sup>st</sup>, 2013</time>
-	  
+<time datetime="2013-07-07T19:18:00+08:00" pubdate data-updated="true">Jul 7<sup>th</sup>, 2013</time></div>
+      <div class="tags">
 
-<span class="tags">
   Tag:
   
-    <a href='/blog/tags/live/'>Live</a>
+    <a href='/blog/tags/opengl/'>opengl</a>
   
-</span>
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=2013年要点列表 - &amp;url=http://sweetdark.github.com/blog/2013/01/01/important-list/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=2013年要点列表 - &amp;url=http://sweetdark.github.com/blog/2013/01/01/important-list/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=2013年要点列表 - http://sweetdark.github.com/blog/2013/01/01/important-list/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><ol>
-<li>锻炼身体</li>
-<li>认真工作，努力学习</li>
-<li>*******************（待填）</li>
-<li>端正自己的态度</li>
-<li>时刻反省自己</li>
-<li>保持自信心</li>
-<li>消除消极的和无用的杂念</li>
-</ol>
-
 </div>
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这节主要讲旋转变换。给定一个点和一个角度，绕一个坐标轴旋转。在X，Y，Z中保持一个值不变（绕该轴旋转的值不变），另外两个坐标改变。我们可以绕Z轴，Y轴，X轴旋转。甚至可以绕任意向量进行宣召。
+考虑下面的图形：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/rotation.png">
+我们沿着圆从(x1, yz)旋转到(x2,y2)。换句话说，我们把(x1, y1)旋转α角。假设半径是1.有如下的等式：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x1 = cos(α1)
+</span><span class='line'>y1 = sin(α1)
+</span><span class='line'>x2 = cos(α1+α2)
+</span><span class='line'>y2 = sin(α1+α2)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>三角函数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cos(α+β) = cosαcosβ-sinαsinβ
+</span><span class='line'>sin(α+β) = sinαcosβ+cosαsinβ</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用上面的公式对x2和y2进行扩展得</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x2 = cosα1costα2 - sinα1sinα2
+</span><span class='line'>y2 = sinα1cosα2 + cosα1sinα2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的图形是，Z轴指向屏幕里面，从屏幕外向里看XY平面。如果X&amp;Y 是4维向量的一部分，绕Z轴旋转的矩阵的形式如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_01.png">
+绕Y轴旋转的矩阵：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_02.png">
+绕X轴旋转的矩阵：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_03.png"></p>
+
+<h1>代码漫游</h1>
+
+<p>我们只需要把上一次的代码做稍微的修改，就可以实现旋转了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在是绕z轴旋转。你可以尝试着绕其他轴旋转。但绕其他轴旋转没有3d到2d的投影变换，显得多余。接下来将会介绍所有的变换。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/07/ogl-step7//page3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/05/ogl-step6/">
+		
+			Ogl Step6 Translation Transformation</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
   
-  
 
 
-    </article>
-  
-  
-    <article>
-      
+<time datetime="2013-07-05T12:34:00+08:00" pubdate data-updated="true">Jul 5<sup>th</sup>, 2013</time></div>
+      <div class="tags">
 
-
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/01/mood/">2013年随笔</a></h1>
-    
-    
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-01T21:33:00+08:00" pubdate data-updated="true">Jan 1<sup>st</sup>, 2013</time>
-	  
-
-<span class="tags">
   Tag:
   
-    <a href='/blog/tags/live/'>Live</a>
+    <a href='/blog/tags/opengl/'>opengl</a>
   
-</span>
+</div>
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
 
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=2013年随笔 - &amp;url=http://sweetdark.github.com/blog/2013/01/01/mood/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
+<h1>背景</h1>
 
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=2013年随笔 - &amp;url=http://sweetdark.github.com/blog/2013/01/01/mood/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
+<p>这一节开始介绍3D环境下物体的转换。通用的方式是用矩阵或多个矩阵连乘最后乘以顶点坐标来实现转换。后面的每一节都会详解一种转换。</p>
 
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=2013年随笔 - http://sweetdark.github.com/blog/2013/01/01/mood/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
+<p>下图是把左图的三角形平移到右图的位置。
+<img src="http://ogldev.atspace.co.uk/www/tutorial06/translation.png">
+一种方式是提供向量的位置作为一个一致变量给着色器然后在处理每一个顶点是加上这个向量来实现平移的效果。然而，这种方式不是通用的转换方式。另外的，如果这个顶点值改变了，那么后面的转换就是基于这个被改变的顶点进行转换了，而不是平移前的转换了。这很麻烦。一个更好的方式是用一个矩阵代表平移乘以其他的转换矩阵。但是你无法找到一个矩阵乘以左图三角形的左下角的点(0,0),能够得到（1,1）。实际情况是你无法在二维矩阵实现这种转换。通用的公式是M * P = P1(x + v1, y + v2, z + v3).我们需要的是一个矩阵M和一个点P(x, y, z)和一个向量V(v1, v2, v3)。矩阵M平移P到P+V的位置。在P1中我们观察到P1每一维的值是对应的P的值和V的值相加的结果。左边的值可以认为是与单位阵相乘的结果：I * P = P(x, y, z)。所以我们从单位阵开始去寻找一个能够实现右边的每一维的相加结果(&hellip;+V1, &hellip;+V2, &hellip;+V3)的矩阵。 如下图：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation1.png">
+由上可以得出两个结论：
+1.  a, b, c, d, e 和 f 其中的任意两个会对每一维度有影响，所以它们必须为0，如此又变为单位矩阵。
+2.  因为x，y，z会影响三个维度的值，所以也必须为0.这样的话向量变为零向量，而零向量转换之后还是零向量。</p>
+
+<p>我们必须找到一个矩阵能够提供如下的运算：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation2.png">
+所以我们必须找到一种方式加上v1-v3，上面的a到f必须为0.我们把矩阵增加一行和一列。变为4X4的矩阵。把向量也增加一个维度w变为四维的。最终得到我们的平移矩阵如下：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation3.png">
+现在即使x,y,z都为0.我们也可以实现平移了。</p>
+
+<h2>用4维向量来表示3维的向量也成为齐次坐标，在3D图形中是非常流行的方式。第四维称作&#8217;w&#8217;。在之前的着色器中gl_Position也是齐次坐标。w维在3D投影到2D中扮演着十分重要的角色。在一般情况下点使用w=1,向量则用w=0.原因是点可以被平移而向量不行。你可以改变向量的长度和方向，所有长度和方向一样的向量被认为是一样的，向量是相对的。所以如果w=0，向量乘以平移矩阵结果是一样的向量。</h2>
+
+
+		
+		<a href="/blog/2013/07/05/ogl-step6/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/05/ogl-step6//page3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/01/ogl-step5/">
+		
+			Ogl Step5 Uniform Variables</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
   
-  </header>
 
 
-  <div class="entry-content"><p>“如果不把思路理清楚就不要回来了”,出去散步前默默的这么对自己说。进入2013年，想给自己定个目标，制定个计划。把那些不重要的琐碎的事先剔除掉，只留下重要的事，人生真的很短暂，尽量去做重要的事。希望自己能有个清醒的头脑，时刻提醒自己不要偏离了轨道，毕竟现实中有
-太多的诱惑。那些看起来琐碎的事情以为没浪费多少时间，其实这些时间累积起来是很大的一个数。无论是事业还是感情，都必须清楚坚定，
-犹豫不决浪费了很多时间。选择了就怀抱着一种信仰，坚定的走下去。人生有很多条路可以走，我们无法预知未来，也很难评判哪条路会更好。
-最重要的事追随自己的内心，去做你想做的事，不要去重复别人的生活。看到别人走了另一条路成功了，就后悔当初为什么没有选择另外一条路是没有意义的，因为如果当初你选择了另一条路，
-未必会比过的更好。跟随自己的内心，相信自己的当下的选择就是最好的。</p>
+<time datetime="2013-07-01T13:19:00+08:00" pubdate data-updated="true">Jul 1<sup>st</sup>, 2013</time></div>
+      <div class="tags">
 
-<p><strong>听说过这样一个故事：</strong>
-<strong>20岁的年轻人迈斯决定离开家乡，到外面的世界去开创自己的前途。</strong>
-<strong>动身之前，迈斯先来拜访本族的族长，请求指点。</strong>
-<strong>老族长听了迈斯的打算，想了想，拿出一张纸，在上面写了3个字：“不要怕。”</strong>
-<strong>然后抬起头来，望着迈斯说：“孩子，人生的秘诀只有6个字，今天先告诉你3个，供你半生受用。”</strong>
-<strong>转眼30年过去了，当年20岁的小伙子迈斯已是50岁的中年人了。他有了一些成就，也平添了很多遗憾。</strong>
-<strong>这一天，他回到了家乡，又特意来拜访那位族长。到了族长家里，他才知道老人家几年前已经去世。</strong>
-<strong>族长的儿子取出一个密封的信封对他说：“这是我父亲生前留给你的，他说万一有一天你回来时，可能想看它。”</strong>
-<strong>迈斯这才想起，30年前他在这里只听到了人生秘诀的一半。另一半是什么呢？</strong>
-<strong>他急切地拆开信，打开信纸，上面赫然写着3个大字：“不要悔。”</strong>
-<strong>人生在世，中年以前不要怕，中年以后不要悔，这是经验的提炼，智慧的浓缩，也是人人都想追求的人生境界。</strong>
-<strong>要做事就不要怕，做过了就不要悔。</strong></p>
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<h1>背景</h1>
+
+<p>在这一节中我们将会使用到一个新的着色器变量————一致变量。属性变量与一致变量的不同在于，属性变量是由顶点指定的并在每一次的着色器调用中都会去从顶点缓冲区中读取。然而一致变量是在整个绘制调用保持一致。这也就意味着你在绘制调用前赋了一个值，然后你在每一次调用顶点着色器的时候使用的都是同一个值。着色器有两种类型的参数：一致变量（Uniform variables）指得是在一帧当中保持恒定的数值，典型的参数包括视口的方向和灯光的方向。而易变变量（Varying variables）对于每一个执行单元（包括顶点着色器中的顶点，以及片元着色器中的片元）都是变化的。</p>
+
+<p>在这一节中我们将会用一组一致变量在每一帧中都进行改变，通过GLUT提供的idle回调函数来实现。GLUT只有在窗体改变了尺寸和被其他窗体覆盖的时候会调用回调函数。如果在程序加载之后，我们什么都不做那么回调函数只会被调用一次。我们通过注册一个idle的回调函数来实现循环绘制画面，idle函数会在窗体系统没有接收到任何消息的时候被调用。</p>
 
 <hr />
 
-<p><em>留人间多少爱，迎浮生千重变，和有情人做快乐事，别问是劫是缘。</em></p>
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutIdleFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在这里我们注册一个idle函数。如果你想要使用一个有用的idle回调函数，你需要在它结束是添加一个glutPostRedisplay()函数。否则idle函数会被一直调用，但是渲染函数却不会。glutPostRedisplay()标志了当前窗体需要被重新显示，在下一个GLUT的main循环中绘制回调函数将会被调用。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gScaleLocation</span> <span class="o">=</span> <span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="s">&quot;gScale&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">assert</span><span class="p">(</span><span class="n">gScaleLocation</span> <span class="o">!=</span> <span class="mh">0xFFFFFFFF</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在链接了程序之后，我们通过glGetUniformLocation方法去获得gScale一致变量的地址。这是一种C\C++程序执行环境映射到着色器的执行环境。你不能直接访问着色器里的内容也不能直接修改里面的变量。当你编译着色器是，GLSL的编译器就为每一个一致变量建立了一个索引。着色器器内部是通过这个索引对变量进行操作。我们也可以通过glGetUniformLocation获得某个程序内部的变量名的索引。这个函数返回索引，出错时返回-1。检查错误非常重要，着色器内部不存在这个变量（<font color="red">你的变量名拼写错误</font>）或者编译器对这个变量进行了优化（<font color="red">为被使用的变量</font>)都会导致glGetUniformLocation调用失败。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="kt">float</span> <span class="n">Scale</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">Scale</span> <span class="o">+=</span> <span class="mf">0.001f</span><span class="p">;</span>
+</span><span class='line'><span class="n">glUniform1f</span><span class="p">(</span><span class="n">gScaleLocation</span><span class="p">,</span> <span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用一个静态变量Scale，在每次渲染调用是递增。传给着色器的值是Scale的正弦值。会产生一个在-1.0到1.0之间的值。 通过glUniform1f传给着色器。OpenGl提供了多种形式glUniform{1234}{if}。glUniform2i glUniform3f&hellip;etc. glUniform传的第一个参数是索引。</p>
+
+<p>我们只对上一教程的VS段进行修改，FS保持不变</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">uniform</span> <span class="kt">float</span> <span class="n">gScale</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>定义一个一致变量。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们队X和Y的值进行转换。你知道为什么三角形会在循环到一半时倒过来吗？</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/01/ogl-step5//page3/index.html#disqus_thread">Comments</a></span>
+	
 </div>
-  
-  
+</article>
 
 
-    </article>
-  
-  
-    <article>
-      
-
-
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/30/daily/">随笔</a></h1>
-    
-    
-    <p class="meta">
-      
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/06/25/ogl-step4/">
+		
+			Ogl Step4 Shaders</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
 
 
 
@@ -400,371 +443,233 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
   
 
 
-<time datetime="2012-12-30T20:55:00+08:00" pubdate data-updated="true">Dec 30<sup>th</sup>, 2012</time>
-	  
+<time datetime="2013-06-25T12:51:00+08:00" pubdate data-updated="true">Jun 25<sup>th</sup>, 2013</time></div>
+      <div class="tags">
 
-<span class="tags">
   Tag:
   
-    <a href='/blog/tags/live/'>Live</a>
+    <a href='/blog/tags/opengl/'>opengl</a>
   
-</span>
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=随笔 - &amp;url=http://sweetdark.github.com/blog/2012/12/30/daily/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=随笔 - &amp;url=http://sweetdark.github.com/blog/2012/12/30/daily/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=随笔 - http://sweetdark.github.com/blog/2012/12/30/daily/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><p>  要搬家了，今天先过去把房子打扫干净。我和我姐，还有房东，清理了一整天。。房子实在是太脏了，到处都是灰尘。之前的租客是两个男孩子，住了半年估计都没有打  扫过卫生，房东张姐很生气的，决定以后不租给男孩子住的，因为我和我姐合租，她才答应租给我们。房子的采光很好，冬天的阳光从窗户里照进来，那种感觉很温暖。小区也很安静，房子在顶层九楼就更安静了。安静的享受冬日的阳光，安静的看书，安静的思考，多么美好~哈。</p>
-
-<p>  今天是今年最冷的一天了，水很凉，一开始手浸下去觉得冷的刺骨。但后面活动起来，身子热了就不觉得冷了。我们细心的把房间的每个柜子，格子，窗，床都擦了一遍，看着房子变得亮堂起来，觉得很欣慰。姐总是唠叨着，这里擦干净点，那也擦干净点。张姐也称赞我们打扫的很干净。我说这是习俗吧，年前大扫除，新的一年希望有一个崭新的开始。新的一年为了自己的梦想，为了自己的未来，努力去把眼前的每一步做好。</p>
-
-<p> 新年就要来到了，好期待新的生活，对未来充满信心！！</p>
 </div>
-  
-  
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get the source</a>  <a href="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html">原文链接</a></p>
+
+<h1>背景</h1>
+
+<p>从这一节开始我们将会用到着色器绘图。着色器是绘制3D图像的潮流。从另一个角度说着色器取代了固定函数管道的方式，需要开发者自己配置参数（如：光源属性，旋转值等）。然而可编程的方式提供了更好的灵活性和创造性。</p>
+
+<p>OpenGL可编程管道如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial04/pipeline.png">
+vertex processor负责执行顶点着色器去处理每一个通过管道的顶点数据（处理的个数取决与绘制函数调用时传的参数）。顶点着色器对被渲染的几何体的拓扑图一无所知。另外你不能再vertex processor删除顶点的数据。每一个顶点仅且经过vertex processor一次，被转换之后传到下一个管道中。</p>
+
+<p>下一阶段是几何处理器（geometry processor）。在这个阶段着色器知道所有的几何体以及他们的相邻关系。此时需要考虑除了顶点本身之外的信息。几何着色器可以变换输出的拓扑顺序。例如：你可以提供一组点的信息然后产生两个三角形或者产生一个四边形。另外，你还可以像几何着色器传入多个顶点，并根据你所选择的拓扑顺序产生多个几何体.</p>
+
+<p>下一个阶段是裁剪器。这是一个固定的函数单元处理简单的任务，裁剪几何图形到标准化格子中。它也裁剪到near Z和far Z的平面中。有相应的参数惨叫他们。经过裁剪后，顶点会被映射到屏幕坐标中，然后根据他们的拓扑顺序渲染出来。  例如：在三角形中找出所有的点在这个三角内的，光栅化程序为每个点调用片段处理器。你还可以指定像素点的颜色。</p>
+
+<p>着色器的管理方式类似于C\C++的程序的创建一样。 首先你编写着色的代码供你的程序使用。可以简单的再源代码里直接写字符穿或者从外部文件加载进来，然后编译成一个个的着色器目标对象，链接这些着色器到单个程序加载到GPU中。链接着色器提供机会给驱动去裁剪他们和优化他们之间的关系。例如：（感谢小翼的翻译）如果顶点着色器(vs)里输出法线，但是和不用法线的片段着色器(fs)链接，那么vs的法线操作会被删除来优化vs的速度。如果后来那个vs又和用到法线的fs链接，那么链接另外一个程序会产生不同的vs（有法线输出计算的）在这种情况下，GLSL的编译器会删除相关功能的着色器使得顶点着色器执行的更快。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLuint</span> <span class="n">ShaderProgram</span> <span class="o">=</span> <span class="n">glCreateProgram</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-    </article>
-  
-  
-    <article>
-      
+<p>在设置着色器之前先创建一个程序对象。我们将连接所有的着色器到这个程序中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLunit</span> <span class="n">ShaderObj</span> <span class="o">=</span> <span class="n">glCreateShader</span><span class="p">(</span><span class="n">ShaderType</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/29/build-blog-problem/">搭建博客遇到的问题以及总结</a></h1>
-    
-    
-    <p class="meta">
-      
+<p>创建着色器对象。一个使用GL_VERTEX_SHADER类型创建顶点着色器，另一个是GL_FRAGMENT_SHADER类型创建片段着色器。用来编译指定的着色器代码。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">const</span> <span class="n">GLchar</span><span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pShaderText</span><span class="p">;</span>
+</span><span class='line'><span class="n">GLint</span> <span class="n">Lengths</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">Lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">pShaderText</span><span class="p">);</span>
+</span><span class='line'><span class="n">glShaderSource</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">Lengths</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>指定要编译的源代码。glShaderSource传入一个着色器对象去编译你指定的代码。代码可以由字符串数组提供并相应的指定保持各个字符串长度的数组。简单起见我们用只包含一个元素的字符串数组和长度数组。第二参数指定了这两个数组的元素个数。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glCompileShader</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>编译着色器对象。</p>
 
-
-
-
-  
-
-
-<time datetime="2012-12-29T19:55:00+08:00" pubdate data-updated="true">Dec 29<sup>th</sup>, 2012</time>
-	  
-
-<span class="tags">
-  Tags:
-  
-    <a href='/blog/tags/github/'>Github</a>, <a href='/blog/tags/octopress/'>octopress</a>
-  
-</span>
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=搭建博客遇到的问题以及总结 - &amp;url=http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=搭建博客遇到的问题以及总结 - &amp;url=http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=搭建博客遇到的问题以及总结 - http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><p> 使用octorepss+github搭建博客，在这个过程中遇到了很多问题。其实根本原因是自己过于浮躁，没有详细的研究文档，很匆忙的搭建，并乱改乱折腾，所以到处碰壁。Linux下搭建参考官方文档<br/>
-  关于Windows下如何搭建octopress博客这篇文章讲的挺详细的。<a href="http://xuhehuan.com/783.html" title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>
-  第一个遇到的问题：
-<img src="http://ww1.sinaimg.cn/mw690/7485f70fjw1e00h3kzw2cj.jpg"></p>
-
-<p>  我是在windows上装的，但是我按照octopress官网上的Linux的方式去装，装了ruby 1.9.3然后又按照<a href="http://xuhehuan.com/783.html"     title="在Github上搭建Octopress博客">在Github上搭建Octopress博客</a>上介绍的windows的方式去装，结果导致了版本不一致的问题，建议版本最好是按照文章中建议的来装。如果装错了呢，怎么办。会提示版本对应不上的情况，可以修改Gemfile和Gemfile.lock下面的配置，设置到对应的版本号。</p>
-
-<figure class='code'><figcaption><span>Gemfile </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
-</span><span class='line'>  gem 'rake', '~> 10.0.3' #改为你所用的rake版本
-</span><span class='line'>  gem 'rack', '~> 1.4.1'
-</span><span class='line'>  gem 'jekyll', '~> 0.11.2'
-</span><span class='line'>  gem 'rdiscount', '~> 1.6.8'
-</span><span class='line'>  gem 'pygments.rb', '~> 0.2.12'
-</span><span class='line'>  gem 'RedCloth', '~> 4.2.9'
-</span><span class='line'>  gem 'haml', '~> 3.1.6'
-</span><span class='line'>  gem 'compass', '~> 0.12.1'
-</span><span class='line'>  gem 'rubypants', '~> 0.2.0'
-</span><span class='line'>  gem 'rb-fsevent', '~> 0.9'
-</span><span class='line'>  gem 'stringex', '~> 1.4.0'
-</span><span class='line'>  gem 'liquid', '~> 2.3.0'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake (10.0.3)  #改为你所用的rake版本</span></code></pre></td></tr></table></div></figure>
-
-
-<p>  如果是发布不成功，没有权限报错如下：那么就是没有添加ssh key。详细解决办法是添加一个ssh key。</p>
-
-<p><img src="http://ww1.sinaimg.cn/mw690/7485f70fjw1e04hxitgftj.jpg"></p>
-
-<p>详细参考这里<a href="https://help.github.com/articles/generating-ssh-keys">https://help.github.com/articles/generating-ssh-keys</a> 。
-有一点要注意的是Octopress会有两个分支：source（编写博客）和master（生成好的博客）。一般我们用source编写博客，和使用rake generate生成博客。rake deploy是发布到远程的origin master主分支上的。请不要在本地仓库上对master进行编辑，添加，修改等操作，更不要使用git push origin master用本地仓库的master去同步远程的github仓库。你会遇到很多麻烦的，我就是瞎折腾，所以就弄得半死。我建议的操作方式是：步骤如下：</p>
-
-<pre><code>1. git checkout source 切换到source分支上，进行编辑
-2. pull origin source 从远程仓库获取最新的并与本地仓库进行合并(如果你是在其他的电脑上工作，这一步很重要），你也可以这样用git fetch orgin source,git merge 。
-3. 编辑好博客之后使用 rake gen_deploy可以生成并发布，但不建议这样做，你可以先rake generate，然后用rake preview先在本地预览一下，觉得没问题了在rake deploy发布。
-4. 发布完了，别忘记备份到github上。首先git status 检查本地仓库的状态，这时会打印列表并给出相应的指令，然后调用 git add 命令添加你新增的文件，或者合并解决冲突之后的文件。调用git commit -m "yourmessage" 提交。
-最后再用git status确认一下，确认无误之后git push origin source，备份到github上。
-</code></pre>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/29/build-blog-problem/">阅读全文 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-
-
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/27/solve-problem/">解决问题的科学方法</a></h1>
-    
-    
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-27T12:15:00+08:00" pubdate data-updated="true">Dec 27<sup>th</sup>, 2012</time>
-	  
-
-<span class="tags">
-  Tag:
-  
-    <a href='/blog/tags/thinking/'>Thinking</a>
-  
-</span>
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=解决问题的科学方法 - &amp;url=http://sweetdark.github.com/blog/2012/12/27/solve-problem/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=解决问题的科学方法 - &amp;url=http://sweetdark.github.com/blog/2012/12/27/solve-problem/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=解决问题的科学方法 - http://sweetdark.github.com/blog/2012/12/27/solve-problem/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><p>科学的方法分为两种归纳法和演绎法。
-归纳法就是由通过一些个别现象归纳出普遍性的结论。是一种由个别到一般的论证方法。
-而演绎法则是从一般的原则推论出特定的结果。归纳法的例子：
-今天早上8点多去上班发现公司还没开门，等到9点才有人来开门。明天还是8点多去，还没开门，后天还是如此。你大概会归纳出，公司没有9点是不会开门的。</p>
-
-<p>演绎法的例子：</p>
-
-<p>电脑的BIOS用的电，是由电池提供的。那么你设置了BIOS的设置，保存之后，发现下次进去是出厂设置。那么你可以推断，是BIOS的电池没电了。</p>
-
-<p>遇到复杂的问题时，你先拿出一个笔记本，把所有的状况写下来，这样你就知道情况如何，问题要怎么解决。不然的话，问题会复杂到让你忘记摸不着头脑，然后忘记了该如何解决，最后只得放弃。
-要把问题正确的写下来，要兼顾到六个方面：</p>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/12/27/solve-problem/">阅读全文 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-
-
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/27/test/">测试图片</a></h1>
-    
-    
-    <p class="meta">
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-27T10:13:00+08:00" pubdate data-updated="true">Dec 27<sup>th</sup>, 2012</time>
-	  
-
-      <span class="share-to-weibo">
-        <a href="javascript:void(0)" onclick="window.open('http://service.weibo.com/share/share.php?appkey=&amp;ralateUid=1954936591&amp;title=测试图片 - &amp;url=http://sweetdark.github.com/blog/2012/12/27/test/', null, 'width=615,height=505,toolbar=0,status=0')" class="sina-weibo" title="分享到新浪微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('http://share.v.t.qq.com/index.php?c=share&amp;a=index&amp;appkey=&amp;title=测试图片 - &amp;url=http://sweetdark.github.com/blog/2012/12/27/test/', null, 'width=700,height=680,toolbar=0,status=0')" class="tencent-weibo" title="分享到腾讯微博"></a>
-
-        <a href="javascript:void(0)" onclick="window.open('https://twitter.com/intent/tweet?text=测试图片 - http://sweetdark.github.com/blog/2012/12/27/test/', null, 'width=600,height=300,toolbar=0,status=0')" class="twitter" title="分享到Twitter"></a>
-      </span>
-    </p>
-  
-  </header>
-
-
-  <div class="entry-content"><p><img class="left" src="http://img.xshuma.com/201211/20525412112642806.jpg"></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">abc</span> <span class="p">();</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLint</span> <span class="n">success</span><span class="p">;</span>
+</span><span class='line'><span class="n">glGetShaderiv</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="n">GL_COMPILE_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">success</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">GLchar</span> <span class="n">InfoLog</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">glGetShaderInfoLog</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">InfoLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error compiling shader type %d: &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ShaderType</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>File /readme.MD could not be found</p>
+<p>捕获编译时产生的错误并显示。</p>
 
-<p>Use the <code>printf()</code> function.</p>
-
-<blockquote><p>在天愿作比翼鸟，在地愿为连理枝</p><footer><strong>@白居易</strong> <cite><a href='http://zhidao.baidu.com/question/72129166.html'>长恨歌</a></cite></footer></blockquote>
-
-
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glAttachShader</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">ShaderObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<blockquote><p></p></blockquote>
+<p>把编译好的着色器对象附加到程序中。类似于Makefile链接一列目标对象。真正的链接目标对象发生在链接阶段。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glLinkProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p><embed src="http://player.youku.com/player.php/Type/Folder/Fid/18810229/Ob/1/sid/XNDk5NTEzNTU2/v.swf" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
-<link rel='stylesheet' type='text/css' href='http://www.osctools.net/js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css'/><div id="highlighter_476120" class="syntaxhighlighter  c"><div class="toolbar"><span><a href="#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="c comments">/<em>&nbsp;&mdash;-示例代码&mdash;&mdash;</em>/</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="c color1 bold">int</code>&nbsp;<code class="c plain">main&nbsp;()&nbsp;{</code></div><div class="line number4 index3 alt1"><code class="c spaces">&nbsp;&nbsp;</code><code class="c keyword bold">return</code>&nbsp;<code class="c plain">0;</code></div><div class="line number5 index4 alt2"><code class="c plain">}</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="c comments">/<em>&nbsp;&mdash;-示例代码&mdash;&mdash;</em>/</code></div><div class="line number8 index7 alt1"><code class="c spaces">&nbsp;&nbsp;&nbsp;</code>&nbsp;</div></div></td></tr></tbody></table></div></p>
+<p>在编译了所有的着色器对象然后附加到着色器程序中，最后需要链接它们。链接完之后，你可以删除产生的中间对象。通过glDeleteShader删除它们。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glGetProgramiv</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">GL_LINK_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Success</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">Sourcess</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">glGetProgramInfoLog</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">ErrorLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error Linking shader program : &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与此前处理编译错误不同的是，这里通过通过glGetProgramiv和glGetProgramInfoLog去捕获和处理链接产生的错误信息。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glValidateProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个调用是用来检测在当前的管道状态下这个着色程序是否能够执行。在复杂的程序中包含着多个着色器和许多的状态，在使用之前最好检查一下，提高代码的健壮性。当然你可以再最终产品发布时去掉这些检测，避免这些性能开销。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glUseProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最终把这个着色器程序设置成管道的状态。这个着色器程序会影响所有的绘制调用，知道你用另外一个替换掉。或者通过glUseProgram(NULL)的方式使其不可用(同时开启固定函数管道)。如果你只创建了一个类型的着色器，那么其他阶段的操作按默认的固定函数进行处理。</p>
+
+<p>到此已经讲完了着色器管理的OpenGL调用。下面是顶点着色器和片段着色器的相关内容。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#version 330</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>告诉编译器我们使用的是GLSL3.3. 如果编译器不支持就会报错</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">in</span> <span class="n">vec3</span> <span class="n">Position</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这条语句出现在顶点着色器中。它声明了顶点的属性。3个浮点数在着色器中被当做‘Position&#8217;.&lsquo;Vertex specifi&#8217;意味着为每一次GPU中着色器的调用，都从缓冲中取出一个新的顶点值。layout (location = 0) 创建属性名称和缓冲中属性的绑定。当顶点包含多个属性（position（位置）， normal（法线）， texture（纹理）)时这一语句是必须的。我们要让编译器知道缓冲区中的每一个顶点的属性映射到着色器中的哪一个属性。 有两种方式，一种是显示的指定像上面的设置为0.然后我们可以再程序中使用这个硬编码。或者我们可以留空（简单滴&#8217;in vec3 Position&rsquo;)然后再运行时用glGetAttribLocation去检索位置。此中情况下我们需要通过glVertexAttributePointer定义顶点属性数组,第一个参数是顶点属性位置的索引，同样的我们设置为0<strong>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</strong>。在这里我们使用简单的方式，但在复杂的程序中最好是让编译器决定属性的索引然后在运行时去检索他们。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每一个着色阶段(VS,GS,FS)都有且仅有一个main函数,是着色器的入口。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们为每一个进入顶点着色阶段的顶点位置做硬编码的转换。X和Y的值减半，Z值不变。gl_Postion是一个特殊的内建类型支持齐次的顶点位置。在经过一系列的转换之后，光栅化程序会遍历这些变量并在屏幕空间中使用它们。X，Y值减半意味着这个三角形只有上一次的四分之一。把W设置为1确保三角形能正确显示。把3D投影到2D需要分两步完成。首先需要把所有的顶点乘以投影矩阵，GPU自动使用透视分割进行处理，然后再传给光栅化程序。（原理原文讲了很多）。</p>
+
+<p>如果一切正常，则这三个顶掉会被转换为(-0.5, -0.5), (0.5, -0.5),(0.0, 0.5)，再传给光栅化程序进行处理。这里裁剪器不需要做任何处理，因为每一个点都在归一化的盒子里。这些值被映射到屏幕坐标上。片段着色器再针对每一个点进行着色。如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">FragColor</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一般情况下片段着色器决定片段的颜色。另外，它还可以改变像素的Z值。输出的颜色是上面变量的值。这个变量由光栅化程序接受并话到帧缓存中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定一个红色的值。
+<img src="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html" title="&#34;效果图&#34;" alt="&#34;效果图&#34;"></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/06/25/ogl-step4//page3/index.html#disqus_thread">Comments</a></span>
+	
 </div>
-  
-  
+</article>
 
-
-    </article>
-  
-  <div class="pagination">
+<nav id="pagenavi">
     
-    <a href="/blog/archives">Blog Archives</a>
+        <a href="page2" class="prev">Prev</a>
     
-    <a class="next" href="2">Newer &rarr;</a>
     
-  </div>
+        <a href="page4" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
 </div>
+
 <aside class="sidebar">
   
     <section>
-  <h1>最新发布</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/07/03/how-to-install-octproess/">如何部署已有的octopress Blog</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/10/ogl-step9/">ogl step9 插值</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/07/ogl-step8/">ogl step8 缩放Scaling Transformation</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/07/ogl-step7/">ogl step7 旋转Rotation Transformation</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/05/ogl-step6/">ogl step6 Translation Transformation</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
-  </ul>
-  
-  <a href="https://github.com/sweetdark">@sweetdark</a> on GitHub
-  
-  <script type="text/javascript">
-    $.domReady(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'sweetdark',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-<section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+18.88888888888889%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 
   
 </aside>
 
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Mario -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
 
-</footer>
-  
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
 
 <script type="text/javascript">
       var disqus_shortname = 'sweetdark';
@@ -783,11 +688,14 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina
 
 
 
-
-
-
-
-
-
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
 </body>
 </html>
