@@ -4,3 +4,180 @@
 @import "base/typography";
 @import "base/utilities";
 
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+/* tags */
+.entry-tags a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.entry-tags a:hover {
+  color: #000;
+}
+
+/* standard */
+.post pre {
+  border: 1px solid #ddd;
+  background-color: #eef;
+  overflow: auto;
+  padding: 0 .4em;
+  white-space: pre;
+}
+
+.post ul, .post ol {
+  margin-left: 1.35em;
+}
+
+.post code {
+  border: 1px solid #ddd;
+  background-color: #eef;
+  padding: 0;
+}
+
+.post pre code {
+  border: none;
+}
+
+/* terminal */
+.post pre.terminal {
+  border: 1px solid #000;
+  background-color: #333;
+  color: #FFF;
+}
+
+.post pre.terminal code {
+  background-color: #333;
+}
+
+.center {
+  text-align: center;
+}
+
+.center figcaption {
+  background-color: #eee;
+}
+
+.grails-travis {
+  /*display: table;*/
+  vertical-align: center;
+}
+
+.grails-travis img {
+  max-height: 200px;
+  vertical-align: middle;
+  width: 32%;
+}
+
+.grails-travis span {
+  font-size: 475%;
+  position: relative;
+  /*padding-bottom: 40%;*/
+  top:10px;
+}
+
+.spring-mybatis {
+  vertical-align: center;
+}
+
+.spring-mybatis img {
+  max-height: 200px;
+  vertical-align: middle;
+  width: 32%;
+}
+
+.spring-mybatis span {
+  font-size: 300%;
+  position: relative;
+  /*padding-bottom: 40%;*/
+  top:5px;
+}
+
+.note {
+  margin: 0 1em;
+  padding: 1px 20px;
+  background-color: #eef;
+  border-radius: 5px;
+}
+
+/*****************************************************************************/
+/*
+/* Tags
+/*
+/*****************************************************************************/
+
+.tag-box {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  overflow: hidden;
+  *zoom: 1;
+}
+
+.tag-box:before, .tag-box:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+
+.tag-box:after {
+  clear: both;
+}
+
+.tag-box.inline li {
+  float: left;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 2.5;
+}
+
+.tag-box a {
+  padding: 4px 6px;
+  margin: 2px;
+  background-color: #e6e6e6;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.tag-box a span {
+  vertical-align: super;
+  font-size: 10px;
+  font-size: 0.625rem;
+}
+
+@media screen and (min-width: 768px) {
+  .site .footer .links {
+    display: table-row;
+    float: right;
+    width: 80%;
+  }
+  .site .footer .contact {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .site {
+    margin: 1em auto 2em;
+  }
+  .site .header h1.title {
+    margin: 0;
+  }
+  .nav {
+    display: block;
+    margin: 0 0 2em;
+  }
+  ul.posts li {
+    margin-left: 1em;
+  }
+  ul.posts span {
+    display: block;
+    margin-left: -1em;
+  }
+}
