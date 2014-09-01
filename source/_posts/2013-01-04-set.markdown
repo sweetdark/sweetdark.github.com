@@ -4,7 +4,7 @@ title: "集合"
 date: 2013-01-04 22:46
 comments: true
 categories: 
-tags: ['算法与数据结构']
+tags: ['algorithm']
 ---
 这里的集合是用链表的方式来实现的。
 

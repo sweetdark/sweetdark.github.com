@@ -17,6 +17,9 @@ layout: default
     <div class="center"><a href="{{ root_url }}/blog/archives">Blog Archives</a></div>
 </nav>
 </div>
+{% unless page.sharing == false %}
+	{% include post/sharing.html %}
+{% endunless %}
 {% unless page.sidebar == false %}
 <aside class="sidebar">
   {% if site.blog_index_asides.size %}

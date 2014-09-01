@@ -4,7 +4,7 @@ title: "思念"
 date: 2013-01-12 19:58
 comments: true
 categories: 
-tags: ['随笔']
+tags: ['essay']
 ---
 早上醒来，赖床开始思考。思考着自己这一段的心理历程。一想起你，脑海中有无数的想法。
 
