@@ -10,7 +10,7 @@ tags: vim
 1. [Vbundle](https://github.com/gmarik/Vundle.vim) 这个可以很方便的安装和管理Vim的插件。最好是也装上git，因为很多插件托管在github上
 2. [txtbrowser](http://www.vim.org/scripts/script.php?script_id=2899) 高效处理纯文本,提供快速的搜索和打开URL等功能，支持Email的格式等
 3. [nerdtree](https://github.com/scrooloose/nerdtree) 非常好的目录浏览的插件，功能强大
-4. [ctrlp](https://github.com/kien/ctrlp.vim) 代码和文件的模糊查询
+4. [ctrlp](https://github.com/kien/ctrlp.vim) 文件和buffer的模糊查询
 5. [vim-surround](https://github.com/tpope/vim-surround) 引号，括号等操作，非常方便
 
 ##编程
