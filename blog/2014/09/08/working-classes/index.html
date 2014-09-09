@@ -1,0 +1,332 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>类的设计 - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="抽象数据类型 抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
+ADT的益处 隐藏实现细节
+限制改动程序影响的范围
+让接口提供更多的信息
+让程序的正确性更显而易见，易于检查错误
+程序更具自我说明性
+无须在程序内部到处传递数据
+像现实世界中那样操作实体，不用在底层操作它 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">类的设计</h2>
+	<div class="entry-content"><h2>抽象数据类型</h2>
+
+<p>抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
+<strong>ADT的益处</strong></p>
+
+<ul>
+<li>隐藏实现细节</li>
+<li>限制改动程序影响的范围</li>
+<li>让接口提供更多的信息</li>
+<li>让程序的正确性更显而易见，易于检查错误</li>
+<li>程序更具自我说明性</li>
+<li>无须在程序内部到处传递数据</li>
+<li>像现实世界中那样操作实体，不用在底层操作它</li>
+</ul>
+
+
+<p><strong>注意事项</strong>
+不要让ADT依赖于存储介质。在命名上须要注意。如操作税率表的RateFile类不如RateTable类的命名方式好，虽然目前是通过文件的方式实现的。</p>
+
+<h2>类优秀的设计</h2>
+
+<ol>
+<li>类的接口应该展现一致的抽象层次</li>
+<li>一定要理解类所实现的抽象是什么</li>
+<li>提供成对的服务 （如打开，关闭）</li>
+<li>把不相关的信息移到其它类中</li>
+<li>尽可能让接口可编程，而不是表达语义</li>
+<li>谨防在修改时破坏类的抽象</li>
+<li>不要添加与接口抽象不一致的公用成员</li>
+<li>同时考虑类的抽象性和内聚性</li>
+</ol>
+
+
+<!-- more -->
+
+
+<h2>良好的封装</h2>
+
+<ol>
+<li>尽可能地限制类和成员的可访问性</li>
+<li>不要公开暴露成员数据</li>
+<li>避免把私用的实现细节放入类的接口中 （C++应该使用信封类）</li>
+<li>不要对类的使用者做出任何假设</li>
+<li>避免使用友元</li>
+<li>不要因为一个子程序里仅使用了公用子程序，就把它归入公开接口中</li>
+<li>让阅读代码比编写代码更方便</li>
+<li>警惕从语义上破坏封装性 （如在调用B之前要先调用A初始化数据，但是由于开发人员知道B中会去调用A，所以不调用A）</li>
+<li>留意过于紧密的耦合关系</li>
+</ol>
+
+
+<h2>有关设计和实现的问题</h2>
+
+<h3>包含关系</h3>
+
+<ul>
+<li>通过包含来实现有一个的关系</li>
+<li>在万不得已情况下才使用private继承来实现有一个关系</li>
+<li>数据成员应该控制5~9个</li>
+</ul>
+
+
+<h3>继承关系</h3>
+
+<ul>
+<li>用public继承来实现“是一个”的关系</li>
+<li>使用继承时必须进行详细说明</li>
+<li>遵循LSP原则（派生类完全可以通过基类的接口来使用，而使用者无须了解两者之间的差异）</li>
+<li>确保只继承需要继承的部分</li>
+<li>把共用的接口，数据和操作尽可能的放在更高的抽象层次上</li>
+<li>只有一个实例的继承值得怀疑</li>
+<li>只有一个派生类也值得怀疑（提前设计？）</li>
+<li>派生类覆盖某个子程序，但在其中不做任何操作，值得怀疑</li>
+<li>避免让继承体系过深</li>
+<li>尽量使用多态，避免大量的类型检查</li>
+<li>让所有数据都是private的</li>
+</ul>
+
+
+<h3>成员函数和数据成员</h3>
+
+<ol>
+<li>让类中的子程序数量尽可能少</li>
+<li>禁止隐示的产生不需要的成员函数和运算符</li>
+<li>对其它类的子程序调用尽可能少</li>
+<li>尽量减少类和类之间的合作范围
+
+<blockquote><p>所实例化的类的数量
+调用其它类的子程序的数量
+调用其它对象返回对象的子程序的数量</p></blockquote></li>
+</ol>
+
+
+<h3>构造函数</h3>
+
+<p>优化采用深层Copy而不是浅Copy，除非论证浅Copy的可行性。 浅Copy虽然会提升性能，但会加大管理的复杂度，过早代码性能优化是没有意义的，后期可以很容易的把深Copy重构为浅Copy</p>
+
+<h3>创建类的原因</h3>
+
+<p>每次创建类时，都应该问一下自己创建这个类的原因。</p>
+
+<ul>
+<li>为现实世界中的对象建模</li>
+<li>为抽象的对象建模</li>
+<li>降低复杂度</li>
+<li>隔离复杂度</li>
+<li>建立一个控制中心</li>
+<li>限制变动的范围</li>
+<li>隐藏实现的细节</li>
+<li>隐藏全局数据</li>
+<li>让参数传递更顺畅</li>
+<li>让代码容易重用</li>
+<li>把易变的区域封装</li>
+<li>把相关操作包装到一起</li>
+<li>实现某种特定的重构</li>
+</ul>
+
+
+<h2>核对表</h2>
+
+<h3>抽象</h3>
+
+<ul>
+<li>类是否有一个中心目的，类的命名是否符合这个中心目的？</li>
+<li>类的接口是否展现一致的抽象？</li>
+<li>类的接口是否让人明白应该如何使用它？</li>
+<li>类的接口是否足够抽象，是否是个黑盒子？</li>
+<li>是否从类中去除无关信息？</li>
+<li>是否可以进一步分解为一组类？</li>
+<li>修改类时，是否保证其接口的完整性？
+
+<h3>封装</h3></li>
+<li>是否把类的成员的可访问性降到最低？</li>
+<li>是否完全隐藏了自己的实现细节？</li>
+<li>类是松耦合的吗？</li>
+<li>类是否避免了对其使用者做假设？
+
+<h3>继承</h3></li>
+<li>派生类是否遵循LSP原则？</li>
+<li>派生类是否避免了覆盖，不可覆盖的方法？</li>
+<li>基类中的数据是否是private的？</li>
+<li>继承层次是否很浅？
+
+<h4>跟实现相关的其它问题</h4></li>
+<li>类中是否只有大约七个或更少的成员？</li>
+<li>类调用其它类的子程序降低到最少了吗？</li>
+<li>类是否在绝对必要时才与其它类协作？</li>
+<li>所有数据成员是否在构造函数中初始化了？</li>
+<li>是否在没有论证的情况下使用了浅拷贝，而不是深拷贝？</li>
+</ul>
+
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/08/working-classes/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/09/08/working-classes/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/09/08/working-classes/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

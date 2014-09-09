@@ -1,0 +1,338 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>关键的设计概念摘要 - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="管理复杂度 软件首要的技术使命就是管理复杂度。
+我们不应该同时把整个程序塞进大脑里，而应该试着以某种方式组织程序，使得我们在某一时刻只关注于一个特定的部分。
+人更易于理解多项简单的东西，而不是一项复杂的东西。
+保持子程序的短小精悍可以减小大脑的负担，在抽象层上工作也可以减小大脑的负担。 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">关键的设计概念摘要</h2>
+	<div class="entry-content"><h2>管理复杂度</h2>
+
+<ul>
+<li>软件首要的技术使命就是管理复杂度。</li>
+<li>我们不应该同时把整个程序塞进大脑里，而应该试着以某种方式组织程序，使得我们在某一时刻只关注于一个特定的部分。</li>
+<li>人更易于理解多项简单的东西，而不是一项复杂的东西。</li>
+<li>保持子程序的短小精悍可以减小大脑的负担，在抽象层上工作也可以减小大脑的负担。
+
+<h2>如何应对复杂度</h2>
+
+<p>高代价，低效率的设计的三个根源</p></li>
+<li>用复杂的方法解决简单的问题</li>
+<li>用简单但错误的方法解决复杂的问题</li>
+<li>用不恰当的复杂方法解决复杂的问题
+正确的方法</li>
+<li>把本质的复杂度降至最低</li>
+<li>尽可能减少偶然性复杂度
+
+<h2>理想的设计特征</h2></li>
+<li>最小的复杂度
+
+<blockquote><p>如果你的设计方案不能让你在专注于程序的一部分时，忽略其它部分，那么这样的设计就是有问题的</p></blockquote></li>
+<li>易于维护</li>
+<li>松散耦合
+
+<blockquote><p>相互关联的类尽可能的少</p></blockquote></li>
+<li>可扩展性</li>
+<li>可重用性</li>
+<li>高扇入 （一个底层的类被大量的引用）</li>
+<li>低扇出 （一个类少量的用其它的类）</li>
+<li>可移植性</li>
+<li>精简性</li>
+<li>层次性 （各个层次保持概念的完整性）
+
+<blockquote><p>如果旧代码不合理，编写一个新系统时，封装一层来调用旧代码</p></blockquote></li>
+<li>标准技术 （尽可能的用标准技术）
+
+<h2>设计的层次</h2>
+
+<p>设计分为五层</p></li>
+<li>软件系统设计</li>
+<li>分解为子系统和包</li>
+<li>分解为类</li>
+<li>分解为子程序</li>
+<li>子程序的详细设计
+
+<blockquote><p>在分解子系统时如果让子系统之间可以的相互通信，那么就失去了分解的意义。应当规定子系统之间的通信规则。</p></blockquote></li>
+</ul>
+
+
+<p><img src="http://i.imgur.com/8M70dbQ.jpg" width="150" height="250" title="'常用的子系统'" ></p>
+
+<!-- more -->
+
+
+<h2>信息隐藏</h2>
+
+<p><strong>隐藏的是某个易变的区域，某种文件格式，某种数据类型，某个隔离区域, 把这些易变信息的影响限制在某个类或子程序内。 隐藏复杂度，隐藏变化源</strong></p>
+
+<h3>信息隐藏的障碍</h3>
+
+<ul>
+<li>信息过度分散</li>
+<li>循环依赖</li>
+<li>把类内数据误认为全局数据</li>
+<li>误认为的性能损耗
+在编写类时，时常问自己“这个类需要隐藏什么”
+
+<h3>找出容易改变的区域</h3></li>
+<li>找出看起来容易变化的项目</li>
+<li>把容易变化的项目分离出来</li>
+<li>把容易变化的项目隔离开</li>
+</ul>
+
+
+<blockquote><p>易变化的区域
+业务规则
+对硬件的依赖
+输入输出
+非标准的库
+状态变量 （用枚举而不是布尔）
+数据常量</p></blockquote>
+
+<h3>预料不同程度的变化</h3>
+
+<p><strong>不要把精力放在那些不太可能发生而又很难设计的变化上</strong></p>
+
+<p>首先找出那些对用户有用的尽可能小的子集，这一子集构成系统的核心，不易发生变化。接下来进行尽可能小的扩充，慢慢的扩充。</p>
+
+<h3>松散的耦合</h3>
+
+<p>模块之间的耦合关系应该松散到应该可以很容易的被其它模块使用。</p>
+
+<h4>耦合标准</h4>
+
+<ul>
+<li>规模 这里的规模指的是模块之间的连接数。一个参数的子程序比六个参数的子程序的耦合性更低</li>
+<li>可见性 模块之间的关系应该是显著的。避免通过操作全局变量的方式来实现模块之间的关联，一个模块不应该了解其它模块的实现细节。</li>
+<li>灵活性 灵活性是指模块之间的连接是否容易改动。</li>
+</ul>
+
+
+<p>简而言之，一个模块越容易被其它模块调用，那么它们之间的耦合性就越松散。</p>
+
+<h4>耦合的种类</h4>
+
+<p>下面的耦合关系递增排列</p>
+
+<ol>
+<li>简单参数数据耦合 （两个对象传的参数都是基本类型的数据）</li>
+<li>简单对象耦合 （一个模块实例化一个对象）</li>
+<li>对象参数耦合 （Object1 要求 Object2 传一个Object3给它）</li>
+<li>语义上的耦合 （最难缠的耦合关系）
+
+<blockquote><ul>
+<li>Model1传个控制标志给Model2，告诉Model2应该做什么。 这种方法要求Model1对Model2的工作细节有了解。 参数是枚举或对象会好一些</li>
+<li>Model2修改了某个全局数据之后，Model1使用它。</li>
+<li>Model1要求它的Initialize方法必须在它的Routin方法之前调用。Model2知道Routin方法会去调用Initialize方法，所以Model2不调用Initialize</li>
+<li>Model1传个部分初始化的Object给Model2，因为它知道Model2只使用Object 7个方法中的3全方法，只用到其中的部分数据。</li>
+<li>Modle1传个BaseObject， Model2知道是DerivedObject，强制转成DerivedObject，然后使用DerivedObject的方法</li>
+</ul>
+</blockquote></li>
+</ol>
+
+
+<p><strong>语义上的耦合是非常危险的，因为更改被调用的模块会破坏调用的模块，而这种错误是编译器无法检查的。</strong>
+<strong>松耦合在于一个模块提供了一种间接层次的抽象，另一个模块可以放心的使用它，而不用管里面的细节</strong></p>
+
+<h3>设计模式的益处</h3>
+
+<ul>
+<li>设计模式通过提供现成的抽象来减小复杂度</li>
+<li>设计模式通过把常见的解决方案的细节予以制度化来减小出错</li>
+<li>设计模式通过多种设计方案而带来启发性的价值</li>
+<li>设计模式通过把设计对话提高到一个更高的层次来简化交流
+
+<h3>其它启发式方法</h3></li>
+<li>高内聚性</li>
+<li>构造分层结构</li>
+<li>严格描述类契约</li>
+<li>分配职责 （单一职责）</li>
+<li>为测试而设计 （为了更容易测试，须要模块化，松耦合）</li>
+<li>避免失误</li>
+<li>有意识的选择绑定时间</li>
+<li>创建中央控制点 (控制可以集中在类，子程序，甚至具名常量里。这样为了找到某样事物，你需要查找的地方越少)</li>
+<li>画图</li>
+<li>保持设计的模块化</li>
+<li>使用蛮力</li>
+</ul>
+
+
+<h3>记录你的设计成果</h3>
+
+<ul>
+<li>把设计文档插入到代码中。（文档少的情况下，JavaDoc可以生成文档）</li>
+<li>用Wiki来记录设计的决策</li>
+<li>写总结邮件 （写完发给项目组的所有人，维持一个邮件列表）</li>
+<li>用数码相机 拍下画板上的设计图，这种比在电脑上画图高效</li>
+<li>在适当的细节使用UML图</li>
+</ul>
+
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/02/key-design-concepts/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/09/02/key-design-concepts/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/09/02/key-design-concepts/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

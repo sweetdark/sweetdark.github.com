@@ -6,8 +6,11 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jul 23rd, 2014 Tag: build PlatForm win32 64bit
-python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以按照官方这个步骤去做。官方说Windows也差不多， &hellip;">
+	<meta name="description" content="Published on: Sep 8th, 2014 Tag: code-complete 抽象数据类型 抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
+ADT的益处 隐藏实现细节
+限制改动程序影响的范围
+让接口提供更多的信息
+让程序的正确性更显而易见，易于检查错误 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -69,8 +72,8 @@ python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以�
 <ul id="nav">
 	<li id="ajax"><a href="/index.html">Home</a></li>
 	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
 	<li id="ajax"><a href="/about/index.html">About</a></li>
-    <li><a href="/atom.xml">RSS</a></li>
     
     <li>
     <div id="dark">
@@ -97,9 +100,9 @@ python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以�
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/2014/07/23/buildbot-build/">
+		<a href="/blog/2014/09/08/working-classes/">
 		
-			Buildbot的搭建总结</a>
+			类的设计</a>
 	</h2>
     <div class="entry-content">
     <div class="meta">
@@ -115,176 +118,278 @@ python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以�
   
 
 
-<time datetime="2014-07-23T18:56:27+08:00" pubdate data-updated="true">Jul 23<sup>rd</sup>, 2014</time></div>
+<time datetime="2014-09-08T11:23:01+08:00" pubdate data-updated="true">Sep 8<sup>th</sup>, 2014</time></div>
       <div class="tags">
 
   Tag:
   
-    <a href='/blog/tags/build/'>build</a>
+    <a href='/blog/tags/code-complete/'>code-complete</a>
   
 </div>
     </div>
-		<p><strong>PlatForm</strong>                    <em>win32 64bit</em>
-<strong>python version</strong>              <em>python2.7 32bit</em></p>
+		<h2>抽象数据类型</h2>
 
-<h2>入门</h2>
+<p>抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
+<strong>ADT的益处</strong></p>
 
-<p>如果是Linux系统的<a href="http://docs.buildbot.net/current/tutorial/firstrun.html">FirstRun</a>，可以按照官方这个步骤去做。官方说Windows也差不多，但在我的环境下有问题，（我安装了Cygwin，在Cygwin环境下运行的）。 virtualenv  这个的easy_install太旧了。我用sandbox运行 easy_install buildbot总是提示缺少库。更新easy_install 也没用。 关于用easy_install -U setuptool的产生的Perssion Denied问题可以看<a href="http://stackoverflow.com/questions/17601020/easy-install-exe-permission-denied-on-windows-8">这里</a></p>
-
-<p>Windows 下的安装步骤。参考<a href="http://trac.buildbot.net/wiki/RunningBuildbotOnWindows">这里</a> 下面说一下我遇到的问题。
-我的建议是都安装x86的版本。python  PyWin32版本。 有一些需要编译的python库很麻烦如pysqlite 。python2.7的大部分库是用VS2008编译的，可以去下个VS2008的Express。如果是Windows 64bit出现问题参考<a href="http://stackoverflow.com/questions/4676728/value-error-trying-to-install-python-for-windows-extensions">这里</a>
-因为我装了好几个版本的VS。我的问题弄了好久没解决。还好网上有编译好的版本。
-<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32">http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32</a> 我在这里下了个pysqlite的exe.
-如果下载的是.zip文件，则解压，然后dos进入该目录，执行<code>python setup.py install</code>命令即可
-也在网上找了个OpenSSL windwos版的下载安装好了。
-大部分需要的组件我都上传的网盘了地址<a href="http://pan.baidu.com/s/1dD7tlUp">http://pan.baidu.com/s/1dD7tlUp</a>
-检查是否buildbot和buildbot-slave是否安装好了。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>buildbot --version
-</span><span class='line'>buildslave --version</span></code></pre></td></tr></table></div></figure>
+<ul>
+<li>隐藏实现细节</li>
+<li>限制改动程序影响的范围</li>
+<li>让接口提供更多的信息</li>
+<li>让程序的正确性更显而易见，易于检查错误</li>
+<li>程序更具自我说明性</li>
+<li>无须在程序内部到处传递数据</li>
+<li>像现实世界中那样操作实体，不用在底层操作它</li>
+</ul>
 
 
-<p>如果一切正常那可以按照<a href="http://docs.buildbot.net/current/tutorial/firstrun.html">FirstRun</a> 这里后面的继续去做了。</p>
+<p><strong>注意事项</strong>
+不要让ADT依赖于存储介质。在命名上须要注意。如操作税率表的RateFile类不如RateTable类的命名方式好，虽然目前是通过文件的方式实现的。</p>
 
-
-		
-		<a href="/blog/2014/07/23/buildbot-build/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/07/23/buildbot-build//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/17/vs-error-collection/">
-		
-			Vs编译错误及解决办法</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T18:18:48+08:00" pubdate data-updated="true">Jul 17<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/compile/'>Compile</a>
-  
-</div>
-    </div>
-		<h3>error C2220: 警告被视为错误 &ndash; 没有生成“object”文件</h3>
-
-<p>这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
-解决方案：
-1. 在VS2010以后在文件->高级保存选项，设置UTF-8的格式，重新保存一次。 或者用其它的程序保存成UTF-8的格式。</p>
+<h2>类优秀的设计</h2>
 
 <ol>
-<li>如果上述不能去掉错误，还可以点击项目，右击选择属性->配置属性->c/c++&ndash;>常规，将“警告视为错误”的选项改为“否”。就可以！</li>
+<li>类的接口应该展现一致的抽象层次</li>
+<li>一定要理解类所实现的抽象是什么</li>
+<li>提供成对的服务 （如打开，关闭）</li>
+<li>把不相关的信息移到其它类中</li>
+<li>尽可能让接口可编程，而不是表达语义</li>
+<li>谨防在修改时破坏类的抽象</li>
+<li>不要添加与接口抽象不一致的公用成员</li>
+<li>同时考虑类的抽象性和内聚性</li>
 </ol>
 
 
-<h3>error C2143: 语法错误 : 缺少“;”(在“类型”的前面)</h3>
 
-<p>C99之前都要求，函数内的局部变量要在开始处定义。</p>
+		
+		<a href="/blog/2014/09/08/working-classes/" class="more-link">阅读全文 &rarr;</a>
+	</div>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">f</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;j is %d&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/08/working-classes//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
-<p>这可能出现在c文件编译的时候，VS2012都不完全支持C99。须要调整一下代码。把函数内的局部变量放到函数开头去定义。或者改成cpp后缀的文件</p>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/02/key-design-concepts/">
+		
+			关键的设计概念摘要</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
 
-<p>VS2010之后开始支持C99，所以在VS2008之前如果出现 找不到 stdint.h 文件的话。可以升级到VS2010之后。</p>
 
-<h3>LNK2001: 无法解析的外部符号 __iob 问题的解决方法</h3>
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-02T22:01:20+08:00" pubdate data-updated="true">Sep 2<sup>nd</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/code-complete/'>code-complete</a>
+  
+</div>
+    </div>
+		<h2>管理复杂度</h2>
+
+<ul>
+<li>软件首要的技术使命就是管理复杂度。</li>
+<li>我们不应该同时把整个程序塞进大脑里，而应该试着以某种方式组织程序，使得我们在某一时刻只关注于一个特定的部分。</li>
+<li>人更易于理解多项简单的东西，而不是一项复杂的东西。</li>
+<li>保持子程序的短小精悍可以减小大脑的负担，在抽象层上工作也可以减小大脑的负担。
+
+<h2>如何应对复杂度</h2>
+
+<p>高代价，低效率的设计的三个根源</p></li>
+<li>用复杂的方法解决简单的问题</li>
+<li>用简单但错误的方法解决复杂的问题</li>
+<li>用不恰当的复杂方法解决复杂的问题
+正确的方法</li>
+<li>把本质的复杂度降至最低</li>
+<li>尽可能减少偶然性复杂度
+
+<h2>理想的设计特征</h2></li>
+<li>最小的复杂度
+
+<blockquote><p>如果你的设计方案不能让你在专注于程序的一部分时，忽略其它部分，那么这样的设计就是有问题的</p></blockquote></li>
+<li>易于维护</li>
+<li>松散耦合
+
+<blockquote><p>相互关联的类尽可能的少</p></blockquote></li>
+<li>可扩展性</li>
+<li>可重用性</li>
+<li>高扇入 （一个底层的类被大量的引用）</li>
+<li>低扇出 （一个类少量的用其它的类）</li>
+<li>可移植性</li>
+<li>精简性</li>
+<li>层次性 （各个层次保持概念的完整性）
+
+<blockquote><p>如果旧代码不合理，编写一个新系统时，封装一层来调用旧代码</p></blockquote></li>
+<li>标准技术 （尽可能的用标准技术）
+
+<h2>设计的层次</h2>
+
+<p>设计分为五层</p></li>
+<li>软件系统设计</li>
+<li>分解为子系统和包</li>
+<li>分解为类</li>
+<li>分解为子程序</li>
+<li>子程序的详细设计
+
+<blockquote><p>在分解子系统时如果让子系统之间可以的相互通信，那么就失去了分解的意义。应当规定子系统之间的通信规则。</p></blockquote></li>
+</ul>
+
+
+<p><img src="http://i.imgur.com/8M70dbQ.jpg" width="150" height="250" title="'常用的子系统'" ></p>
+
+
+		
+		<a href="/blog/2014/09/02/key-design-concepts/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/02/key-design-concepts//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/30/architecture-prerequisite/">
+		
+			怎样算是一分优秀的架构规格书</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-30T19:09:52+08:00" pubdate data-updated="true">Aug 30<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/architecture/'>architecture</a>
+  
+</div>
+    </div>
+		<h2>架构的先决条件</h2>
+
+<p>架构的质量决定了系统的概念完整性。后者继而决定了软件的最终质量。</p>
+
+<h2>架构的典型组成部分</h2>
+
+<h3>程序组织</h3>
 
 <ol>
-<li><p>缺少libc.lib
-解决这个问题的方法是去掉链接到libc.lib，具体地点：项目-〉属性-〉配置属性-〉链接器-〉忽略特定库。</p></li>
-<li><p>unresolved external symbol <code>__iob</code>
-这个<code>__iob</code>找不到的问题费了我大部分的时间。跟踪到stdio.h文件，发现那里有个关于iob的宏，终于搞定。加入一句话到.cpp文件中：<code>extern "C" { FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]}; }</code></p></li>
-<li><p>NULL iterator
-STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器上进行++或&mdash;之类的是不成立的。</p></li>
-<li><p>结构体默认函数
-在VC6中，结构体的默认运算符==或者&lt;之类的如果不实现也可以作为STL元素放入list等容器中。但VC8不行了，因为它已经不再为结构体生成缺省的操作符函数。</p></li>
+<li>系统架构首先要以概要的形式对有关系统做一个综述。</li>
+<li>架构定义主要的构造块。根据程序规模的不同，各个构造块可以由单个类或者多个类组成的子系统。每条列在需求中的功能特性至少有一个构造块覆盖到。</li>
+<li>明确定义各个构造块的责任。构造块之间的关系和接口。各个构造块之间应该知道的越少越好。明确层次关系，对于每个构造块，可以调用哪些构造块，可以间接调用哪些构造块，不可以调用哪些构造块。</li>
 </ol>
 
 
-<p>该错误主要是由于静态库在VC6编译而主程序在VC2005编译，大家用的CRT不同。解决办法，代码中增加</p>
+<h3>主要的类</h3>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef __cplusplus</span>
-</span><span class='line'><span class="k">extern</span> <span class="s">&quot;C&quot;</span>
-</span><span class='line'><span class="cp">#endif</span>
-</span><span class='line'><span class="kt">FILE</span> <span class="n">_iob</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">__iob_func</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">__iob_func</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="n">__iob_func</span><span class="p">()[</span><span class="mi">2</span><span class="p">]};</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>定义20%完成80%的需求的类。</p>
+
+<h3>数据设计</h3>
+
+<p>明确使用什么样的数据形式，为什么不用其它的形式。使用文件还是数据库，为什么？</p>
+
+<h3>业务规则</h3>
+
+<p>如果架构须要依赖于特定的业务，那么要主细描述这么规则。</p>
+
+<h3>用户界面设计</h3>
+
+<p>架构中应当说明使用哪种UI，什么格式，是桌面的，WEB的，命令行接口还是其它的形式。</p>
+
+<h3>变更策略</h3>
+
+<p>明确的需求发生变更时，应当执行什么样的策略，怎样管理。</p>
+
+<h3>资源管理</h3>
+
+<p>一些有限的资源像线程，句柄，内存，硬盘。应当如何合理的使用，统一使用的方式。在嵌入式中，资源短缺的情况下，更应该注重资源的管理。</p>
+
+<h3>安全性</h3>
+
+<p>架构应该描述实现设计层面和代码层面的安全性的方法。</p>
+
+<h3>性能</h3>
+
+<p>明确性能目标，性能要达到什么样的程度。</p>
+
+<h3>可伸缩性</h3>
+
+<p>可伸缩性是指系统增长满足未来需求的能力</p>
+
+<h3>输入输出</h3>
+
+<p>架构应该详细定义读取策略，而且应该描述在哪一层检测IO错误。</p>
+
+<h3>错误处理</h3>
+
+<p>架构应该清楚的说明一种“一致处理错误错误”的策略
+* 错误处理是进行纠正还是仅仅检测
+* 错误检测是主动还是被动
+* 程序的错误如何传播
+* 错误消息的处理有什么约定
+* 如何处理异常
+* 程序在什么层次上处理错误
+* 每个类的错误处理上负什么样的责任。是每个类负责处理错误，还是由一组类来处理整个系统的错误
+* 使用运行环境中的内部支持的错误处理机制还是自己编写错误处理机制</p>
+
+<h3>容错性</h3>
+
+<p>架构应该定义所期望的容错种类。</p>
+
+<h3>架构的可行性</h3>
+
+<p>应该认证系统的技术可行性</p>
+
+<h3>架构的总体质量</h3>
+
+<ul>
+<li>优秀的架构规格书的特点在于讨论了系统中的类，每个类背后的隐藏信息，讨论了“采纳或排斥所有替代方案的理由”</li>
+<li>架构的目标应该清楚的表述</li>
+<li>架构在很大程度止是与机器和编程语言无关的</li>
+<li>架构应该描述所有决策的主要动机</li>
+<li>架构应该明确的指出有风险的区域</li>
+<li>架构应该在“欠描述”和“过度描述”之间的那条分界线上</li>
+<li>架构不应该包含很难理解的东西</li>
+</ul>
 
 
-<p>此错误的产生根源：
-在VC6的stdio.h之中有如下定义</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">_CRTIMP</span> <span class="k">extern</span> <span class="kt">FILE</span> <span class="n">_iob</span><span class="p">[];</span>
-</span><span class='line'><span class="cp">#define stdin (&amp;_iob[0])</span>
-</span><span class='line'><span class="cp">#define stdout (&amp;_iob[1])</span>
-</span><span class='line'><span class="cp">#define stderr (&amp;_iob[2])</span>
-</span></code></pre></td></tr></table></div></figure>
+<blockquote><p>摘自代码大全</p></blockquote>
 
 
-<p>stdin、stdout、stderr是通过查<em>iob数组得到的。所以，VC6编译的程序、静态库只要用到了printf、scanf之类的函数，都要链接</em>iob数组。</p>
 
-<p>而在vc2005中，stdio.h中变成了</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">_CRTIMP</span> <span class="kt">FILE</span> <span class="o">*</span> <span class="kr">__cdecl</span> <span class="nf">__iob_func</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
-</span><span class='line'><span class="cp">#define stdin (&amp;__iob_func()[0])</span>
-</span><span class='line'><span class="cp">#define stdout (&amp;__iob_func()[1])</span>
-</span><span class='line'><span class="cp">#define stderr (&amp;__iob_func()[2])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>_iob</code>数组不再是显式的暴露出来了，需要调用<em><em>iob_func()函数获得。所以vc6的静态库链接VC2005的C运行库就会找不到</em>iob数组.
-通过重新定义
-<code>FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]};</code>
-就把vc6需要用到的</em>iob数组搞出来了</p>
 
 		
 		
@@ -292,7 +397,7 @@ STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2014/07/17/vs-error-collection//index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2014/08/30/architecture-prerequisite//index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -301,9 +406,9 @@ STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/2014/07/09/jni-manual/">
+		<a href="/blog/2014/08/28/windows-message-queue-introduction/">
 		
-			JNI Manual GetFieldID</a>
+			Windows Message Queue Introduction</a>
 	</h2>
     <div class="entry-content">
     <div class="meta">
@@ -319,79 +424,36 @@ STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器
   
 
 
-<time datetime="2014-07-09T21:32:08+08:00" pubdate data-updated="true">Jul 9<sup>th</sup>, 2014</time></div>
+<time datetime="2014-08-28T20:59:07+08:00" pubdate data-updated="true">Aug 28<sup>th</sup>, 2014</time></div>
       <div class="tags">
 
   Tag:
   
-    <a href='/blog/tags/jni/'>JNI</a>
+    <a href='/blog/tags/windows/'>windows</a>
   
 </div>
     </div>
-		<p>在JNI中要访问结构体中的字段，首先要获得这个字段的FieldID。然后通过Get<Type>Field和Set<Type>Field来访问和修改。</p>
+		<p>Windows 的消息队列和消息处理方式一直没有非常系统的学习过。正如某位名人所说的“一知半解，最危险”。</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="c1">//C的接口</span>
-</span><span class='line'><span class="n">jfieldID</span> <span class="nf">GetFieldID</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jclass</span> <span class="n">clazz</span><span class="p">,</span>
-</span><span class='line'>      <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//C++的接口</span>
-</span><span class='line'><span class="n">jfieldID</span> <span class="nf">GetFieldID</span><span class="p">(</span><span class="n">jclass</span> <span class="n">clazz</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">sig</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
+<blockquote><p>“一知半解”就是对事物的吸收囫囵吞枣、不求甚解，导致判断失准而不自知。因为不彻底了解事物，不精准分辨事物细微差异，以致陷入断章取义、冯京当马凉、张飞打岳飞打得满天飞。而且正因为自以为很懂，他甚至听不进去别人的观点、劝告，当然赖之作出的判断，就会差之毫厘失之千里，甚至造成很大的错误。</p></blockquote>
 
 
-<p><strong>描述</strong></p>
+<p></p>
 
-<blockquote><p>返回一个字段的FieldID或者为NULL（如果操作失败），这个字段是用字段和描述串来指定的。然后把FieldID作为Get<Type>Field和Set<Type>Field的参数来访问这个字段。这个字段必须是可以通过clazz来访问的. 当然这个字段可以是clazz类的父类, clazz必须是非空的。
-GetFieldID会初始化未初始化的类
-GetFieldID不可以用来获取数组的长度。应该用GetArrayLength来获取数组的长度。</p></blockquote>
+<h2>创建消息循环</h2>
 
-<p><strong>异常</strong></p>
+<p>系统只会为那些须要消息队列来执行某些操作的线程创建消息队列。如果一个线程创建了一个或多个窗口，那么就必须创建一个消息循环来处理消息队列中的消息。（窗口都会有显示和关闭的消息），这个消息循环会从线程的消息队列中检索消息(<code>PeekMessage</code>和<code>GetMessage</code>)，然后分发给相应的处理过程。</p>
 
-<blockquote><p>NoSuchFiledError: 如果指定的字段没有找到
-ExceptionInInitializeError: 如果类初始化失败。
-OutOfMemoryError：系统内存不够</p></blockquote>
-
-<figure class='code'><figcaption><span>Java结构体Person.java</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>  <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">ID</span><span class="o">;</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">native</span> <span class="n">Person</span> <span class="nf">OnePerson</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span>本地方法的实现</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jobject</span> <span class="n">JNICALL</span> <span class="nf">Java_Person_OnePerson</span>
-</span><span class='line'>  <span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="p">,</span> <span class="n">jobject</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>由于应用程序中系统会把消息分发给各个窗口，所以线程在创建消息循环之前至少要创建一个窗口。传统的应用程序中，应用会WinMain函数中注册一个窗口类作为主窗口，创建和显示窗口，然后启动消息循环。</p>
 
 
 		
-		
+		<a href="/blog/2014/08/28/windows-message-queue-introduction/" class="more-link">阅读全文 &rarr;</a>
 	</div>
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2014/07/09/jni-manual//index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2014/08/28/windows-message-queue-introduction//index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -400,9 +462,9 @@ OutOfMemoryError：系统内存不够</p></blockquote>
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/2014/07/09/eclipse-tools/">
+		<a href="/blog/2014/08/27/vim-plugin/">
 		
-			Eclipse 工具</a>
+			Vim 插件</a>
 	</h2>
     <div class="entry-content">
     <div class="meta">
@@ -418,196 +480,56 @@ OutOfMemoryError：系统内存不够</p></blockquote>
   
 
 
-<time datetime="2014-07-09T19:33:01+08:00" pubdate data-updated="true">Jul 9<sup>th</sup>, 2014</time></div>
+<time datetime="2014-08-27T20:59:00+08:00" pubdate data-updated="true">Aug 27<sup>th</sup>, 2014</time></div>
       <div class="tags">
 
   Tag:
   
-    <a href='/blog/tags/tools/'>tools</a>
+    <a href='/blog/tags/vim/'>vim</a>
   
 </div>
     </div>
-		<h2>配置Javap工具</h2>
+		<p>记录一些常用的好用的Vim插件</p>
 
-<p>在Eclipse的Menu中打开Run->External Tools->External Tools Configurations
-添加一个新的项。
-<img src="https://farm3.staticflickr.com/2928/14617040064_088658d740_o.png">
-<img src="https://farm3.staticflickr.com/2912/14639067183_6776a117b8_b.jpg">
-javap这个工具可以用来输出java类 对应jni的描述。
-<img src="http://farm3.staticflickr.com/2939/14619183735_dfb1841c44_b.jpg">
-把Signature 后面的字符串拷贝就行了（<strong>后面的分号也要拷贝</strong>）。这样可以在GetField中使用了。
-env->GetField(cls, &ldquo;fieldName&rdquo;, &ldquo;Signature&rdquo;);
-javah的工具配置类似。</p>
+<h2>通用</h2>
 
-<h2>定位文件目录</h2>
+<ol>
+<li><a href="https://github.com/gmarik/Vundle.vim">Vbundle</a> 这个可以很方便的安装和管理Vim的插件。最好是也装上git，因为很多插件托管在github上</li>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=2899">txtbrowser</a> 高效处理纯文本,提供快速的搜索和打开URL等功能，支持Email的格式等</li>
+<li><a href="https://github.com/scrooloose/nerdtree">nerdtree</a> 非常好的目录浏览的插件，功能强大</li>
+<li><a href="https://github.com/kien/ctrlp.vim">ctrlp</a> 文件和buffer的模糊查询</li>
+<li><a href="https://github.com/tpope/vim-surround">vim-surround</a> 引号，括号等操作，非常方便</li>
+</ol>
 
-<p>跟VS一样，VS在标签中右键打开文件目录一样。Eclipse须要配置。也是在External Tool中。
-新建一个
-<img src="http://farm3.staticflickr.com/2931/14618685852_2340a8acab_b.jpg">
-Build选项下面就不要勾上build before launch了。</p>
 
-<p><a href="http://www.open-open.com/bbs/view/1320934157953/">Eclipse快捷键 10个最有用的快捷键</a></p>
+<h2>编程</h2>
+
+<ol>
+<li><a href="https://github.com/klen/python-mode">pythonmode</a> python必备</li>
+<li><a href="https://github.com/vim-debug.vim">vim-debug</a> 支持python 和php debug</li>
+<li><a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a> git的插件可以在Vim中执行git命令，非常方便, 类似的有git-vim</li>
+<li><a href="www.vim.org/script.php?script_id=31">a.vim</a>在头文件和cpp,c文件中切换</li>
+<li><a href="https://github.com/Shougo/neocomplcache.vim">neocomplcache.vim</a> 强大的自动补全插件</li>
+<li><a href="https://github.com/scrooloose/syntastic">syntastic</a> Python和其它多种语言的语法检查</li>
+</ol>
+
+
+<h2>样式</h2>
+
+<ol>
+<li><a href="https://github.com/bling/vim-airline">vim-airline</a>让vim的用户体验更好</li>
+<li><a href="http://files.werx.dk/wombat.vim">Wombat</a>一种样式</li>
+</ol>
+
+
 
 		
-		
+		<a href="/blog/2014/08/27/vim-plugin/" class="more-link">阅读全文 &rarr;</a>
 	</div>
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2014/07/09/eclipse-tools//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/09/local-reference-table-overflow/">
-		
-			Andriod Ndk Error Local Reference Table Overflow Max 512</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-09T12:57:43+08:00" pubdate data-updated="true">Jul 9<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/jni/'>JNI</a>
-  
-</div>
-    </div>
-		<h1>引言</h1>
-
-<p>在Android开发中，常会遇到 local reference table overflow的错误。原因是从java代码进入jni层的本地代码调用时，Dalvik就会创建一张local reference表来存储local reference， 这张表的表项数有最大限制。一般为512个。当表项数超过最大值限制时，Dalvik就会抛出异常。</p>
-
-<figure class='code'><figcaption><span>下面这段代码就会导致溢出</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">jclass</span> <span class="n">strinClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">800</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="n">stringClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">.....</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>什么是Local References？</h1>
-
-<p>大多数的JNI函数都创建了Local reference（以下简称为<em>LR</em>）。 比如 NewObject, NewString&hellip;. 和 FindClass 等。</p>
-
-<p>一个<em>LR</em>只有在创建它的的一个局部作用域内有效。在超出这个作用域之后，就可能会被释放。 所有的<em>LR</em>在本地函数调用时创建的，在这个本地函数返回时就会被释放。</p>
-
-<p>你不能把一个Local reference 保存在静态变量中，然后在后面继续调用，这是不安全的。</p>
-
-<figure class='code'><figcaption><span>错误的例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* This code is illegal */</span>
-</span><span class='line'><span class="n">jstring</span>
-</span><span class='line'><span class="nf">MyNewString</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jchar</span> <span class="o">*</span><span class="n">chars</span><span class="p">,</span> <span class="n">jint</span> <span class="n">len</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">static</span> <span class="n">jclass</span> <span class="n">stringClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">jmethodID</span> <span class="n">cid</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">jcharArray</span> <span class="n">elemArr</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">jstring</span> <span class="n">result</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">stringClass</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="n">env</span><span class="p">,</span>
-</span><span class='line'>                                        <span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* exception thrown */</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="cm">/* It is wrong to use the cached stringClass here,</span>
-</span><span class='line'><span class="cm">       because it may be invalid. */</span>
-</span><span class='line'>    <span class="n">cid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span>
-</span><span class='line'>                              <span class="s">&quot;&lt;init&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;([C)V&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>    <span class="n">elemArr</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewCharArray</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>  <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewObject</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span>
-</span><span class='line'><span class="nf">Java_C_f</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">this</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kt">char</span> <span class="o">*</span><span class="n">c_str</span> <span class="o">=</span> <span class="p">...;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">MyNewString</span><span class="p">(</span><span class="n">c_str</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//Java 中</span>
-</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
-</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>假设我调用了两次Java_C_f。 其中调用了MyNewString， MyNewString的想法是把stringClass这个<em>LR</em> 初始化一次后保存起来，下次可以继续用。但根据JNI的规则。在MyNewString返回时，所有的<em>LR</em>都会被释放。所以第二次调用时stringClass就是Invalid的。</p>
-
-<p>虽然VM会在本地函数返回时，释放所有的<em>LR</em>，但我们也可以显示的控制<em>LR</em>的释放。<em>LR</em>引用的对象只有在，<em>LR</em>无效的时候才会被GC回收，在MyNewString函数中调用的DeleteLocalRef 释放中间的变量elemArr，这样GC可以立即回收这个<em>LR</em> 不然elemArr这个<em>LR</em>会等到本地函数MyNewString返回时才被回收。</p>
-
-<p><em>LR</em>只能在创建它的线程中使用，在其它的线程中使用它是错误的。所以用一个全局变量保存在其它线程中用是不可行的。</p>
-
-
-		
-		<a href="/blog/2014/07/09/local-reference-table-overflow/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/07/09/local-reference-table-overflow//index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2014/08/27/vim-plugin//index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -621,11 +543,25 @@ Build选项下面就不要勾上build before launch了。</p>
 </nav>
 </div>
 
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
 <aside class="sidebar">
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+18.88888888888889%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsuan-fa-yu-shu-ju-jie-gou%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fsui-bi%27+style%3D%27font-size%3A+14.444444444444445%25%27%3E%E9%9A%8F%E7%AC%94%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+18.88888888888889%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

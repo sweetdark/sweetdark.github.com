@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2014-08-25T14:42:02+08:00</updated>
+  <updated>2014-09-09T09:53:44+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,906 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[类的设计]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/09/08/working-classes/"/>
+    <updated>2014-09-08T11:23:01+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/09/08/working-classes</id>
+    <content type="html"><![CDATA[<h2>抽象数据类型</h2>
+
+<p>抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
+<strong>ADT的益处</strong></p>
+
+<ul>
+<li>隐藏实现细节</li>
+<li>限制改动程序影响的范围</li>
+<li>让接口提供更多的信息</li>
+<li>让程序的正确性更显而易见，易于检查错误</li>
+<li>程序更具自我说明性</li>
+<li>无须在程序内部到处传递数据</li>
+<li>像现实世界中那样操作实体，不用在底层操作它</li>
+</ul>
+
+
+<p><strong>注意事项</strong>
+不要让ADT依赖于存储介质。在命名上须要注意。如操作税率表的RateFile类不如RateTable类的命名方式好，虽然目前是通过文件的方式实现的。</p>
+
+<h2>类优秀的设计</h2>
+
+<ol>
+<li>类的接口应该展现一致的抽象层次</li>
+<li>一定要理解类所实现的抽象是什么</li>
+<li>提供成对的服务 （如打开，关闭）</li>
+<li>把不相关的信息移到其它类中</li>
+<li>尽可能让接口可编程，而不是表达语义</li>
+<li>谨防在修改时破坏类的抽象</li>
+<li>不要添加与接口抽象不一致的公用成员</li>
+<li>同时考虑类的抽象性和内聚性</li>
+</ol>
+
+
+<!-- more -->
+
+
+<h2>良好的封装</h2>
+
+<ol>
+<li>尽可能地限制类和成员的可访问性</li>
+<li>不要公开暴露成员数据</li>
+<li>避免把私用的实现细节放入类的接口中 （C++应该使用信封类）</li>
+<li>不要对类的使用者做出任何假设</li>
+<li>避免使用友元</li>
+<li>不要因为一个子程序里仅使用了公用子程序，就把它归入公开接口中</li>
+<li>让阅读代码比编写代码更方便</li>
+<li>警惕从语义上破坏封装性 （如在调用B之前要先调用A初始化数据，但是由于开发人员知道B中会去调用A，所以不调用A）</li>
+<li>留意过于紧密的耦合关系</li>
+</ol>
+
+
+<h2>有关设计和实现的问题</h2>
+
+<h3>包含关系</h3>
+
+<ul>
+<li>通过包含来实现有一个的关系</li>
+<li>在万不得已情况下才使用private继承来实现有一个关系</li>
+<li>数据成员应该控制5~9个</li>
+</ul>
+
+
+<h3>继承关系</h3>
+
+<ul>
+<li>用public继承来实现“是一个”的关系</li>
+<li>使用继承时必须进行详细说明</li>
+<li>遵循LSP原则（派生类完全可以通过基类的接口来使用，而使用者无须了解两者之间的差异）</li>
+<li>确保只继承需要继承的部分</li>
+<li>把共用的接口，数据和操作尽可能的放在更高的抽象层次上</li>
+<li>只有一个实例的继承值得怀疑</li>
+<li>只有一个派生类也值得怀疑（提前设计？）</li>
+<li>派生类覆盖某个子程序，但在其中不做任何操作，值得怀疑</li>
+<li>避免让继承体系过深</li>
+<li>尽量使用多态，避免大量的类型检查</li>
+<li>让所有数据都是private的</li>
+</ul>
+
+
+<h3>成员函数和数据成员</h3>
+
+<ol>
+<li>让类中的子程序数量尽可能少</li>
+<li>禁止隐示的产生不需要的成员函数和运算符</li>
+<li>对其它类的子程序调用尽可能少</li>
+<li>尽量减少类和类之间的合作范围
+
+<blockquote><p>所实例化的类的数量
+调用其它类的子程序的数量
+调用其它对象返回对象的子程序的数量</p></blockquote></li>
+</ol>
+
+
+<h3>构造函数</h3>
+
+<p>优化采用深层Copy而不是浅Copy，除非论证浅Copy的可行性。 浅Copy虽然会提升性能，但会加大管理的复杂度，过早代码性能优化是没有意义的，后期可以很容易的把深Copy重构为浅Copy</p>
+
+<h3>创建类的原因</h3>
+
+<p>每次创建类时，都应该问一下自己创建这个类的原因。</p>
+
+<ul>
+<li>为现实世界中的对象建模</li>
+<li>为抽象的对象建模</li>
+<li>降低复杂度</li>
+<li>隔离复杂度</li>
+<li>建立一个控制中心</li>
+<li>限制变动的范围</li>
+<li>隐藏实现的细节</li>
+<li>隐藏全局数据</li>
+<li>让参数传递更顺畅</li>
+<li>让代码容易重用</li>
+<li>把易变的区域封装</li>
+<li>把相关操作包装到一起</li>
+<li>实现某种特定的重构</li>
+</ul>
+
+
+<h2>核对表</h2>
+
+<h3>抽象</h3>
+
+<ul>
+<li>类是否有一个中心目的，类的命名是否符合这个中心目的？</li>
+<li>类的接口是否展现一致的抽象？</li>
+<li>类的接口是否让人明白应该如何使用它？</li>
+<li>类的接口是否足够抽象，是否是个黑盒子？</li>
+<li>是否从类中去除无关信息？</li>
+<li>是否可以进一步分解为一组类？</li>
+<li>修改类时，是否保证其接口的完整性？
+
+<h3>封装</h3></li>
+<li>是否把类的成员的可访问性降到最低？</li>
+<li>是否完全隐藏了自己的实现细节？</li>
+<li>类是松耦合的吗？</li>
+<li>类是否避免了对其使用者做假设？
+
+<h3>继承</h3></li>
+<li>派生类是否遵循LSP原则？</li>
+<li>派生类是否避免了覆盖，不可覆盖的方法？</li>
+<li>基类中的数据是否是private的？</li>
+<li>继承层次是否很浅？
+
+<h4>跟实现相关的其它问题</h4></li>
+<li>类中是否只有大约七个或更少的成员？</li>
+<li>类调用其它类的子程序降低到最少了吗？</li>
+<li>类是否在绝对必要时才与其它类协作？</li>
+<li>所有数据成员是否在构造函数中初始化了？</li>
+<li>是否在没有论证的情况下使用了浅拷贝，而不是深拷贝？</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[关键的设计概念摘要]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/09/02/key-design-concepts/"/>
+    <updated>2014-09-02T22:01:20+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/09/02/key-design-concepts</id>
+    <content type="html"><![CDATA[<h2>管理复杂度</h2>
+
+<ul>
+<li>软件首要的技术使命就是管理复杂度。</li>
+<li>我们不应该同时把整个程序塞进大脑里，而应该试着以某种方式组织程序，使得我们在某一时刻只关注于一个特定的部分。</li>
+<li>人更易于理解多项简单的东西，而不是一项复杂的东西。</li>
+<li>保持子程序的短小精悍可以减小大脑的负担，在抽象层上工作也可以减小大脑的负担。
+
+<h2>如何应对复杂度</h2>
+
+<p>高代价，低效率的设计的三个根源</p></li>
+<li>用复杂的方法解决简单的问题</li>
+<li>用简单但错误的方法解决复杂的问题</li>
+<li>用不恰当的复杂方法解决复杂的问题
+正确的方法</li>
+<li>把本质的复杂度降至最低</li>
+<li>尽可能减少偶然性复杂度
+
+<h2>理想的设计特征</h2></li>
+<li>最小的复杂度
+
+<blockquote><p>如果你的设计方案不能让你在专注于程序的一部分时，忽略其它部分，那么这样的设计就是有问题的</p></blockquote></li>
+<li>易于维护</li>
+<li>松散耦合
+
+<blockquote><p>相互关联的类尽可能的少</p></blockquote></li>
+<li>可扩展性</li>
+<li>可重用性</li>
+<li>高扇入 （一个底层的类被大量的引用）</li>
+<li>低扇出 （一个类少量的用其它的类）</li>
+<li>可移植性</li>
+<li>精简性</li>
+<li>层次性 （各个层次保持概念的完整性）
+
+<blockquote><p>如果旧代码不合理，编写一个新系统时，封装一层来调用旧代码</p></blockquote></li>
+<li>标准技术 （尽可能的用标准技术）
+
+<h2>设计的层次</h2>
+
+<p>设计分为五层</p></li>
+<li>软件系统设计</li>
+<li>分解为子系统和包</li>
+<li>分解为类</li>
+<li>分解为子程序</li>
+<li>子程序的详细设计
+
+<blockquote><p>在分解子系统时如果让子系统之间可以的相互通信，那么就失去了分解的意义。应当规定子系统之间的通信规则。</p></blockquote></li>
+</ul>
+
+
+<p><img src="http://i.imgur.com/8M70dbQ.jpg" width="150" height="250" title="'常用的子系统'" ></p>
+
+<!-- more -->
+
+
+<h2>信息隐藏</h2>
+
+<p><strong>隐藏的是某个易变的区域，某种文件格式，某种数据类型，某个隔离区域, 把这些易变信息的影响限制在某个类或子程序内。 隐藏复杂度，隐藏变化源</strong></p>
+
+<h3>信息隐藏的障碍</h3>
+
+<ul>
+<li>信息过度分散</li>
+<li>循环依赖</li>
+<li>把类内数据误认为全局数据</li>
+<li>误认为的性能损耗
+在编写类时，时常问自己“这个类需要隐藏什么”
+
+<h3>找出容易改变的区域</h3></li>
+<li>找出看起来容易变化的项目</li>
+<li>把容易变化的项目分离出来</li>
+<li>把容易变化的项目隔离开</li>
+</ul>
+
+
+<blockquote><p>易变化的区域
+业务规则
+对硬件的依赖
+输入输出
+非标准的库
+状态变量 （用枚举而不是布尔）
+数据常量</p></blockquote>
+
+<h3>预料不同程度的变化</h3>
+
+<p><strong>不要把精力放在那些不太可能发生而又很难设计的变化上</strong></p>
+
+<p>首先找出那些对用户有用的尽可能小的子集，这一子集构成系统的核心，不易发生变化。接下来进行尽可能小的扩充，慢慢的扩充。</p>
+
+<h3>松散的耦合</h3>
+
+<p>模块之间的耦合关系应该松散到应该可以很容易的被其它模块使用。</p>
+
+<h4>耦合标准</h4>
+
+<ul>
+<li>规模 这里的规模指的是模块之间的连接数。一个参数的子程序比六个参数的子程序的耦合性更低</li>
+<li>可见性 模块之间的关系应该是显著的。避免通过操作全局变量的方式来实现模块之间的关联，一个模块不应该了解其它模块的实现细节。</li>
+<li>灵活性 灵活性是指模块之间的连接是否容易改动。</li>
+</ul>
+
+
+<p>简而言之，一个模块越容易被其它模块调用，那么它们之间的耦合性就越松散。</p>
+
+<h4>耦合的种类</h4>
+
+<p>下面的耦合关系递增排列</p>
+
+<ol>
+<li>简单参数数据耦合 （两个对象传的参数都是基本类型的数据）</li>
+<li>简单对象耦合 （一个模块实例化一个对象）</li>
+<li>对象参数耦合 （Object1 要求 Object2 传一个Object3给它）</li>
+<li>语义上的耦合 （最难缠的耦合关系）
+
+<blockquote><ul>
+<li>Model1传个控制标志给Model2，告诉Model2应该做什么。 这种方法要求Model1对Model2的工作细节有了解。 参数是枚举或对象会好一些</li>
+<li>Model2修改了某个全局数据之后，Model1使用它。</li>
+<li>Model1要求它的Initialize方法必须在它的Routin方法之前调用。Model2知道Routin方法会去调用Initialize方法，所以Model2不调用Initialize</li>
+<li>Model1传个部分初始化的Object给Model2，因为它知道Model2只使用Object 7个方法中的3全方法，只用到其中的部分数据。</li>
+<li>Modle1传个BaseObject， Model2知道是DerivedObject，强制转成DerivedObject，然后使用DerivedObject的方法</li>
+</ul>
+</blockquote></li>
+</ol>
+
+
+<p><strong>语义上的耦合是非常危险的，因为更改被调用的模块会破坏调用的模块，而这种错误是编译器无法检查的。</strong>
+<strong>松耦合在于一个模块提供了一种间接层次的抽象，另一个模块可以放心的使用它，而不用管里面的细节</strong></p>
+
+<h3>设计模式的益处</h3>
+
+<ul>
+<li>设计模式通过提供现成的抽象来减小复杂度</li>
+<li>设计模式通过把常见的解决方案的细节予以制度化来减小出错</li>
+<li>设计模式通过多种设计方案而带来启发性的价值</li>
+<li>设计模式通过把设计对话提高到一个更高的层次来简化交流
+
+<h3>其它启发式方法</h3></li>
+<li>高内聚性</li>
+<li>构造分层结构</li>
+<li>严格描述类契约</li>
+<li>分配职责 （单一职责）</li>
+<li>为测试而设计 （为了更容易测试，须要模块化，松耦合）</li>
+<li>避免失误</li>
+<li>有意识的选择绑定时间</li>
+<li>创建中央控制点 (控制可以集中在类，子程序，甚至具名常量里。这样为了找到某样事物，你需要查找的地方越少)</li>
+<li>画图</li>
+<li>保持设计的模块化</li>
+<li>使用蛮力</li>
+</ul>
+
+
+<h3>记录你的设计成果</h3>
+
+<ul>
+<li>把设计文档插入到代码中。（文档少的情况下，JavaDoc可以生成文档）</li>
+<li>用Wiki来记录设计的决策</li>
+<li>写总结邮件 （写完发给项目组的所有人，维持一个邮件列表）</li>
+<li>用数码相机 拍下画板上的设计图，这种比在电脑上画图高效</li>
+<li>在适当的细节使用UML图</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[怎样算是一分优秀的架构规格书]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/08/30/architecture-prerequisite/"/>
+    <updated>2014-08-30T19:09:52+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/08/30/architecture-prerequisite</id>
+    <content type="html"><![CDATA[<h2>架构的先决条件</h2>
+
+<p>架构的质量决定了系统的概念完整性。后者继而决定了软件的最终质量。</p>
+
+<h2>架构的典型组成部分</h2>
+
+<h3>程序组织</h3>
+
+<ol>
+<li>系统架构首先要以概要的形式对有关系统做一个综述。</li>
+<li>架构定义主要的构造块。根据程序规模的不同，各个构造块可以由单个类或者多个类组成的子系统。每条列在需求中的功能特性至少有一个构造块覆盖到。</li>
+<li>明确定义各个构造块的责任。构造块之间的关系和接口。各个构造块之间应该知道的越少越好。明确层次关系，对于每个构造块，可以调用哪些构造块，可以间接调用哪些构造块，不可以调用哪些构造块。</li>
+</ol>
+
+
+<h3>主要的类</h3>
+
+<p>定义20%完成80%的需求的类。</p>
+
+<h3>数据设计</h3>
+
+<p>明确使用什么样的数据形式，为什么不用其它的形式。使用文件还是数据库，为什么？</p>
+
+<h3>业务规则</h3>
+
+<p>如果架构须要依赖于特定的业务，那么要主细描述这么规则。</p>
+
+<h3>用户界面设计</h3>
+
+<p>架构中应当说明使用哪种UI，什么格式，是桌面的，WEB的，命令行接口还是其它的形式。</p>
+
+<h3>变更策略</h3>
+
+<p>明确的需求发生变更时，应当执行什么样的策略，怎样管理。</p>
+
+<h3>资源管理</h3>
+
+<p>一些有限的资源像线程，句柄，内存，硬盘。应当如何合理的使用，统一使用的方式。在嵌入式中，资源短缺的情况下，更应该注重资源的管理。</p>
+
+<h3>安全性</h3>
+
+<p>架构应该描述实现设计层面和代码层面的安全性的方法。</p>
+
+<h3>性能</h3>
+
+<p>明确性能目标，性能要达到什么样的程度。</p>
+
+<h3>可伸缩性</h3>
+
+<p>可伸缩性是指系统增长满足未来需求的能力</p>
+
+<h3>输入输出</h3>
+
+<p>架构应该详细定义读取策略，而且应该描述在哪一层检测IO错误。</p>
+
+<h3>错误处理</h3>
+
+<p>架构应该清楚的说明一种“一致处理错误错误”的策略
+* 错误处理是进行纠正还是仅仅检测
+* 错误检测是主动还是被动
+* 程序的错误如何传播
+* 错误消息的处理有什么约定
+* 如何处理异常
+* 程序在什么层次上处理错误
+* 每个类的错误处理上负什么样的责任。是每个类负责处理错误，还是由一组类来处理整个系统的错误
+* 使用运行环境中的内部支持的错误处理机制还是自己编写错误处理机制</p>
+
+<h3>容错性</h3>
+
+<p>架构应该定义所期望的容错种类。</p>
+
+<h3>架构的可行性</h3>
+
+<p>应该认证系统的技术可行性</p>
+
+<h3>架构的总体质量</h3>
+
+<ul>
+<li>优秀的架构规格书的特点在于讨论了系统中的类，每个类背后的隐藏信息，讨论了“采纳或排斥所有替代方案的理由”</li>
+<li>架构的目标应该清楚的表述</li>
+<li>架构在很大程度止是与机器和编程语言无关的</li>
+<li>架构应该描述所有决策的主要动机</li>
+<li>架构应该明确的指出有风险的区域</li>
+<li>架构应该在“欠描述”和“过度描述”之间的那条分界线上</li>
+<li>架构不应该包含很难理解的东西</li>
+</ul>
+
+
+<blockquote><p>摘自代码大全</p></blockquote>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Windows Message Queue Introduction]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/08/28/windows-message-queue-introduction/"/>
+    <updated>2014-08-28T20:59:07+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/08/28/windows-message-queue-introduction</id>
+    <content type="html"><![CDATA[<p>Windows 的消息队列和消息处理方式一直没有非常系统的学习过。正如某位名人所说的“一知半解，最危险”。</p>
+
+<blockquote><p>“一知半解”就是对事物的吸收囫囵吞枣、不求甚解，导致判断失准而不自知。因为不彻底了解事物，不精准分辨事物细微差异，以致陷入断章取义、冯京当马凉、张飞打岳飞打得满天飞。而且正因为自以为很懂，他甚至听不进去别人的观点、劝告，当然赖之作出的判断，就会差之毫厘失之千里，甚至造成很大的错误。</p></blockquote>
+
+
+<p></p>
+
+<h2>创建消息循环</h2>
+
+<p>系统只会为那些须要消息队列来执行某些操作的线程创建消息队列。如果一个线程创建了一个或多个窗口，那么就必须创建一个消息循环来处理消息队列中的消息。（窗口都会有显示和关闭的消息），这个消息循环会从线程的消息队列中检索消息(<code>PeekMessage</code>和<code>GetMessage</code>)，然后分发给相应的处理过程。</p>
+
+<p>由于应用程序中系统会把消息分发给各个窗口，所以线程在创建消息循环之前至少要创建一个窗口。传统的应用程序中，应用会WinMain函数中注册一个窗口类作为主窗口，创建和显示窗口，然后启动消息循环。</p>
+
+<!-- more -->
+
+
+<p>我们可以使用<code>GetMessage</code>和<code>DispatchMessage</code>函数来创建消息循环。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">HINSTANCE</span> <span class="n">hinst</span><span class="p">;</span>
+</span><span class='line'><span class="n">HWND</span> <span class="n">hwndMain</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">PASCAL</span> <span class="nf">WinMain</span><span class="p">(</span><span class="n">HINSTANCE</span> <span class="n">hInstance</span><span class="p">,</span> <span class="n">HINSTANCE</span> <span class="n">hPrevInstance</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">LPSTR</span> <span class="n">lpszCmdLine</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nCmdShow</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">MSG</span> <span class="n">msg</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">BOOL</span> <span class="n">bRet</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">WNDCLASS</span> <span class="n">wc</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">UNREFERENCED_PARAMETER</span><span class="p">(</span><span class="n">lpszCmdLine</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Register the window class for the main window. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">hPrevInstance</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">style</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">lpfnWndProc</span> <span class="o">=</span> <span class="p">(</span><span class="n">WNDPROC</span><span class="p">)</span> <span class="n">WndProc</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">cbClsExtra</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">cbWndExtra</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">hInstance</span> <span class="o">=</span> <span class="n">hInstance</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">hIcon</span> <span class="o">=</span> <span class="n">LoadIcon</span><span class="p">((</span><span class="n">HINSTANCE</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">,</span>
+</span><span class='line'>            <span class="n">IDI_APPLICATION</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">hCursor</span> <span class="o">=</span> <span class="n">LoadCursor</span><span class="p">((</span><span class="n">HINSTANCE</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">,</span>
+</span><span class='line'>            <span class="n">IDC_ARROW</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">hbrBackground</span> <span class="o">=</span> <span class="n">GetStockObject</span><span class="p">(</span><span class="n">WHITE_BRUSH</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">lpszMenuName</span> <span class="o">=</span>  <span class="s">&quot;MainMenu&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">lpszClassName</span> <span class="o">=</span> <span class="s">&quot;MainWndClass&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">RegisterClass</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wc</span><span class="p">))</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">hinst</span> <span class="o">=</span> <span class="n">hInstance</span><span class="p">;</span>  <span class="c1">// save instance handle </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Create the main window. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">hwndMain</span> <span class="o">=</span> <span class="n">CreateWindow</span><span class="p">(</span><span class="s">&quot;MainWndClass&quot;</span><span class="p">,</span> <span class="s">&quot;Sample&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">WS_OVERLAPPEDWINDOW</span><span class="p">,</span> <span class="n">CW_USEDEFAULT</span><span class="p">,</span> <span class="n">CW_USEDEFAULT</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">CW_USEDEFAULT</span><span class="p">,</span> <span class="n">CW_USEDEFAULT</span><span class="p">,</span> <span class="p">(</span><span class="n">HWND</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">,</span>
+</span><span class='line'>        <span class="p">(</span><span class="n">HMENU</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">hinst</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// If the main window cannot be created, terminate </span>
+</span><span class='line'>    <span class="c1">// the application. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">hwndMain</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Show the window and paint its contents. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">ShowWindow</span><span class="p">(</span><span class="n">hwndMain</span><span class="p">,</span> <span class="n">nCmdShow</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">UpdateWindow</span><span class="p">(</span><span class="n">hwndMain</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Start the message loop. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">while</span><span class="p">(</span> <span class="p">(</span><span class="n">bRet</span> <span class="o">=</span> <span class="n">GetMessage</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">bRet</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// handle the error and possibly exit</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">TranslateMessage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">DispatchMessage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Return the exit code to the system. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">msg</span><span class="p">.</span><span class="n">wParam</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>线程，窗口，消息队列，消息循环，消息处理过程</h2>
+
+<p>如果一个线程须要消息来处理某些操作，那么可以创建一个（只可以是一个）消息循环来检查消息队列，获取有取的消息并做处理。每个线程有它自己的一个消息队列（如其它线程可以通过PostThreadMessage 来向某个线程发送消息，这个消息会被发到相应的消息队列中），线程可以用PeekMessage来获取消息并处理。线程可以创建一个窗口，这个窗口有自己的消息处理程序如WndProc。线程在接收到消息后可以通过DispatchMessage来分发消息到各个窗口中。</p>
+
+<h2>什么是UI线程</h2>
+
+<p>UI线程指的是有窗口，或控件的线程，有消息队列和消息循环。UI线程有以下几个特点
+1.  UI线程有一个消息队列，这个消息队列由操作系统分配。在创建第一个窗体时就分配。
+2.  UI线程需要一个消息汞（消息循环）来检索消息，然后分发消息给各个窗体或者控件。
+3. COM在这个线程止初始化.一个STA（单线程单元需要让许多窗体特征正常运行，因为这些不是线程安全的）COM确保这些特性是线程安全的。
+4. 线程不会在任何操作阻塞。
+5. UI线程可以创建多个窗体和控件，这些控件都是由一个消息循环来分发消息的。</p>
+
+<p>在Windows中操作系统只会为UI线程创建消息队列。基本上我们只需要一个UI线程。
+MSDN： The system does not automatically create a message queue for each thread，Instead, the system creates a message queue only for threads that perform operations which require a message queue.</p>
+
+<h2>消息队列函数</h2>
+
+<h3>DispatchMessage</h3>
+
+<figure class='code'><figcaption><span>C++</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="n">LRESULT</span> <span class="n">WINAPI</span> <span class="nf">DispatchMessage</span><span class="p">(</span>
+</span><span class='line'>      <span class="n">_In_</span> <span class="k">const</span> <span class="n">MSG</span> <span class="o">*</span><span class="n">lpmsg</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个函数会分发消息到窗口的处理过程中，一般和GetMessage一起用。<strong>note: 这个函数会等待窗口处理过程的返回 是阻塞式的</strong>
+如果lpmsg指向一个<code>WM_TIMER</code>和lParam参数不为空，那么这个lParam指向的函数将会被调用，而不会调用窗口的处理过程。</p>
+
+<h3>PeekMessage</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">BOOL</span> <span class="n">WINAPI</span> <span class="nf">PeekMessage</span><span class="p">(</span>
+</span><span class='line'>  <span class="n">_Out_</span>     <span class="n">LPMSG</span> <span class="n">lpMsg</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">_In_opt_</span>  <span class="n">HWND</span> <span class="n">hWnd</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">_In_</span>      <span class="n">UINT</span> <span class="n">wMsgFilterMin</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">_In_</span>      <span class="n">UINT</span> <span class="n">wMsgFilterMax</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">_In_</span>      <span class="n">UINT</span> <span class="n">wRemoveMsg</span>
+</span><span class='line'><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[vim 插件]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/08/27/vim-plugin/"/>
+    <updated>2014-08-27T20:59:00+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/08/27/vim-plugin</id>
+    <content type="html"><![CDATA[<p>记录一些常用的好用的Vim插件</p>
+
+<h2>通用</h2>
+
+<ol>
+<li><a href="https://github.com/gmarik/Vundle.vim">Vbundle</a> 这个可以很方便的安装和管理Vim的插件。最好是也装上git，因为很多插件托管在github上</li>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=2899">txtbrowser</a> 高效处理纯文本,提供快速的搜索和打开URL等功能，支持Email的格式等</li>
+<li><a href="https://github.com/scrooloose/nerdtree">nerdtree</a> 非常好的目录浏览的插件，功能强大</li>
+<li><a href="https://github.com/kien/ctrlp.vim">ctrlp</a> 文件和buffer的模糊查询</li>
+<li><a href="https://github.com/tpope/vim-surround">vim-surround</a> 引号，括号等操作，非常方便</li>
+</ol>
+
+
+<h2>编程</h2>
+
+<ol>
+<li><a href="https://github.com/klen/python-mode">pythonmode</a> python必备</li>
+<li><a href="https://github.com/vim-debug.vim">vim-debug</a> 支持python 和php debug</li>
+<li><a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a> git的插件可以在Vim中执行git命令，非常方便, 类似的有git-vim</li>
+<li><a href="www.vim.org/script.php?script_id=31">a.vim</a>在头文件和cpp,c文件中切换</li>
+<li><a href="https://github.com/Shougo/neocomplcache.vim">neocomplcache.vim</a> 强大的自动补全插件</li>
+<li><a href="https://github.com/scrooloose/syntastic">syntastic</a> Python和其它多种语言的语法检查</li>
+</ol>
+
+
+<h2>样式</h2>
+
+<ol>
+<li><a href="https://github.com/bling/vim-airline">vim-airline</a>让vim的用户体验更好</li>
+<li><a href="http://files.werx.dk/wombat.vim">Wombat</a>一种样式</li>
+</ol>
+
+
+<!-- more -->
+
+
+<figure class='code'><figcaption><span>_vimrc的配置</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">set</span> <span class="nb">nocompatible</span> <span class="c">&quot;去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限</span>
+</span><span class='line'><span class="k">filetype</span> off                  <span class="c">&quot; required</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; set the runtime path to include Vundle and initialize</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">rtp</span><span class="p">+=~</span><span class="sr">/.vim/</span>bundle<span class="sr">/vundle/</span>
+</span><span class='line'><span class="k">let</span> <span class="nb">path</span><span class="p">=</span><span class="s1">&#39;$VIMFILES/bundle/&#39;</span>
+</span><span class='line'><span class="k">call</span> vundle#begin<span class="p">(</span><span class="nb">path</span><span class="p">)</span>
+</span><span class='line'><span class="c">&quot; alternatively, pass a path where Vundle should install plugins</span>
+</span><span class='line'><span class="c">&quot;call vundle#begin(&#39;~/some/path/here&#39;)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; let Vundle manage Vundle, required</span>
+</span><span class='line'>Plugin <span class="s1">&#39;gmarik/Vundle.vim&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; The following are examples of different formats supported.</span>
+</span><span class='line'><span class="c">&quot; Keep Plugin commands between vundle#begin/end.</span>
+</span><span class='line'><span class="c">&quot; plugin on GitHub repo</span>
+</span><span class='line'>Plugin <span class="s1">&#39;tpope/vim-fugitive&#39;</span>
+</span><span class='line'><span class="c">&quot; Python and PHP Debugger</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/vim-debug.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Better file browser</span>
+</span><span class='line'>Bundle <span class="s1">&#39;scrooloose/nerdtree&#39;</span>
+</span><span class='line'><span class="c">&quot; Code commenter</span>
+</span><span class='line'>Bundle <span class="s1">&#39;scrooloose/nerdcommenter&#39;</span>
+</span><span class='line'><span class="c">&quot; Class/module browser</span>
+</span><span class='line'>Bundle <span class="s1">&#39;majutsushi/tagbar&#39;</span>
+</span><span class='line'><span class="c">&quot; Code and files fuzzy finder</span>
+</span><span class='line'>Bundle <span class="s1">&#39;kien/ctrlp.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Extension to ctrlp, for fuzzy command finder</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/vim-ctrlp-cmdpalette&#39;</span>
+</span><span class='line'><span class="c">&quot; Git integration</span>
+</span><span class='line'>Bundle <span class="s1">&#39;motemen/git-vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Tab list panel</span>
+</span><span class='line'>Bundle <span class="s1">&#39;kien/tabman.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Airline</span>
+</span><span class='line'>Bundle <span class="s1">&#39;bling/vim-airline&#39;</span>
+</span><span class='line'><span class="c">&quot; Terminal Vim with 256 colors colorscheme</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/fisa-vim-colorscheme&#39;</span>
+</span><span class='line'><span class="c">&quot; Consoles as buffers</span>
+</span><span class='line'>Bundle <span class="s1">&#39;rosenfeld/conque-term&#39;</span>
+</span><span class='line'><span class="c">&quot; Pending tasks list</span>
+</span><span class='line'><span class="c">&quot;Bundle &#39;fisadev/FixedTaskList.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Surround</span>
+</span><span class='line'>Bundle <span class="s1">&#39;tpope/vim-surround&#39;</span>
+</span><span class='line'><span class="c">&quot; Autoclose</span>
+</span><span class='line'>Bundle <span class="s1">&#39;Townk/vim-autoclose&#39;</span>
+</span><span class='line'><span class="c">&quot; Indent text object</span>
+</span><span class='line'>Bundle <span class="s1">&#39;michaeljsmith/vim-indent-object&#39;</span>
+</span><span class='line'><span class="c">&quot; Python mode (indentation, doc, refactor, lints, code checking, motion and</span>
+</span><span class='line'><span class="c">&quot; operators, highlighting, run and ipdb breakpoints)</span>
+</span><span class='line'>Bundle <span class="s1">&#39;klen/python-mode&#39;</span>
+</span><span class='line'><span class="c">&quot; Better autocompletion</span>
+</span><span class='line'>Bundle <span class="s1">&#39;Shougo/neocomplcache.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Automatically sort python imports</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/vim-isort&#39;</span>
+</span><span class='line'><span class="c">&quot; Drag visual blocks arround</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/dragvisuals.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Window chooser</span>
+</span><span class='line'><span class="c">&quot;Bundle &#39;t9md/vim-choosewin&#39;</span>
+</span><span class='line'><span class="c">&quot; Python and other languages code checker</span>
+</span><span class='line'>Bundle <span class="s1">&#39;scrooloose/syntastic&#39;</span>
+</span><span class='line'><span class="c">&quot; Search results counter</span>
+</span><span class='line'>Bundle <span class="s1">&#39;IndexedSearch&#39;</span>
+</span><span class='line'><span class="c">&quot; XML/HTML tags navigation</span>
+</span><span class='line'>Bundle <span class="s1">&#39;matchit.zip&#39;</span>
+</span><span class='line'><span class="c">&quot; Gvim colorscheme</span>
+</span><span class='line'>Bundle <span class="s1">&#39;Wombat&#39;</span>
+</span><span class='line'><span class="c">&quot; Yank history navigation</span>
+</span><span class='line'>Bundle <span class="s1">&#39;YankRing.vim&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; All of your Plugins must be added before the following line</span>
+</span><span class='line'><span class="k">call</span> vundle#<span class="k">end</span><span class="p">()</span>            <span class="c">&quot; required</span>
+</span><span class='line'><span class="k">filetype</span> plugin indent <span class="k">on</span>    <span class="c">&quot; required</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>暂时先介绍这么多，后续更新</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[buildbot tips]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/08/24/buildbot-tips/"/>
+    <updated>2014-08-24T22:45:16+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/08/24/buildbot-tips</id>
+    <content type="html"><![CDATA[<h2>目录</h2>
+
+<ol>
+<li>命令最终执行的代码的目录是 build配置的slave builddir(没有则默认是slave的name) + step的workdir</li>
+</ol>
+
+
+<h2>Scheduler</h2>
+
+<ol>
+<li>Dependant Scheduler只依赖于上层的Scheduler。当上层的Scheduler成功时，才会执行，而不关心其它的改变。须要注意的是如果ChangeSourcerevision为None，那这意味着Head revision。如果在上流的Scheduler执行成功后，触发Dependant的期间，ChangeSource发生了改变，那么Dependant会取最新的Head revision。 如果想要更灵活的方式，可以考虑用Triggerable Scheduler的方式</li>
+</ol>
+
+
+<h2>Steps</h2>
+
+<ol>
+<li>steps中的SVN的checkout和update会先删掉checkout目录，然后重新checkout一份代码。所以不要在这个目录下放一些非SVN服务器上的东西。</li>
+<li>steps中可以获得build设置的property，可以通过这些property来执行相应的代码。更灵活的方式是用render</li>
+<li>steps可以设置Property来给下一个steps用，使用SetProperty(property=&ldquo;&rdquo;, value=&ldquo;&rdquo;) values可以是string和 Interpolate对象,这样就可以把一些steps根据property来执行</li>
+</ol>
+
+
+<figure class='code'><figcaption><span>例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.vstudio</span> <span class="kn">import</span> <span class="n">vc8</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.properties</span> <span class="kn">import</span> <span class="n">Property</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.factory</span> <span class="kn">import</span> <span class="n">BuildFactory</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.master</span> <span class="kn">import</span> <span class="n">SetProperty</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">vc</span> <span class="o">=</span> <span class="n">vc8</span><span class="p">(</span><span class="n">projectfile</span><span class="o">=</span><span class="s">&quot;youproject.sln&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">mode</span><span class="o">=</span><span class="s">&quot;build&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">=</span><span class="n">Property</span><span class="p">(</span><span class="s">&quot;buildconfig&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">build</span> <span class="o">=</span> <span class="n">BuildFactory</span><span class="p">()</span>
+</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">SetProperty</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="s">&quot;buildconfig&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;release&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">vc</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[buildbot的搭建总结]]></title>
@@ -617,7 +1517,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 
 <p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#111;&#x3a;&#103;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#104;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;">&#103;&#105;&#x74;&#x40;&#x67;&#105;&#x74;&#104;&#x75;&#98;&#x2e;&#99;&#111;&#109;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+只需要把原先的<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#103;&#105;&#116;&#x40;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;">&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1388,438 +2288,6 @@ zk – 向上移动到上一个折叠的结束处
 
 
 <p>我们队X和Y的值进行转换。你知道为什么三角形会在循环到一半时倒过来吗？</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ogl step4 Shaders]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/06/25/ogl-step4/"/>
-    <updated>2013-06-25T12:51:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/06/25/ogl-step4</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get the source</a>  <a href="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html">原文链接</a></p>
-
-<h1>背景</h1>
-
-<p>从这一节开始我们将会用到着色器绘图。着色器是绘制3D图像的潮流。从另一个角度说着色器取代了固定函数管道的方式，需要开发者自己配置参数（如：光源属性，旋转值等）。然而可编程的方式提供了更好的灵活性和创造性。</p>
-
-<p>OpenGL可编程管道如下：
-<img src="http://ogldev.atspace.co.uk/www/tutorial04/pipeline.png">
-vertex processor负责执行顶点着色器去处理每一个通过管道的顶点数据（处理的个数取决与绘制函数调用时传的参数）。顶点着色器对被渲染的几何体的拓扑图一无所知。另外你不能再vertex processor删除顶点的数据。每一个顶点仅且经过vertex processor一次，被转换之后传到下一个管道中。</p>
-
-<p>下一阶段是几何处理器（geometry processor）。在这个阶段着色器知道所有的几何体以及他们的相邻关系。此时需要考虑除了顶点本身之外的信息。几何着色器可以变换输出的拓扑顺序。例如：你可以提供一组点的信息然后产生两个三角形或者产生一个四边形。另外，你还可以像几何着色器传入多个顶点，并根据你所选择的拓扑顺序产生多个几何体.</p>
-
-<p>下一个阶段是裁剪器。这是一个固定的函数单元处理简单的任务，裁剪几何图形到标准化格子中。它也裁剪到near Z和far Z的平面中。有相应的参数惨叫他们。经过裁剪后，顶点会被映射到屏幕坐标中，然后根据他们的拓扑顺序渲染出来。  例如：在三角形中找出所有的点在这个三角内的，光栅化程序为每个点调用片段处理器。你还可以指定像素点的颜色。</p>
-
-<p>着色器的管理方式类似于C\C++的程序的创建一样。 首先你编写着色的代码供你的程序使用。可以简单的再源代码里直接写字符穿或者从外部文件加载进来，然后编译成一个个的着色器目标对象，链接这些着色器到单个程序加载到GPU中。链接着色器提供机会给驱动去裁剪他们和优化他们之间的关系。例如：（感谢小翼的翻译）如果顶点着色器(vs)里输出法线，但是和不用法线的片段着色器(fs)链接，那么vs的法线操作会被删除来优化vs的速度。如果后来那个vs又和用到法线的fs链接，那么链接另外一个程序会产生不同的vs（有法线输出计算的）在这种情况下，GLSL的编译器会删除相关功能的着色器使得顶点着色器执行的更快。</p>
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLuint</span> <span class="n">ShaderProgram</span> <span class="o">=</span> <span class="n">glCreateProgram</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在设置着色器之前先创建一个程序对象。我们将连接所有的着色器到这个程序中。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLunit</span> <span class="n">ShaderObj</span> <span class="o">=</span> <span class="n">glCreateShader</span><span class="p">(</span><span class="n">ShaderType</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>创建着色器对象。一个使用GL_VERTEX_SHADER类型创建顶点着色器，另一个是GL_FRAGMENT_SHADER类型创建片段着色器。用来编译指定的着色器代码。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">const</span> <span class="n">GLchar</span><span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</span><span class='line'><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pShaderText</span><span class="p">;</span>
-</span><span class='line'><span class="n">GLint</span> <span class="n">Lengths</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-</span><span class='line'><span class="n">Lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">pShaderText</span><span class="p">);</span>
-</span><span class='line'><span class="n">glShaderSource</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">Lengths</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>指定要编译的源代码。glShaderSource传入一个着色器对象去编译你指定的代码。代码可以由字符串数组提供并相应的指定保持各个字符串长度的数组。简单起见我们用只包含一个元素的字符串数组和长度数组。第二参数指定了这两个数组的元素个数。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glCompileShader</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>编译着色器对象。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLint</span> <span class="n">success</span><span class="p">;</span>
-</span><span class='line'><span class="n">glGetShaderiv</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="n">GL_COMPILE_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">success</span><span class="p">);</span>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">GLchar</span> <span class="n">InfoLog</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
-</span><span class='line'>  <span class="n">glGetShaderInfoLog</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">InfoLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error compiling shader type %d: &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ShaderType</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>捕获编译时产生的错误并显示。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glAttachShader</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">ShaderObj</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>把编译好的着色器对象附加到程序中。类似于Makefile链接一列目标对象。真正的链接目标对象发生在链接阶段。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glLinkProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在编译了所有的着色器对象然后附加到着色器程序中，最后需要链接它们。链接完之后，你可以删除产生的中间对象。通过glDeleteShader删除它们。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glGetProgramiv</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">GL_LINK_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Success</span><span class="p">);</span>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">Sourcess</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">glGetProgramInfoLog</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">ErrorLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error Linking shader program : &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>与此前处理编译错误不同的是，这里通过通过glGetProgramiv和glGetProgramInfoLog去捕获和处理链接产生的错误信息。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glValidateProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这个调用是用来检测在当前的管道状态下这个着色程序是否能够执行。在复杂的程序中包含着多个着色器和许多的状态，在使用之前最好检查一下，提高代码的健壮性。当然你可以再最终产品发布时去掉这些检测，避免这些性能开销。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glUseProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>最终把这个着色器程序设置成管道的状态。这个着色器程序会影响所有的绘制调用，知道你用另外一个替换掉。或者通过glUseProgram(NULL)的方式使其不可用(同时开启固定函数管道)。如果你只创建了一个类型的着色器，那么其他阶段的操作按默认的固定函数进行处理。</p>
-
-<p>到此已经讲完了着色器管理的OpenGL调用。下面是顶点着色器和片段着色器的相关内容。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#version 330</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>告诉编译器我们使用的是GLSL3.3. 如果编译器不支持就会报错</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">in</span> <span class="n">vec3</span> <span class="n">Position</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这条语句出现在顶点着色器中。它声明了顶点的属性。3个浮点数在着色器中被当做‘Position&#8217;.&lsquo;Vertex specifi&#8217;意味着为每一次GPU中着色器的调用，都从缓冲中取出一个新的顶点值。layout (location = 0) 创建属性名称和缓冲中属性的绑定。当顶点包含多个属性（position（位置）， normal（法线）， texture（纹理）)时这一语句是必须的。我们要让编译器知道缓冲区中的每一个顶点的属性映射到着色器中的哪一个属性。 有两种方式，一种是显示的指定像上面的设置为0.然后我们可以再程序中使用这个硬编码。或者我们可以留空（简单滴&#8217;in vec3 Position&rsquo;)然后再运行时用glGetAttribLocation去检索位置。此中情况下我们需要通过glVertexAttributePointer定义顶点属性数组,第一个参数是顶点属性位置的索引，同样的我们设置为0<strong>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</strong>。在这里我们使用简单的方式，但在复杂的程序中最好是让编译器决定属性的索引然后在运行时去检索他们。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>每一个着色阶段(VS,GS,FS)都有且仅有一个main函数,是着色器的入口。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这里我们为每一个进入顶点着色阶段的顶点位置做硬编码的转换。X和Y的值减半，Z值不变。gl_Postion是一个特殊的内建类型支持齐次的顶点位置。在经过一系列的转换之后，光栅化程序会遍历这些变量并在屏幕空间中使用它们。X，Y值减半意味着这个三角形只有上一次的四分之一。把W设置为1确保三角形能正确显示。把3D投影到2D需要分两步完成。首先需要把所有的顶点乘以投影矩阵，GPU自动使用透视分割进行处理，然后再传给光栅化程序。（原理原文讲了很多）。</p>
-
-<p>如果一切正常，则这三个顶掉会被转换为(-0.5, -0.5), (0.5, -0.5),(0.0, 0.5)，再传给光栅化程序进行处理。这里裁剪器不需要做任何处理，因为每一个点都在归一化的盒子里。这些值被映射到屏幕坐标上。片段着色器再针对每一个点进行着色。如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">FragColor</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>一般情况下片段着色器决定片段的颜色。另外，它还可以改变像素的Z值。输出的颜色是上面变量的值。这个变量由光栅化程序接受并话到帧缓存中。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>指定一个红色的值。
-<img src="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html" title="&#34;效果图&#34;" alt="&#34;效果图&#34;"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ogl step3 First Triangle]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/06/25/ogl-step3/"/>
-    <updated>2013-06-25T12:34:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/06/25/ogl-step3</id>
-    <content type="html"><![CDATA[<h1>背景</h1>
-
-<p>这篇指南非常短，只是简单的画一个三角形。</p>
-
-<p>在此篇指南中，我们依赖于标准化的盒子。可见的顶点必须在这个盒子内
-这样视图转换是才能够把它映射到屏幕坐标上。从z轴的负极往里面看。opengl的盒子如下：
-<img src="http://ogldev.atspace.co.uk/www/tutorial03/coord_system.png">
-Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围，那么图形将会被剪切。</p>
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Vector3f</span> <span class="n">Vertices</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
-</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
-</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
-</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>扩展顶点数组包含3个顶点。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>与上一篇相比两个参数变了，我们画三角形而不是画点。我们画三个顶点而不是一个顶点了。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ogl step2 Hello Dot!]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/06/21/ogl-step2/"/>
-    <updated>2013-06-21T07:40:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/06/21/ogl-step2</id>
-    <content type="html"><![CDATA[<p><a href="http://ogldev.atspace.co.uk/www/tutorial02/tutorial02.html">原文地址</a>
-<em>PS：我是使用VS来编译这些项目。并非纯粹的翻译，翻译中带有个人观点和文章。如有错误请指正。</em></p>
-
-<h1>背景</h1>
-
-<p>在这个课题我们需要使用到<a href="http://en.wikipedia.org/wiki/Glew" title="OpenGL Extension Wrangler Library ">GLEW</a>。可以在这里下载<a href="http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A">http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A</a>
-把bin目录下的dll放到System32的目录下。lib的目录和include目录拷到你当前的项目中，并在vs的项目中进行引用。在此声明此篇文章需要opengl1.5以上的版本，如果你的显卡不支持就没办法编译通过（只要不是集显都会支持）。独显的如果你好久没更新驱动了，赶紧去更新驱动吧。</p>
-
-<p>在这篇指南中。我们将会第一次使用到<em>顶点缓冲区对象</em>（vertex buffer objects VBOs）。顾名思义，它们是用来存储顶点源的。在3D世界中的怪物，城堡或者一个简单的四方形，都是通过一组顶点源构造出来的。VBOs是把顶点源加载到GPU的最有效方式。VBOs可以被存储在图像存储器中，提供最短的访问GPU的时间。</p>
-
-<p>这一篇指南和下一篇是此系列中唯一依赖于固定管线模式，而不是可编程模式的例子。在这些例子中没有变换发生。我们仅仅是简单的方式让数据流过管道。后面的例子会带您深入的了解管道。但在此处我们还没有必要去深入<em>光栅化程序</em>。 可视化的顶点源中有[x,y,z]坐标，范围在[-1.0, 1.0]。光栅化程序负责把这些坐标映射到屏幕空间中（例如，如果屏幕宽度是1024.则X坐标-1.0对应的是0,1.0对应的是1023）。最后光栅化程序才更具制定的拓扑顺序去渲染元素。由于我们没有绑定任何的渲染器到管道中，也没有用到变换。所以我们只是简单地给出坐标，并让这些坐标点可见。</p>
-
-<h1>代码漫游</h1>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;GL/glew.h&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>包含GLEW的头文件。如果你需要包含其他的OpenGl头文件，你要小心。把这个头文件放在后面包含进去。编译时，记得引入glew的lib文件。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include "math_3d.h"</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这个头文件定义了辅助的结构体。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>GLenum res = glewInit();
-</span><span class='line'>if (res != GLEW_OK)
-</span><span class='line'>{
-</span><span class='line'>  fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
-</span><span class='line'>  return 1;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面的代码要放在glut初始化之后，用于初始化GLEW并检查错误。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Vector3f Vertices[1];
-</span><span class='line'>Vertices[0] = Vector3f(0.0f, 0.0f, 0.0f);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>创建一个Vector3f的结构体数组，并初始化为0。这个点是屏幕的中心点。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>GLuint VBO;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们用一个全局变量来存储<em>顶点缓冲区对象</em>。大部分的OpenGL对象是通过GLunit类型的变量来访问的。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>glGenBuffers(1, &VBO);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>OpenGL定义了一些glGen* 函数用于产生各种类型的对象。它们通常带两个参数——第一个代表你要创建多少个对象。第二个参数是存储这些对象的句柄是 驱动给你分配的一组GLuint类型的数组。之后再调用这个函数不会产生相同的句柄，除非你嫌调用glDeleteBuffers删除它们。目前产生的这个缓冲区被视为默认的缓冲区，供下面的函数使用。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>OpenGL用一个相当独特的方式来使用这些句柄。在许多的API中都是直接操作句柄，把句柄作为参数传给函数进行使用。在OpenGL中我们需要为句柄绑定一个<em>目标名称</em>（target name）然后再基于这个目标名称执行命令。这些命令会一直影响被绑定的句柄，直到有另外一个句柄替换它或者使用glBindBuffer(*,0)来释放绑定。参数GL_ARRAY_BUFFER意味着缓冲区将包含一组顶点源。另一个有用的目标名称GL_ELEMENT_ARRAY_BUFFER则是使用另一个缓冲区存储着顶点源的索引，通过这些索引来使用顶点源。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在绑定这些对象之后，我们往里面填充数据。第一个参数是目标名称（我们刚才绑定的），第二个参数是绑定顶点源的数据大小以字节为单位，第三个参数是顶点源数组的地址。最后一个参数指明我们对此数据使用什么样的DRAW模式。因为我们没必要修改缓冲区的内容所以我们指定了GL_STATIC_DRAW模式。相反地，是GL_DYNAMIC_DRAW模式。这只是给OpenGL一个指示，如何使用这些缓冲区。显卡驱动会根据这些标志进行优化。（例如：在内存中找到最佳位置存储该缓冲区）。</p>
-
-<p><!-- more --!>
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>glEnableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
-在渲染器的指南中，你将会看到顶点的属性用于渲染。在渲染器中，这些属性有对应的索引值建立c\C++数据与属性名称的绑定。另外你需要让这些顶点的属性可用通过一些Enalbe的方法。在此例中，我们没有用到任何渲染器，我们只是把顶点的位置加载到缓冲区中。在固定函数管道（当没有渲染器被绑定时，默认激活）中默认的顶点属性索引为0。你必须让每个顶点属性可用否则数据将不能被管道访问。
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
-调用绘画函数之前我们需要重新绑定缓冲。在我们这个简单的程序中略显多余，但在复杂的程序中，将有多个缓冲区存储着多样的数据模型。你必须指定你要使用的缓冲区，更新管道的状态。
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</span></code></pre></td></tr></table></div></figure>
-这个函数告诉管道如何解释缓冲区里的数据。第一个参数指定属性的索引，我们只使用了0. 第二个参数指明属性的组织形式（3 for X，Y and Z)。第三个参数代表没一维的数据类型。第四个参数指明在被管道使用之前是否将属性标准化。我们的数据不需要标准化。第五个参数代表在缓冲区中两个属性实例之间的步幅。而此例中只有一个属性参数。最后一个参数指定属性在数据中的偏移量。
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>glDrawArrays(GL_POINTS, 0, 1);</span></code></pre></td></tr></table></div></figure>
-最终，我们调用glDrawArrays函数画几何图形。之前的命令都是为了这个函数调用做准备。到这里GPU才开始工作。GPU会结合已经通过参数设置好的状态，在屏幕上渲染点。</p>
-
-<p>OpenGL提供了许多种函数调用，每一种适用于不同的情况。一般你可以把它们分为两类，<em>顺序绘制</em>和<em>索引绘制</em>。顺序绘制很简单就是遍历你的顶点缓冲区，逐一绘制。例如：如果你指定的是GL_TRIANGLES，则顶点缓冲区里的0-2绘制第一个三角形。</p>
-
-<p>索引绘制更复杂需要引入额外的缓冲区（索引缓冲区）。该索引缓冲区包含所有顶点的索引，我们可以通过索引来取的顶点。编辑索引缓冲区，我们可以重复绘制顶点。实现更复杂的绘制效果。</p>
-
-<p>在这篇指南中我们只是简单的调用了glDrawArray.顺序绘制。第一个参数指定点的拓扑结构，GL_POINTS代表每个顶点都是单独的点。第二个代表第一个顶点的索引。最后一个参数代表要绘制的顶点的个数。
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>glDisableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
-在不使用时，disable顶点属性是良好的编程习惯。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[opengl step1 Create a window]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/06/20/ogl-step1/"/>
-    <updated>2013-06-20T21:54:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/06/20/ogl-step1</id>
-    <content type="html"><![CDATA[<p><a href="http://ogldev.atspace.co.uk/www/tutorial01/tutorial01.html">原文地址</a></p>
-
-<h1>背景</h1>
-
-<p>Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
-我们这里使用的是OpenGl utility library 简称“GLUT&#8221;.GLUT去操作窗体更加简便，同时它也是跨平台的。</p>
-
-<h1>代码漫游</h1>
-
-<blockquote><p>glutInit(&amp;argc, argv);</p></blockquote>
-
-<p>这里初始化GLUT，</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitDisplayMode</span><span class="p">(</span><span class="n">GLUT_DOUBLE</span> <span class="o">|</span> <span class="n">GLUT_RGBA</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这里我们配置一些GLUT的选项。GLUT_DOUBLE开启双缓冲。GLUT_RGBA代表颜色的格式。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitWindowSize</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">);</span>
-</span><span class='line'><span class="n">glutInitWindowPosition</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
-</span><span class='line'><span class="n">glutCreateWindow</span><span class="p">(</span><span class="s">&quot;Tutorial 01&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这些调用指定窗体的参数，并创建它</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutDisplayFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>大多数的窗体系统都是通过回调函数来交互的。GLUT处理与底层系统的交互。在这里我们仅需要一个主回调函数。这个函数会在GLUT的内部循环不断地调用。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glClearColor</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这是第一次接触到OpenGL 状态的概念。由于状态非常多，难以通过调用函数的时候直接传参过去。所以所以你需要指定
-着色器，缓冲区，各种各样的标志告诉opengl，渲染是如何发生的。另外，你也可能经常会使用到相同的参数去渲染多个图像。
-所以大部分的渲染操作都是通过设置标志和值的方式去指定的。上面的函数调用，设置了情况 帧缓存（framebuffer)时使用到的颜色。这个颜色是（RGBA）格式的，参数值的范围在
-0.0到1.0之间。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutMainLoop</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>此函数调用，让GLUT开始他的内部循环。这个循环会监听系统时间，并传给我们刚才设置的回调函数进行处理。我们只注册了一个用于显示的回调函数（RenderSceneCB）去画帧。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span>
-</span><span class='line'><span class="n">glutSwapBuffers</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>第一个函数是清空帧缓存，使用上面glClearColor设置的元素进行清空。第二个函数调用是交换前缓冲和后缓冲。</p>
-
-<p><em>VS源代码地址：</em><a href="https://github.com/sweetdark/openglex/tree/master/oglstep1">https://github.com/sweetdark/openglex/tree/master/oglstep1</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[修心]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/18/heart/"/>
-    <updated>2013-01-18T21:32:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/18/heart</id>
-    <content type="html"><![CDATA[<p>其实一个人所追求的仅仅是安稳和快乐而已。一个人饿了，想吃饭。”你为什么要吃饭“，”因为我饿了，感觉难受，吃饱了，我就感觉的好了“。是的，感觉好了，感觉安稳了。其实这种安稳和快乐，我们也可以通过修心来达到。并且修心达到的安稳和快乐，是持久的。我们总是被事物的表象所迷惑，不停的要，不停的追，追求的其实还是心灵的安稳与快乐。有了房，有了车你也仅仅是暂时的安稳和快乐。因为你的心又开始不安，你又会想要更多的东西。</p>
-
-<p>修心达到的安稳与快乐相比追求物质以达到安稳与快乐，更高级一点，而且是持久的，一劳永逸的。并且“修心”是便宜实惠的，性价比非常高的产品。修心最基本就是多看好书，书是最实惠的投资。修心不是即刻见效的，相对于眼前一些唾手可得的快乐，浮躁的人就会选择前者。浮躁的人总是追着事物跑，追着快乐跑，所得的永远是短暂的。而修心的人，快乐与安稳自会去找上门来。</p>
-
-<p>人痛苦的原因是贪瞋痴，修慈心可以治瞋，行布施可以治贪，学智慧可以治痴。要修慈心，首先要先对自己修慈心，再对他人修慈心。问问自己，你真的爱自己吗？终日为了自己的贪念奔波劳碌，对别人的过错生气伤害自己的身体。讨厌自己身上的缺点，厌恶自己。觉得自己太差，嫌弃自己。你有没有同情过自己，对自己都没有慈悲心的人，对其他人怎么会有慈悲心呢。佛陀说：“他还没见过爱别人胜过爱自己的人”。爱别人胜过爱自己，即使有也是短暂的，难以持久。首先要学会爱自己，接受自己的缺点，对自己宽容一些，慈悲一些，才能对别人宽容一些，慈悲一些。常对自己说“虽然自己现在做的不够好，但我接受现在的自己，并我会试着努力做的更好。不要自怨自艾，自暴自弃，那除了让自己痛苦之外，一点用处都没有。” 。然后遇到他人做的不好的时候，也这么想。“他虽然现在做的不够好，但相信他会努力做的更好的”。这是对他人修慈心了。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[禅修]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/01/16/zen/"/>
-    <updated>2013-01-16T21:49:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/01/16/zen</id>
-    <content type="html"><![CDATA[<p>近期对禅产生了兴趣，在知乎上关注了禅的话题。有人推荐了一本书德宝法师《观呼吸》。我就上网搜，下了电子书来看。读完发现的确是一本好书，里面把禅讲的通俗易懂，没有什么高深的东西。很适合作为禅修入门的书籍。</p>
-
-<p>书中讲了禅修不是什么？回答了大众对禅修的疑问和不解，禅修不是什么高深的东西，任何一个普通人都能够修炼。还讲了禅修是什么？这本书讲的是内观禅修，讲的入出息念的禅修方式。内观禅修是上座部佛教的最普遍的一种禅修。内观禅修，修禅定和正念，如果再辅以慈心效果会更好。</p>
-
-<p>禅定是什么。禅定从科学的角度来讲，就是把所有注意力集中到一处。这样我们就能了解事物的全貌。禅定可以通过打坐，观呼吸来练习。禅定能够帮助我们延长念头与念头之间的那一刻时间，从而有办法使我们去观察一个念头。例如，忧虑是一个过程，它有步骤。忧虑并非只是一种存在的状态， 而是一组程序。你必须做的是，观看那个程序的开头，那些过程萌生的最初阶段。忧虑的第一个环节是“执着/排斥”的反应。只要现象一在心中跃现，我们便在心理上尝试去捕捉它或推开它，那就开启了忧虑的一连串反应。 我们可以通过内观禅修，让这种机制崩盘。而禅定就是让这种机制崩盘的工具，当忧虑这种念头，由潜意识发出要上升到意识层面是，我们用禅定来延长这一时刻，并用正念来观察它。看着它起，它灭，不加任何评判，思考，因为任何的思考都是在喂养这个念头，给予这个念头力量。你越是排斥它，它就越有力。我们做的仅仅是观察，看它是什么，它做了什么，它如何消失的。</p>
-
-<p>正念是选择禅定关注的对象，正念所做的就是观察。正念是一种觉知，对念头的觉知，是一种毫无遮蔽的注意力。</p>
-
-<ul>
-<li>正念提醒我们应该做什么；</li>
-<li>正念如实地观察事物；</li>
-<li>正念看见一切现象的真实本质。</li>
-</ul>
-
-
-<!-- more -->
-
-
-<p>（一）正念提醒我们应该做什么。在禅修中，你把注意力放在一个地方。当你的心偏离这个焦点时，正念会提醒你，你的心正在徘徊，以及你应该做什么。是正念把你的心拉回禅修的目标，这一切都在瞬间发生，没有内在对话。</p>
-
-<p>（二）正念如实地观察事物。正念既不会对认知加油添醋，也不会删减任何东西。它不会做任何扭曲。它是毫无遮蔽的注意力，只观察任何出现的事物。</p>
-
-<p>（三）正念看见一切现象的真实本质。正念，而且只有正念，才能理解佛教所教导实相的三个主要特征：无常、苦与无我。这三个特征不是盲目的教条式信仰，佛教徒认为任何人只要以正确的方式研究，就会发现它们是普遍与自明的实相。正念是研究的方法，正念本身有能力揭露人类所能观察到最深层的实相。在这个检视的层面，人们了解到：（1）一切因缘法本质上都是短暂的；（2）所有世间法到头来都是无法令人满足的；（3）其实没有永恒不变的实体，只有过程。</p>
-
-<p>总结：
-这几天也利用了晚上比较安静的时间段，进行内观禅修。由于我身体柔韧性不好，我选择坐在椅子上观呼吸。这个过程一开始是有点困难的，精神老是不集中，脑海里有太多杂念了。但慢慢的这些杂念沉淀下去，你可以细心的去观察呼吸。呼吸的每一个细节，很奇妙。自己以前从没发现呼吸也是个很奇妙的东西。虽然才练了几天，但还是有一点点效果的，对事物的看法变得更客观了。<strong>我会继续努力练习禅修，让自己摆脱烦恼。</strong></p>
 ]]></content>
   </entry>
   

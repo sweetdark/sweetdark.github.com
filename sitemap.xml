@@ -1,160 +1,184 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://sweetdark.github.com/blog/2012/12/27/test/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
-    </url>
-    <url>
         <loc>http://sweetdark.github.com/blog/2012/12/27/solve-problem/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2012/12/29/build-blog-problem/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2012/12/30/daily/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/01/mood/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/01/important-list/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/02/blog-config/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/02/write-markdown/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/04/how-to-pull/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/04/new-rome/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/04/set/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-09-01T20:42:14+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/05/reflection/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/05/thinking/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/06/set-problem/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/12/sinian/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-09-01T20:42:14+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/12/gdb/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/16/zen/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/01/18/heart/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/06/20/ogl-step1/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/06/21/ogl-step2/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/06/25/ogl-step3/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/06/25/ogl-step4/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/07/01/ogl-step5/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/07/05/ogl-step6/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/07/07/ogl-step7/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/07/07/ogl-step8/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/07/10/ogl-step9/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/08/07/vim-8-7/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2013/08/08/vim-component/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2014/07/03/how-to-install-octproess/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2014/07/05/config-mutil-ssh-key-user/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2014/07/09/local-reference-table-overflow/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2014/07/09/eclipse-tools/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2014/07/09/jni-manual/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2014/07/17/vs-error-collection/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/2014/07/23/buildbot-build/</loc>
-        <lastmod>2014-08-25T14:17:04+08:00</lastmod>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://sweetdark.github.com/blog/2014/08/24/buildbot-tips/</loc>
+        <lastmod>2014-08-31T22:25:41+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://sweetdark.github.com/blog/2014/08/27/vim-plugin/</loc>
+        <lastmod>2014-09-06T14:20:54+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://sweetdark.github.com/blog/2014/08/28/windows-message-queue-introduction/</loc>
+        <lastmod>2014-09-01T21:08:38+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://sweetdark.github.com/blog/2014/08/30/architecture-prerequisite/</loc>
+        <lastmod>2014-08-31T22:31:46+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://sweetdark.github.com/blog/2014/09/02/key-design-concepts/</loc>
+        <lastmod>2014-09-06T14:10:07+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://sweetdark.github.com/blog/2014/09/08/working-classes/</loc>
+        <lastmod>2014-09-09T09:54:08+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/about/about/</loc>
-        <lastmod>2014-08-25T14:17:02+08:00</lastmod>
+        <lastmod>2014-09-09T09:54:08+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/blog/archives/blog/archives/</loc>
-        <lastmod>2014-08-25T09:04:09+08:00</lastmod>
+        <lastmod>2014-09-09T09:54:08+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/</loc>
-        <lastmod>2014-08-25T14:04:38+08:00</lastmod>
+        <lastmod>2014-09-09T09:54:08+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://sweetdark.github.com/tag/tag/</loc>
+        <lastmod>2014-09-09T09:54:08+08:00</lastmod>
     </url>
     <url>
         <loc>http://sweetdark.github.com/links.html</loc>

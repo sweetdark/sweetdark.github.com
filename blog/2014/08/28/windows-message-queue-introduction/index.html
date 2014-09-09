@@ -1,0 +1,387 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Windows Message Queue Introduction - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="Windows 的消息队列和消息处理方式一直没有非常系统的学习过。正如某位名人所说的“一知半解，最危险”。 “一知半解”就是对事物的吸收囫囵吞枣、不求甚解，导致判断失准而不自知。因为不彻底了解事物，不精准分辨事物细微差异，以致陷入断章取义、冯京当马凉、张飞打岳飞打得满天飞。而且正因为自以为很懂， &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Windows Message Queue Introduction</h2>
+	<div class="entry-content"><p>Windows 的消息队列和消息处理方式一直没有非常系统的学习过。正如某位名人所说的“一知半解，最危险”。</p>
+
+<blockquote><p>“一知半解”就是对事物的吸收囫囵吞枣、不求甚解，导致判断失准而不自知。因为不彻底了解事物，不精准分辨事物细微差异，以致陷入断章取义、冯京当马凉、张飞打岳飞打得满天飞。而且正因为自以为很懂，他甚至听不进去别人的观点、劝告，当然赖之作出的判断，就会差之毫厘失之千里，甚至造成很大的错误。</p></blockquote>
+
+
+<p></p>
+
+<h2>创建消息循环</h2>
+
+<p>系统只会为那些须要消息队列来执行某些操作的线程创建消息队列。如果一个线程创建了一个或多个窗口，那么就必须创建一个消息循环来处理消息队列中的消息。（窗口都会有显示和关闭的消息），这个消息循环会从线程的消息队列中检索消息(<code>PeekMessage</code>和<code>GetMessage</code>)，然后分发给相应的处理过程。</p>
+
+<p>由于应用程序中系统会把消息分发给各个窗口，所以线程在创建消息循环之前至少要创建一个窗口。传统的应用程序中，应用会WinMain函数中注册一个窗口类作为主窗口，创建和显示窗口，然后启动消息循环。</p>
+
+<!-- more -->
+
+
+<p>我们可以使用<code>GetMessage</code>和<code>DispatchMessage</code>函数来创建消息循环。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">HINSTANCE</span> <span class="n">hinst</span><span class="p">;</span>
+</span><span class='line'><span class="n">HWND</span> <span class="n">hwndMain</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">PASCAL</span> <span class="nf">WinMain</span><span class="p">(</span><span class="n">HINSTANCE</span> <span class="n">hInstance</span><span class="p">,</span> <span class="n">HINSTANCE</span> <span class="n">hPrevInstance</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">LPSTR</span> <span class="n">lpszCmdLine</span><span class="p">,</span> <span class="kt">int</span> <span class="n">nCmdShow</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">MSG</span> <span class="n">msg</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">BOOL</span> <span class="n">bRet</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">WNDCLASS</span> <span class="n">wc</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">UNREFERENCED_PARAMETER</span><span class="p">(</span><span class="n">lpszCmdLine</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Register the window class for the main window. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">hPrevInstance</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">style</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">lpfnWndProc</span> <span class="o">=</span> <span class="p">(</span><span class="n">WNDPROC</span><span class="p">)</span> <span class="n">WndProc</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">cbClsExtra</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">cbWndExtra</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">hInstance</span> <span class="o">=</span> <span class="n">hInstance</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">hIcon</span> <span class="o">=</span> <span class="n">LoadIcon</span><span class="p">((</span><span class="n">HINSTANCE</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">,</span>
+</span><span class='line'>            <span class="n">IDI_APPLICATION</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">hCursor</span> <span class="o">=</span> <span class="n">LoadCursor</span><span class="p">((</span><span class="n">HINSTANCE</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">,</span>
+</span><span class='line'>            <span class="n">IDC_ARROW</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">hbrBackground</span> <span class="o">=</span> <span class="n">GetStockObject</span><span class="p">(</span><span class="n">WHITE_BRUSH</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">lpszMenuName</span> <span class="o">=</span>  <span class="s">&quot;MainMenu&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">wc</span><span class="p">.</span><span class="n">lpszClassName</span> <span class="o">=</span> <span class="s">&quot;MainWndClass&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">RegisterClass</span><span class="p">(</span><span class="o">&amp;</span><span class="n">wc</span><span class="p">))</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">hinst</span> <span class="o">=</span> <span class="n">hInstance</span><span class="p">;</span>  <span class="c1">// save instance handle </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Create the main window. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">hwndMain</span> <span class="o">=</span> <span class="n">CreateWindow</span><span class="p">(</span><span class="s">&quot;MainWndClass&quot;</span><span class="p">,</span> <span class="s">&quot;Sample&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">WS_OVERLAPPEDWINDOW</span><span class="p">,</span> <span class="n">CW_USEDEFAULT</span><span class="p">,</span> <span class="n">CW_USEDEFAULT</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">CW_USEDEFAULT</span><span class="p">,</span> <span class="n">CW_USEDEFAULT</span><span class="p">,</span> <span class="p">(</span><span class="n">HWND</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">,</span>
+</span><span class='line'>        <span class="p">(</span><span class="n">HMENU</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">hinst</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// If the main window cannot be created, terminate </span>
+</span><span class='line'>    <span class="c1">// the application. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">hwndMain</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">FALSE</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Show the window and paint its contents. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">ShowWindow</span><span class="p">(</span><span class="n">hwndMain</span><span class="p">,</span> <span class="n">nCmdShow</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">UpdateWindow</span><span class="p">(</span><span class="n">hwndMain</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Start the message loop. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">while</span><span class="p">(</span> <span class="p">(</span><span class="n">bRet</span> <span class="o">=</span> <span class="n">GetMessage</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">msg</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">bRet</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// handle the error and possibly exit</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">TranslateMessage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">DispatchMessage</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Return the exit code to the system. </span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">msg</span><span class="p">.</span><span class="n">wParam</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>线程，窗口，消息队列，消息循环，消息处理过程</h2>
+
+<p>如果一个线程须要消息来处理某些操作，那么可以创建一个（只可以是一个）消息循环来检查消息队列，获取有取的消息并做处理。每个线程有它自己的一个消息队列（如其它线程可以通过PostThreadMessage 来向某个线程发送消息，这个消息会被发到相应的消息队列中），线程可以用PeekMessage来获取消息并处理。线程可以创建一个窗口，这个窗口有自己的消息处理程序如WndProc。线程在接收到消息后可以通过DispatchMessage来分发消息到各个窗口中。</p>
+
+<h2>什么是UI线程</h2>
+
+<p>UI线程指的是有窗口，或控件的线程，有消息队列和消息循环。UI线程有以下几个特点
+1.  UI线程有一个消息队列，这个消息队列由操作系统分配。在创建第一个窗体时就分配。
+2.  UI线程需要一个消息汞（消息循环）来检索消息，然后分发消息给各个窗体或者控件。
+3. COM在这个线程止初始化.一个STA（单线程单元需要让许多窗体特征正常运行，因为这些不是线程安全的）COM确保这些特性是线程安全的。
+4. 线程不会在任何操作阻塞。
+5. UI线程可以创建多个窗体和控件，这些控件都是由一个消息循环来分发消息的。</p>
+
+<p>在Windows中操作系统只会为UI线程创建消息队列。基本上我们只需要一个UI线程。
+MSDN： The system does not automatically create a message queue for each thread，Instead, the system creates a message queue only for threads that perform operations which require a message queue.</p>
+
+<h2>消息队列函数</h2>
+
+<h3>DispatchMessage</h3>
+
+<figure class='code'><figcaption><span>C++</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="n">LRESULT</span> <span class="n">WINAPI</span> <span class="nf">DispatchMessage</span><span class="p">(</span>
+</span><span class='line'>      <span class="n">_In_</span> <span class="k">const</span> <span class="n">MSG</span> <span class="o">*</span><span class="n">lpmsg</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个函数会分发消息到窗口的处理过程中，一般和GetMessage一起用。<strong>note: 这个函数会等待窗口处理过程的返回 是阻塞式的</strong>
+如果lpmsg指向一个<code>WM_TIMER</code>和lParam参数不为空，那么这个lParam指向的函数将会被调用，而不会调用窗口的处理过程。</p>
+
+<h3>PeekMessage</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">BOOL</span> <span class="n">WINAPI</span> <span class="nf">PeekMessage</span><span class="p">(</span>
+</span><span class='line'>  <span class="n">_Out_</span>     <span class="n">LPMSG</span> <span class="n">lpMsg</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">_In_opt_</span>  <span class="n">HWND</span> <span class="n">hWnd</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">_In_</span>      <span class="n">UINT</span> <span class="n">wMsgFilterMin</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">_In_</span>      <span class="n">UINT</span> <span class="n">wMsgFilterMax</span><span class="p">,</span>
+</span><span class='line'>  <span class="n">_In_</span>      <span class="n">UINT</span> <span class="n">wRemoveMsg</span>
+</span><span class='line'><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/28/windows-message-queue-introduction/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/08/28/windows-message-queue-introduction/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/08/28/windows-message-queue-introduction/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

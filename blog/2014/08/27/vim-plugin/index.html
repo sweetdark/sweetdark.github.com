@@ -1,0 +1,360 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vim 插件 - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="记录一些常用的好用的Vim插件 通用 Vbundle 这个可以很方便的安装和管理Vim的插件。最好是也装上git，因为很多插件托管在github上
+txtbrowser 高效处理纯文本,提供快速的搜索和打开URL等功能，支持Email的格式等
+nerdtree 非常好的目录浏览的插件，功能强大 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">Vim 插件</h2>
+	<div class="entry-content"><p>记录一些常用的好用的Vim插件</p>
+
+<h2>通用</h2>
+
+<ol>
+<li><a href="https://github.com/gmarik/Vundle.vim">Vbundle</a> 这个可以很方便的安装和管理Vim的插件。最好是也装上git，因为很多插件托管在github上</li>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=2899">txtbrowser</a> 高效处理纯文本,提供快速的搜索和打开URL等功能，支持Email的格式等</li>
+<li><a href="https://github.com/scrooloose/nerdtree">nerdtree</a> 非常好的目录浏览的插件，功能强大</li>
+<li><a href="https://github.com/kien/ctrlp.vim">ctrlp</a> 文件和buffer的模糊查询</li>
+<li><a href="https://github.com/tpope/vim-surround">vim-surround</a> 引号，括号等操作，非常方便</li>
+</ol>
+
+
+<h2>编程</h2>
+
+<ol>
+<li><a href="https://github.com/klen/python-mode">pythonmode</a> python必备</li>
+<li><a href="https://github.com/vim-debug.vim">vim-debug</a> 支持python 和php debug</li>
+<li><a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a> git的插件可以在Vim中执行git命令，非常方便, 类似的有git-vim</li>
+<li><a href="www.vim.org/script.php?script_id=31">a.vim</a>在头文件和cpp,c文件中切换</li>
+<li><a href="https://github.com/Shougo/neocomplcache.vim">neocomplcache.vim</a> 强大的自动补全插件</li>
+<li><a href="https://github.com/scrooloose/syntastic">syntastic</a> Python和其它多种语言的语法检查</li>
+</ol>
+
+
+<h2>样式</h2>
+
+<ol>
+<li><a href="https://github.com/bling/vim-airline">vim-airline</a>让vim的用户体验更好</li>
+<li><a href="http://files.werx.dk/wombat.vim">Wombat</a>一种样式</li>
+</ol>
+
+
+<!-- more -->
+
+
+<figure class='code'><figcaption><span>_vimrc的配置</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+</pre></td><td class='code'><pre><code class='vim'><span class='line'><span class="k">set</span> <span class="nb">nocompatible</span> <span class="c">&quot;去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限</span>
+</span><span class='line'><span class="k">filetype</span> off                  <span class="c">&quot; required</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; set the runtime path to include Vundle and initialize</span>
+</span><span class='line'><span class="k">set</span> <span class="nb">rtp</span><span class="p">+=~</span><span class="sr">/.vim/</span>bundle<span class="sr">/vundle/</span>
+</span><span class='line'><span class="k">let</span> <span class="nb">path</span><span class="p">=</span><span class="s1">&#39;$VIMFILES/bundle/&#39;</span>
+</span><span class='line'><span class="k">call</span> vundle#begin<span class="p">(</span><span class="nb">path</span><span class="p">)</span>
+</span><span class='line'><span class="c">&quot; alternatively, pass a path where Vundle should install plugins</span>
+</span><span class='line'><span class="c">&quot;call vundle#begin(&#39;~/some/path/here&#39;)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; let Vundle manage Vundle, required</span>
+</span><span class='line'>Plugin <span class="s1">&#39;gmarik/Vundle.vim&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; The following are examples of different formats supported.</span>
+</span><span class='line'><span class="c">&quot; Keep Plugin commands between vundle#begin/end.</span>
+</span><span class='line'><span class="c">&quot; plugin on GitHub repo</span>
+</span><span class='line'>Plugin <span class="s1">&#39;tpope/vim-fugitive&#39;</span>
+</span><span class='line'><span class="c">&quot; Python and PHP Debugger</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/vim-debug.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Better file browser</span>
+</span><span class='line'>Bundle <span class="s1">&#39;scrooloose/nerdtree&#39;</span>
+</span><span class='line'><span class="c">&quot; Code commenter</span>
+</span><span class='line'>Bundle <span class="s1">&#39;scrooloose/nerdcommenter&#39;</span>
+</span><span class='line'><span class="c">&quot; Class/module browser</span>
+</span><span class='line'>Bundle <span class="s1">&#39;majutsushi/tagbar&#39;</span>
+</span><span class='line'><span class="c">&quot; Code and files fuzzy finder</span>
+</span><span class='line'>Bundle <span class="s1">&#39;kien/ctrlp.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Extension to ctrlp, for fuzzy command finder</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/vim-ctrlp-cmdpalette&#39;</span>
+</span><span class='line'><span class="c">&quot; Git integration</span>
+</span><span class='line'>Bundle <span class="s1">&#39;motemen/git-vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Tab list panel</span>
+</span><span class='line'>Bundle <span class="s1">&#39;kien/tabman.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Airline</span>
+</span><span class='line'>Bundle <span class="s1">&#39;bling/vim-airline&#39;</span>
+</span><span class='line'><span class="c">&quot; Terminal Vim with 256 colors colorscheme</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/fisa-vim-colorscheme&#39;</span>
+</span><span class='line'><span class="c">&quot; Consoles as buffers</span>
+</span><span class='line'>Bundle <span class="s1">&#39;rosenfeld/conque-term&#39;</span>
+</span><span class='line'><span class="c">&quot; Pending tasks list</span>
+</span><span class='line'><span class="c">&quot;Bundle &#39;fisadev/FixedTaskList.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Surround</span>
+</span><span class='line'>Bundle <span class="s1">&#39;tpope/vim-surround&#39;</span>
+</span><span class='line'><span class="c">&quot; Autoclose</span>
+</span><span class='line'>Bundle <span class="s1">&#39;Townk/vim-autoclose&#39;</span>
+</span><span class='line'><span class="c">&quot; Indent text object</span>
+</span><span class='line'>Bundle <span class="s1">&#39;michaeljsmith/vim-indent-object&#39;</span>
+</span><span class='line'><span class="c">&quot; Python mode (indentation, doc, refactor, lints, code checking, motion and</span>
+</span><span class='line'><span class="c">&quot; operators, highlighting, run and ipdb breakpoints)</span>
+</span><span class='line'>Bundle <span class="s1">&#39;klen/python-mode&#39;</span>
+</span><span class='line'><span class="c">&quot; Better autocompletion</span>
+</span><span class='line'>Bundle <span class="s1">&#39;Shougo/neocomplcache.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Automatically sort python imports</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/vim-isort&#39;</span>
+</span><span class='line'><span class="c">&quot; Drag visual blocks arround</span>
+</span><span class='line'>Bundle <span class="s1">&#39;fisadev/dragvisuals.vim&#39;</span>
+</span><span class='line'><span class="c">&quot; Window chooser</span>
+</span><span class='line'><span class="c">&quot;Bundle &#39;t9md/vim-choosewin&#39;</span>
+</span><span class='line'><span class="c">&quot; Python and other languages code checker</span>
+</span><span class='line'>Bundle <span class="s1">&#39;scrooloose/syntastic&#39;</span>
+</span><span class='line'><span class="c">&quot; Search results counter</span>
+</span><span class='line'>Bundle <span class="s1">&#39;IndexedSearch&#39;</span>
+</span><span class='line'><span class="c">&quot; XML/HTML tags navigation</span>
+</span><span class='line'>Bundle <span class="s1">&#39;matchit.zip&#39;</span>
+</span><span class='line'><span class="c">&quot; Gvim colorscheme</span>
+</span><span class='line'>Bundle <span class="s1">&#39;Wombat&#39;</span>
+</span><span class='line'><span class="c">&quot; Yank history navigation</span>
+</span><span class='line'>Bundle <span class="s1">&#39;YankRing.vim&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">&quot; All of your Plugins must be added before the following line</span>
+</span><span class='line'><span class="k">call</span> vundle#<span class="k">end</span><span class="p">()</span>            <span class="c">&quot; required</span>
+</span><span class='line'><span class="k">filetype</span> plugin indent <span class="k">on</span>    <span class="c">&quot; required</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>暂时先介绍这么多，后续更新</p>
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/27/vim-plugin/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/08/27/vim-plugin/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/08/27/vim-plugin/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>
