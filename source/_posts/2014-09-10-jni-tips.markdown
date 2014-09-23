@@ -1,0 +1,92 @@
+---
+layout: post
+title: "JNI本地多线程FindClass错误"
+date: 2014-09-10 20:47:24 +0800
+comments: true
+tags: ["JNI"]
+---
+今天在用JNI开发Android程序时，遇到一个奇怪的情况。我在本地C++层中用`pthread_create`创建一个线程，在回调函数中要使用Java层的类，使用FindClass来获取Java的类，但是返回的却是NULL。但在主线程中却是可以用的。后来在Google的[Android Developer的JNI Tips文章](http://developer.android.com/training/articles/perf-jni.html#faq_FindClass)中找到了相关信息。
+> 
+> If the class name looks right, you could be running into a class loader issue. FindClass wants to start the class search in the class loader associated with your code. It examines the call stack, which will look something like:
+> 
+>     Foo.myfunc(Native Method)
+>     Foo.main(Foo.java:10)
+>     dalvik.system.NativeStart.main(Native Method)
+> The topmost method is Foo.myfunc. FindClass finds the ClassLoader object associated with the Foo class and uses that.
+> 
+> This usually does what you want. You can get into trouble if you create a thread yourself (perhaps by calling pthread_create and then attaching it with AttachCurrentThread). Now the stack trace looks like this:
+>     dalvik.system.NativeStart.run(Native Method)
+> The topmost method is NativeStart.run, which isn't part of your application. If you call FindClass from this thread, the JavaVM will start in the "system" class loader instead of the one associated with your application, so attempts to find app-specific classes will fail.
+> 
+> There are a few ways to work around this:
+> 
+> * Do your FindClass lookups once, in JNI_OnLoad, and cache the class references for later use. Any FindClass calls made as part of executing JNI_OnLoad will use the class loader associated with the function that called System.loadLibrary (this is a special rule, provided to make library initialization more convenient). If your app code is loading the library, FindClass will use the correct class loader.
+> * Pass an instance of the class into the functions that need it, by declaring your native method to take a Class argument and then passing Foo.class in.
+> * Cache a reference to the ClassLoader object somewhere handy, and issue loadClass calls directly. This requires some effort.
+
+通过Java层调用JNI的接口,JNI接口参数都会包含一个class的信息，从这个class中可以获取等到相应的ClassLoader。但是如果我自己创建了一个本地的线程来调用了FindClass，却找不到相应的ClassLoader，而使用了“系统”的ClassLoader，而不是你应用程序的ClassLoader，会找不到和这个app相关的类。
+解决的方式有如下三种方式：
+
+* 在`JNI_OnLoad`方法中就去调用FindClass找到相应的jclass并存起来。
+``` cpp
+static jclass yourClass;
+jclass yourClass = env->FindClass("yourClassName");
+```
+* 在你的本地方法中加一个类的参数，调用这个方法时传一个类的实例进去。比如Foo.class作为参数。
+* 在某个地方缓存ClassLoader对象，然后自己通过这个对象调用loadClass方法。
+这三个方法中，我觉得第三个方法对我目前的项目最适用吧，只须要把env->FindClass替换成一个方法，方法里面会先调用env->FindClass，如果返回为NULL，我再调用ClassLoader的loadClass方法去加载类。
+我在StackOverFlow找到了相应的[实现](http://stackoverflow.com/a/16302771/2770848)。
+<!-- more -->
+但在Android中，通过JNI调用ClassLoader用findClass方法还是找不到类，需要用loadClass方法. 同时我想首先通过env->FindClass来找类，如果找不到就用CallObjectMethod调用loadClass去加载。但是发现在找到这个类class之后，调用env->GetMethodID时却会出错。不知道什么原因，在SO上提了个[问题](http://stackoverflow.com/questions/25782353/jni-getmethodid-cause-error-in-native-thread)。希望有人能解答。
+``` cpp
+JavaVM* gJvm = nullptr;
+static jobject gClassLoader;
+static jmethodID gFindClassMethod;
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *pjvm, void *reserved) {
+    gJvm = pjvm;  // cache the JavaVM pointer
+    JNIEnv* env = getEnv();
+    //replace with one of your classes in the line below
+    jclass randomClass = env->FindClass("com/example/RandomClass");
+    jclass classClass = env->GetObjectClass(randomClass);
+    jclass classLoaderClass = env->FindClass("java/lang/ClassLoader");
+    jmethodID getClassLoaderMethod = env->GetMethodID(classClass, "getClassLoader",
+                                             "()Ljava/lang/ClassLoader;");
+    jobject localClassLoader = env->CallObjectMethod(randomClass, getClassLoaderMethod);
+	gClassLoader = env->NewGlobalRef(localClassLoader);
+	//我在Android中用findClass不行，改成loadClass才可以找到class
+    gFindClassMethod = env->GetMethodID(classLoaderClass, "findClass",
+                                    "(Ljava/lang/String;)Ljava/lang/Class;");
+
+    return JNI_VERSION_1_6;
+}
+
+jclass findClass(JNIEnv *env, const char* name) {
+	jclass result = nullptr;
+	if (env)
+	{
+		//这句会出错，所以要处理错误
+		result = env->Findclass(name);
+		jthrowable exception = env->ExceptionOccurred();
+		if (exception)
+		{
+			env->ExceptionClear();
+			return static_cast<jclass>(env->CallObjectMethod(gClassLoader, gFindClassMethod, env->NewStringUTF(name)));
+		}
+	}
+    return result;
+}
+
+JNIEnv* getEnv() {
+    JNIEnv *env;
+    int status = gJvm->GetEnv((void**)&env, JNI_VERSION_1_6);
+    if(status < 0) {    
+        status = gJvm->AttachCurrentThread(&env, NULL);
+        if(status < 0) {        
+            return nullptr;
+        }
+    }
+    return env;
+}
+```
+
