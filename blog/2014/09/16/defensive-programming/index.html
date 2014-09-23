@@ -1,0 +1,314 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>防御式编程 - Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="防御式编程应该要检查数据的正确性，以及在出现错误数据时应该如何处理（避免程序崩溃，提示用户，让程序正确的崩溃，处理异常等）。
+其核心思想是：子程序不应该因传入错误的数据而被破坏，要承认程序都会有问题，都需要被修改。 保护程序免遭非法输入数据的破坏 检查所有来源于外部的数据 当从文件，用户， &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <article class="post">
+	<h2 class="title">防御式编程</h2>
+	<div class="entry-content"><p>防御式编程应该要检查数据的正确性，以及在出现错误数据时应该如何处理（避免程序崩溃，提示用户，让程序正确的崩溃，处理异常等）。
+<em>其核心思想是：子程序不应该因传入错误的数据而被破坏，要承认程序都会有问题，都需要被修改。</em></p>
+
+<h2>保护程序免遭非法输入数据的破坏</h2>
+
+<ul>
+<li><p>检查所有来源于外部的数据</p>
+
+<blockquote><p>当从文件，用户，网络或其它外部中获取数据时，要检查所有的数据值，以确保值在合法的范围内。</p></blockquote></li>
+<li><p>检查输入的参数</p></li>
+<li>决定如何处理错误的数据</li>
+</ul>
+
+
+<h2>断言</h2>
+
+<p>断言对于大型的复杂程序或可靠性要求极高的程序来说尤其有用。通过使用断言，程序员能更快排查出因修改代码或者别的原因而导致的错误。</p>
+
+<ul>
+<li>输入和输出参数处于合理的范围</li>
+<li>子程序开始（结束）执行时，文件处于打开（关闭）状态</li>
+<li>文件或流已用只读‘只写或可读写的方式打开</li>
+<li>仅用于输入的变量没有被子程序所修改</li>
+<li>指针非空</li>
+<li>传入子程序的数组或其它窗口至少能容纳X个数据元素</li>
+<li>表已初始化，存储着真实的数值</li>
+</ul>
+
+
+<p>断言只是用于开发和维护阶段。</p>
+
+<ul>
+<li>用错误处理代码来处理预期会发生的情况，断言来处理绝不应该发生的情况。</li>
+<li>避免把要执行的代码放到断言中</li>
+<li>用断言来注解前条件和后条件</li>
+<li>对于高健壮性的代码，应该先使用断言再处理错误</li>
+</ul>
+
+
+<h2>错误处理技术</h2>
+
+<p>当程序中出现错误数据时，可选的处理方式有如下几种</p>
+
+<ul>
+<li>返回中立值</li>
+<li>换用下一个正确的数据</li>
+<li>返回与前次相同的数据</li>
+<li>换用最近的合法值</li>
+<li>把警告信息记录到日志文件中</li>
+<li>返回一个错误码</li>
+<li>调用错误处理子程序</li>
+<li>当错误发生时显示错误信息</li>
+<li>用最妥当的方式在局部处理错误</li>
+<li>关闭程序</li>
+</ul>
+
+
+<h2>异常</h2>
+
+<p>异常是把代码的错误和异常事件传递给调用方的一种特殊手段。 异常和继承一样要审慎明智的使用。</p>
+
+<ul>
+<li>用异常通知程序的其余部分，发生了<em>不可忽略</em>的错误</li>
+<li>不能用异常来推卸责任</li>
+<li>避免在构造和析构函数中抛出异常，除非你在同一个地方捕获它们</li>
+<li>在恰当的抽象层次抛出异常</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">Employee</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="n">TaxID</span> <span class="n">GetTaxID</span><span class="p">()</span> <span class="k">throw</span> <span class="n">EOFException</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个EOFException就和GetTexID的抽象层次不一致，暴露了内部是用读取文件的方式实现的。然而在这个抽象层次，调用方是不关心也不依赖于你是用什么方式实现的。所以正确的做法是再抽象一个Exception。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">Employee</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="n">TaxID</span> <span class="n">GetTaxID</span><span class="p">()</span> <span class="k">throw</span> <span class="n">EmployeeDataNotAvailable</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在异常消息中加入导致异常的全部消息</li>
+<li>避免使用空的catch语句</li>
+<li>了解所用函数库可能抛出的异常</li>
+<li>考虑创建一个集中的异常报告机制。 可以自己定制一个异常的机类，里面实现了如何记录异常的方法</li>
+<li>把项目中对异常的使用标准化</li>
+<li>考虑异常的替换方案</li>
+<li><p>使用防火墙的隔离技术，在某一层次上统一做数据的检查（数据验证层），下面的层次就可以不用做检查了。</p>
+
+<blockquote><p>例如在类的public接口统一对传入的参数进行检测，private就不做这些检测了</p></blockquote></li>
+<li><p>尽早引入辅助调试的代码和工具</p></li>
+<li>计划移除辅助调试代码
+
+<blockquote><ul>
+<li>使用类似ant和make这样的工具</li>
+<li>使用内置的预处理器 如DEBUG等</li>
+<li>使用自己编写的预处理器</li>
+<li>使用调试存根</li>
+</ul>
+</blockquote></li>
+</ul>
+
+
+<h2>采用进攻式编程</h2>
+
+<p>异常情况应该尽早的在开发阶段让它显现出来。</p>
+
+<ul>
+<li>确保断言语句使程序终止运行</li>
+<li>完全填充分配到的所有内存</li>
+<li>完全填充已分配到的文件或流</li>
+<li>确保每一个case语句中的default分支或else分支都能产生严重的错误。</li>
+</ul>
+
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/16/defensive-programming/#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/09/16/defensive-programming/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/09/16/defensive-programming/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

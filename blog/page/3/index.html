@@ -6,7 +6,7 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jun 25th, 2013 Tag: opengl Get the source 原文链接 背景 从这一节开始我们将会用到着色器绘图。着色器是绘制3D图像的潮流。从另一个角度说着色器取代了固定函数管道的方式，需要开发者自己配置参数（如：光源属性，旋转值等）。 &hellip;">
+	<meta name="description" content="Published on: Jul 7th, 2013 Tag: opengl Get The Source 背景 缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -43,7 +43,7 @@
 <br>
 <h3 class="animated bounceInDown">
 	<div id="headerbg">
-        吾尝终日而思矣，不如须臾之所学也！
+        学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！
     </div>
 </h3>
 
@@ -96,6 +96,335 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/2013/07/07/ogl-step8/">
+		
+			Ogl Step8 缩放Scaling Transformation</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-07T22:02:00+08:00" pubdate data-updated="true">Jul 7<span>th</span>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简。</p>
+
+<p>你想要缩放哪一维，只需对应的改变矩阵对角线上的值就可以了。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与上一节不同的只是这个矩阵。三角形会随着正弦值(0,1]由小变大，为0时缩放到最小三角形消失。在[-1, 0)时只是反过来而已。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/07/ogl-step8//blog/page/3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/07/ogl-step7/">
+		
+			Ogl Step7 旋转Rotation Transformation</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-07T19:18:00+08:00" pubdate data-updated="true">Jul 7<span>th</span>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这节主要讲旋转变换。给定一个点和一个角度，绕一个坐标轴旋转。在X，Y，Z中保持一个值不变（绕该轴旋转的值不变），另外两个坐标改变。我们可以绕Z轴，Y轴，X轴旋转。甚至可以绕任意向量进行宣召。
+考虑下面的图形：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/rotation.png">
+我们沿着圆从(x1, yz)旋转到(x2,y2)。换句话说，我们把(x1, y1)旋转α角。假设半径是1.有如下的等式：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x1 = cos(α1)
+</span><span class='line'>y1 = sin(α1)
+</span><span class='line'>x2 = cos(α1+α2)
+</span><span class='line'>y2 = sin(α1+α2)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>三角函数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cos(α+β) = cosαcosβ-sinαsinβ
+</span><span class='line'>sin(α+β) = sinαcosβ+cosαsinβ</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用上面的公式对x2和y2进行扩展得</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x2 = cosα1costα2 - sinα1sinα2
+</span><span class='line'>y2 = sinα1cosα2 + cosα1sinα2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的图形是，Z轴指向屏幕里面，从屏幕外向里看XY平面。如果X&amp;Y 是4维向量的一部分，绕Z轴旋转的矩阵的形式如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_01.png">
+绕Y轴旋转的矩阵：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_02.png">
+绕X轴旋转的矩阵：
+<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_03.png"></p>
+
+<h1>代码漫游</h1>
+
+<p>我们只需要把上一次的代码做稍微的修改，就可以实现旋转了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在是绕z轴旋转。你可以尝试着绕其他轴旋转。但绕其他轴旋转没有3d到2d的投影变换，显得多余。接下来将会介绍所有的变换。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/07/ogl-step7//blog/page/3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/05/ogl-step6/">
+		
+			Ogl Step6 Translation Transformation</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-05T12:34:00+08:00" pubdate data-updated="true">Jul 5<span>th</span>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这一节开始介绍3D环境下物体的转换。通用的方式是用矩阵或多个矩阵连乘最后乘以顶点坐标来实现转换。后面的每一节都会详解一种转换。</p>
+
+<p>下图是把左图的三角形平移到右图的位置。
+<img src="http://ogldev.atspace.co.uk/www/tutorial06/translation.png">
+一种方式是提供向量的位置作为一个一致变量给着色器然后在处理每一个顶点是加上这个向量来实现平移的效果。然而，这种方式不是通用的转换方式。另外的，如果这个顶点值改变了，那么后面的转换就是基于这个被改变的顶点进行转换了，而不是平移前的转换了。这很麻烦。一个更好的方式是用一个矩阵代表平移乘以其他的转换矩阵。但是你无法找到一个矩阵乘以左图三角形的左下角的点(0,0),能够得到（1,1）。实际情况是你无法在二维矩阵实现这种转换。通用的公式是M * P = P1(x + v1, y + v2, z + v3).我们需要的是一个矩阵M和一个点P(x, y, z)和一个向量V(v1, v2, v3)。矩阵M平移P到P+V的位置。在P1中我们观察到P1每一维的值是对应的P的值和V的值相加的结果。左边的值可以认为是与单位阵相乘的结果：I * P = P(x, y, z)。所以我们从单位阵开始去寻找一个能够实现右边的每一维的相加结果(&#8230;+V1, &#8230;+V2, &#8230;+V3)的矩阵。 如下图：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation1.png">
+由上可以得出两个结论：
+1.  a, b, c, d, e 和 f 其中的任意两个会对每一维度有影响，所以它们必须为0，如此又变为单位矩阵。
+2.  因为x，y，z会影响三个维度的值，所以也必须为0.这样的话向量变为零向量，而零向量转换之后还是零向量。</p>
+
+<p>我们必须找到一个矩阵能够提供如下的运算：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation2.png">
+所以我们必须找到一种方式加上v1-v3，上面的a到f必须为0.我们把矩阵增加一行和一列。变为4X4的矩阵。把向量也增加一个维度w变为四维的。最终得到我们的平移矩阵如下：</p>
+
+<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation3.png">
+现在即使x,y,z都为0.我们也可以实现平移了。</p>
+
+<h2>用4维向量来表示3维的向量也成为齐次坐标，在3D图形中是非常流行的方式。第四维称作&#8217;w&#8217;。在之前的着色器中gl_Position也是齐次坐标。w维在3D投影到2D中扮演着十分重要的角色。在一般情况下点使用w=1,向量则用w=0.原因是点可以被平移而向量不行。你可以改变向量的长度和方向，所有长度和方向一样的向量被认为是一样的，向量是相对的。所以如果w=0，向量乘以平移矩阵结果是一样的向量。</h2>
+
+
+		
+		<a href="/blog/2013/07/05/ogl-step6/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/05/ogl-step6//blog/page/3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/01/ogl-step5/">
+		
+			Ogl Step5 Uniform Variables</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-01T13:19:00+08:00" pubdate data-updated="true">Jul 1<span>st</span>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<h1>背景</h1>
+
+<p>在这一节中我们将会使用到一个新的着色器变量————一致变量。属性变量与一致变量的不同在于，属性变量是由顶点指定的并在每一次的着色器调用中都会去从顶点缓冲区中读取。然而一致变量是在整个绘制调用保持一致。这也就意味着你在绘制调用前赋了一个值，然后你在每一次调用顶点着色器的时候使用的都是同一个值。着色器有两种类型的参数：一致变量（Uniform variables）指得是在一帧当中保持恒定的数值，典型的参数包括视口的方向和灯光的方向。而易变变量（Varying variables）对于每一个执行单元（包括顶点着色器中的顶点，以及片元着色器中的片元）都是变化的。</p>
+
+<p>在这一节中我们将会用一组一致变量在每一帧中都进行改变，通过GLUT提供的idle回调函数来实现。GLUT只有在窗体改变了尺寸和被其他窗体覆盖的时候会调用回调函数。如果在程序加载之后，我们什么都不做那么回调函数只会被调用一次。我们通过注册一个idle的回调函数来实现循环绘制画面，idle函数会在窗体系统没有接收到任何消息的时候被调用。</p>
+
+<hr />
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutIdleFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在这里我们注册一个idle函数。如果你想要使用一个有用的idle回调函数，你需要在它结束是添加一个glutPostRedisplay()函数。否则idle函数会被一直调用，但是渲染函数却不会。glutPostRedisplay()标志了当前窗体需要被重新显示，在下一个GLUT的main循环中绘制回调函数将会被调用。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gScaleLocation</span> <span class="o">=</span> <span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="s">&quot;gScale&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="n">assert</span><span class="p">(</span><span class="n">gScaleLocation</span> <span class="o">!=</span> <span class="mh">0xFFFFFFFF</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在链接了程序之后，我们通过glGetUniformLocation方法去获得gScale一致变量的地址。这是一种C\C++程序执行环境映射到着色器的执行环境。你不能直接访问着色器里的内容也不能直接修改里面的变量。当你编译着色器是，GLSL的编译器就为每一个一致变量建立了一个索引。着色器器内部是通过这个索引对变量进行操作。我们也可以通过glGetUniformLocation获得某个程序内部的变量名的索引。这个函数返回索引，出错时返回-1。检查错误非常重要，着色器内部不存在这个变量（<font color="red">你的变量名拼写错误</font>）或者编译器对这个变量进行了优化（<font color="red">为被使用的变量</font>)都会导致glGetUniformLocation调用失败。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="kt">float</span> <span class="n">Scale</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">Scale</span> <span class="o">+=</span> <span class="mf">0.001f</span><span class="p">;</span>
+</span><span class='line'><span class="n">glUniform1f</span><span class="p">(</span><span class="n">gScaleLocation</span><span class="p">,</span> <span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>使用一个静态变量Scale，在每次渲染调用是递增。传给着色器的值是Scale的正弦值。会产生一个在-1.0到1.0之间的值。 通过glUniform1f传给着色器。OpenGl提供了多种形式glUniform{1234}{if}。glUniform2i glUniform3f&#8230;etc. glUniform传的第一个参数是索引。</p>
+
+<p>我们只对上一教程的VS段进行修改，FS保持不变</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">uniform</span> <span class="kt">float</span> <span class="n">gScale</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>定义一个一致变量。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们队X和Y的值进行转换。你知道为什么三角形会在循环到一半时倒过来吗？</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/01/ogl-step5//blog/page/3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/2013/06/25/ogl-step4/">
 		
 			Ogl Step4 Shaders</a>
@@ -114,7 +443,7 @@
   
 
 
-<time datetime="2013-06-25T12:51:00+08:00" pubdate data-updated="true">Jun 25<sup>th</sup>, 2013</time></div>
+<time datetime="2013-06-25T12:51:00+08:00" pubdate data-updated="true">Jun 25<span>th</span>, 2013</time></div>
       <div class="tags">
 
   Tag:
@@ -253,7 +582,7 @@ vertex processor负责执行顶点着色器去处理每一个通过管道的顶�
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>这条语句出现在顶点着色器中。它声明了顶点的属性。3个浮点数在着色器中被当做‘Position&#8217;.&lsquo;Vertex specifi&#8217;意味着为每一次GPU中着色器的调用，都从缓冲中取出一个新的顶点值。layout (location = 0) 创建属性名称和缓冲中属性的绑定。当顶点包含多个属性（position（位置）， normal（法线）， texture（纹理）)时这一语句是必须的。我们要让编译器知道缓冲区中的每一个顶点的属性映射到着色器中的哪一个属性。 有两种方式，一种是显示的指定像上面的设置为0.然后我们可以再程序中使用这个硬编码。或者我们可以留空（简单滴&#8217;in vec3 Position&rsquo;)然后再运行时用glGetAttribLocation去检索位置。此中情况下我们需要通过glVertexAttributePointer定义顶点属性数组,第一个参数是顶点属性位置的索引，同样的我们设置为0<strong>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</strong>。在这里我们使用简单的方式，但在复杂的程序中最好是让编译器决定属性的索引然后在运行时去检索他们。</p>
+<p>这条语句出现在顶点着色器中。它声明了顶点的属性。3个浮点数在着色器中被当做‘Position&#8217;.&#8217;Vertex specifi&#8217;意味着为每一次GPU中着色器的调用，都从缓冲中取出一个新的顶点值。layout (location = 0) 创建属性名称和缓冲中属性的绑定。当顶点包含多个属性（position（位置）， normal（法线）， texture（纹理）)时这一语句是必须的。我们要让编译器知道缓冲区中的每一个顶点的属性映射到着色器中的哪一个属性。 有两种方式，一种是显示的指定像上面的设置为0.然后我们可以再程序中使用这个硬编码。或者我们可以留空（简单滴&#8217;in vec3 Position&#8217;)然后再运行时用glGetAttribLocation去检索位置。此中情况下我们需要通过glVertexAttributePointer定义顶点属性数组,第一个参数是顶点属性位置的索引，同样的我们设置为0<strong>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</strong>。在这里我们使用简单的方式，但在复杂的程序中最好是让编译器决定属性的索引然后在运行时去检索他们。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
@@ -292,7 +621,7 @@ vertex processor负责执行顶点着色器去处理每一个通过管道的顶�
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2013/06/25/ogl-step4//page5/index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2013/06/25/ogl-step4//blog/page/3/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -319,7 +648,7 @@ vertex processor负责执行顶点着色器去处理每一个通过管道的顶�
   
 
 
-<time datetime="2013-06-25T12:34:00+08:00" pubdate data-updated="true">Jun 25<sup>th</sup>, 2013</time></div>
+<time datetime="2013-06-25T12:34:00+08:00" pubdate data-updated="true">Jun 25<span>th</span>, 2013</time></div>
       <div class="tags">
 
   Tag:
@@ -365,7 +694,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2013/06/25/ogl-step3//page5/index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2013/06/25/ogl-step3//blog/page/3/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -392,7 +721,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
   
 
 
-<time datetime="2013-06-21T07:40:00+08:00" pubdate data-updated="true">Jun 21<sup>st</sup>, 2013</time></div>
+<time datetime="2013-06-21T07:40:00+08:00" pubdate data-updated="true">Jun 21<span>st</span>, 2013</time></div>
       <div class="tags">
 
   Tag:
@@ -406,7 +735,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 
 <h1>背景</h1>
 
-<p>在这个课题我们需要使用到<a href="http://en.wikipedia.org/wiki/Glew" title="OpenGL Extension Wrangler Library ">GLEW</a>。可以在这里下载<a href="http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A">http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A</a>
+<p>在这个课题我们需要使用到<a href="http://en.wikipedia.org/wiki/Glew" title="OpenGL Extension Wrangler Library ">GLEW</a>。可以在这里下载http://sourceforge.net/projects/glew/files/glew/1.8.0/。下载之后解压，解压之后把
 把bin目录下的dll放到System32的目录下。lib的目录和include目录拷到你当前的项目中，并在vs的项目中进行引用。在此声明此篇文章需要opengl1.5以上的版本，如果你的显卡不支持就没办法编译通过（只要不是集显都会支持）。独显的如果你好久没更新驱动了，赶紧去更新驱动吧。</p>
 
 <p>在这篇指南中。我们将会第一次使用到<em>顶点缓冲区对象</em>（vertex buffer objects VBOs）。顾名思义，它们是用来存储顶点源的。在3D世界中的怪物，城堡或者一个简单的四方形，都是通过一组顶点源构造出来的。VBOs是把顶点源加载到GPU的最有效方式。VBOs可以被存储在图像存储器中，提供最短的访问GPU的时间。</p>
@@ -475,7 +804,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 
 <p>在绑定这些对象之后，我们往里面填充数据。第一个参数是目标名称（我们刚才绑定的），第二个参数是绑定顶点源的数据大小以字节为单位，第三个参数是顶点源数组的地址。最后一个参数指明我们对此数据使用什么样的DRAW模式。因为我们没必要修改缓冲区的内容所以我们指定了GL_STATIC_DRAW模式。相反地，是GL_DYNAMIC_DRAW模式。这只是给OpenGL一个指示，如何使用这些缓冲区。显卡驱动会根据这些标志进行优化。（例如：在内存中找到最佳位置存储该缓冲区）。</p>
 
-<p><!-- more --!>
+<!-- more --!>
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>glEnableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
 在渲染器的指南中，你将会看到顶点的属性用于渲染。在渲染器中，这些属性有对应的索引值建立c\C++数据与属性名称的绑定。另外你需要让这些顶点的属性可用通过一些Enalbe的方法。在此例中，我们没有用到任何渲染器，我们只是把顶点的位置加载到缓冲区中。在固定函数管道（当没有渲染器被绑定时，默认激活）中默认的顶点属性索引为0。你必须让每个顶点属性可用否则数据将不能被管道访问。
@@ -487,16 +816,17 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 这个函数告诉管道如何解释缓冲区里的数据。第一个参数指定属性的索引，我们只使用了0. 第二个参数指明属性的组织形式（3 for X，Y and Z)。第三个参数代表没一维的数据类型。第四个参数指明在被管道使用之前是否将属性标准化。我们的数据不需要标准化。第五个参数代表在缓冲区中两个属性实例之间的步幅。而此例中只有一个属性参数。最后一个参数指定属性在数据中的偏移量。
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>glDrawArrays(GL_POINTS, 0, 1);</span></code></pre></td></tr></table></div></figure>
-最终，我们调用glDrawArrays函数画几何图形。之前的命令都是为了这个函数调用做准备。到这里GPU才开始工作。GPU会结合已经通过参数设置好的状态，在屏幕上渲染点。</p>
+最终，我们调用glDrawArrays函数画几何图形。之前的命令都是为了这个函数调用做准备。到这里GPU才开始工作。GPU会结合已经通过参数设置好的状态，在屏幕上渲染点。
 
-<p>OpenGL提供了许多种函数调用，每一种适用于不同的情况。一般你可以把它们分为两类，<em>顺序绘制</em>和<em>索引绘制</em>。顺序绘制很简单就是遍历你的顶点缓冲区，逐一绘制。例如：如果你指定的是GL_TRIANGLES，则顶点缓冲区里的0-2绘制第一个三角形。</p>
+OpenGL提供了许多种函数调用，每一种适用于不同的情况。一般你可以把它们分为两类，_顺序绘制_和_索引绘制_。顺序绘制很简单就是遍历你的顶点缓冲区，逐一绘制。例如：如果你指定的是GL_TRIANGLES，则顶点缓冲区里的0-2绘制第一个三角形。
 
-<p>索引绘制更复杂需要引入额外的缓冲区（索引缓冲区）。该索引缓冲区包含所有顶点的索引，我们可以通过索引来取的顶点。编辑索引缓冲区，我们可以重复绘制顶点。实现更复杂的绘制效果。</p>
+索引绘制更复杂需要引入额外的缓冲区（索引缓冲区）。该索引缓冲区包含所有顶点的索引，我们可以通过索引来取的顶点。编辑索引缓冲区，我们可以重复绘制顶点。实现更复杂的绘制效果。
 
-<p>在这篇指南中我们只是简单的调用了glDrawArray.顺序绘制。第一个参数指定点的拓扑结构，GL_POINTS代表每个顶点都是单独的点。第二个代表第一个顶点的索引。最后一个参数代表要绘制的顶点的个数。
+在这篇指南中我们只是简单的调用了glDrawArray.顺序绘制。第一个参数指定点的拓扑结构，GL_POINTS代表每个顶点都是单独的点。第二个代表第一个顶点的索引。最后一个参数代表要绘制的顶点的个数。
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>glDisableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
-在不使用时，disable顶点属性是良好的编程习惯。</p>
+在不使用时，disable顶点属性是良好的编程习惯。
+
 
 		
 		
@@ -504,7 +834,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2013/06/21/ogl-step2//page5/index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2013/06/21/ogl-step2//blog/page/3/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -531,7 +861,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
   
 
 
-<time datetime="2013-06-20T21:54:00+08:00" pubdate data-updated="true">Jun 20<sup>th</sup>, 2013</time></div>
+<time datetime="2013-06-20T21:54:00+08:00" pubdate data-updated="true">Jun 20<span>th</span>, 2013</time></div>
       <div class="tags">
 
   Tag:
@@ -604,7 +934,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 
 <p>第一个函数是清空帧缓存，使用上面glClearColor设置的元素进行清空。第二个函数调用是交换前缓冲和后缓冲。</p>
 
-<p><em>VS源代码地址：</em><a href="https://github.com/sweetdark/openglex/tree/master/oglstep1">https://github.com/sweetdark/openglex/tree/master/oglstep1</a></p>
+<p><em>VS源代码地址：</em>https://github.com/sweetdark/openglex/tree/master/oglstep1</p>
 
 		
 		
@@ -612,7 +942,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2013/06/20/ogl-step1//page5/index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2013/06/20/ogl-step1//blog/page/3/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
@@ -639,7 +969,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
   
 
 
-<time datetime="2013-01-18T21:32:00+08:00" pubdate data-updated="true">Jan 18<sup>th</sup>, 2013</time></div>
+<time datetime="2013-01-18T21:32:00+08:00" pubdate data-updated="true">Jan 18<span>th</span>, 2013</time></div>
       <div class="tags">
 
   Tag:
@@ -660,17 +990,75 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2013/01/18/heart//page5/index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2013/01/18/heart//blog/page/3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/01/16/zen/">
+		
+			禅修</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-16T21:49:00+08:00" pubdate data-updated="true">Jan 16<span>th</span>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/zen/'>zen</a>
+  
+</div>
+    </div>
+		<p>近期对禅产生了兴趣，在知乎上关注了禅的话题。有人推荐了一本书德宝法师《观呼吸》。我就上网搜，下了电子书来看。读完发现的确是一本好书，里面把禅讲的通俗易懂，没有什么高深的东西。很适合作为禅修入门的书籍。</p>
+
+<p>书中讲了禅修不是什么？回答了大众对禅修的疑问和不解，禅修不是什么高深的东西，任何一个普通人都能够修炼。还讲了禅修是什么？这本书讲的是内观禅修，讲的入出息念的禅修方式。内观禅修是上座部佛教的最普遍的一种禅修。内观禅修，修禅定和正念，如果再辅以慈心效果会更好。</p>
+
+<p>禅定是什么。禅定从科学的角度来讲，就是把所有注意力集中到一处。这样我们就能了解事物的全貌。禅定可以通过打坐，观呼吸来练习。禅定能够帮助我们延长念头与念头之间的那一刻时间，从而有办法使我们去观察一个念头。例如，忧虑是一个过程，它有步骤。忧虑并非只是一种存在的状态， 而是一组程序。你必须做的是，观看那个程序的开头，那些过程萌生的最初阶段。忧虑的第一个环节是“执着/排斥”的反应。只要现象一在心中跃现，我们便在心理上尝试去捕捉它或推开它，那就开启了忧虑的一连串反应。 我们可以通过内观禅修，让这种机制崩盘。而禅定就是让这种机制崩盘的工具，当忧虑这种念头，由潜意识发出要上升到意识层面是，我们用禅定来延长这一时刻，并用正念来观察它。看着它起，它灭，不加任何评判，思考，因为任何的思考都是在喂养这个念头，给予这个念头力量。你越是排斥它，它就越有力。我们做的仅仅是观察，看它是什么，它做了什么，它如何消失的。</p>
+
+<p>正念是选择禅定关注的对象，正念所做的就是观察。正念是一种觉知，对念头的觉知，是一种毫无遮蔽的注意力。</p>
+
+<ul>
+<li>正念提醒我们应该做什么；</li>
+<li>正念如实地观察事物；</li>
+<li>正念看见一切现象的真实本质。</li>
+</ul>
+
+
+
+		
+		<a href="/blog/2013/01/16/zen/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/01/16/zen//blog/page/3/index.html#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
 
 <nav id="pagenavi">
     
-        <a href="page4" class="prev">Prev</a>
+        <a href="page/blog/page/2/" class="prev">Prev</a>
     
     
-        <a href="page6" class="next">Next</a>
+        <a href="page/blog/page/4/" class="next">Next</a>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav>
@@ -693,8 +1081,68 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 <aside class="sidebar">
   
     <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/16/defensive-programming/">防御式编程</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/14/high-quality-routines/">高质量的子程序</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/12/dayly-thinking/">要抓住事物的本质才能应变</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/10/jni-tips/">JNI本地多线程FindClass错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/08/working-classes/">类的设计</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sweetdark">@sweetdark</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sweetdark',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+18.88888888888889%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+<section>
+<iframe id="sina_widget_1954936591" style="width:100%; height:500px;" frameborder="0" scrolling="no" src="http://v.t.sina.com.cn/widget/widget_blog.php?uid=1954936591&height=500&skin=wd_02&showpic=1"></iframe>
 </section>
 
 

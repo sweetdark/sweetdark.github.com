@@ -6,11 +6,8 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Sep 8th, 2014 Tag: code-complete 抽象数据类型 抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
-ADT的益处 隐藏实现细节
-限制改动程序影响的范围
-让接口提供更多的信息
-让程序的正确性更显而易见，易于检查错误 &hellip;">
+	<meta name="description" content="Published on: Sep 16th, 2014 Tag: code-complete 防御式编程应该要检查数据的正确性，以及在出现错误数据时应该如何处理（避免程序崩溃，提示用户，让程序正确的崩溃，处理异常等）。
+其核心思想是：子程序不应该因传入错误的数据而被破坏，要承认程序都会有问题， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -47,7 +44,7 @@ ADT的益处 隐藏实现细节
 <br>
 <h3 class="animated bounceInDown">
 	<div id="headerbg">
-        吾尝终日而思矣，不如须臾之所学也！
+        学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！
     </div>
 </h3>
 
@@ -100,6 +97,416 @@ ADT的益处 隐藏实现细节
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/2014/09/16/defensive-programming/">
+		
+			防御式编程</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-16T21:58:40+08:00" pubdate data-updated="true">Sep 16<span>th</span>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/code-complete/'>code-complete</a>
+  
+</div>
+    </div>
+		<p>防御式编程应该要检查数据的正确性，以及在出现错误数据时应该如何处理（避免程序崩溃，提示用户，让程序正确的崩溃，处理异常等）。
+<em>其核心思想是：子程序不应该因传入错误的数据而被破坏，要承认程序都会有问题，都需要被修改。</em></p>
+
+<h2>保护程序免遭非法输入数据的破坏</h2>
+
+<ul>
+<li><p>检查所有来源于外部的数据</p>
+
+<blockquote><p>当从文件，用户，网络或其它外部中获取数据时，要检查所有的数据值，以确保值在合法的范围内。</p></blockquote></li>
+<li><p>检查输入的参数</p></li>
+<li>决定如何处理错误的数据</li>
+</ul>
+
+
+<h2>断言</h2>
+
+<p>断言对于大型的复杂程序或可靠性要求极高的程序来说尤其有用。通过使用断言，程序员能更快排查出因修改代码或者别的原因而导致的错误。</p>
+
+<ul>
+<li>输入和输出参数处于合理的范围</li>
+<li>子程序开始（结束）执行时，文件处于打开（关闭）状态</li>
+<li>文件或流已用只读‘只写或可读写的方式打开</li>
+<li>仅用于输入的变量没有被子程序所修改</li>
+<li>指针非空</li>
+<li>传入子程序的数组或其它窗口至少能容纳X个数据元素</li>
+<li>表已初始化，存储着真实的数值</li>
+</ul>
+
+
+<p>断言只是用于开发和维护阶段。</p>
+
+<ul>
+<li>用错误处理代码来处理预期会发生的情况，断言来处理绝不应该发生的情况。</li>
+<li>避免把要执行的代码放到断言中</li>
+<li>用断言来注解前条件和后条件</li>
+<li>对于高健壮性的代码，应该先使用断言再处理错误</li>
+</ul>
+
+
+<h2>错误处理技术</h2>
+
+<p>当程序中出现错误数据时，可选的处理方式有如下几种</p>
+
+<ul>
+<li>返回中立值</li>
+<li>换用下一个正确的数据</li>
+<li>返回与前次相同的数据</li>
+<li>换用最近的合法值</li>
+<li>把警告信息记录到日志文件中</li>
+<li>返回一个错误码</li>
+<li>调用错误处理子程序</li>
+<li>当错误发生时显示错误信息</li>
+<li>用最妥当的方式在局部处理错误</li>
+<li>关闭程序</li>
+</ul>
+
+
+<h2>异常</h2>
+
+<p>异常是把代码的错误和异常事件传递给调用方的一种特殊手段。 异常和继承一样要审慎明智的使用。</p>
+
+<ul>
+<li>用异常通知程序的其余部分，发生了<em>不可忽略</em>的错误</li>
+<li>不能用异常来推卸责任</li>
+<li>避免在构造和析构函数中抛出异常，除非你在同一个地方捕获它们</li>
+<li>在恰当的抽象层次抛出异常</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">Employee</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="n">TaxID</span> <span class="n">GetTaxID</span><span class="p">()</span> <span class="k">throw</span> <span class="n">EOFException</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个EOFException就和GetTexID的抽象层次不一致，暴露了内部是用读取文件的方式实现的。然而在这个抽象层次，调用方是不关心也不依赖于你是用什么方式实现的。所以正确的做法是再抽象一个Exception。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">Employee</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="n">TaxID</span> <span class="n">GetTaxID</span><span class="p">()</span> <span class="k">throw</span> <span class="n">EmployeeDataNotAvailable</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在异常消息中加入导致异常的全部消息</li>
+<li>避免使用空的catch语句</li>
+<li>了解所用函数库可能抛出的异常</li>
+<li>考虑创建一个集中的异常报告机制。 可以自己定制一个异常的机类，里面实现了如何记录异常的方法</li>
+<li>把项目中对异常的使用标准化</li>
+<li>考虑异常的替换方案</li>
+<li><p>使用防火墙的隔离技术，在某一层次上统一做数据的检查（数据验证层），下面的层次就可以不用做检查了。</p>
+
+<blockquote><p>例如在类的public接口统一对传入的参数进行检测，private就不做这些检测了</p></blockquote></li>
+<li><p>尽早引入辅助调试的代码和工具</p></li>
+<li>计划移除辅助调试代码
+
+<blockquote><ul>
+<li>使用类似ant和make这样的工具</li>
+<li>使用内置的预处理器 如DEBUG等</li>
+<li>使用自己编写的预处理器</li>
+<li>使用调试存根</li>
+</ul>
+</blockquote></li>
+</ul>
+
+
+<h2>采用进攻式编程</h2>
+
+<p>异常情况应该尽早的在开发阶段让它显现出来。</p>
+
+<ul>
+<li>确保断言语句使程序终止运行</li>
+<li>完全填充分配到的所有内存</li>
+<li>完全填充已分配到的文件或流</li>
+<li>确保每一个case语句中的default分支或else分支都能产生严重的错误。</li>
+</ul>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/16/defensive-programming//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/14/high-quality-routines/">
+		
+			高质量的子程序</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-14T10:24:12+08:00" pubdate data-updated="true">Sep 14<span>th</span>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/code-complete/'>code-complete</a>
+  
+</div>
+    </div>
+		<p>创建子程序不仅仅是为了重用和更容易调试。下面给出更多合理的理由。</p>
+
+<h2>创建子程序的正当理由</h2>
+
+<ul>
+<li>降低复杂度，隐藏细节。</li>
+<li>引入中间，易懂的抽象。 把一段代码放进一个命名恰当的子程序中，这是对代码的最好说明，而不是用注释。</li>
+<li>避免重复代码</li>
+<li>支持子类化，如果是类的方法，那么可以在必要时可以用派生类重写这个方法</li>
+<li>隐藏顺序 把事件处理的顺序隐藏起来</li>
+<li>提高可移植性， 把一切非标准的API和操作系统等底层相关的API用一个子程序封装起来，可以提高可移植性。</li>
+<li>简化复杂的布尔判断 把布尔判断放进子程序中</li>
+<li>改善性能 通过使用子程序，你可以只在一个地方优化代码。</li>
+<li>隔离复杂度</li>
+<li>限制变化所带来的影响</li>
+<li>形成中央控制点</li>
+</ul>
+
+
+<h2>在子程序上的设计</h2>
+
+<p><strong>功能上的的内聚性,这个是最好的内聚性，这意味着这个子程序只完成一项功能。如sin, CloseFile，GetCustomerName</strong></p>
+
+<p>不理想的内聚性</p>
+
+<ul>
+<li>顺序上的内聚性 指在子程序内包含有需要按特定顺序执行的操作，这些步骤需要共享数据，而且只在全部执行完成后才完成一项特定的功能</li>
+<li>通信上的内聚性 指子程序只是共享了数据，代码之间不存在任何联系</li>
+<li>临时的内聚性 指一些需要同时执行才放到一起操作的子程序。 如 StartUp。 解决这个问题是让这个子程序的代码分成多个子程序，去调用其它的多个子程序</li>
+</ul>
+
+
+<p>不可取的内聚性</p>
+
+<ul>
+<li>过程上的内聚性 指一个子程序按特定的顺序执行。 解决方式：可以把不同的操作放进各自的子程序中</li>
+<li>逻辑上的内聚性 指若干个操作放入同一个子程序，通过传入一个控制标志来执行不同的操作。 如InputAll 根据控制标志来判断输入的是姓名，不是用户ID。如果这些子程序共享数据可以考虑包裹到类中</li>
+<li>巧合的内聚性</li>
+</ul>
+
+
+
+		
+		<a href="/blog/2014/09/14/high-quality-routines/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/14/high-quality-routines//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/12/dayly-thinking/">
+		
+			要抓住事物的本质才能应变</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-12T22:13:57+08:00" pubdate data-updated="true">Sep 12<span>th</span>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/thinking/'>Thinking</a>
+  
+</div>
+    </div>
+		<p>在许多事物中都存在着共性，如果没有掌握这种共性。每次来一样新的事物都要从头学起很浪费时间。这种不求甚解，靠死记的方式，在短时间内可以立即看到效果，但长时间来看是效率低下的。我们应该学会深入挖掘事物的本质，抽象出它们的共性，学会这样的方法。这样新的事物或技术出现，我们就立马可以与旧的事物联系起来，而且一旦建立起联系之后我们对新事物的记忆和理解也会更加深刻。所以那些一带而过的学习方式，这种看起来是一下子扩宽了知识面，其实是非常肤浅的，而且没有效率的。</p>
+
+<ul>
+<li>实验证明钻研式的学习更有效率，虽然难度大些，但这是非常值得。只有这样才能掌握以不变应万变的能力。</li>
+<li>要用平常心去面对困难的事物，不要浮躁，不要轻易放弃。</li>
+<li>T型人才应该从那一竖开始。</li>
+</ul>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/12/dayly-thinking//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/10/jni-tips/">
+		
+			JNI本地多线程FindClass错误</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-10T20:47:24+08:00" pubdate data-updated="true">Sep 10<span>th</span>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/jni/'>JNI</a>
+  
+</div>
+    </div>
+		<p>今天在用JNI开发Android程序时，遇到一个奇怪的情况。我在本地C++层中用<code>pthread_create</code>创建一个线程，在回调函数中要使用Java层的类，使用FindClass来获取Java的类，但是返回的却是NULL。但在主线程中却是可以用的。后来在Google的<a href="http://developer.android.com/training/articles/perf-jni.html#faq_FindClass">Android Developer的JNI Tips文章</a>中找到了相关信息。</p>
+
+<blockquote><p>If the class name looks right, you could be running into a class loader issue. FindClass wants to start the class search in the class loader associated with your code. It examines the call stack, which will look something like:</p>
+
+<pre><code>Foo.myfunc(Native Method)
+Foo.main(Foo.java:10)
+dalvik.system.NativeStart.main(Native Method)
+</code></pre>
+
+<p>The topmost method is Foo.myfunc. FindClass finds the ClassLoader object associated with the Foo class and uses that.</p>
+
+<p>This usually does what you want. You can get into trouble if you create a thread yourself (perhaps by calling pthread_create and then attaching it with AttachCurrentThread). Now the stack trace looks like this:</p>
+
+<pre><code>dalvik.system.NativeStart.run(Native Method)
+</code></pre>
+
+<p>The topmost method is NativeStart.run, which isn&#8217;t part of your application. If you call FindClass from this thread, the JavaVM will start in the &#8220;system&#8221; class loader instead of the one associated with your application, so attempts to find app-specific classes will fail.</p>
+
+<p>There are a few ways to work around this:</p>
+
+<ul>
+<li>Do your FindClass lookups once, in JNI_OnLoad, and cache the class references for later use. Any FindClass calls made as part of executing JNI_OnLoad will use the class loader associated with the function that called System.loadLibrary (this is a special rule, provided to make library initialization more convenient). If your app code is loading the library, FindClass will use the correct class loader.</li>
+<li>Pass an instance of the class into the functions that need it, by declaring your native method to take a Class argument and then passing Foo.class in.</li>
+<li>Cache a reference to the ClassLoader object somewhere handy, and issue loadClass calls directly. This requires some effort.</li>
+</ul>
+</blockquote>
+
+<p>通过Java层调用JNI的接口,JNI接口参数都会包含一个class的信息，从这个class中可以获取等到相应的ClassLoader。但是如果我自己创建了一个本地的线程来调用了FindClass，却找不到相应的ClassLoader，而使用了“系统”的ClassLoader，而不是你应用程序的ClassLoader，会找不到和这个app相关的类。
+解决的方式有如下三种方式：</p>
+
+<ul>
+<li>在<code>JNI_OnLoad</code>方法中就去调用FindClass找到相应的jclass并存起来。</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">static</span> <span class="n">jclass</span> <span class="n">yourClass</span><span class="p">;</span>
+</span><span class='line'><span class="n">jclass</span> <span class="n">yourClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;yourClassName&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在你的本地方法中加一个类的参数，调用这个方法时传一个类的实例进去。比如Foo.class作为参数。</li>
+<li>在某个地方缓存ClassLoader对象，然后自己通过这个对象调用loadClass方法。
+这三个方法中，我觉得第三个方法对我目前的项目最适用吧，只须要把env->FindClass替换成一个方法，方法里面会先调用env->FindClass，如果返回为NULL，我再调用ClassLoader的loadClass方法去加载类。
+我在StackOverFlow找到了相应的<a href="http://stackoverflow.com/a/16302771/2770848">实现</a>。</li>
+</ul>
+
+
+
+		
+		<a href="/blog/2014/09/10/jni-tips/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/10/jni-tips//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/2014/09/08/working-classes/">
 		
 			类的设计</a>
@@ -118,7 +525,7 @@ ADT的益处 隐藏实现细节
   
 
 
-<time datetime="2014-09-08T11:23:01+08:00" pubdate data-updated="true">Sep 8<sup>th</sup>, 2014</time></div>
+<time datetime="2014-09-08T11:23:01+08:00" pubdate data-updated="true">Sep 8<span>th</span>, 2014</time></div>
       <div class="tags">
 
   Tag:
@@ -194,7 +601,7 @@ ADT的益处 隐藏实现细节
   
 
 
-<time datetime="2014-09-02T22:01:20+08:00" pubdate data-updated="true">Sep 2<sup>nd</sup>, 2014</time></div>
+<time datetime="2014-09-02T22:01:20+08:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2014</time></div>
       <div class="tags">
 
   Tag:
@@ -289,7 +696,7 @@ ADT的益处 隐藏实现细节
   
 
 
-<time datetime="2014-08-30T19:09:52+08:00" pubdate data-updated="true">Aug 30<sup>th</sup>, 2014</time></div>
+<time datetime="2014-08-30T19:09:52+08:00" pubdate data-updated="true">Aug 30<span>th</span>, 2014</time></div>
       <div class="tags">
 
   Tag:
@@ -424,7 +831,7 @@ ADT的益处 隐藏实现细节
   
 
 
-<time datetime="2014-08-28T20:59:07+08:00" pubdate data-updated="true">Aug 28<sup>th</sup>, 2014</time></div>
+<time datetime="2014-08-28T20:59:07+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2014</time></div>
       <div class="tags">
 
   Tag:
@@ -480,7 +887,7 @@ ADT的益处 隐藏实现细节
   
 
 
-<time datetime="2014-08-27T20:59:00+08:00" pubdate data-updated="true">Aug 27<sup>th</sup>, 2014</time></div>
+<time datetime="2014-08-27T20:59:00+08:00" pubdate data-updated="true">Aug 27<span>th</span>, 2014</time></div>
       <div class="tags">
 
   Tag:
@@ -534,10 +941,104 @@ ADT的益处 隐藏实现细节
 </div>
 </article>
 
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/24/buildbot-tips/">
+		
+			Buildbot Tips</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-24T22:45:16+08:00" pubdate data-updated="true">Aug 24<span>th</span>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/build/'>build</a>
+  
+</div>
+    </div>
+		<h2>目录</h2>
+
+<ol>
+<li>命令最终执行的代码的目录是 build配置的slave builddir(没有则默认是slave的name) + step的workdir</li>
+</ol>
+
+
+<h2>Scheduler</h2>
+
+<ol>
+<li>Dependant Scheduler只依赖于上层的Scheduler。当上层的Scheduler成功时，才会执行，而不关心其它的改变。须要注意的是如果ChangeSourcerevision为None，那这意味着Head revision。如果在上流的Scheduler执行成功后，触发Dependant的期间，ChangeSource发生了改变，那么Dependant会取最新的Head revision。 如果想要更灵活的方式，可以考虑用Triggerable Scheduler的方式</li>
+</ol>
+
+
+<h2>Steps</h2>
+
+<ol>
+<li>steps中的SVN的checkout和update会先删掉checkout目录，然后重新checkout一份代码。所以不要在这个目录下放一些非SVN服务器上的东西。</li>
+<li>steps中可以获得build设置的property，可以通过这些property来执行相应的代码。更灵活的方式是用render</li>
+<li>steps可以设置Property来给下一个steps用，使用SetProperty(property=&#8221;&#8220;, value=&#8221;&#8220;) values可以是string和 Interpolate对象,这样就可以把一些steps根据property来执行</li>
+</ol>
+
+
+<figure class='code'><figcaption><span>例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.vstudio</span> <span class="kn">import</span> <span class="n">vc8</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.properties</span> <span class="kn">import</span> <span class="n">Property</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.factory</span> <span class="kn">import</span> <span class="n">BuildFactory</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.master</span> <span class="kn">import</span> <span class="n">SetProperty</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">vc</span> <span class="o">=</span> <span class="n">vc8</span><span class="p">(</span><span class="n">projectfile</span><span class="o">=</span><span class="s">&quot;youproject.sln&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">mode</span><span class="o">=</span><span class="s">&quot;build&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">=</span><span class="n">Property</span><span class="p">(</span><span class="s">&quot;buildconfig&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">build</span> <span class="o">=</span> <span class="n">BuildFactory</span><span class="p">()</span>
+</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">SetProperty</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="s">&quot;buildconfig&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;release&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">vc</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/24/buildbot-tips//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
 <nav id="pagenavi">
     
     
-        <a href="page2" class="next">Next</a>
+        <a href="page/blog/page/2/" class="next">Next</a>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav>
@@ -560,8 +1061,68 @@ ADT的益处 隐藏实现细节
 <aside class="sidebar">
   
     <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/16/defensive-programming/">防御式编程</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/14/high-quality-routines/">高质量的子程序</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/12/dayly-thinking/">要抓住事物的本质才能应变</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/10/jni-tips/">JNI本地多线程FindClass错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/08/working-classes/">类的设计</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sweetdark">@sweetdark</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sweetdark',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+18.88888888888889%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+<section>
+<iframe id="sina_widget_1954936591" style="width:100%; height:500px;" frameborder="0" scrolling="no" src="http://v.t.sina.com.cn/widget/widget_blog.php?uid=1954936591&height=500&skin=wd_02&showpic=1"></iframe>
 </section>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2014-09-09T09:53:44+08:00</updated>
+  <updated>2014-09-23T09:21:55+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,450 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[防御式编程]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/09/16/defensive-programming/"/>
+    <updated>2014-09-16T21:58:40+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/09/16/defensive-programming</id>
+    <content type="html"><![CDATA[<p>防御式编程应该要检查数据的正确性，以及在出现错误数据时应该如何处理（避免程序崩溃，提示用户，让程序正确的崩溃，处理异常等）。
+<em>其核心思想是：子程序不应该因传入错误的数据而被破坏，要承认程序都会有问题，都需要被修改。</em></p>
+
+<h2>保护程序免遭非法输入数据的破坏</h2>
+
+<ul>
+<li><p>检查所有来源于外部的数据</p>
+
+<blockquote><p>当从文件，用户，网络或其它外部中获取数据时，要检查所有的数据值，以确保值在合法的范围内。</p></blockquote></li>
+<li><p>检查输入的参数</p></li>
+<li>决定如何处理错误的数据</li>
+</ul>
+
+
+<h2>断言</h2>
+
+<p>断言对于大型的复杂程序或可靠性要求极高的程序来说尤其有用。通过使用断言，程序员能更快排查出因修改代码或者别的原因而导致的错误。</p>
+
+<ul>
+<li>输入和输出参数处于合理的范围</li>
+<li>子程序开始（结束）执行时，文件处于打开（关闭）状态</li>
+<li>文件或流已用只读‘只写或可读写的方式打开</li>
+<li>仅用于输入的变量没有被子程序所修改</li>
+<li>指针非空</li>
+<li>传入子程序的数组或其它窗口至少能容纳X个数据元素</li>
+<li>表已初始化，存储着真实的数值</li>
+</ul>
+
+
+<p>断言只是用于开发和维护阶段。</p>
+
+<ul>
+<li>用错误处理代码来处理预期会发生的情况，断言来处理绝不应该发生的情况。</li>
+<li>避免把要执行的代码放到断言中</li>
+<li>用断言来注解前条件和后条件</li>
+<li>对于高健壮性的代码，应该先使用断言再处理错误</li>
+</ul>
+
+
+<h2>错误处理技术</h2>
+
+<p>当程序中出现错误数据时，可选的处理方式有如下几种</p>
+
+<ul>
+<li>返回中立值</li>
+<li>换用下一个正确的数据</li>
+<li>返回与前次相同的数据</li>
+<li>换用最近的合法值</li>
+<li>把警告信息记录到日志文件中</li>
+<li>返回一个错误码</li>
+<li>调用错误处理子程序</li>
+<li>当错误发生时显示错误信息</li>
+<li>用最妥当的方式在局部处理错误</li>
+<li>关闭程序</li>
+</ul>
+
+
+<h2>异常</h2>
+
+<p>异常是把代码的错误和异常事件传递给调用方的一种特殊手段。 异常和继承一样要审慎明智的使用。</p>
+
+<ul>
+<li>用异常通知程序的其余部分，发生了<em>不可忽略</em>的错误</li>
+<li>不能用异常来推卸责任</li>
+<li>避免在构造和析构函数中抛出异常，除非你在同一个地方捕获它们</li>
+<li>在恰当的抽象层次抛出异常</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">Employee</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="n">TaxID</span> <span class="n">GetTaxID</span><span class="p">()</span> <span class="k">throw</span> <span class="n">EOFException</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个EOFException就和GetTexID的抽象层次不一致，暴露了内部是用读取文件的方式实现的。然而在这个抽象层次，调用方是不关心也不依赖于你是用什么方式实现的。所以正确的做法是再抽象一个Exception。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">Employee</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span> <span class="n">TaxID</span> <span class="n">GetTaxID</span><span class="p">()</span> <span class="k">throw</span> <span class="n">EmployeeDataNotAvailable</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在异常消息中加入导致异常的全部消息</li>
+<li>避免使用空的catch语句</li>
+<li>了解所用函数库可能抛出的异常</li>
+<li>考虑创建一个集中的异常报告机制。 可以自己定制一个异常的机类，里面实现了如何记录异常的方法</li>
+<li>把项目中对异常的使用标准化</li>
+<li>考虑异常的替换方案</li>
+<li><p>使用防火墙的隔离技术，在某一层次上统一做数据的检查（数据验证层），下面的层次就可以不用做检查了。</p>
+
+<blockquote><p>例如在类的public接口统一对传入的参数进行检测，private就不做这些检测了</p></blockquote></li>
+<li><p>尽早引入辅助调试的代码和工具</p></li>
+<li>计划移除辅助调试代码
+
+<blockquote><ul>
+<li>使用类似ant和make这样的工具</li>
+<li>使用内置的预处理器 如DEBUG等</li>
+<li>使用自己编写的预处理器</li>
+<li>使用调试存根</li>
+</ul>
+</blockquote></li>
+</ul>
+
+
+<h2>采用进攻式编程</h2>
+
+<p>异常情况应该尽早的在开发阶段让它显现出来。</p>
+
+<ul>
+<li>确保断言语句使程序终止运行</li>
+<li>完全填充分配到的所有内存</li>
+<li>完全填充已分配到的文件或流</li>
+<li>确保每一个case语句中的default分支或else分支都能产生严重的错误。</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[高质量的子程序]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/09/14/high-quality-routines/"/>
+    <updated>2014-09-14T10:24:12+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/09/14/high-quality-routines</id>
+    <content type="html"><![CDATA[<p>创建子程序不仅仅是为了重用和更容易调试。下面给出更多合理的理由。</p>
+
+<h2>创建子程序的正当理由</h2>
+
+<ul>
+<li>降低复杂度，隐藏细节。</li>
+<li>引入中间，易懂的抽象。 把一段代码放进一个命名恰当的子程序中，这是对代码的最好说明，而不是用注释。</li>
+<li>避免重复代码</li>
+<li>支持子类化，如果是类的方法，那么可以在必要时可以用派生类重写这个方法</li>
+<li>隐藏顺序 把事件处理的顺序隐藏起来</li>
+<li>提高可移植性， 把一切非标准的API和操作系统等底层相关的API用一个子程序封装起来，可以提高可移植性。</li>
+<li>简化复杂的布尔判断 把布尔判断放进子程序中</li>
+<li>改善性能 通过使用子程序，你可以只在一个地方优化代码。</li>
+<li>隔离复杂度</li>
+<li>限制变化所带来的影响</li>
+<li>形成中央控制点</li>
+</ul>
+
+
+<h2>在子程序上的设计</h2>
+
+<p><strong>功能上的的内聚性,这个是最好的内聚性，这意味着这个子程序只完成一项功能。如sin, CloseFile，GetCustomerName</strong></p>
+
+<p>不理想的内聚性</p>
+
+<ul>
+<li>顺序上的内聚性 指在子程序内包含有需要按特定顺序执行的操作，这些步骤需要共享数据，而且只在全部执行完成后才完成一项特定的功能</li>
+<li>通信上的内聚性 指子程序只是共享了数据，代码之间不存在任何联系</li>
+<li>临时的内聚性 指一些需要同时执行才放到一起操作的子程序。 如 StartUp。 解决这个问题是让这个子程序的代码分成多个子程序，去调用其它的多个子程序</li>
+</ul>
+
+
+<p>不可取的内聚性</p>
+
+<ul>
+<li>过程上的内聚性 指一个子程序按特定的顺序执行。 解决方式：可以把不同的操作放进各自的子程序中</li>
+<li>逻辑上的内聚性 指若干个操作放入同一个子程序，通过传入一个控制标志来执行不同的操作。 如InputAll 根据控制标志来判断输入的是姓名，不是用户ID。如果这些子程序共享数据可以考虑包裹到类中</li>
+<li>巧合的内聚性</li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2>好的子程序的名字</h2>
+
+<ul>
+<li>描述子程序做的所有事情。 如果这样使得这个子程序名字很长，那么要考虑这个子程序设计的是否合理，需要重构不。</li>
+<li>避免使用模糊或表述不清的动词 如HandleCalculation, DealSomething, ProcessInput这些都不能准确说明子程序到底做了什么</li>
+<li>不要仅通过数字来分别子程序</li>
+<li>根据需要确定子程序名字的长度 最好是在9-15个字符之间</li>
+<li>给函数名字时要描述它的返回值</li>
+<li>给过程命名时要用强烈的动词加宾语的形式</li>
+<li><p>准确使用对仗词</p>
+
+<blockquote><p>add/remove    open/close  new/delete      begin/end
+insert/delete show/hide   create/destroy  lock/unlock
+get/put       first/last  start/stop      up/down
+next/previous get/set     old/new</p></blockquote></li>
+<li><p>为常用操作确立命名规则。 比如如何获取ID</p>
+
+<blockquote><p>混乱的方式
+employ.id.Get()
+people.GetID()
+product.id()</p></blockquote></li>
+</ul>
+
+
+<p><strong>子程序的长度尽量控制在200行以内</strong></p>
+
+<h2>如何使用子程序的参数</h2>
+
+<ul>
+<li>按照输入-修改-输出的顺序放置参数</li>
+<li>如果几个子程序使用了相同的参数，保持顺序一致</li>
+<li>使用所有的参数。 不用的参数要删除</li>
+<li>把状态或出错变量放到最后</li>
+<li>不要把子程序的输入参数当作工作变量</li>
+<li>在接口中对参数的假定加以说明。 比如度量信息，使用的是米，不是英里。 可以用注释说明，更好的方式是使用断言</li>
+<li>为子程序传递用以维持其接口抽象的变量或对象</li>
+<li>使用具名参数</li>
+<li>确保实际参数各形式参数相匹配</li>
+</ul>
+
+
+<h2>使用函数，还是过程</h2>
+
+<p>函数是指有返回值的子程序（没有输出参数，只有输入参数），过程是没有返回值的子程序（可以用输出参数）
+简而言之，就是一个子程序的主要用途是返回其名字所指明的返回值，那么就用函数，否则用过程</p>
+
+<h3>设置函数的返回值</h3>
+
+<ul>
+<li>检查所有可能的返回路径</li>
+<li>不要返回局部引用和指针</li>
+</ul>
+
+
+<h2>要点</h2>
+
+<ul>
+<li>尽量不要使用宏子程序</li>
+<li>创建子程序主要是管理复杂度，使得程序更可靠，更易读，易修改</li>
+<li>如果子程序的名字糟糕但恰如其分，要重构代码</li>
+<li>有时候把一些简单的操作写成子程序也是非常值得去做的。</li>
+<li>只有在某个子程序主要目的是返回其名字所描述的返回值时才用函数，否则用过程</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[要抓住事物的本质才能应变]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/09/12/dayly-thinking/"/>
+    <updated>2014-09-12T22:13:57+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/09/12/dayly-thinking</id>
+    <content type="html"><![CDATA[<p>在许多事物中都存在着共性，如果没有掌握这种共性。每次来一样新的事物都要从头学起很浪费时间。这种不求甚解，靠死记的方式，在短时间内可以立即看到效果，但长时间来看是效率低下的。我们应该学会深入挖掘事物的本质，抽象出它们的共性，学会这样的方法。这样新的事物或技术出现，我们就立马可以与旧的事物联系起来，而且一旦建立起联系之后我们对新事物的记忆和理解也会更加深刻。所以那些一带而过的学习方式，这种看起来是一下子扩宽了知识面，其实是非常肤浅的，而且没有效率的。</p>
+
+<ul>
+<li>实验证明钻研式的学习更有效率，虽然难度大些，但这是非常值得。只有这样才能掌握以不变应万变的能力。</li>
+<li>要用平常心去面对困难的事物，不要浮躁，不要轻易放弃。</li>
+<li>T型人才应该从那一竖开始。</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JNI本地多线程FindClass错误]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/09/10/jni-tips/"/>
+    <updated>2014-09-10T20:47:24+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/09/10/jni-tips</id>
+    <content type="html"><![CDATA[<p>今天在用JNI开发Android程序时，遇到一个奇怪的情况。我在本地C++层中用<code>pthread_create</code>创建一个线程，在回调函数中要使用Java层的类，使用FindClass来获取Java的类，但是返回的却是NULL。但在主线程中却是可以用的。后来在Google的<a href="http://developer.android.com/training/articles/perf-jni.html#faq_FindClass">Android Developer的JNI Tips文章</a>中找到了相关信息。</p>
+
+<blockquote><p>If the class name looks right, you could be running into a class loader issue. FindClass wants to start the class search in the class loader associated with your code. It examines the call stack, which will look something like:</p>
+
+<pre><code>Foo.myfunc(Native Method)
+Foo.main(Foo.java:10)
+dalvik.system.NativeStart.main(Native Method)
+</code></pre>
+
+<p>The topmost method is Foo.myfunc. FindClass finds the ClassLoader object associated with the Foo class and uses that.</p>
+
+<p>This usually does what you want. You can get into trouble if you create a thread yourself (perhaps by calling pthread_create and then attaching it with AttachCurrentThread). Now the stack trace looks like this:</p>
+
+<pre><code>dalvik.system.NativeStart.run(Native Method)
+</code></pre>
+
+<p>The topmost method is NativeStart.run, which isn&#8217;t part of your application. If you call FindClass from this thread, the JavaVM will start in the &#8220;system&#8221; class loader instead of the one associated with your application, so attempts to find app-specific classes will fail.</p>
+
+<p>There are a few ways to work around this:</p>
+
+<ul>
+<li>Do your FindClass lookups once, in JNI_OnLoad, and cache the class references for later use. Any FindClass calls made as part of executing JNI_OnLoad will use the class loader associated with the function that called System.loadLibrary (this is a special rule, provided to make library initialization more convenient). If your app code is loading the library, FindClass will use the correct class loader.</li>
+<li>Pass an instance of the class into the functions that need it, by declaring your native method to take a Class argument and then passing Foo.class in.</li>
+<li>Cache a reference to the ClassLoader object somewhere handy, and issue loadClass calls directly. This requires some effort.</li>
+</ul>
+</blockquote>
+
+<p>通过Java层调用JNI的接口,JNI接口参数都会包含一个class的信息，从这个class中可以获取等到相应的ClassLoader。但是如果我自己创建了一个本地的线程来调用了FindClass，却找不到相应的ClassLoader，而使用了“系统”的ClassLoader，而不是你应用程序的ClassLoader，会找不到和这个app相关的类。
+解决的方式有如下三种方式：</p>
+
+<ul>
+<li>在<code>JNI_OnLoad</code>方法中就去调用FindClass找到相应的jclass并存起来。</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">static</span> <span class="n">jclass</span> <span class="n">yourClass</span><span class="p">;</span>
+</span><span class='line'><span class="n">jclass</span> <span class="n">yourClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;yourClassName&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在你的本地方法中加一个类的参数，调用这个方法时传一个类的实例进去。比如Foo.class作为参数。</li>
+<li>在某个地方缓存ClassLoader对象，然后自己通过这个对象调用loadClass方法。
+这三个方法中，我觉得第三个方法对我目前的项目最适用吧，只须要把env->FindClass替换成一个方法，方法里面会先调用env->FindClass，如果返回为NULL，我再调用ClassLoader的loadClass方法去加载类。
+我在StackOverFlow找到了相应的<a href="http://stackoverflow.com/a/16302771/2770848">实现</a>。</li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>但在Android中，通过JNI调用ClassLoader用findClass方法还是找不到类，需要用loadClass方法. 同时我想首先通过env->FindClass来找类，如果找不到就用CallObjectMethod调用loadClass去加载。但是发现在找到这个类class之后，调用env->GetMethodID时却会出错。不知道什么原因，在SO上提了个<a href="http://stackoverflow.com/questions/25782353/jni-getmethodid-cause-error-in-native-thread">问题</a>。希望有人能解答。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="n">JavaVM</span><span class="o">*</span> <span class="n">gJvm</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
+</span><span class='line'><span class="k">static</span> <span class="n">jobject</span> <span class="n">gClassLoader</span><span class="p">;</span>
+</span><span class='line'><span class="k">static</span> <span class="n">jmethodID</span> <span class="n">gFindClassMethod</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="n">JNI_OnLoad</span><span class="p">(</span><span class="n">JavaVM</span> <span class="o">*</span><span class="n">pjvm</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">reserved</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">gJvm</span> <span class="o">=</span> <span class="n">pjvm</span><span class="p">;</span>  <span class="c1">// cache the JavaVM pointer</span>
+</span><span class='line'>    <span class="n">JNIEnv</span><span class="o">*</span> <span class="n">env</span> <span class="o">=</span> <span class="n">getEnv</span><span class="p">();</span>
+</span><span class='line'>    <span class="c1">//replace with one of your classes in the line below</span>
+</span><span class='line'>    <span class="n">jclass</span> <span class="n">randomClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;com/example/RandomClass&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">jclass</span> <span class="n">classClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetObjectClass</span><span class="p">(</span><span class="n">randomClass</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">jclass</span> <span class="n">classLoaderClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;java/lang/ClassLoader&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">jmethodID</span> <span class="n">getClassLoaderMethod</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">classClass</span><span class="p">,</span> <span class="s">&quot;getClassLoader&quot;</span><span class="p">,</span>
+</span><span class='line'>                                             <span class="s">&quot;()Ljava/lang/ClassLoader;&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">jobject</span> <span class="n">localClassLoader</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">CallObjectMethod</span><span class="p">(</span><span class="n">randomClass</span><span class="p">,</span> <span class="n">getClassLoaderMethod</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">gClassLoader</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">NewGlobalRef</span><span class="p">(</span><span class="n">localClassLoader</span><span class="p">);</span>
+</span><span class='line'>  <span class="c1">//我在Android中用findClass不行，改成loadClass才可以找到class</span>
+</span><span class='line'>    <span class="n">gFindClassMethod</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">classLoaderClass</span><span class="p">,</span> <span class="s">&quot;findClass&quot;</span><span class="p">,</span>
+</span><span class='line'>                                    <span class="s">&quot;(Ljava/lang/String;)Ljava/lang/Class;&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">JNI_VERSION_1_6</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jclass</span> <span class="n">findClass</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">jclass</span> <span class="n">result</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="c1">//这句会出错，所以要处理错误</span>
+</span><span class='line'>      <span class="n">result</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">Findclass</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">jthrowable</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">ExceptionOccurred</span><span class="p">();</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">exception</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="n">env</span><span class="o">-&gt;</span><span class="n">ExceptionClear</span><span class="p">();</span>
+</span><span class='line'>          <span class="k">return</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">jclass</span><span class="o">&gt;</span><span class="p">(</span><span class="n">env</span><span class="o">-&gt;</span><span class="n">CallObjectMethod</span><span class="p">(</span><span class="n">gClassLoader</span><span class="p">,</span> <span class="n">gFindClassMethod</span><span class="p">,</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">NewStringUTF</span><span class="p">(</span><span class="n">name</span><span class="p">)));</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">JNIEnv</span><span class="o">*</span> <span class="n">getEnv</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">status</span> <span class="o">=</span> <span class="n">gJvm</span><span class="o">-&gt;</span><span class="n">GetEnv</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">env</span><span class="p">,</span> <span class="n">JNI_VERSION_1_6</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">status</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">status</span> <span class="o">=</span> <span class="n">gJvm</span><span class="o">-&gt;</span><span class="n">AttachCurrentThread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">env</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="n">status</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">nullptr</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">env</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[类的设计]]></title>
@@ -878,7 +1322,7 @@ MSDN： The system does not automatically create a message queue for each thread
 <ol>
 <li>steps中的SVN的checkout和update会先删掉checkout目录，然后重新checkout一份代码。所以不要在这个目录下放一些非SVN服务器上的东西。</li>
 <li>steps中可以获得build设置的property，可以通过这些property来执行相应的代码。更灵活的方式是用render</li>
-<li>steps可以设置Property来给下一个steps用，使用SetProperty(property=&ldquo;&rdquo;, value=&ldquo;&rdquo;) values可以是string和 Interpolate对象,这样就可以把一些steps根据property来执行</li>
+<li>steps可以设置Property来给下一个steps用，使用SetProperty(property=&#8221;&#8220;, value=&#8221;&#8220;) values可以是string和 Interpolate对象,这样就可以把一些steps根据property来执行</li>
 </ol>
 
 
@@ -928,10 +1372,10 @@ MSDN： The system does not automatically create a message queue for each thread
 <p>Windows 下的安装步骤。参考<a href="http://trac.buildbot.net/wiki/RunningBuildbotOnWindows">这里</a> 下面说一下我遇到的问题。
 我的建议是都安装x86的版本。python  PyWin32版本。 有一些需要编译的python库很麻烦如pysqlite 。python2.7的大部分库是用VS2008编译的，可以去下个VS2008的Express。如果是Windows 64bit出现问题参考<a href="http://stackoverflow.com/questions/4676728/value-error-trying-to-install-python-for-windows-extensions">这里</a>
 因为我装了好几个版本的VS。我的问题弄了好久没解决。还好网上有编译好的版本。
-<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32">http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32</a> 我在这里下了个pysqlite的exe.
+http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32 我在这里下了个pysqlite的exe.
 如果下载的是.zip文件，则解压，然后dos进入该目录，执行<code>python setup.py install</code>命令即可
 也在网上找了个OpenSSL windwos版的下载安装好了。
-大部分需要的组件我都上传的网盘了地址<a href="http://pan.baidu.com/s/1dD7tlUp">http://pan.baidu.com/s/1dD7tlUp</a>
+大部分需要的组件我都上传的网盘了地址http://pan.baidu.com/s/1dD7tlUp
 检查是否buildbot和buildbot-slave是否安装好了。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -1004,7 +1448,7 @@ Now, create the slave:</p>
 </pre></td><td class='code'><pre><code class=''><span class='line'>buildslave create-slave slave localhost:9989 example-slave pass</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The user:host pair, username, and password should be the same as the ones in master.cfg; verify this is the case by looking at the section for c[&lsquo;slaves&rsquo;] and c[&lsquo;slavePortnum&rsquo;]:</p>
+<p>The user:host pair, username, and password should be the same as the ones in master.cfg; verify this is the case by looking at the section for c[&#8216;slaves&#8217;] and c[&#8216;slavePortnum&#8217;]:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>cat master/master.cfg</span></code></pre></td></tr></table></div></figure>
@@ -1013,7 +1457,7 @@ Now, create the slave:</p>
 <p>Now, start the slave:</p>
 
 <p>buildslave start slave
-Check the slave&rsquo;s log:</p>
+Check the slave&#8217;s log:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>tail -f slave/twistd.log</span></code></pre></td></tr></table></div></figure>
@@ -1041,7 +1485,7 @@ Check the slave&rsquo;s log:</p>
 </span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] Buildslave example-slave attached to runtests</span></code></pre></td></tr></table></div></figure>
 
 
-<p>You should now be able to go to <a href="http://localhost:8010,">http://localhost:8010,</a> where you will see a web page similar to:
+<p>You should now be able to go to http://localhost:8010, where you will see a web page similar to:
 <img src="http://docs.buildbot.net/current/_images/index.png"></p>
 
 <p>Click on the Waterfall Display link and you get this:</p>
@@ -1055,14 +1499,14 @@ Check the slave&rsquo;s log:</p>
     <link href="http://sweetdark.github.com/blog/2014/07/17/vs-error-collection/"/>
     <updated>2014-07-17T18:18:48+08:00</updated>
     <id>http://sweetdark.github.com/blog/2014/07/17/vs-error-collection</id>
-    <content type="html"><![CDATA[<h3>error C2220: 警告被视为错误 &ndash; 没有生成“object”文件</h3>
+    <content type="html"><![CDATA[<h3>error C2220: 警告被视为错误 - 没有生成“object”文件</h3>
 
 <p>这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
 解决方案：
 1. 在VS2010以后在文件->高级保存选项，设置UTF-8的格式，重新保存一次。 或者用其它的程序保存成UTF-8的格式。</p>
 
 <ol>
-<li>如果上述不能去掉错误，还可以点击项目，右击选择属性->配置属性->c/c++&ndash;>常规，将“警告视为错误”的选项改为“否”。就可以！</li>
+<li>如果上述不能去掉错误，还可以点击项目，右击选择属性->配置属性->c/c++->常规，将“警告视为错误”的选项改为“否”。就可以！</li>
 </ol>
 
 
@@ -1097,7 +1541,7 @@ Check the slave&rsquo;s log:</p>
 <li><p>unresolved external symbol <code>__iob</code>
 这个<code>__iob</code>找不到的问题费了我大部分的时间。跟踪到stdio.h文件，发现那里有个关于iob的宏，终于搞定。加入一句话到.cpp文件中：<code>extern "C" { FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]}; }</code></p></li>
 <li><p>NULL iterator
-STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器上进行++或&mdash;之类的是不成立的。</p></li>
+STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器上进行++或&#8211;之类的是不成立的。</p></li>
 <li><p>结构体默认函数
 在VC6中，结构体的默认运算符==或者&lt;之类的如果不实现也可以作为STL元素放入list等容器中。但VC8不行了，因为它已经不再为结构体生成缺省的操作符函数。</p></li>
 </ol>
@@ -1230,7 +1674,7 @@ OutOfMemoryError：系统内存不够</p></blockquote>
 javap这个工具可以用来输出java类 对应jni的描述。
 <img src="http://farm3.staticflickr.com/2939/14619183735_dfb1841c44_b.jpg">
 把Signature 后面的字符串拷贝就行了（<strong>后面的分号也要拷贝</strong>）。这样可以在GetField中使用了。
-env->GetField(cls, &ldquo;fieldName&rdquo;, &ldquo;Signature&rdquo;);
+env->GetField(cls, &#8220;fieldName&#8221;, &#8220;Signature&#8221;);
 javah的工具配置类似。</p>
 
 <h2>定位文件目录</h2>
@@ -1270,7 +1714,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 <h1>什么是Local References？</h1>
 
-<p>大多数的JNI函数都创建了Local reference（以下简称为<em>LR</em>）。 比如 NewObject, NewString&hellip;. 和 FindClass 等。</p>
+<p>大多数的JNI函数都创建了Local reference（以下简称为<em>LR</em>）。 比如 NewObject, NewString&#8230;. 和 FindClass 等。</p>
 
 <p>一个<em>LR</em>只有在创建它的的一个局部作用域内有效。在超出这个作用域之后，就可能会被释放。 所有的<em>LR</em>在本地函数调用时创建的，在这个本地函数返回时就会被释放。</p>
 
@@ -1466,7 +1910,7 @@ Build选项下面就不要勾上build before launch了。</p>
 <ol>
 <li><p><a href="http://journals.ecs.soton.ac.uk/java/tutorial/native1.1/implementing/refs.html">Local and Global References</a></p></li>
 <li><p><a href="http://www.soi.city.ac.uk/~kloukin/IN2P3/material/jni.pdf">The Java ™  Native Interface Programmer’s Guide and Specification</a></p></li>
-<li><p><a href="http://mysuperbaby.iteye.com/blog/1603817">http://mysuperbaby.iteye.com/blog/1603817</a></p></li>
+<li><p>http://mysuperbaby.iteye.com/blog/1603817</p></li>
 </ol>
 
 ]]></content>
@@ -1517,7 +1961,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 
 <p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#103;&#105;&#116;&#x40;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;">&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+只需要把原先的git@github.com 改为git@firstkey 就可以了,更改远程地址的命令：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1563,7 +2007,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 <ol>
 <li>下载和安装git， 把git安装目录的bin和cmd文件目录加到path中。</li>
-<li>下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby &mdash;version来测试是否安装成功</li>
+<li>下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby &#8211;version来测试是否安装成功</li>
 <li>去网上下载一个<a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a> 解压到一个目录如E:/Devkit。dos cd 到这个目录。执行如下命令:</li>
 </ol>
 
@@ -1668,7 +2112,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 <p>git remote -v 命令可以查远程的地址。
 <img src="../images/gitremote.png" alt="" />
-有不懂的git命令都可以用git command &mdash;help 来查这个command。</p>
+有不懂的git命令都可以用git command &#8211;help 来查这个command。</p>
 
 <p>为了确保安全不造成混乱，以后每次写blog之前，都要检查，你是否是在source分支下，是否跟服务器上是一致的。</p>
 
@@ -1681,7 +2125,7 @@ Build选项下面就不要勾上build before launch了。</p>
 <h2>注意事项</h2>
 
 <ul>
-<li>图片最好是上传到一些可以保存图片的网站上，然后用 octopress 的Image 标签来引用， 相关用法<a href="http://octopress.org/docs/plugins/image-tag/%E3%80%82">http://octopress.org/docs/plugins/image-tag/%E3%80%82</a>
+<li>图片最好是上传到一些可以保存图片的网站上，然后用 octopress 的Image 标签来引用， 相关用法http://octopress.org/docs/plugins/image-tag/。
 用markdown语法也是可以的，不要写本地的相对路径（如上面的那张图片，会导致在Tag目录下看不到</li>
 </ul>
 
@@ -1689,22 +2133,22 @@ Build选项下面就不要勾上build before launch了。</p>
 <p>相关的文章
 octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上搭建Octopress博客</a></p>
 
-<p><a href="http://octopress.org/">http://octopress.org/</a> 官方文档必看。这里有许多官方的plugin介绍。包括代码高亮，插入网络上图片等。</p>
+<p>http://octopress.org/ 官方文档必看。这里有许多官方的plugin介绍。包括代码高亮，插入网络上图片等。</p>
 
 <p><a href="http://qingbo.net/picky/502-markdown-syntax.html">MarkDonw的语法，文章就是用markdown语法的，很简单。</a></p>
 
 <p>-git的学习</p>
 
 <p>英文10本
-<a href="http://sixrevisions.com/resources/git-tutorials-beginners/#comments">http://sixrevisions.com/resources/git-tutorials-beginners/#comments</a></p>
+http://sixrevisions.com/resources/git-tutorials-beginners/#comments</p>
 
 <p>中文</p>
 
-<p><a href="http://gitbook.liuhui998.com/index.html">http://gitbook.liuhui998.com/index.html</a></p>
+<p>http://gitbook.liuhui998.com/index.html</p>
 
 <p>详解系列
-<a href="http://blog.jobbole.com/24379/">http://blog.jobbole.com/24379/</a>
-<a href="http://blog.jobbole.com/25808/">http://blog.jobbole.com/25808/</a></p>
+http://blog.jobbole.com/24379/
+http://blog.jobbole.com/25808/</p>
 ]]></content>
   </entry>
   
@@ -1817,12 +2261,12 @@ octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上�
 
 <p>word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
 A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, <EOL>). An empty line is also considered to be a word.
-Use &lsquo;w&rsquo;, &lsquo;e&rsquo;, and &lsquo;b&rsquo; to navigate words.
-Special case: &ldquo;cw&rdquo; is treated like &ldquo;ce&rdquo; if the cursor is on a non-blank. This is because &ldquo;cw&rdquo; is interpreted as change-word, and a word does not include the following white space.</p>
+Use &#8216;w&#8217;, &#8216;e&#8217;, and &#8216;b&#8217; to navigate words.
+Special case: &#8220;cw&#8221; is treated like &#8220;ce&#8221; if the cursor is on a non-blank. This is because &#8220;cw&#8221; is interpreted as change-word, and a word does not include the following white space.</p>
 
 <p>Example: (each word is surrounded by a rectangle)</p>
 
-<p>|while| |(|next_line1| |!==| |&ldquo;|The END|!&rdquo;)| |do| |{|</p>
+<p>|while| |(|next_line1| |!==| |&#8221;|The END|!&#8221;)| |do| |{|</p>
 
 <p>  |next_line1| |=| |readNextLine|();|</p>
 
@@ -1830,11 +2274,11 @@ Special case: &ldquo;cw&rdquo; is treated like &ldquo;ce&rdquo; if the cursor is
 
 <p>WORD 长字代表一系列的字符串。 由blank tab 换行区分
 A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
-Use &lsquo;W&rsquo;, &lsquo;E&rsquo;, and &lsquo;B&rsquo; to navigate WORDs.
-Special case: &ldquo;cW&rdquo; is treated like &ldquo;cE&rdquo; if the cursor is on a non-blank. This is because &ldquo;cW&rdquo; is interpreted as change-WORD, and a WORD does not include the following white space.
+Use &#8216;W&#8217;, &#8216;E&#8217;, and &#8216;B&#8217; to navigate WORDs.
+Special case: &#8220;cW&#8221; is treated like &#8220;cE&#8221; if the cursor is on a non-blank. This is because &#8220;cW&#8221; is interpreted as change-WORD, and a WORD does not include the following white space.
 Example: (each WORD is surrounded by a rectangle)</p>
 
-<p>|while| |(next_line1| |!==| |&ldquo;The END!&rdquo;)| |do| |{|</p>
+<p>|while| |(next_line1| |!==| |&#8221;The END!&#8221;)| |do| |{|</p>
 
 <p>  |next_line1| |=| |readNextLine();|</p>
 
@@ -2023,7 +2467,7 @@ zk – 向上移动到上一个折叠的结束处
 
 <p>颜色在图形管道中通常用范围为[0.0, 1.0]的浮点数进行表示。该值随后会被映射到0~255的颜色通道上。我们设置顶点的位置作为颜色值。首先我们使用内建的函数clamp();确保值在0.0-1.0的范围内。这是因为三角形的左下角的点位于(-1,-1)，且小于等于0的值都会被渲染为黑色。这样的话左下角的角都会是黑色的。我们通过夹紧使得左下角的颜色值大于0.</p>
 
-<p>clamp函数并不会改变向量的维数，智慧改变它的值。但我们输出的变量是4-vector的形式。所以我们使用GLSL的符号&#8217;vec4(vec3,W)&lsquo;来创建一个4-vector包含了3-vector并增加了一个w值。</p>
+<p>clamp函数并不会改变向量的维数，智慧改变它的值。但我们输出的变量是4-vector的形式。所以我们使用GLSL的符号&#8217;vec4(vec3,W)&#8217;来创建一个4-vector包含了3-vector并增加了一个w值。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">in</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
@@ -2038,256 +2482,6 @@ zk – 向上移动到上一个折叠的结束处
 
 
 <p>我们使用插值的颜色作为片段的颜色。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ogl step8 缩放Scaling Transformation]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/07/07/ogl-step8/"/>
-    <updated>2013-07-07T22:02:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/07/07/ogl-step8</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
-
-<h1>背景</h1>
-
-<p>缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简。</p>
-
-<p>你想要缩放哪一维，只需对应的改变矩阵对角线上的值就可以了。</p>
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0f</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>与上一节不同的只是这个矩阵。三角形会随着正弦值(0,1]由小变大，为0时缩放到最小三角形消失。在[-1, 0)时只是反过来而已。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ogl step7 旋转Rotation Transformation]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/07/07/ogl-step7/"/>
-    <updated>2013-07-07T19:18:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/07/07/ogl-step7</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
-
-<h1>背景</h1>
-
-<p>这节主要讲旋转变换。给定一个点和一个角度，绕一个坐标轴旋转。在X，Y，Z中保持一个值不变（绕该轴旋转的值不变），另外两个坐标改变。我们可以绕Z轴，Y轴，X轴旋转。甚至可以绕任意向量进行宣召。
-考虑下面的图形：
-<img src="http://ogldev.atspace.co.uk/www/tutorial07/rotation.png">
-我们沿着圆从(x1, yz)旋转到(x2,y2)。换句话说，我们把(x1, y1)旋转α角。假设半径是1.有如下的等式：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>x1 = cos(α1)
-</span><span class='line'>y1 = sin(α1)
-</span><span class='line'>x2 = cos(α1+α2)
-</span><span class='line'>y2 = sin(α1+α2)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>三角函数</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cos(α+β) = cosαcosβ-sinαsinβ
-</span><span class='line'>sin(α+β) = sinαcosβ+cosαsinβ</span></code></pre></td></tr></table></div></figure>
-
-
-<p>使用上面的公式对x2和y2进行扩展得</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>x2 = cosα1costα2 - sinα1sinα2
-</span><span class='line'>y2 = sinα1cosα2 + cosα1sinα2</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面的图形是，Z轴指向屏幕里面，从屏幕外向里看XY平面。如果X&amp;Y 是4维向量的一部分，绕Z轴旋转的矩阵的形式如下：
-<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_01.png">
-绕Y轴旋转的矩阵：
-<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_02.png">
-绕X轴旋转的矩阵：
-<img src="http://ogldev.atspace.co.uk/www/tutorial07/07_03.png"></p>
-
-<h1>代码漫游</h1>
-
-<p>我们只需要把上一次的代码做稍微的修改，就可以实现旋转了。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>现在是绕z轴旋转。你可以尝试着绕其他轴旋转。但绕其他轴旋转没有3d到2d的投影变换，显得多余。接下来将会介绍所有的变换。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ogl step6 Translation Transformation]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/07/05/ogl-step6/"/>
-    <updated>2013-07-05T12:34:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/07/05/ogl-step6</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
-
-<h1>背景</h1>
-
-<p>这一节开始介绍3D环境下物体的转换。通用的方式是用矩阵或多个矩阵连乘最后乘以顶点坐标来实现转换。后面的每一节都会详解一种转换。</p>
-
-<p>下图是把左图的三角形平移到右图的位置。
-<img src="http://ogldev.atspace.co.uk/www/tutorial06/translation.png">
-一种方式是提供向量的位置作为一个一致变量给着色器然后在处理每一个顶点是加上这个向量来实现平移的效果。然而，这种方式不是通用的转换方式。另外的，如果这个顶点值改变了，那么后面的转换就是基于这个被改变的顶点进行转换了，而不是平移前的转换了。这很麻烦。一个更好的方式是用一个矩阵代表平移乘以其他的转换矩阵。但是你无法找到一个矩阵乘以左图三角形的左下角的点(0,0),能够得到（1,1）。实际情况是你无法在二维矩阵实现这种转换。通用的公式是M * P = P1(x + v1, y + v2, z + v3).我们需要的是一个矩阵M和一个点P(x, y, z)和一个向量V(v1, v2, v3)。矩阵M平移P到P+V的位置。在P1中我们观察到P1每一维的值是对应的P的值和V的值相加的结果。左边的值可以认为是与单位阵相乘的结果：I * P = P(x, y, z)。所以我们从单位阵开始去寻找一个能够实现右边的每一维的相加结果(&hellip;+V1, &hellip;+V2, &hellip;+V3)的矩阵。 如下图：</p>
-
-<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation1.png">
-由上可以得出两个结论：
-1.  a, b, c, d, e 和 f 其中的任意两个会对每一维度有影响，所以它们必须为0，如此又变为单位矩阵。
-2.  因为x，y，z会影响三个维度的值，所以也必须为0.这样的话向量变为零向量，而零向量转换之后还是零向量。</p>
-
-<p>我们必须找到一个矩阵能够提供如下的运算：</p>
-
-<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation2.png">
-所以我们必须找到一种方式加上v1-v3，上面的a到f必须为0.我们把矩阵增加一行和一列。变为4X4的矩阵。把向量也增加一个维度w变为四维的。最终得到我们的平移矩阵如下：</p>
-
-<p><img src="http://ogldev.atspace.co.uk/www/tutorial06/equation3.png">
-现在即使x,y,z都为0.我们也可以实现平移了。</p>
-
-<h2>用4维向量来表示3维的向量也成为齐次坐标，在3D图形中是非常流行的方式。第四维称作&#8217;w&#8217;。在之前的着色器中gl_Position也是齐次坐标。w维在3D投影到2D中扮演着十分重要的角色。在一般情况下点使用w=1,向量则用w=0.原因是点可以被平移而向量不行。你可以改变向量的长度和方向，所有长度和方向一样的向量被认为是一样的，向量是相对的。所以如果w=0，向量乘以平移矩阵结果是一样的向量。</h2>
-
-<!-- more -->
-
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">struct</span> <span class="n">Matrix4f</span> <span class="p">{</span>
-</span><span class='line'><span class="kt">float</span> <span class="n">m</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">];</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们把4x4矩阵的定义放在math_3.h中。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLuint</span> <span class="n">gWorldLocation</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们用这个句柄去访问着色器中的一致变量world matrix。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Matrix4f</span> <span class="n">World</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面定义的矩阵会在X坐标[-1 1]之间平移。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glUniformMatrix4fv</span><span class="p">(</span><span class="n">gWorldLocation</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">GL_TRUE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这是glUniform*函数的一种形式加载一致变量到着色器中。这里指定了加载4x4的矩阵，当然还有其他的版本2x2, 3x3 &hellip;。第一个参数是一直变量的位置（我们可以通过glGetUniformLocation()获取)。第二个参数表示我们要更新的矩阵的个数，第三个参数代表数组的方位顺序，GL_TRUE代表行主顺序的数组，C语言就是用这种顺序的。GL_FALSE代表列主顺序的数组，典型的是Fortran语言。</p>
-
-<p>下面的是着色器的代码。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">uniform</span> <span class="n">mat4</span> <span class="n">gWorld</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这是一个4x4矩阵的一致变量，还有mat2 和 mat3分别代表2x2 和 3x3的矩阵。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">gWorld</span> <span class="o">*</span> <span class="n">vec4</span><span class="p">(</span><span class="n">Position</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在顶点缓冲区中三角顶点是3维的，上面的语句是把它扩充到4维，用1填充。有两种方式来表示4维的顶点，一种是像上面那样，先定义一个3维的顶点，然后在顶点缓冲区中去扩充。第二种是直接定义一个4维的顶点。很明显第二种方式比较浪费空间，因为第4维的值一直是1. 更好的方式是第一种，保留原先的3维的顶点然后在着色器中去连接第四维w。在GLSL中的语法是&#8217;vec4(Position, 1.0)&lsquo;。
-总结：在每一帧中我们都生成一个平移矩阵，实现X坐标在[-1 1]之间平移。三角形被平移的归一化盒子外面的将被裁剪。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ogl step5 Uniform Variables]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/07/01/ogl-step5/"/>
-    <updated>2013-07-01T13:19:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/07/01/ogl-step5</id>
-    <content type="html"><![CDATA[<h1>背景</h1>
-
-<p>在这一节中我们将会使用到一个新的着色器变量————一致变量。属性变量与一致变量的不同在于，属性变量是由顶点指定的并在每一次的着色器调用中都会去从顶点缓冲区中读取。然而一致变量是在整个绘制调用保持一致。这也就意味着你在绘制调用前赋了一个值，然后你在每一次调用顶点着色器的时候使用的都是同一个值。着色器有两种类型的参数：一致变量（Uniform variables）指得是在一帧当中保持恒定的数值，典型的参数包括视口的方向和灯光的方向。而易变变量（Varying variables）对于每一个执行单元（包括顶点着色器中的顶点，以及片元着色器中的片元）都是变化的。</p>
-
-<p>在这一节中我们将会用一组一致变量在每一帧中都进行改变，通过GLUT提供的idle回调函数来实现。GLUT只有在窗体改变了尺寸和被其他窗体覆盖的时候会调用回调函数。如果在程序加载之后，我们什么都不做那么回调函数只会被调用一次。我们通过注册一个idle的回调函数来实现循环绘制画面，idle函数会在窗体系统没有接收到任何消息的时候被调用。</p>
-
-<hr />
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutIdleFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在这里我们注册一个idle函数。如果你想要使用一个有用的idle回调函数，你需要在它结束是添加一个glutPostRedisplay()函数。否则idle函数会被一直调用，但是渲染函数却不会。glutPostRedisplay()标志了当前窗体需要被重新显示，在下一个GLUT的main循环中绘制回调函数将会被调用。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gScaleLocation</span> <span class="o">=</span> <span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="s">&quot;gScale&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="n">assert</span><span class="p">(</span><span class="n">gScaleLocation</span> <span class="o">!=</span> <span class="mh">0xFFFFFFFF</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在链接了程序之后，我们通过glGetUniformLocation方法去获得gScale一致变量的地址。这是一种C\C++程序执行环境映射到着色器的执行环境。你不能直接访问着色器里的内容也不能直接修改里面的变量。当你编译着色器是，GLSL的编译器就为每一个一致变量建立了一个索引。着色器器内部是通过这个索引对变量进行操作。我们也可以通过glGetUniformLocation获得某个程序内部的变量名的索引。这个函数返回索引，出错时返回-1。检查错误非常重要，着色器内部不存在这个变量（<font color="red">你的变量名拼写错误</font>）或者编译器对这个变量进行了优化（<font color="red">为被使用的变量</font>)都会导致glGetUniformLocation调用失败。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="kt">float</span> <span class="n">Scale</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">Scale</span> <span class="o">+=</span> <span class="mf">0.001f</span><span class="p">;</span>
-</span><span class='line'><span class="n">glUniform1f</span><span class="p">(</span><span class="n">gScaleLocation</span><span class="p">,</span> <span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>使用一个静态变量Scale，在每次渲染调用是递增。传给着色器的值是Scale的正弦值。会产生一个在-1.0到1.0之间的值。 通过glUniform1f传给着色器。OpenGl提供了多种形式glUniform{1234}{if}。glUniform2i glUniform3f&hellip;etc. glUniform传的第一个参数是索引。</p>
-
-<p>我们只对上一教程的VS段进行修改，FS保持不变</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">uniform</span> <span class="kt">float</span> <span class="n">gScale</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>定义一个一致变量。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们队X和Y的值进行转换。你知道为什么三角形会在循环到一半时倒过来吗？</p>
 ]]></content>
   </entry>
   

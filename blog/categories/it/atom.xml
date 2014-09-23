@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[tags: it | Mario's Blog]]></title>
-  <link href="http://sweetdark.github.com/blog/tags/it/atom.xml" rel="self"/>
+  <title><![CDATA[Category: IT | Mario's Blog]]></title>
+  <link href="http://sweetdark.github.com/blog/categories/it/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2014-09-09T09:53:44+08:00</updated>
+  <updated>2014-09-23T09:21:55+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
