@@ -44,7 +44,7 @@ python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以�
 <br>
 <h3 class="animated bounceInDown">
 	<div id="headerbg">
-        学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！
+        吾尝终日而思矣，不如须臾之所学也！
     </div>
 </h3>
 
@@ -102,10 +102,10 @@ python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以�
 <p>Windows 下的安装步骤。参考<a href="http://trac.buildbot.net/wiki/RunningBuildbotOnWindows">这里</a> 下面说一下我遇到的问题。
 我的建议是都安装x86的版本。python  PyWin32版本。 有一些需要编译的python库很麻烦如pysqlite 。python2.7的大部分库是用VS2008编译的，可以去下个VS2008的Express。如果是Windows 64bit出现问题参考<a href="http://stackoverflow.com/questions/4676728/value-error-trying-to-install-python-for-windows-extensions">这里</a>
 因为我装了好几个版本的VS。我的问题弄了好久没解决。还好网上有编译好的版本。
-http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32 我在这里下了个pysqlite的exe.
+<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32">http://www.lfd.uci.edu/~gohlke/pythonlibs/#pywin32</a> 我在这里下了个pysqlite的exe.
 如果下载的是.zip文件，则解压，然后dos进入该目录，执行<code>python setup.py install</code>命令即可
 也在网上找了个OpenSSL windwos版的下载安装好了。
-大部分需要的组件我都上传的网盘了地址http://pan.baidu.com/s/1dD7tlUp
+大部分需要的组件我都上传的网盘了地址<a href="http://pan.baidu.com/s/1dD7tlUp">http://pan.baidu.com/s/1dD7tlUp</a>
 检查是否buildbot和buildbot-slave是否安装好了。</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -178,7 +178,7 @@ Now, create the slave:</p>
 </pre></td><td class='code'><pre><code class=''><span class='line'>buildslave create-slave slave localhost:9989 example-slave pass</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The user:host pair, username, and password should be the same as the ones in master.cfg; verify this is the case by looking at the section for c[&#8216;slaves&#8217;] and c[&#8216;slavePortnum&#8217;]:</p>
+<p>The user:host pair, username, and password should be the same as the ones in master.cfg; verify this is the case by looking at the section for c[&lsquo;slaves&rsquo;] and c[&lsquo;slavePortnum&rsquo;]:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>cat master/master.cfg</span></code></pre></td></tr></table></div></figure>
@@ -187,7 +187,7 @@ Now, create the slave:</p>
 <p>Now, start the slave:</p>
 
 <p>buildslave start slave
-Check the slave&#8217;s log:</p>
+Check the slave&rsquo;s log:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>tail -f slave/twistd.log</span></code></pre></td></tr></table></div></figure>
@@ -215,7 +215,7 @@ Check the slave&#8217;s log:</p>
 </span><span class='line'>2011-03-13 18:46:58-0700 [Broker,1,127.0.0.1] Buildslave example-slave attached to runtests</span></code></pre></td></tr></table></div></figure>
 
 
-<p>You should now be able to go to http://localhost:8010, where you will see a web page similar to:
+<p>You should now be able to go to <a href="http://localhost:8010,">http://localhost:8010,</a> where you will see a web page similar to:
 <img src="http://docs.buildbot.net/current/_images/index.png"></p>
 
 <p>Click on the Waterfall Display link and you get this:</p>

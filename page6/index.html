@@ -1,0 +1,608 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="Published on: Jun 25th, 2013 Tag: opengl 背景 这篇指南非常短，只是简单的画一个三角形。 在此篇指南中，我们依赖于标准化的盒子。可见的顶点必须在这个盒子内
+这样视图转换是才能够把它映射到屏幕坐标上。从z轴的负极往里面看。opengl的盒子如下： Point &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <div class="blog-index">
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/06/25/ogl-step3/">
+		
+			Ogl Step3 First Triangle</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-25T12:34:00+08:00" pubdate data-updated="true">Jun 25<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<h1>背景</h1>
+
+<p>这篇指南非常短，只是简单的画一个三角形。</p>
+
+<p>在此篇指南中，我们依赖于标准化的盒子。可见的顶点必须在这个盒子内
+这样视图转换是才能够把它映射到屏幕坐标上。从z轴的负极往里面看。opengl的盒子如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial03/coord_system.png">
+Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围，那么图形将会被剪切。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Vector3f</span> <span class="n">Vertices</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>扩展顶点数组包含3个顶点。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与上一篇相比两个参数变了，我们画三角形而不是画点。我们画三个顶点而不是一个顶点了。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/06/25/ogl-step3//page6/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/06/21/ogl-step2/">
+		
+			Ogl Step2 Hello Dot!</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-21T07:40:00+08:00" pubdate data-updated="true">Jun 21<sup>st</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<p><a href="http://ogldev.atspace.co.uk/www/tutorial02/tutorial02.html">原文地址</a>
+<em>PS：我是使用VS来编译这些项目。并非纯粹的翻译，翻译中带有个人观点和文章。如有错误请指正。</em></p>
+
+<h1>背景</h1>
+
+<p>在这个课题我们需要使用到<a href="http://en.wikipedia.org/wiki/Glew" title="OpenGL Extension Wrangler Library ">GLEW</a>。可以在这里下载<a href="http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A">http://sourceforge.net/projects/glew/files/glew/1.8.0/%E3%80%82%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%90%8E%E8%A7%A3%E5%8E%8B%EF%BC%8C%E8%A7%A3%E5%8E%8B%E4%B9%8B%E5%90%8E%E6%8A%8A</a>
+把bin目录下的dll放到System32的目录下。lib的目录和include目录拷到你当前的项目中，并在vs的项目中进行引用。在此声明此篇文章需要opengl1.5以上的版本，如果你的显卡不支持就没办法编译通过（只要不是集显都会支持）。独显的如果你好久没更新驱动了，赶紧去更新驱动吧。</p>
+
+<p>在这篇指南中。我们将会第一次使用到<em>顶点缓冲区对象</em>（vertex buffer objects VBOs）。顾名思义，它们是用来存储顶点源的。在3D世界中的怪物，城堡或者一个简单的四方形，都是通过一组顶点源构造出来的。VBOs是把顶点源加载到GPU的最有效方式。VBOs可以被存储在图像存储器中，提供最短的访问GPU的时间。</p>
+
+<p>这一篇指南和下一篇是此系列中唯一依赖于固定管线模式，而不是可编程模式的例子。在这些例子中没有变换发生。我们仅仅是简单的方式让数据流过管道。后面的例子会带您深入的了解管道。但在此处我们还没有必要去深入<em>光栅化程序</em>。 可视化的顶点源中有[x,y,z]坐标，范围在[-1.0, 1.0]。光栅化程序负责把这些坐标映射到屏幕空间中（例如，如果屏幕宽度是1024.则X坐标-1.0对应的是0,1.0对应的是1023）。最后光栅化程序才更具制定的拓扑顺序去渲染元素。由于我们没有绑定任何的渲染器到管道中，也没有用到变换。所以我们只是简单地给出坐标，并让这些坐标点可见。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;GL/glew.h&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>包含GLEW的头文件。如果你需要包含其他的OpenGl头文件，你要小心。把这个头文件放在后面包含进去。编译时，记得引入glew的lib文件。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include "math_3d.h"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个头文件定义了辅助的结构体。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>GLenum res = glewInit();
+</span><span class='line'>if (res != GLEW_OK)
+</span><span class='line'>{
+</span><span class='line'>  fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
+</span><span class='line'>  return 1;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的代码要放在glut初始化之后，用于初始化GLEW并检查错误。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Vector3f Vertices[1];
+</span><span class='line'>Vertices[0] = Vector3f(0.0f, 0.0f, 0.0f);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建一个Vector3f的结构体数组，并初始化为0。这个点是屏幕的中心点。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>GLuint VBO;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们用一个全局变量来存储<em>顶点缓冲区对象</em>。大部分的OpenGL对象是通过GLunit类型的变量来访问的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glGenBuffers(1, &VBO);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OpenGL定义了一些glGen* 函数用于产生各种类型的对象。它们通常带两个参数——第一个代表你要创建多少个对象。第二个参数是存储这些对象的句柄是 驱动给你分配的一组GLuint类型的数组。之后再调用这个函数不会产生相同的句柄，除非你嫌调用glDeleteBuffers删除它们。目前产生的这个缓冲区被视为默认的缓冲区，供下面的函数使用。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OpenGL用一个相当独特的方式来使用这些句柄。在许多的API中都是直接操作句柄，把句柄作为参数传给函数进行使用。在OpenGL中我们需要为句柄绑定一个<em>目标名称</em>（target name）然后再基于这个目标名称执行命令。这些命令会一直影响被绑定的句柄，直到有另外一个句柄替换它或者使用glBindBuffer(*,0)来释放绑定。参数GL_ARRAY_BUFFER意味着缓冲区将包含一组顶点源。另一个有用的目标名称GL_ELEMENT_ARRAY_BUFFER则是使用另一个缓冲区存储着顶点源的索引，通过这些索引来使用顶点源。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在绑定这些对象之后，我们往里面填充数据。第一个参数是目标名称（我们刚才绑定的），第二个参数是绑定顶点源的数据大小以字节为单位，第三个参数是顶点源数组的地址。最后一个参数指明我们对此数据使用什么样的DRAW模式。因为我们没必要修改缓冲区的内容所以我们指定了GL_STATIC_DRAW模式。相反地，是GL_DYNAMIC_DRAW模式。这只是给OpenGL一个指示，如何使用这些缓冲区。显卡驱动会根据这些标志进行优化。（例如：在内存中找到最佳位置存储该缓冲区）。</p>
+
+<p><!-- more --!>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glEnableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
+在渲染器的指南中，你将会看到顶点的属性用于渲染。在渲染器中，这些属性有对应的索引值建立c\C++数据与属性名称的绑定。另外你需要让这些顶点的属性可用通过一些Enalbe的方法。在此例中，我们没有用到任何渲染器，我们只是把顶点的位置加载到缓冲区中。在固定函数管道（当没有渲染器被绑定时，默认激活）中默认的顶点属性索引为0。你必须让每个顶点属性可用否则数据将不能被管道访问。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glBindBuffer(GL_ARRAY_BUFFER, VBO);</span></code></pre></td></tr></table></div></figure>
+调用绘画函数之前我们需要重新绑定缓冲。在我们这个简单的程序中略显多余，但在复杂的程序中，将有多个缓冲区存储着多样的数据模型。你必须指定你要使用的缓冲区，更新管道的状态。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</span></code></pre></td></tr></table></div></figure>
+这个函数告诉管道如何解释缓冲区里的数据。第一个参数指定属性的索引，我们只使用了0. 第二个参数指明属性的组织形式（3 for X，Y and Z)。第三个参数代表没一维的数据类型。第四个参数指明在被管道使用之前是否将属性标准化。我们的数据不需要标准化。第五个参数代表在缓冲区中两个属性实例之间的步幅。而此例中只有一个属性参数。最后一个参数指定属性在数据中的偏移量。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glDrawArrays(GL_POINTS, 0, 1);</span></code></pre></td></tr></table></div></figure>
+最终，我们调用glDrawArrays函数画几何图形。之前的命令都是为了这个函数调用做准备。到这里GPU才开始工作。GPU会结合已经通过参数设置好的状态，在屏幕上渲染点。</p>
+
+<p>OpenGL提供了许多种函数调用，每一种适用于不同的情况。一般你可以把它们分为两类，<em>顺序绘制</em>和<em>索引绘制</em>。顺序绘制很简单就是遍历你的顶点缓冲区，逐一绘制。例如：如果你指定的是GL_TRIANGLES，则顶点缓冲区里的0-2绘制第一个三角形。</p>
+
+<p>索引绘制更复杂需要引入额外的缓冲区（索引缓冲区）。该索引缓冲区包含所有顶点的索引，我们可以通过索引来取的顶点。编辑索引缓冲区，我们可以重复绘制顶点。实现更复杂的绘制效果。</p>
+
+<p>在这篇指南中我们只是简单的调用了glDrawArray.顺序绘制。第一个参数指定点的拓扑结构，GL_POINTS代表每个顶点都是单独的点。第二个代表第一个顶点的索引。最后一个参数代表要绘制的顶点的个数。
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>glDisableVertexAttribArray(0);</span></code></pre></td></tr></table></div></figure>
+在不使用时，disable顶点属性是良好的编程习惯。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/06/21/ogl-step2//page6/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/06/20/ogl-step1/">
+		
+			Opengl Step1 Create a Window</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-20T21:54:00+08:00" pubdate data-updated="true">Jun 20<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<p><a href="http://ogldev.atspace.co.uk/www/tutorial01/tutorial01.html">原文地址</a></p>
+
+<h1>背景</h1>
+
+<p>Opengl指南里没有任何API是用于创建窗体和操作窗体的。现代的视窗系统都支持OpenGl的上下文与系统进行绑定。在X Window系统中的接口被命名为GLX。比如Windows的WGL，MacOs的CGL。直接调用这些系统的函数去创建窗体十分繁琐，我们用更高级的接口来创建窗体，避免重复性的工作。
+我们这里使用的是OpenGl utility library 简称“GLUT&#8221;.GLUT去操作窗体更加简便，同时它也是跨平台的。</p>
+
+<h1>代码漫游</h1>
+
+<blockquote><p>glutInit(&amp;argc, argv);</p></blockquote>
+
+<p>这里初始化GLUT，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitDisplayMode</span><span class="p">(</span><span class="n">GLUT_DOUBLE</span> <span class="o">|</span> <span class="n">GLUT_RGBA</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们配置一些GLUT的选项。GLUT_DOUBLE开启双缓冲。GLUT_RGBA代表颜色的格式。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutInitWindowSize</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutInitWindowPosition</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutCreateWindow</span><span class="p">(</span><span class="s">&quot;Tutorial 01&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这些调用指定窗体的参数，并创建它</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutDisplayFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大多数的窗体系统都是通过回调函数来交互的。GLUT处理与底层系统的交互。在这里我们仅需要一个主回调函数。这个函数会在GLUT的内部循环不断地调用。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glClearColor</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这是第一次接触到OpenGL 状态的概念。由于状态非常多，难以通过调用函数的时候直接传参过去。所以所以你需要指定
+着色器，缓冲区，各种各样的标志告诉opengl，渲染是如何发生的。另外，你也可能经常会使用到相同的参数去渲染多个图像。
+所以大部分的渲染操作都是通过设置标志和值的方式去指定的。上面的函数调用，设置了情况 帧缓存（framebuffer)时使用到的颜色。这个颜色是（RGBA）格式的，参数值的范围在
+0.0到1.0之间。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutMainLoop</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此函数调用，让GLUT开始他的内部循环。这个循环会监听系统时间，并传给我们刚才设置的回调函数进行处理。我们只注册了一个用于显示的回调函数（RenderSceneCB）去画帧。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span>
+</span><span class='line'><span class="n">glutSwapBuffers</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>第一个函数是清空帧缓存，使用上面glClearColor设置的元素进行清空。第二个函数调用是交换前缓冲和后缓冲。</p>
+
+<p><em>VS源代码地址：</em><a href="https://github.com/sweetdark/openglex/tree/master/oglstep1">https://github.com/sweetdark/openglex/tree/master/oglstep1</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/06/20/ogl-step1//page6/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/01/18/heart/">
+		
+			修心</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-18T21:32:00+08:00" pubdate data-updated="true">Jan 18<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/zen/'>zen</a>
+  
+</div>
+    </div>
+		<p>其实一个人所追求的仅仅是安稳和快乐而已。一个人饿了，想吃饭。”你为什么要吃饭“，”因为我饿了，感觉难受，吃饱了，我就感觉的好了“。是的，感觉好了，感觉安稳了。其实这种安稳和快乐，我们也可以通过修心来达到。并且修心达到的安稳和快乐，是持久的。我们总是被事物的表象所迷惑，不停的要，不停的追，追求的其实还是心灵的安稳与快乐。有了房，有了车你也仅仅是暂时的安稳和快乐。因为你的心又开始不安，你又会想要更多的东西。</p>
+
+<p>修心达到的安稳与快乐相比追求物质以达到安稳与快乐，更高级一点，而且是持久的，一劳永逸的。并且“修心”是便宜实惠的，性价比非常高的产品。修心最基本就是多看好书，书是最实惠的投资。修心不是即刻见效的，相对于眼前一些唾手可得的快乐，浮躁的人就会选择前者。浮躁的人总是追着事物跑，追着快乐跑，所得的永远是短暂的。而修心的人，快乐与安稳自会去找上门来。</p>
+
+<p>人痛苦的原因是贪瞋痴，修慈心可以治瞋，行布施可以治贪，学智慧可以治痴。要修慈心，首先要先对自己修慈心，再对他人修慈心。问问自己，你真的爱自己吗？终日为了自己的贪念奔波劳碌，对别人的过错生气伤害自己的身体。讨厌自己身上的缺点，厌恶自己。觉得自己太差，嫌弃自己。你有没有同情过自己，对自己都没有慈悲心的人，对其他人怎么会有慈悲心呢。佛陀说：“他还没见过爱别人胜过爱自己的人”。爱别人胜过爱自己，即使有也是短暂的，难以持久。首先要学会爱自己，接受自己的缺点，对自己宽容一些，慈悲一些，才能对别人宽容一些，慈悲一些。常对自己说“虽然自己现在做的不够好，但我接受现在的自己，并我会试着努力做的更好。不要自怨自艾，自暴自弃，那除了让自己痛苦之外，一点用处都没有。” 。然后遇到他人做的不好的时候，也这么想。“他虽然现在做的不够好，但相信他会努力做的更好的”。这是对他人修慈心了。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/01/18/heart//page6/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/01/16/zen/">
+		
+			禅修</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-16T21:49:00+08:00" pubdate data-updated="true">Jan 16<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/zen/'>zen</a>
+  
+</div>
+    </div>
+		<p>近期对禅产生了兴趣，在知乎上关注了禅的话题。有人推荐了一本书德宝法师《观呼吸》。我就上网搜，下了电子书来看。读完发现的确是一本好书，里面把禅讲的通俗易懂，没有什么高深的东西。很适合作为禅修入门的书籍。</p>
+
+<p>书中讲了禅修不是什么？回答了大众对禅修的疑问和不解，禅修不是什么高深的东西，任何一个普通人都能够修炼。还讲了禅修是什么？这本书讲的是内观禅修，讲的入出息念的禅修方式。内观禅修是上座部佛教的最普遍的一种禅修。内观禅修，修禅定和正念，如果再辅以慈心效果会更好。</p>
+
+<p>禅定是什么。禅定从科学的角度来讲，就是把所有注意力集中到一处。这样我们就能了解事物的全貌。禅定可以通过打坐，观呼吸来练习。禅定能够帮助我们延长念头与念头之间的那一刻时间，从而有办法使我们去观察一个念头。例如，忧虑是一个过程，它有步骤。忧虑并非只是一种存在的状态， 而是一组程序。你必须做的是，观看那个程序的开头，那些过程萌生的最初阶段。忧虑的第一个环节是“执着/排斥”的反应。只要现象一在心中跃现，我们便在心理上尝试去捕捉它或推开它，那就开启了忧虑的一连串反应。 我们可以通过内观禅修，让这种机制崩盘。而禅定就是让这种机制崩盘的工具，当忧虑这种念头，由潜意识发出要上升到意识层面是，我们用禅定来延长这一时刻，并用正念来观察它。看着它起，它灭，不加任何评判，思考，因为任何的思考都是在喂养这个念头，给予这个念头力量。你越是排斥它，它就越有力。我们做的仅仅是观察，看它是什么，它做了什么，它如何消失的。</p>
+
+<p>正念是选择禅定关注的对象，正念所做的就是观察。正念是一种觉知，对念头的觉知，是一种毫无遮蔽的注意力。</p>
+
+<ul>
+<li>正念提醒我们应该做什么；</li>
+<li>正念如实地观察事物；</li>
+<li>正念看见一切现象的真实本质。</li>
+</ul>
+
+
+
+		
+		<a href="/blog/2013/01/16/zen/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/01/16/zen//page6/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="page5" class="prev">Prev</a>
+    
+    
+        <a href="page7" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
+</div>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

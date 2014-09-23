@@ -44,7 +44,7 @@
 <br>
 <h3 class="animated bounceInDown">
 	<div id="headerbg">
-        学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！
+        吾尝终日而思矣，不如须臾之所学也！
     </div>
 </h3>
 
@@ -101,7 +101,7 @@
 javap这个工具可以用来输出java类 对应jni的描述。
 <img src="http://farm3.staticflickr.com/2939/14619183735_dfb1841c44_b.jpg">
 把Signature 后面的字符串拷贝就行了（<strong>后面的分号也要拷贝</strong>）。这样可以在GetField中使用了。
-env->GetField(cls, &#8220;fieldName&#8221;, &#8220;Signature&#8221;);
+env->GetField(cls, &ldquo;fieldName&rdquo;, &ldquo;Signature&rdquo;);
 javah的工具配置类似。</p>
 
 <h2>定位文件目录</h2>

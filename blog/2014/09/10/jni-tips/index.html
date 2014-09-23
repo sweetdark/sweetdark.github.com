@@ -43,7 +43,7 @@
 <br>
 <h3 class="animated bounceInDown">
 	<div id="headerbg">
-        学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！
+        吾尝终日而思矣，不如须臾之所学也！
     </div>
 </h3>
 
@@ -107,7 +107,7 @@ dalvik.system.NativeStart.main(Native Method)
 <pre><code>dalvik.system.NativeStart.run(Native Method)
 </code></pre>
 
-<p>The topmost method is NativeStart.run, which isn&#8217;t part of your application. If you call FindClass from this thread, the JavaVM will start in the &#8220;system&#8221; class loader instead of the one associated with your application, so attempts to find app-specific classes will fail.</p>
+<p>The topmost method is NativeStart.run, which isn&rsquo;t part of your application. If you call FindClass from this thread, the JavaVM will start in the &ldquo;system&rdquo; class loader instead of the one associated with your application, so attempts to find app-specific classes will fail.</p>
 
 <p>There are a few ways to work around this:</p>
 
@@ -199,7 +199,7 @@ dalvik.system.NativeStart.main(Native Method)
 </span><span class='line'><span class="k">static</span> <span class="n">jobject</span> <span class="n">gClassLoader</span><span class="p">;</span>
 </span><span class='line'><span class="k">static</span> <span class="n">jmethodID</span> <span class="n">gFindClassMethod</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="n">JNI_OnLoad</span><span class="p">(</span><span class="n">JavaVM</span> <span class="o">*</span><span class="n">pjvm</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">reserved</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jint</span> <span class="n">JNICALL</span> <span class="nf">JNI_OnLoad</span><span class="p">(</span><span class="n">JavaVM</span> <span class="o">*</span><span class="n">pjvm</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">reserved</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">gJvm</span> <span class="o">=</span> <span class="n">pjvm</span><span class="p">;</span>  <span class="c1">// cache the JavaVM pointer</span>
 </span><span class='line'>    <span class="n">JNIEnv</span><span class="o">*</span> <span class="n">env</span> <span class="o">=</span> <span class="n">getEnv</span><span class="p">();</span>
 </span><span class='line'>    <span class="c1">//replace with one of your classes in the line below</span>
@@ -217,7 +217,7 @@ dalvik.system.NativeStart.main(Native Method)
 </span><span class='line'>    <span class="k">return</span> <span class="n">JNI_VERSION_1_6</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">jclass</span> <span class="n">findClass</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="n">jclass</span> <span class="nf">findClass</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="n">jclass</span> <span class="n">result</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">;</span>
 </span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">{</span>
@@ -233,7 +233,7 @@ dalvik.system.NativeStart.main(Native Method)
 </span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">JNIEnv</span><span class="o">*</span> <span class="n">getEnv</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'><span class="n">JNIEnv</span><span class="o">*</span> <span class="nf">getEnv</span><span class="p">()</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">;</span>
 </span><span class='line'>    <span class="kt">int</span> <span class="n">status</span> <span class="o">=</span> <span class="n">gJvm</span><span class="o">-&gt;</span><span class="n">GetEnv</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">env</span><span class="p">,</span> <span class="n">JNI_VERSION_1_6</span><span class="p">);</span>
 </span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">status</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>

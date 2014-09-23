@@ -6,9 +6,9 @@
 	<title>vs编译错误及解决办法 - Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="error C2220: 警告被视为错误 - 没有生成“object”文件 这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
+	<meta name="description" content="error C2220: 警告被视为错误 &ndash; 没有生成“object”文件 这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
 解决方案：
-1. 在VS2010以后在文件->高级保存选项，设置UTF-8的格式，重新保存一次。 或者用其它的程序保存成UTF-8的格式。 &hellip;">
+1. 在VS2010以后在文件->高级保存选项，设置UTF-8的格式，重新保存一次。 或者用其它的程序保存成UTF- &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -45,7 +45,7 @@
 <br>
 <h3 class="animated bounceInDown">
 	<div id="headerbg">
-        学而不思则罔，思而不学则殆。吾尝终日而思矣，不如须臾之所学也！
+        吾尝终日而思矣，不如须臾之所学也！
     </div>
 </h3>
 
@@ -93,14 +93,14 @@
     <div id="content" class="inner">
         <article class="post">
 	<h2 class="title">Vs编译错误及解决办法</h2>
-	<div class="entry-content"><h3>error C2220: 警告被视为错误 - 没有生成“object”文件</h3>
+	<div class="entry-content"><h3>error C2220: 警告被视为错误 &ndash; 没有生成“object”文件</h3>
 
 <p>这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
 解决方案：
 1. 在VS2010以后在文件->高级保存选项，设置UTF-8的格式，重新保存一次。 或者用其它的程序保存成UTF-8的格式。</p>
 
 <ol>
-<li>如果上述不能去掉错误，还可以点击项目，右击选择属性->配置属性->c/c++->常规，将“警告视为错误”的选项改为“否”。就可以！</li>
+<li>如果上述不能去掉错误，还可以点击项目，右击选择属性->配置属性->c/c++&ndash;>常规，将“警告视为错误”的选项改为“否”。就可以！</li>
 </ol>
 
 
@@ -135,7 +135,7 @@
 <li><p>unresolved external symbol <code>__iob</code>
 这个<code>__iob</code>找不到的问题费了我大部分的时间。跟踪到stdio.h文件，发现那里有个关于iob的宏，终于搞定。加入一句话到.cpp文件中：<code>extern "C" { FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]}; }</code></p></li>
 <li><p>NULL iterator
-STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器上进行++或&#8211;之类的是不成立的。</p></li>
+STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器上进行++或&mdash;之类的是不成立的。</p></li>
 <li><p>结构体默认函数
 在VC6中，结构体的默认运算符==或者&lt;之类的如果不实现也可以作为STL元素放入list等容器中。但VC8不行了，因为它已经不再为结构体生成缺省的操作符函数。</p></li>
 </ol>

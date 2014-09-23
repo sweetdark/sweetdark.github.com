@@ -1,0 +1,526 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="Published on: Jan 4th, 2013 Tag: algorithm 这里的集合是用链表的方式来实现的。 单向链表的定义：list.h #ifndef LIST_H_
+#define LIST_H_
+#include &lt;stdlib.h&gt; typedef struct &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <div class="blog-index">
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/01/04/set/">
+		
+			集合</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T22:46:00+08:00" pubdate data-updated="true">Jan 4<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/algorithm/'>algorithm</a>
+  
+</div>
+    </div>
+		<p>这里的集合是用链表的方式来实现的。</p>
+
+<p>单向链表的定义：list.h</p>
+
+<div><script src='https://gist.github.com/4259013.js'></script>
+<noscript><pre><code>#ifndef LIST_H_
+#define LIST_H_
+#include &lt;stdlib.h&gt;
+
+typedef struct ListElement_ {
+    void *data;
+    struct ListElement_ *next;
+} ListElement;
+
+typedef struct List_ {
+    int size;
+    int (*match) (const void *data1, const void *data2);
+    void (*destory) (void* data);
+    ListElement *head;
+    ListElement *tail;
+} List;
+
+void list_init(List *list, void (*destory) (void *data));
+void destory(List *list);
+int list_ins_next(List *list, ListElement *element, const void *data);
+int list_rem_next(List *list, ListElement *element, void *data);
+#define list_size(list) ((list)-&gt;size)
+#define list_head(list) ((list)-&gt;head)
+#define list_tail(list) ((list)-&gt;tail)
+#define list_is_head(list, element) ((element) == (list-&gt;head) ? 1 : 0)
+#define list_is_tail(element)       ((element)-&gt;next == NULL ? 1 : 0)
+#define list_data(element)          ((element)-&gt;data)
+#define list_next(element)          ((element)-&gt;next)
+
+#endif</code></pre></noscript></div>
+
+
+
+
+
+		
+		<a href="/blog/2013/01/04/set/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/01/04/set//page8/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/01/04/new-rome/">
+		
+			2013-1-4随笔</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T22:07:00+08:00" pubdate data-updated="true">Jan 4<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/live/'>Live</a>
+  
+</div>
+    </div>
+		<p>今天是2013年1月4号，201314即爱你一生一世，很有寓意的一天。无论精神多么独立的人，其情感都会寻找依附。爱情真是让人期盼，令人着迷。</p>
+
+<p>对于爱，多么的期盼那是一份真情。自己一直在做得就是“去伪存真”。我虽然不能完全保证对方的真情实意，但必须保证自己是真情实意的，自己不欺人骗世也就心安了，对于他人的虚情假意，实在没必要为之而气愤和痛苦，拿比人的错误来惩罚自己。我也不希望自己爱上的只是爱的表象，是自己虚幻构造出来的。我变得小心谨慎，特别是在夜深的时候，不要因为寂寞而爱上一个人。我希望我说的每一句话都是真心的，都是发自于当时的真实情感。<strong>感情不能随便拿来开玩笑，时光易逝人很快就会老去，能拥有一份真情是多么幸福的事情，时间唯有真情才能长久</strong>。爱不是一种束缚，不要去争那些无所谓的对与错，输和赢，不要去比较谁付出的更多。我希望她也有她的生活，她的朋友，她的自由，我们能彼此互相理解，宽容，关心和爱护，这就很美好。</p>
+
+<p>如果决定了去爱一个人，就要好好爱她。如果在这个过程中失去了你，我会心痛，但不允许自己去后悔。<strong>“能够失去的东西就不是属于自己的”</strong>，Follow Your Heart！做好自己就是了，其他的一切会随之而来的。</p>
+
+<p>从动心的那一刻开始，我就会去准备，需要耐心~。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/01/04/new-rome//page8/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/01/04/how-to-pull/">
+		
+			非本机快速写博客</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-04T12:51:00+08:00" pubdate data-updated="true">Jan 4<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tags:
+  
+    <a href='/blog/tags/github/'>Github</a>, <a href='/blog/tags/octopress/'>octopress</a>
+  
+</div>
+    </div>
+		<p>有时出差，或者去别的地方。要在其他地方写博客怎么办呢。首先安装好机子上的本地环境。参考<a href="http://xuhehuan.com/783.html">这里</a>的搭建本地环境和更新本地环境。然后从github中clone 远程的仓库到本地。
+具体步骤：
+git clone git://github.com/sweetdark/sweetdark.github.com.git octopress
+进入该目录
+cd octopress
+你用git branch -a命令查看分支
+你会发现只是clone了master的分支，没有克隆和创建source分支的。source的文件夹和文件没有克隆下来：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041302488150_0.jpg"></p>
+
+<p>那么我们要从本地区抓取远程的source分支。
+可以执行
+git checkout &mdash;track -b reps-branch origin/reps-branch  抓取 reps-branch, 並將此 branch 建立於 local 的 reps-branch
+再看一下你的目录：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041303593154_0.jpg">
+是不是可以了。
+附上全部命令截图：
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301041304293434_0.jpg"></p>
+
+<p>初始化你的github页面的地址
+rake setup_github_pages</p>
+
+<p>然后写完博客rake gen_deploy发布之后，别忘了。
+用git status检查哪些还没有提交，用git add . 和 git commit -m &ldquo;yourmessage&#8221;提交更新
+最后要git push origin source</p>
+
+<p>一切搞定。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/01/04/how-to-pull//page8/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/01/02/write-markdown/">
+		
+			用Markdown写Markdown语法说明</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-02T20:16:00+08:00" pubdate data-updated="true">Jan 2<sup>nd</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/markdown/'>markdown</a>
+  
+</div>
+    </div>
+		<h2><a href="http://wowubuntu.com/markdown/">原文markdown语法地址</a>  <a href="http://wowubuntu.com/markdown/basic.html">markdown快速入门</a></h2>
+
+<ul>
+<li><a href="#overview">概述</a>
+
+<ul>
+<li><a href="#philosophy">宗旨</a></li>
+<li><a href="#html">兼容HTML</a></li>
+<li><a href="#autoescape">特殊字符自动转换</a></li>
+</ul>
+</li>
+<li><a href="#block">区块元素</a>
+
+<ul>
+<li><a href="#p">段落和换行</a></li>
+<li><a href="#header">标题</a></li>
+<li><a href="#blockquote">区块引用</a></li>
+<li><a href="#list">列表</a></li>
+<li><a href="#precode">代码区块</a></li>
+<li><a href="#hr">分隔线</a></li>
+</ul>
+</li>
+<li><a href="#span">区段元素</a>
+
+<ul>
+<li><a href="#link">链接</a></li>
+<li><a href="#em">强调</a></li>
+<li><a href="#code">代码</a></li>
+<li><a href="#img">图片</a></li>
+</ul>
+</li>
+<li><a href="#misc">其他</a>
+
+<ul>
+<li><a href="#backslash">反斜杠</a></li>
+<li><a href="#autolink">自动链接</a></li>
+</ul>
+</li>
+</ul>
+
+
+<hr>
+
+
+
+		
+		<a href="/blog/2013/01/02/write-markdown/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/01/02/write-markdown//page8/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/01/02/blog-config/">
+		
+			博客主题的配置</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-02T12:17:00+08:00" pubdate data-updated="true">Jan 2<sup>nd</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tags:
+  
+    <a href='/blog/tags/github/'>Github</a>, <a href='/blog/tags/octopress/'>octopress</a>
+  
+</div>
+    </div>
+		<p><strong>首先<a href="https://github.com/sweetdark/sweetdark.github.com/tree/source/.themes">我的博客主题</a>下载。把mario目录拷贝到.themes目录下。执行rake install[&ldquo;mario&rdquo;]</strong> 由于categories不支持中文，我加了tags标签。
+装完之后，要改一下_config.yml的配置，在适当的位置添加一行tag_dir: blog/tags  。然后在文章里，添加tags: 标签下面添你的标签名，例如：  tags: [&lsquo;Github&rsquo;,&lsquo;octopress&rsquo;]
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021334145207_0.png"></p>
+
+<p>我还在导航栏里 添加了关于我的页面，修改的话，请修改about目录下的index.html文件即可。</p>
+
+<p>关于在侧边栏添加微博插件的问题，我在_includes\asides 下增加了weibo_sina.html只要修改这个文件，替换为你的微博Html代码。微博的html代码的，只要登录你的微博，在设置里，点击我的工具可以产生。
+<img src="http://p13.freep.cn/p.aspx?u=v20_p13_photo_1301021321353343_0.png">
+然后再_config.yml修改一下配置
+default_asides: [asides/recent_posts.html, asides/github.html, asides/weibo_sina.html, asides/googleplus.html]  加上asides/weibo_sina.html即可。</p>
+
+<p>编写markdown文件的工具可以使用<a href="http://markdownpad.com/">markdownPad</a>，推荐使用notepad++编写博客，把经常使用的插件代码用宏录制好，避免重复性的工作。上传图片的工具可以使用<a href="http://www1.freep.cn/%E3%80%82">http://www1.freep.cn/%E3%80%82</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/01/02/blog-config//page8/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="page7" class="prev">Prev</a>
+    
+    
+        <a href="page9" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
+</div>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

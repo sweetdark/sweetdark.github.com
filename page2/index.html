@@ -1,0 +1,639 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="Published on: Sep 2nd, 2014 Tag: code-complete 管理复杂度 软件首要的技术使命就是管理复杂度。
+我们不应该同时把整个程序塞进大脑里，而应该试着以某种方式组织程序，使得我们在某一时刻只关注于一个特定的部分。
+人更易于理解多项简单的东西， &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <div class="blog-index">
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/02/key-design-concepts/">
+		
+			关键的设计概念摘要</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-02T22:01:20+08:00" pubdate data-updated="true">Sep 2<sup>nd</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/code-complete/'>code-complete</a>
+  
+</div>
+    </div>
+		<h2>管理复杂度</h2>
+
+<ul>
+<li>软件首要的技术使命就是管理复杂度。</li>
+<li>我们不应该同时把整个程序塞进大脑里，而应该试着以某种方式组织程序，使得我们在某一时刻只关注于一个特定的部分。</li>
+<li>人更易于理解多项简单的东西，而不是一项复杂的东西。</li>
+<li>保持子程序的短小精悍可以减小大脑的负担，在抽象层上工作也可以减小大脑的负担。
+
+<h2>如何应对复杂度</h2>
+
+<p>高代价，低效率的设计的三个根源</p></li>
+<li>用复杂的方法解决简单的问题</li>
+<li>用简单但错误的方法解决复杂的问题</li>
+<li>用不恰当的复杂方法解决复杂的问题
+正确的方法</li>
+<li>把本质的复杂度降至最低</li>
+<li>尽可能减少偶然性复杂度
+
+<h2>理想的设计特征</h2></li>
+<li>最小的复杂度
+
+<blockquote><p>如果你的设计方案不能让你在专注于程序的一部分时，忽略其它部分，那么这样的设计就是有问题的</p></blockquote></li>
+<li>易于维护</li>
+<li>松散耦合
+
+<blockquote><p>相互关联的类尽可能的少</p></blockquote></li>
+<li>可扩展性</li>
+<li>可重用性</li>
+<li>高扇入 （一个底层的类被大量的引用）</li>
+<li>低扇出 （一个类少量的用其它的类）</li>
+<li>可移植性</li>
+<li>精简性</li>
+<li>层次性 （各个层次保持概念的完整性）
+
+<blockquote><p>如果旧代码不合理，编写一个新系统时，封装一层来调用旧代码</p></blockquote></li>
+<li>标准技术 （尽可能的用标准技术）
+
+<h2>设计的层次</h2>
+
+<p>设计分为五层</p></li>
+<li>软件系统设计</li>
+<li>分解为子系统和包</li>
+<li>分解为类</li>
+<li>分解为子程序</li>
+<li>子程序的详细设计
+
+<blockquote><p>在分解子系统时如果让子系统之间可以的相互通信，那么就失去了分解的意义。应当规定子系统之间的通信规则。</p></blockquote></li>
+</ul>
+
+
+<p><img src="http://i.imgur.com/8M70dbQ.jpg" width="150" height="250" title="'常用的子系统'" ></p>
+
+
+		
+		<a href="/blog/2014/09/02/key-design-concepts/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/02/key-design-concepts//page2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/30/architecture-prerequisite/">
+		
+			怎样算是一分优秀的架构规格书</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-30T19:09:52+08:00" pubdate data-updated="true">Aug 30<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/architecture/'>architecture</a>
+  
+</div>
+    </div>
+		<h2>架构的先决条件</h2>
+
+<p>架构的质量决定了系统的概念完整性。后者继而决定了软件的最终质量。</p>
+
+<h2>架构的典型组成部分</h2>
+
+<h3>程序组织</h3>
+
+<ol>
+<li>系统架构首先要以概要的形式对有关系统做一个综述。</li>
+<li>架构定义主要的构造块。根据程序规模的不同，各个构造块可以由单个类或者多个类组成的子系统。每条列在需求中的功能特性至少有一个构造块覆盖到。</li>
+<li>明确定义各个构造块的责任。构造块之间的关系和接口。各个构造块之间应该知道的越少越好。明确层次关系，对于每个构造块，可以调用哪些构造块，可以间接调用哪些构造块，不可以调用哪些构造块。</li>
+</ol>
+
+
+<h3>主要的类</h3>
+
+<p>定义20%完成80%的需求的类。</p>
+
+<h3>数据设计</h3>
+
+<p>明确使用什么样的数据形式，为什么不用其它的形式。使用文件还是数据库，为什么？</p>
+
+<h3>业务规则</h3>
+
+<p>如果架构须要依赖于特定的业务，那么要主细描述这么规则。</p>
+
+<h3>用户界面设计</h3>
+
+<p>架构中应当说明使用哪种UI，什么格式，是桌面的，WEB的，命令行接口还是其它的形式。</p>
+
+<h3>变更策略</h3>
+
+<p>明确的需求发生变更时，应当执行什么样的策略，怎样管理。</p>
+
+<h3>资源管理</h3>
+
+<p>一些有限的资源像线程，句柄，内存，硬盘。应当如何合理的使用，统一使用的方式。在嵌入式中，资源短缺的情况下，更应该注重资源的管理。</p>
+
+<h3>安全性</h3>
+
+<p>架构应该描述实现设计层面和代码层面的安全性的方法。</p>
+
+<h3>性能</h3>
+
+<p>明确性能目标，性能要达到什么样的程度。</p>
+
+<h3>可伸缩性</h3>
+
+<p>可伸缩性是指系统增长满足未来需求的能力</p>
+
+<h3>输入输出</h3>
+
+<p>架构应该详细定义读取策略，而且应该描述在哪一层检测IO错误。</p>
+
+<h3>错误处理</h3>
+
+<p>架构应该清楚的说明一种“一致处理错误错误”的策略
+* 错误处理是进行纠正还是仅仅检测
+* 错误检测是主动还是被动
+* 程序的错误如何传播
+* 错误消息的处理有什么约定
+* 如何处理异常
+* 程序在什么层次上处理错误
+* 每个类的错误处理上负什么样的责任。是每个类负责处理错误，还是由一组类来处理整个系统的错误
+* 使用运行环境中的内部支持的错误处理机制还是自己编写错误处理机制</p>
+
+<h3>容错性</h3>
+
+<p>架构应该定义所期望的容错种类。</p>
+
+<h3>架构的可行性</h3>
+
+<p>应该认证系统的技术可行性</p>
+
+<h3>架构的总体质量</h3>
+
+<ul>
+<li>优秀的架构规格书的特点在于讨论了系统中的类，每个类背后的隐藏信息，讨论了“采纳或排斥所有替代方案的理由”</li>
+<li>架构的目标应该清楚的表述</li>
+<li>架构在很大程度止是与机器和编程语言无关的</li>
+<li>架构应该描述所有决策的主要动机</li>
+<li>架构应该明确的指出有风险的区域</li>
+<li>架构应该在“欠描述”和“过度描述”之间的那条分界线上</li>
+<li>架构不应该包含很难理解的东西</li>
+</ul>
+
+
+<blockquote><p>摘自代码大全</p></blockquote>
+
+
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/30/architecture-prerequisite//page2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/28/windows-message-queue-introduction/">
+		
+			Windows Message Queue Introduction</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-28T20:59:07+08:00" pubdate data-updated="true">Aug 28<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/windows/'>windows</a>
+  
+</div>
+    </div>
+		<p>Windows 的消息队列和消息处理方式一直没有非常系统的学习过。正如某位名人所说的“一知半解，最危险”。</p>
+
+<blockquote><p>“一知半解”就是对事物的吸收囫囵吞枣、不求甚解，导致判断失准而不自知。因为不彻底了解事物，不精准分辨事物细微差异，以致陷入断章取义、冯京当马凉、张飞打岳飞打得满天飞。而且正因为自以为很懂，他甚至听不进去别人的观点、劝告，当然赖之作出的判断，就会差之毫厘失之千里，甚至造成很大的错误。</p></blockquote>
+
+
+<p></p>
+
+<h2>创建消息循环</h2>
+
+<p>系统只会为那些须要消息队列来执行某些操作的线程创建消息队列。如果一个线程创建了一个或多个窗口，那么就必须创建一个消息循环来处理消息队列中的消息。（窗口都会有显示和关闭的消息），这个消息循环会从线程的消息队列中检索消息(<code>PeekMessage</code>和<code>GetMessage</code>)，然后分发给相应的处理过程。</p>
+
+<p>由于应用程序中系统会把消息分发给各个窗口，所以线程在创建消息循环之前至少要创建一个窗口。传统的应用程序中，应用会WinMain函数中注册一个窗口类作为主窗口，创建和显示窗口，然后启动消息循环。</p>
+
+
+		
+		<a href="/blog/2014/08/28/windows-message-queue-introduction/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/28/windows-message-queue-introduction//page2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/27/vim-plugin/">
+		
+			Vim 插件</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-27T20:59:00+08:00" pubdate data-updated="true">Aug 27<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/vim/'>vim</a>
+  
+</div>
+    </div>
+		<p>记录一些常用的好用的Vim插件</p>
+
+<h2>通用</h2>
+
+<ol>
+<li><a href="https://github.com/gmarik/Vundle.vim">Vbundle</a> 这个可以很方便的安装和管理Vim的插件。最好是也装上git，因为很多插件托管在github上</li>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=2899">txtbrowser</a> 高效处理纯文本,提供快速的搜索和打开URL等功能，支持Email的格式等</li>
+<li><a href="https://github.com/scrooloose/nerdtree">nerdtree</a> 非常好的目录浏览的插件，功能强大</li>
+<li><a href="https://github.com/kien/ctrlp.vim">ctrlp</a> 文件和buffer的模糊查询</li>
+<li><a href="https://github.com/tpope/vim-surround">vim-surround</a> 引号，括号等操作，非常方便</li>
+</ol>
+
+
+<h2>编程</h2>
+
+<ol>
+<li><a href="https://github.com/klen/python-mode">pythonmode</a> python必备</li>
+<li><a href="https://github.com/vim-debug.vim">vim-debug</a> 支持python 和php debug</li>
+<li><a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a> git的插件可以在Vim中执行git命令，非常方便, 类似的有git-vim</li>
+<li><a href="www.vim.org/script.php?script_id=31">a.vim</a>在头文件和cpp,c文件中切换</li>
+<li><a href="https://github.com/Shougo/neocomplcache.vim">neocomplcache.vim</a> 强大的自动补全插件</li>
+<li><a href="https://github.com/scrooloose/syntastic">syntastic</a> Python和其它多种语言的语法检查</li>
+</ol>
+
+
+<h2>样式</h2>
+
+<ol>
+<li><a href="https://github.com/bling/vim-airline">vim-airline</a>让vim的用户体验更好</li>
+<li><a href="http://files.werx.dk/wombat.vim">Wombat</a>一种样式</li>
+</ol>
+
+
+
+		
+		<a href="/blog/2014/08/27/vim-plugin/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/27/vim-plugin//page2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/24/buildbot-tips/">
+		
+			Buildbot Tips</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-24T22:45:16+08:00" pubdate data-updated="true">Aug 24<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/build/'>build</a>
+  
+</div>
+    </div>
+		<h2>目录</h2>
+
+<ol>
+<li>命令最终执行的代码的目录是 build配置的slave builddir(没有则默认是slave的name) + step的workdir</li>
+</ol>
+
+
+<h2>Scheduler</h2>
+
+<ol>
+<li>Dependant Scheduler只依赖于上层的Scheduler。当上层的Scheduler成功时，才会执行，而不关心其它的改变。须要注意的是如果ChangeSourcerevision为None，那这意味着Head revision。如果在上流的Scheduler执行成功后，触发Dependant的期间，ChangeSource发生了改变，那么Dependant会取最新的Head revision。 如果想要更灵活的方式，可以考虑用Triggerable Scheduler的方式</li>
+</ol>
+
+
+<h2>Steps</h2>
+
+<ol>
+<li>steps中的SVN的checkout和update会先删掉checkout目录，然后重新checkout一份代码。所以不要在这个目录下放一些非SVN服务器上的东西。</li>
+<li>steps中可以获得build设置的property，可以通过这些property来执行相应的代码。更灵活的方式是用render</li>
+<li>steps可以设置Property来给下一个steps用，使用SetProperty(property=&ldquo;&rdquo;, value=&ldquo;&rdquo;) values可以是string和 Interpolate对象,这样就可以把一些steps根据property来执行</li>
+</ol>
+
+
+<figure class='code'><figcaption><span>例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.vstudio</span> <span class="kn">import</span> <span class="n">vc8</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.properties</span> <span class="kn">import</span> <span class="n">Property</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.factory</span> <span class="kn">import</span> <span class="n">BuildFactory</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.master</span> <span class="kn">import</span> <span class="n">SetProperty</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">vc</span> <span class="o">=</span> <span class="n">vc8</span><span class="p">(</span><span class="n">projectfile</span><span class="o">=</span><span class="s">&quot;youproject.sln&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">mode</span><span class="o">=</span><span class="s">&quot;build&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">=</span><span class="n">Property</span><span class="p">(</span><span class="s">&quot;buildconfig&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">build</span> <span class="o">=</span> <span class="n">BuildFactory</span><span class="p">()</span>
+</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">SetProperty</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="s">&quot;buildconfig&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;release&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">vc</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/24/buildbot-tips//page2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="page1" class="prev">Prev</a>
+    
+    
+        <a href="page3" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
+</div>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>

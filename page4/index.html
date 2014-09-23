@@ -1,0 +1,867 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Mario's Blog</title>
+    <meta name="author" content="Mario">
+    
+	<meta name="description" content="Published on: Jul 5th, 2014 Tag: git 如果你在github有多个帐户。那要在不同的帐户之间切换SSH Key。可以config来配置SSH key
+假设你有两个private key文件为 id_rsa1 和 id_rsa2
+生成ssh key的命令如下: 1 &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Mario's Blog" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.ico" rel="shortcut icon">
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=Slackey' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script type="text/javascript" src="/javascripts/jquery-tapir.js"></script>
+
+    <!-- remove or comment it to disable ajaxification -->   
+    <!-- <script src="/javascripts/ajaxify.js"></script> -->
+   
+    
+    
+
+</head>
+
+
+<body>
+    <div id="wrapper">
+    <header id="header" class="inner"><!-- for more effects see _animate.scss -->
+<h1 class="animated bounceInDown">
+    <div id="headerbg">
+        Mario
+    </div>
+</h1>
+<br>
+<h3 class="animated bounceInDown">
+	<div id="headerbg">
+        吾尝终日而思矣，不如须臾之所学也！
+    </div>
+</h3>
+
+<ul id="social-links" style="text-align:center">
+  
+  <!-- GitHub -->
+  <li>
+  <a href="https://github.com/sweetdark" class="github" title="Github"></a>
+  </li>
+  
+  
+  
+  
+  
+  
+  
+  
+</ul>
+
+
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+	<li id="ajax"><a href="/tag/index.html">Tags</a></li>
+	<li id="ajax"><a href="/about/index.html">About</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+
+
+
+</header>
+
+<div id="toload">
+<!-- begin toload --> 
+    <div id="content" class="inner">
+        <div class="blog-index">
+
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/07/05/config-mutil-ssh-key-user/">
+		
+			多个github用户配置SSH KEY的切换</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-05T17:01:53+08:00" pubdate data-updated="true">Jul 5<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/git/'>git</a>
+  
+</div>
+    </div>
+		<p>如果你在github有多个帐户。那要在不同的帐户之间切换SSH Key。可以config来配置SSH key
+假设你有两个private key文件为 id_rsa1 和 id_rsa2
+生成ssh key的命令如下:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh-keygen -t rsa -C "youremail"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在git bash下</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.ssh
+</span><span class='line'>touch config
+</span><span class='line'>#打开config 如果你用的是vim 可以 vim config 
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>打开后编辑如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Host firstkey 
+</span><span class='line'>  HostName github.com
+</span><span class='line'>  User git
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa1
+</span><span class='line'>Host secondkey
+</span><span class='line'>  HostName github.com
+</span><span class='line'>  User git
+</span><span class='line'>  IdentityFile ~/.ssh/id_rsa2</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
+只需要把原先的<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#103;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#116;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#46;&#x63;&#111;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url [name] [url]
+</span><span class='line'>git remote set-url --push [name] [url]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>还要把key加入到ssh-agent中，命令如下:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssh-add ~/.ssh/id_rsa1
+</span><span class='line'>ssh-add ~/.ssh/id_rsa2
+</span><span class='line'>#该命令如果报错：Could not open a connection to your authentication agent.无法连接到ssh agent
+</span><span class='line'>#可先执行
+</span><span class='line'>eval "ssh-agent -s" 或者 ssh-agent bash</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例子：</p>
+
+<figure class='code'><figcaption><span>在同一机器不同目录下克隆远程同一个repo</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>git clone git@firstkey:xxx.git
+</span><span class='line'>
+</span><span class='line'>git clone git@secondkey:xxx.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的两条clone命令，虽然关联到同一个repo，却是通过不同ssh连接，当然也是不同的git账号。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/07/05/config-mutil-ssh-key-user//page4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/07/03/how-to-install-octproess/">
+		
+			如何部署已有的octopress Blog</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-03T17:06:14+08:00" pubdate data-updated="true">Jul 3<sup>rd</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/tools/'>tools</a>
+  
+</div>
+    </div>
+		<p><strong>注意 你的系统的环境变量一定不要有中文, 如果Rake中提示 invalid byte sequence in UTF-8 (ArgumentError) 请检查你的所有的系统环境变量</strong></p>
+
+<ol>
+<li>下载和安装git， 把git安装目录的bin和cmd文件目录加到path中。</li>
+<li>下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby &mdash;version来测试是否安装成功</li>
+<li>去网上下载一个<a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a> 解压到一个目录如E:/Devkit。dos cd 到这个目录。执行如下命令:</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ruby dk.rb init 
+</span><span class='line'>ruby dk.rb install</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>
+安装之后，要把这个 E:/Devkit/mingw/bin这个目录加到你的系统环境path，如果已经安装了MinGw并且在path中配置好的，要把这个mingw拷贝过去覆盖掉。
+</strong></p>
+
+<p>博客的代码高亮需要python环境的支持。去下个python2.7安装。python 安装完成后。执行下面的命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>easy_install pygments</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>设置本地环境</h2>
+
+<p>为了支持中文UTF-8编码，在Windows的环境变量中增加下面的选项。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>LANG = zh_CN.UTF-8
+</span><span class='line'>LC_ALL = zh_CN.UTF-8</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>配置git</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global user.name "yourname"
+</span><span class='line'>git config --global user.email "youremail"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更新gem的更新源，ruby的官方网站经常被和谐。换成国内的更新源，这样速度就快多了，变更如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem sources -a http://ruby.taobao.org/
+</span><span class='line'>gem sources -r http://rubygems.org/</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>下载并配置Blog</h2>
+
+<p>在某个目录下，DOS命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git@github.com:sweetdark/sweetdark.github.com.git sweetdark
+</span><span class='line'>
+</span><span class='line'>如果clone下来只有master分支，那可以新建个source分支，
+</span><span class='line'>git checkout -b source 
+</span><span class='line'>这个命令会新建source分支并切换到source分支。
+</span><span class='line'>再执行git pull origin source 把远程的github上source分支拉到本地source分支。
+</span><span class='line'>
+</span><span class='line'>cd sweetdark
+</span><span class='line'>gem install bundler
+</span><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>配置好之后，DOS cd 到sweetdark目录下就可以写blog了。请确保你在source 分支下，通过git branch 命令可以查看。你在哪个分支下。 git checkout source 可以切换到source分支</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["title"] #创建个新的文章，在source/_post目录下，打开它，就可以编辑了。
+</span><span class='line'>
+</span><span class='line'>编辑完保存之后。
+</span><span class='line'>rake generate #生成网页
+</span><span class='line'>rake preview #预览 打开127.0.0.1:4000 可以看到。
+</span><span class='line'>rake deploy #发布
+</span><span class='line'>
+</span><span class='line'>然后记得提交，须要权限，要ssh的private key。
+</span><span class='line'>git add .
+</span><span class='line'>git commit -m "your commit message"
+</span><span class='line'>git push origin source
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>git remote -v 命令可以查远程的地址。
+<img src="../images/gitremote.png" alt="" />
+有不懂的git命令都可以用git command &mdash;help 来查这个command。</p>
+
+<p>为了确保安全不造成混乱，以后每次写blog之前，都要检查，你是否是在source分支下，是否跟服务器上是一致的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout source #切换到source分支
+</span><span class='line'>git pull origin source #更新服务器上的内容到本地</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>注意事项</h2>
+
+<ul>
+<li>图片最好是上传到一些可以保存图片的网站上，然后用 octopress 的Image 标签来引用， 相关用法<a href="http://octopress.org/docs/plugins/image-tag/%E3%80%82">http://octopress.org/docs/plugins/image-tag/%E3%80%82</a>
+用markdown语法也是可以的，不要写本地的相对路径（如上面的那张图片，会导致在Tag目录下看不到</li>
+</ul>
+
+
+<p>相关的文章
+octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上搭建Octopress博客</a></p>
+
+<p><a href="http://octopress.org/">http://octopress.org/</a> 官方文档必看。这里有许多官方的plugin介绍。包括代码高亮，插入网络上图片等。</p>
+
+<p><a href="http://qingbo.net/picky/502-markdown-syntax.html">MarkDonw的语法，文章就是用markdown语法的，很简单。</a></p>
+
+<p>-git的学习</p>
+
+<p>英文10本
+<a href="http://sixrevisions.com/resources/git-tutorials-beginners/#comments">http://sixrevisions.com/resources/git-tutorials-beginners/#comments</a></p>
+
+<p>中文</p>
+
+<p><a href="http://gitbook.liuhui998.com/index.html">http://gitbook.liuhui998.com/index.html</a></p>
+
+<p>详解系列
+<a href="http://blog.jobbole.com/24379/">http://blog.jobbole.com/24379/</a>
+<a href="http://blog.jobbole.com/25808/">http://blog.jobbole.com/25808/</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/07/03/how-to-install-octproess//page4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/08/08/vim-component/">
+		
+			Vim 命令组合</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-08T21:14:00+08:00" pubdate data-updated="true">Aug 8<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/vim/'>vim</a>
+  
+</div>
+    </div>
+		<h4>以下的命令都是在非insert模式下执行的</h4>
+
+<h1>vim 与跳转命令的组合</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dw 从光标处开始往后删除一个字
+</span><span class='line'>dW 从光标处开始往后删除一个长字
+</span><span class='line'>d$ 从光标处开始往后删除到行尾
+</span><span class='line'>d0 从光标处开始往前删除到行头
+</span><span class='line'>d^ 从光标处开始往前删除到第一个字符头
+</span><span class='line'>D  删除一整行
+</span><span class='line'>dnw 往后删除多个字符
+</span><span class='line'>dd 删除一行包含换行符
+</span><span class='line'>df* 删除到第一个出现*包括*字符的字符串.
+</span><span class='line'>
+</span><span class='line'>&lt;action&gt;i&lt;object&gt; 对在object范围中的内容进行action操作
+</span><span class='line'>如：
+</span><span class='line'>di) 在删除当前光标匹配的括号中的字符
+</span><span class='line'>(i &gt;= 3 && i &lt; 5)  此时将删除括号内的内容，只留下括号
+</span><span class='line'>&lt;action&gt;a&lt;object&gt; 对object范围包含object进行action操作
+</span><span class='line'>da) 把括号也删除
+</span><span class='line'>
+</span><span class='line'>同理适用于 yank的一切
+</span><span class='line'>yw 复制一个字
+</span><span class='line'>yy, ydw, yW, yf* ynf* yi) ya) 等等
+</span><span class='line'>
+</span><span class='line'>同理也适用于v 可视模式
+</span><span class='line'>vw vW vf* vi) 等等
+</span><span class='line'>......
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>与寄存器的组合</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"byy 把一行复制到寄存器b
+</span><span class='line'>"bp 粘贴寄存器b的内容
+</span><span class='line'>同理适用于 [a-zA-Z]的寄存器</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>重复命令</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>. 重复执行上一次操作
+</span><span class='line'>@a 执行寄存器a记录的操作
+</span><span class='line'>@@ 执行寄存器的操作
+</span><span class='line'>n@@ 执行多次</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>录制宏</h1>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>qa 开始记录操作 保存到寄存器a
+</span><span class='line'>....
+</span><span class='line'>q 在非insert 模式下完成记录
+</span><span class='line'>
+</span><span class='line'>@a 执行寄存器a中的操作</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/08/08/vim-component//page4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/08/07/vim-8-7/">
+		
+			Vim 移动命令</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-07T21:27:00+08:00" pubdate data-updated="true">Aug 7<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/vim/'>vim</a>
+  
+</div>
+    </div>
+		<h2>Vim移动命令小结：</h2>
+
+<h3>word和WORD 字和长字的介绍</h3>
+
+<p>word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
+A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, <EOL>). An empty line is also considered to be a word.
+Use &lsquo;w&rsquo;, &lsquo;e&rsquo;, and &lsquo;b&rsquo; to navigate words.
+Special case: &ldquo;cw&rdquo; is treated like &ldquo;ce&rdquo; if the cursor is on a non-blank. This is because &ldquo;cw&rdquo; is interpreted as change-word, and a word does not include the following white space.</p>
+
+<p>Example: (each word is surrounded by a rectangle)</p>
+
+<p>|while| |(|next_line1| |!==| |&ldquo;|The END|!&rdquo;)| |do| |{|</p>
+
+<p>  |next_line1| |=| |readNextLine|();|</p>
+
+<p>|}|</p>
+
+<p>WORD 长字代表一系列的字符串。 由blank tab 换行区分
+A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
+Use &lsquo;W&rsquo;, &lsquo;E&rsquo;, and &lsquo;B&rsquo; to navigate WORDs.
+Special case: &ldquo;cW&rdquo; is treated like &ldquo;cE&rdquo; if the cursor is on a non-blank. This is because &ldquo;cW&rdquo; is interpreted as change-WORD, and a WORD does not include the following white space.
+Example: (each WORD is surrounded by a rectangle)</p>
+
+<p>|while| |(next_line1| |!==| |&ldquo;The END!&rdquo;)| |do| |{|</p>
+
+<p>  |next_line1| |=| |readNextLine();|</p>
+
+<p>|}|</p>
+
+<h1>vim移动命令Normal模式下</h1>
+
+<h2>文件滚动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-u&gt; 上滚动半屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-d&gt; 下滚动半屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-f&gt; 下滚动全屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-b&gt; 上滚动全屏
+</span><span class='line'>
+</span><span class='line'>H 跳到当前页首行
+</span><span class='line'>
+</span><span class='line'>M 跳到当前页中间
+</span><span class='line'>
+</span><span class='line'>L 跳到当前页尾行
+</span><span class='line'>
+</span><span class='line'>N% 按百分比跳
+</span><span class='line'>
+</span><span class='line'>% 单独一个%代表在(),[],{}寻找匹配移动
+</span><span class='line'>
+</span><span class='line'>[{ 跳转到匹配当前}的 {位置
+</span><span class='line'>
+</span><span class='line'>]} 跳转到匹配当前{的 }位置。
+</span><span class='line'>
+</span><span class='line'>NG 或:n 跳转到N行
+</span><span class='line'>
+</span><span class='line'>n n为数字，从当前行往下移动n行
+</span><span class='line'>
+</span><span class='line'>nf* 跳转到第n个出现*字符的位置，包含*字符  大写F 为反向
+</span><span class='line'>
+</span><span class='line'>nt* 跳转到第n个出现*字符的前面，不包含*字符 如t, 跳转到第一个,的前面。大写T为反向</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>大段移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[[ 跳转到下一段的{处
+</span><span class='line'>
+</span><span class='line'>]] 跳转打下一段的}处</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>标记移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>m[a-z|A-Z] 来标记位置 ，然后通过'[a-z|A-Z]来移动到标记的行，行首。使用\`[a-z|A-Z]则移动精确的行和列</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>相对于光标滚屏</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>在阅读代码时，有时我们需要根据光标所在的位置滚屏，把光标所在行移动窗口的顶端、中间或底部，这时就可以用到”zt“、”zz“和”zb“。</span></code></pre></td></tr></table></div></figure>
+
+
+
+		
+		<a href="/blog/2013/08/07/vim-8-7/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/08/07/vim-8-7//page4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/10/ogl-step9/">
+		
+			Ogl Step9 插值</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-10T07:27:00+08:00" pubdate data-updated="true">Jul 10<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>这节主要演示3D管道的重要部分————插值是光栅化处理程序处理从顶点缓冲区取出来的变量。正如你所看到的，为了能在屏幕上显示，你需要指明VS的输出变量是&#8217;gl_Position&#8217;. 这是一个4维的向量包含着顶点的齐次坐标。向量的XYZ分量除以W分量（透视分割），XY分量超出范围[-1,1]的Z分量超出[0,1]的都将被裁剪。结果被转换到屏幕空间坐标，然后几何图元通过光栅化程序被渲染到屏幕上。光栅化程序在三角形的三个顶点间进行插值，然后访问每一个在三角形内的像素执行片段着色器进行处理。
+片段着色器返回一个颜色缓冲区中的像素颜色。如果片段着色器没处理该变量那么驱动器会进行优化，放弃VS中影响该变量的指令（在这种情况下着色程序会合并VS和FS）</p>
+
+<p>两个非常常见的依赖于插值的变量是三角形的法线和纹理坐标。顶点的法线会在所有包含这个顶点的三角形中法线计算一个平均值。 如果对象不是完全平滑的那就意味着每个三角形的三个顶点的法线是各不相同的。 法线用于光照计算产生更真实的光照影响。纹理坐标也是相似的。这些纹理是模型的一部分有每个顶点指定。 为了用纹理覆盖三角形，需要对每个像素进行采样操作。为么个像素选择正确的纹理坐标。这些坐标是由插值产生的。</p>
+
+<p>在这一节我们会看到使用插值产生不同的颜色覆盖三角形的表面。 由于我很懒，我们直接在VS里产生颜色。一个更乏味的方法是从顶点缓冲区中提供。一般你不会通过顶点缓冲区提供，你会提供一个纹理坐标然后从纹理中采样一个颜色。这个颜色在后面会进行光照计算。</p>
+
+<hr />
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在管道之间传输的参数要声明为&#8217;out&#8217;，在着色器中定义为全局变量。这个颜色是一个4-vector，XYZ分量代表RGB值，W分量代表alpha值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Color</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">clamp</span><span class="p">(</span><span class="n">Position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>颜色在图形管道中通常用范围为[0.0, 1.0]的浮点数进行表示。该值随后会被映射到0~255的颜色通道上。我们设置顶点的位置作为颜色值。首先我们使用内建的函数clamp();确保值在0.0-1.0的范围内。这是因为三角形的左下角的点位于(-1,-1)，且小于等于0的值都会被渲染为黑色。这样的话左下角的角都会是黑色的。我们通过夹紧使得左下角的颜色值大于0.</p>
+
+<p>clamp函数并不会改变向量的维数，智慧改变它的值。但我们输出的变量是4-vector的形式。所以我们使用GLSL的符号&#8217;vec4(vec3,W)&lsquo;来创建一个4-vector包含了3-vector并增加了一个w值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">in</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>VS输出的变量，在FS中接受输入的变量。因为这个变量会被光栅化程序进行插值处理，所以每一个FS会对应一个不同的颜色值。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">Color</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们使用插值的颜色作为片段的颜色。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/10/ogl-step9//page4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+<nav id="pagenavi">
+    
+        <a href="page3" class="prev">Prev</a>
+    
+    
+        <a href="page5" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
+</div>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+  
+    <script type="text/javascript" src="http://china-addthis.googlecode.com/svn/trunk/addthis.js" charset="UTF-8"></script><span class="addthis_org_cn"><a href="http://addthis.org.cn/share/" i="0|1|31|22|28|42|48|49|21|2|43" title="收藏&amp;分享"><img src="http://addthis.org.cn/images/a2.gif" alt="分享家:Addthis中文版" align="absmiddle" /></a></span>
+</div>
+
+
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+</section>
+
+
+  
+</aside>
+
+
+
+    </div>
+    <footer id="footer">
+    <div style="display:inline">
+    Copyright &copy; 2014
+
+    Mario
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+
+    </footer>
+    <script src="/javascripts/fabric.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'sweetdark';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+<!-- end toload --> 
+</div>
+</div>
+<script src="/javascripts/jquery.ui.totop.js" type="text/javascript"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+;(function($){$().UItoTop({easingType:'easeOutCirc'});})(jQuery); 
+/*]]>*/
+</script><!-- remove it to remove the scroll to top button -->
+</body>
+</html>
