@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2014-09-23T23:12:03+08:00</updated>
+  <updated>2014-09-25T22:32:21+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[LNK2001: unresolved external symbol __imp__GetTickCount64@0]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0/"/>
+    <updated>2014-09-25T22:16:46+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0</id>
+    <content type="html"><![CDATA[<p>这个链接错误的发生在链接MSVCRT.lib时，原因是链接了的错误版本kernel32.lib等库。修改link条件，把/LIBPATH:&ldquo;libpath&#8221;这个改为正确的path就可以了。如果自己写makefile文件，在使用编译器，链接器，头文件，和库时，要特别小心。如果使用了第三方的库要看这个第三方的库是用什么版本的CRT（运行时库）编译的，是多线程版的还是单线程版的，用Unicode的还是ASCII的。</p>
+
+<p><strong>LINK : fatal error LNK1101: incorrect MSPDB80.DLL version;</strong> 这个错误是在使用cl.exe命令行编译时出现的错误，原因是VC\Bin\下没有“msobj80.dll,mspdb80.dll,mspdbcore.dll,mspdbsrv.exe”这四个文件。
+解决的方法：</p>
+
+<ul>
+<li>直接从Common7\IDE\下复制这四个文件到VC\Bin\下即可解决</li>
+<li>添加系统变量(Path)，这样：我的电脑->属性->高级->环境变量->系统变量，在path中添加C:\Program Files\Microsoft Visual Studio 8\Common7\IDE；，注意结尾最后用“；”隔开！</li>
+</ul>
+
+
+<p>附注：</p>
+
+<blockquote><p>RUN-TIME LIBRARYRun-Time Library是编译器提供的标准库，提供一些基本的库函数和系统调用。
+我们一般使用的Run-Time Library是C Run-Time Libraries。当然也有Standard C++ libraries。</p>
+
+<p>C Run-Time Libraries实现ANSI C的标准库。VC安装目录的CRT目录有C Run-Time库的大部分源代码。 C Run-Time Libraries有静态库版本，也有动态链接库版本；有单线程版本，也有多线程版本；还有调试和非调试版本。</p>
+
+<p>动态链接库版本：/MD Multithreaded DLL 使用导入库MSVCRT.LIB</p>
+
+<p>/MDd Debug Multithreaded DLL 使用导入库MSVCRTD.LIB</p>
+
+<p>静态库版本：/ML Single-Threaded 使用静态库LIBC.LIB</p>
+
+<p>/MLd Debug Single-Threaded 使用静态库LIBCD.LIB</p>
+
+<p>/MT Multithreaded 使用静态库LIBCMT.LIB</p>
+
+<p>/MTd Debug Multithreaded 使用静态库LIBCMTD.LIB</p>
+
+<p>若要使用其中的一个运行时库 请忽略其他库：</p>
+
+<ul>
+<li>libc.lib 单线程 libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcmt.lib 多线程 libc.lib、msvcrt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>msvcrt.lib 使用多线程 DLL libc.lib、libcmt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcd.lib 单线程调试 libc.lib、libcmt.lib、msvcrt.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcmtd.lib 多线程调试 libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、msvcrtd.lib</li>
+<li>msvcrtd.lib 使用多线程调试 DLL  libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib</li>
+</ul>
+
+
+<p>设置方法：属性，链接器，输入，忽略指定库 libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib （使用一个，忽略其他的）</p></blockquote>
+
+<p>[1] 引用<a href="http://www.hz601.org/heaven/">http://www.hz601.org/heaven/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[防御式编程]]></title>
@@ -1961,7 +2014,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 
 <p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#103;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#116;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#46;&#x63;&#111;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+只需要把原先的<a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#104;&#117;&#98;&#46;&#x63;&#111;&#109;">&#x67;&#105;&#x74;&#x40;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#109;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2430,58 +2483,6 @@ zk – 向上移动到上一个折叠的结束处
 </span><span class='line'>&lt;C-i&gt; 跳转到后一次跳转的位置
 </span><span class='line'>'.  跳转到上一次编辑修改过的位置</span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ogl step9 插值]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/07/10/ogl-step9/"/>
-    <updated>2013-07-10T07:27:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/07/10/ogl-step9</id>
-    <content type="html"><![CDATA[<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
-
-<h1>背景</h1>
-
-<p>这节主要演示3D管道的重要部分————插值是光栅化处理程序处理从顶点缓冲区取出来的变量。正如你所看到的，为了能在屏幕上显示，你需要指明VS的输出变量是&#8217;gl_Position&#8217;. 这是一个4维的向量包含着顶点的齐次坐标。向量的XYZ分量除以W分量（透视分割），XY分量超出范围[-1,1]的Z分量超出[0,1]的都将被裁剪。结果被转换到屏幕空间坐标，然后几何图元通过光栅化程序被渲染到屏幕上。光栅化程序在三角形的三个顶点间进行插值，然后访问每一个在三角形内的像素执行片段着色器进行处理。
-片段着色器返回一个颜色缓冲区中的像素颜色。如果片段着色器没处理该变量那么驱动器会进行优化，放弃VS中影响该变量的指令（在这种情况下着色程序会合并VS和FS）</p>
-
-<p>两个非常常见的依赖于插值的变量是三角形的法线和纹理坐标。顶点的法线会在所有包含这个顶点的三角形中法线计算一个平均值。 如果对象不是完全平滑的那就意味着每个三角形的三个顶点的法线是各不相同的。 法线用于光照计算产生更真实的光照影响。纹理坐标也是相似的。这些纹理是模型的一部分有每个顶点指定。 为了用纹理覆盖三角形，需要对每个像素进行采样操作。为么个像素选择正确的纹理坐标。这些坐标是由插值产生的。</p>
-
-<p>在这一节我们会看到使用插值产生不同的颜色覆盖三角形的表面。 由于我很懒，我们直接在VS里产生颜色。一个更乏味的方法是从顶点缓冲区中提供。一般你不会通过顶点缓冲区提供，你会提供一个纹理坐标然后从纹理中采样一个颜色。这个颜色在后面会进行光照计算。</p>
-
-<hr />
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在管道之间传输的参数要声明为&#8217;out&#8217;，在着色器中定义为全局变量。这个颜色是一个4-vector，XYZ分量代表RGB值，W分量代表alpha值。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Color</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">clamp</span><span class="p">(</span><span class="n">Position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>颜色在图形管道中通常用范围为[0.0, 1.0]的浮点数进行表示。该值随后会被映射到0~255的颜色通道上。我们设置顶点的位置作为颜色值。首先我们使用内建的函数clamp();确保值在0.0-1.0的范围内。这是因为三角形的左下角的点位于(-1,-1)，且小于等于0的值都会被渲染为黑色。这样的话左下角的角都会是黑色的。我们通过夹紧使得左下角的颜色值大于0.</p>
-
-<p>clamp函数并不会改变向量的维数，智慧改变它的值。但我们输出的变量是4-vector的形式。所以我们使用GLSL的符号&#8217;vec4(vec3,W)&lsquo;来创建一个4-vector包含了3-vector并增加了一个w值。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">in</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>VS输出的变量，在FS中接受输入的变量。因为这个变量会被光栅化程序进行插值处理，所以每一个FS会对应一个不同的颜色值。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">Color</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们使用插值的颜色作为片段的颜色。</p>
 ]]></content>
   </entry>
   

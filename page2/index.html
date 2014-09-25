@@ -6,9 +6,11 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Sep 2nd, 2014 Tag: code-complete 管理复杂度 软件首要的技术使命就是管理复杂度。
-我们不应该同时把整个程序塞进大脑里，而应该试着以某种方式组织程序，使得我们在某一时刻只关注于一个特定的部分。
-人更易于理解多项简单的东西， &hellip;">
+	<meta name="description" content="Published on: Sep 8th, 2014 Tag: code-complete 抽象数据类型 抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
+ADT的益处 隐藏实现细节
+限制改动程序影响的范围
+让接口提供更多的信息
+让程序的正确性更显而易见，易于检查错误 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -93,6 +95,82 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/08/working-classes/">
+		
+			类的设计</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-08T11:23:01+08:00" pubdate data-updated="true">Sep 8<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/code-complete/'>code-complete</a>
+  
+</div>
+    </div>
+		<h2>抽象数据类型</h2>
+
+<p>抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
+<strong>ADT的益处</strong></p>
+
+<ul>
+<li>隐藏实现细节</li>
+<li>限制改动程序影响的范围</li>
+<li>让接口提供更多的信息</li>
+<li>让程序的正确性更显而易见，易于检查错误</li>
+<li>程序更具自我说明性</li>
+<li>无须在程序内部到处传递数据</li>
+<li>像现实世界中那样操作实体，不用在底层操作它</li>
+</ul>
+
+
+<p><strong>注意事项</strong>
+不要让ADT依赖于存储介质。在命名上须要注意。如操作税率表的RateFile类不如RateTable类的命名方式好，虽然目前是通过文件的方式实现的。</p>
+
+<h2>类优秀的设计</h2>
+
+<ol>
+<li>类的接口应该展现一致的抽象层次</li>
+<li>一定要理解类所实现的抽象是什么</li>
+<li>提供成对的服务 （如打开，关闭）</li>
+<li>把不相关的信息移到其它类中</li>
+<li>尽可能让接口可编程，而不是表达语义</li>
+<li>谨防在修改时破坏类的抽象</li>
+<li>不要添加与接口抽象不一致的公用成员</li>
+<li>同时考虑类的抽象性和内聚性</li>
+</ol>
+
+
+
+		
+		<a href="/blog/2014/09/08/working-classes/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/08/working-classes//page2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -456,100 +534,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/08/24/buildbot-tips/">
-		
-			Buildbot Tips</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-24T22:45:16+08:00" pubdate data-updated="true">Aug 24<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/build/'>build</a>
-  
-</div>
-    </div>
-		<h2>目录</h2>
-
-<ol>
-<li>命令最终执行的代码的目录是 build配置的slave builddir(没有则默认是slave的name) + step的workdir</li>
-</ol>
-
-
-<h2>Scheduler</h2>
-
-<ol>
-<li>Dependant Scheduler只依赖于上层的Scheduler。当上层的Scheduler成功时，才会执行，而不关心其它的改变。须要注意的是如果ChangeSourcerevision为None，那这意味着Head revision。如果在上流的Scheduler执行成功后，触发Dependant的期间，ChangeSource发生了改变，那么Dependant会取最新的Head revision。 如果想要更灵活的方式，可以考虑用Triggerable Scheduler的方式</li>
-</ol>
-
-
-<h2>Steps</h2>
-
-<ol>
-<li>steps中的SVN的checkout和update会先删掉checkout目录，然后重新checkout一份代码。所以不要在这个目录下放一些非SVN服务器上的东西。</li>
-<li>steps中可以获得build设置的property，可以通过这些property来执行相应的代码。更灵活的方式是用render</li>
-<li>steps可以设置Property来给下一个steps用，使用SetProperty(property=&ldquo;&rdquo;, value=&ldquo;&rdquo;) values可以是string和 Interpolate对象,这样就可以把一些steps根据property来执行</li>
-</ol>
-
-
-<figure class='code'><figcaption><span>例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.vstudio</span> <span class="kn">import</span> <span class="n">vc8</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.properties</span> <span class="kn">import</span> <span class="n">Property</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.factory</span> <span class="kn">import</span> <span class="n">BuildFactory</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.master</span> <span class="kn">import</span> <span class="n">SetProperty</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">vc</span> <span class="o">=</span> <span class="n">vc8</span><span class="p">(</span><span class="n">projectfile</span><span class="o">=</span><span class="s">&quot;youproject.sln&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="n">mode</span><span class="o">=</span><span class="s">&quot;build&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="n">config</span><span class="o">=</span><span class="n">Property</span><span class="p">(</span><span class="s">&quot;buildconfig&quot;</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">build</span> <span class="o">=</span> <span class="n">BuildFactory</span><span class="p">()</span>
-</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">SetProperty</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="s">&quot;buildconfig&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;release&quot;</span><span class="p">))</span>
-</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">vc</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/08/24/buildbot-tips//page2/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page1" class="prev">Prev</a>
@@ -579,7 +563,7 @@
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

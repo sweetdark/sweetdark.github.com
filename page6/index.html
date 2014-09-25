@@ -6,8 +6,7 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jun 25th, 2013 Tag: opengl 背景 这篇指南非常短，只是简单的画一个三角形。 在此篇指南中，我们依赖于标准化的盒子。可见的顶点必须在这个盒子内
-这样视图转换是才能够把它映射到屏幕坐标上。从z轴的负极往里面看。opengl的盒子如下： Point &hellip;">
+	<meta name="description" content="Published on: Jun 25th, 2013 Tag: opengl Get the source 原文链接 背景 从这一节开始我们将会用到着色器绘图。着色器是绘制3D图像的潮流。从另一个角度说着色器取代了固定函数管道的方式，需要开发者自己配置参数（如：光源属性，旋转值等）。 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -92,6 +91,211 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/06/25/ogl-step4/">
+		
+			Ogl Step4 Shaders</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-25T12:51:00+08:00" pubdate data-updated="true">Jun 25<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get the source</a>  <a href="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html">原文链接</a></p>
+
+<h1>背景</h1>
+
+<p>从这一节开始我们将会用到着色器绘图。着色器是绘制3D图像的潮流。从另一个角度说着色器取代了固定函数管道的方式，需要开发者自己配置参数（如：光源属性，旋转值等）。然而可编程的方式提供了更好的灵活性和创造性。</p>
+
+<p>OpenGL可编程管道如下：
+<img src="http://ogldev.atspace.co.uk/www/tutorial04/pipeline.png">
+vertex processor负责执行顶点着色器去处理每一个通过管道的顶点数据（处理的个数取决与绘制函数调用时传的参数）。顶点着色器对被渲染的几何体的拓扑图一无所知。另外你不能再vertex processor删除顶点的数据。每一个顶点仅且经过vertex processor一次，被转换之后传到下一个管道中。</p>
+
+<p>下一阶段是几何处理器（geometry processor）。在这个阶段着色器知道所有的几何体以及他们的相邻关系。此时需要考虑除了顶点本身之外的信息。几何着色器可以变换输出的拓扑顺序。例如：你可以提供一组点的信息然后产生两个三角形或者产生一个四边形。另外，你还可以像几何着色器传入多个顶点，并根据你所选择的拓扑顺序产生多个几何体.</p>
+
+<p>下一个阶段是裁剪器。这是一个固定的函数单元处理简单的任务，裁剪几何图形到标准化格子中。它也裁剪到near Z和far Z的平面中。有相应的参数惨叫他们。经过裁剪后，顶点会被映射到屏幕坐标中，然后根据他们的拓扑顺序渲染出来。  例如：在三角形中找出所有的点在这个三角内的，光栅化程序为每个点调用片段处理器。你还可以指定像素点的颜色。</p>
+
+<p>着色器的管理方式类似于C\C++的程序的创建一样。 首先你编写着色的代码供你的程序使用。可以简单的再源代码里直接写字符穿或者从外部文件加载进来，然后编译成一个个的着色器目标对象，链接这些着色器到单个程序加载到GPU中。链接着色器提供机会给驱动去裁剪他们和优化他们之间的关系。例如：（感谢小翼的翻译）如果顶点着色器(vs)里输出法线，但是和不用法线的片段着色器(fs)链接，那么vs的法线操作会被删除来优化vs的速度。如果后来那个vs又和用到法线的fs链接，那么链接另外一个程序会产生不同的vs（有法线输出计算的）在这种情况下，GLSL的编译器会删除相关功能的着色器使得顶点着色器执行的更快。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLuint</span> <span class="n">ShaderProgram</span> <span class="o">=</span> <span class="n">glCreateProgram</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在设置着色器之前先创建一个程序对象。我们将连接所有的着色器到这个程序中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLunit</span> <span class="n">ShaderObj</span> <span class="o">=</span> <span class="n">glCreateShader</span><span class="p">(</span><span class="n">ShaderType</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建着色器对象。一个使用GL_VERTEX_SHADER类型创建顶点着色器，另一个是GL_FRAGMENT_SHADER类型创建片段着色器。用来编译指定的着色器代码。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">const</span> <span class="n">GLchar</span><span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pShaderText</span><span class="p">;</span>
+</span><span class='line'><span class="n">GLint</span> <span class="n">Lengths</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'><span class="n">Lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">pShaderText</span><span class="p">);</span>
+</span><span class='line'><span class="n">glShaderSource</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">Lengths</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定要编译的源代码。glShaderSource传入一个着色器对象去编译你指定的代码。代码可以由字符串数组提供并相应的指定保持各个字符串长度的数组。简单起见我们用只包含一个元素的字符串数组和长度数组。第二参数指定了这两个数组的元素个数。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glCompileShader</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编译着色器对象。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">GLint</span> <span class="n">success</span><span class="p">;</span>
+</span><span class='line'><span class="n">glGetShaderiv</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="n">GL_COMPILE_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">success</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">GLchar</span> <span class="n">InfoLog</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">glGetShaderInfoLog</span><span class="p">(</span><span class="n">ShaderObj</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">InfoLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error compiling shader type %d: &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ShaderType</span><span class="p">,</span> <span class="n">InfoLog</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>捕获编译时产生的错误并显示。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glAttachShader</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">ShaderObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把编译好的着色器对象附加到程序中。类似于Makefile链接一列目标对象。真正的链接目标对象发生在链接阶段。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glLinkProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在编译了所有的着色器对象然后附加到着色器程序中，最后需要链接它们。链接完之后，你可以删除产生的中间对象。通过glDeleteShader删除它们。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glGetProgramiv</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="n">GL_LINK_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Success</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">Sourcess</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">glGetProgramInfoLog</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">ErrorLog</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">&quot;Error Linking shader program : &#39;%s&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ErrorLog</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与此前处理编译错误不同的是，这里通过通过glGetProgramiv和glGetProgramInfoLog去捕获和处理链接产生的错误信息。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glValidateProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个调用是用来检测在当前的管道状态下这个着色程序是否能够执行。在复杂的程序中包含着多个着色器和许多的状态，在使用之前最好检查一下，提高代码的健壮性。当然你可以再最终产品发布时去掉这些检测，避免这些性能开销。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glUseProgram</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最终把这个着色器程序设置成管道的状态。这个着色器程序会影响所有的绘制调用，知道你用另外一个替换掉。或者通过glUseProgram(NULL)的方式使其不可用(同时开启固定函数管道)。如果你只创建了一个类型的着色器，那么其他阶段的操作按默认的固定函数进行处理。</p>
+
+<p>到此已经讲完了着色器管理的OpenGL调用。下面是顶点着色器和片段着色器的相关内容。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#version 330</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>告诉编译器我们使用的是GLSL3.3. 如果编译器不支持就会报错</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="n">in</span> <span class="n">vec3</span> <span class="n">Position</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这条语句出现在顶点着色器中。它声明了顶点的属性。3个浮点数在着色器中被当做‘Position&#8217;.&lsquo;Vertex specifi&#8217;意味着为每一次GPU中着色器的调用，都从缓冲中取出一个新的顶点值。layout (location = 0) 创建属性名称和缓冲中属性的绑定。当顶点包含多个属性（position（位置）， normal（法线）， texture（纹理）)时这一语句是必须的。我们要让编译器知道缓冲区中的每一个顶点的属性映射到着色器中的哪一个属性。 有两种方式，一种是显示的指定像上面的设置为0.然后我们可以再程序中使用这个硬编码。或者我们可以留空（简单滴&#8217;in vec3 Position&rsquo;)然后再运行时用glGetAttribLocation去检索位置。此中情况下我们需要通过glVertexAttributePointer定义顶点属性数组,第一个参数是顶点属性位置的索引，同样的我们设置为0<strong>glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);</strong>。在这里我们使用简单的方式，但在复杂的程序中最好是让编译器决定属性的索引然后在运行时去检索他们。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每一个着色阶段(VS,GS,FS)都有且仅有一个main函数,是着色器的入口。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们为每一个进入顶点着色阶段的顶点位置做硬编码的转换。X和Y的值减半，Z值不变。gl_Postion是一个特殊的内建类型支持齐次的顶点位置。在经过一系列的转换之后，光栅化程序会遍历这些变量并在屏幕空间中使用它们。X，Y值减半意味着这个三角形只有上一次的四分之一。把W设置为1确保三角形能正确显示。把3D投影到2D需要分两步完成。首先需要把所有的顶点乘以投影矩阵，GPU自动使用透视分割进行处理，然后再传给光栅化程序。（原理原文讲了很多）。</p>
+
+<p>如果一切正常，则这三个顶掉会被转换为(-0.5, -0.5), (0.5, -0.5),(0.0, 0.5)，再传给光栅化程序进行处理。这里裁剪器不需要做任何处理，因为每一个点都在归一化的盒子里。这些值被映射到屏幕坐标上。片段着色器再针对每一个点进行着色。如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">FragColor</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一般情况下片段着色器决定片段的颜色。另外，它还可以改变像素的Z值。输出的颜色是上面变量的值。这个变量由光栅化程序接受并话到帧缓存中。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定一个红色的值。
+<img src="http://ogldev.atspace.co.uk/www/tutorial04/tutorial04.html" title="&#34;效果图&#34;" alt="&#34;效果图&#34;"></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/06/25/ogl-step4//page6/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -461,64 +665,6 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/01/16/zen/">
-		
-			禅修</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-16T21:49:00+08:00" pubdate data-updated="true">Jan 16<sup>th</sup>, 2013</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/zen/'>zen</a>
-  
-</div>
-    </div>
-		<p>近期对禅产生了兴趣，在知乎上关注了禅的话题。有人推荐了一本书德宝法师《观呼吸》。我就上网搜，下了电子书来看。读完发现的确是一本好书，里面把禅讲的通俗易懂，没有什么高深的东西。很适合作为禅修入门的书籍。</p>
-
-<p>书中讲了禅修不是什么？回答了大众对禅修的疑问和不解，禅修不是什么高深的东西，任何一个普通人都能够修炼。还讲了禅修是什么？这本书讲的是内观禅修，讲的入出息念的禅修方式。内观禅修是上座部佛教的最普遍的一种禅修。内观禅修，修禅定和正念，如果再辅以慈心效果会更好。</p>
-
-<p>禅定是什么。禅定从科学的角度来讲，就是把所有注意力集中到一处。这样我们就能了解事物的全貌。禅定可以通过打坐，观呼吸来练习。禅定能够帮助我们延长念头与念头之间的那一刻时间，从而有办法使我们去观察一个念头。例如，忧虑是一个过程，它有步骤。忧虑并非只是一种存在的状态， 而是一组程序。你必须做的是，观看那个程序的开头，那些过程萌生的最初阶段。忧虑的第一个环节是“执着/排斥”的反应。只要现象一在心中跃现，我们便在心理上尝试去捕捉它或推开它，那就开启了忧虑的一连串反应。 我们可以通过内观禅修，让这种机制崩盘。而禅定就是让这种机制崩盘的工具，当忧虑这种念头，由潜意识发出要上升到意识层面是，我们用禅定来延长这一时刻，并用正念来观察它。看着它起，它灭，不加任何评判，思考，因为任何的思考都是在喂养这个念头，给予这个念头力量。你越是排斥它，它就越有力。我们做的仅仅是观察，看它是什么，它做了什么，它如何消失的。</p>
-
-<p>正念是选择禅定关注的对象，正念所做的就是观察。正念是一种觉知，对念头的觉知，是一种毫无遮蔽的注意力。</p>
-
-<ul>
-<li>正念提醒我们应该做什么；</li>
-<li>正念如实地观察事物；</li>
-<li>正念看见一切现象的真实本质。</li>
-</ul>
-
-
-
-		
-		<a href="/blog/2013/01/16/zen/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2013/01/16/zen//page6/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page5" class="prev">Prev</a>
@@ -548,7 +694,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

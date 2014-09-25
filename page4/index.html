@@ -6,9 +6,7 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jul 5th, 2014 Tag: git 如果你在github有多个帐户。那要在不同的帐户之间切换SSH Key。可以config来配置SSH key
-假设你有两个private key文件为 id_rsa1 和 id_rsa2
-生成ssh key的命令如下: 1 &hellip;">
+	<meta name="description" content="Published on: Jul 9th, 2014 Tag: JNI 引言 在Android开发中，常会遇到 local reference table overflow的错误。原因是从java代码进入jni层的本地代码调用时，Dalvik就会创建一张local &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -98,6 +96,159 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/2014/07/09/local-reference-table-overflow/">
+		
+			Andriod Ndk Error Local Reference Table Overflow Max 512</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-09T12:57:43+08:00" pubdate data-updated="true">Jul 9<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/jni/'>JNI</a>
+  
+</div>
+    </div>
+		<h1>引言</h1>
+
+<p>在Android开发中，常会遇到 local reference table overflow的错误。原因是从java代码进入jni层的本地代码调用时，Dalvik就会创建一张local reference表来存储local reference， 这张表的表项数有最大限制。一般为512个。当表项数超过最大值限制时，Dalvik就会抛出异常。</p>
+
+<figure class='code'><figcaption><span>下面这段代码就会导致溢出</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">jclass</span> <span class="n">strinClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">800</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">stringClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">.....</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>什么是Local References？</h1>
+
+<p>大多数的JNI函数都创建了Local reference（以下简称为<em>LR</em>）。 比如 NewObject, NewString&hellip;. 和 FindClass 等。</p>
+
+<p>一个<em>LR</em>只有在创建它的的一个局部作用域内有效。在超出这个作用域之后，就可能会被释放。 所有的<em>LR</em>在本地函数调用时创建的，在这个本地函数返回时就会被释放。</p>
+
+<p>你不能把一个Local reference 保存在静态变量中，然后在后面继续调用，这是不安全的。</p>
+
+<figure class='code'><figcaption><span>错误的例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* This code is illegal */</span>
+</span><span class='line'><span class="n">jstring</span>
+</span><span class='line'><span class="nf">MyNewString</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jchar</span> <span class="o">*</span><span class="n">chars</span><span class="p">,</span> <span class="n">jint</span> <span class="n">len</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="n">jclass</span> <span class="n">stringClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jmethodID</span> <span class="n">cid</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jcharArray</span> <span class="n">elemArr</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">jstring</span> <span class="n">result</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">stringClass</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="n">env</span><span class="p">,</span>
+</span><span class='line'>                                        <span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* exception thrown */</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="cm">/* It is wrong to use the cached stringClass here,</span>
+</span><span class='line'><span class="cm">       because it may be invalid. */</span>
+</span><span class='line'>    <span class="n">cid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span>
+</span><span class='line'>                              <span class="s">&quot;&lt;init&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;([C)V&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="n">elemArr</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewCharArray</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>  <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewObject</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span>
+</span><span class='line'><span class="nf">Java_C_f</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">this</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">char</span> <span class="o">*</span><span class="n">c_str</span> <span class="o">=</span> <span class="p">...;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">MyNewString</span><span class="p">(</span><span class="n">c_str</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//Java 中</span>
+</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
+</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>假设我调用了两次Java_C_f。 其中调用了MyNewString， MyNewString的想法是把stringClass这个<em>LR</em> 初始化一次后保存起来，下次可以继续用。但根据JNI的规则。在MyNewString返回时，所有的<em>LR</em>都会被释放。所以第二次调用时stringClass就是Invalid的。</p>
+
+<p>虽然VM会在本地函数返回时，释放所有的<em>LR</em>，但我们也可以显示的控制<em>LR</em>的释放。<em>LR</em>引用的对象只有在，<em>LR</em>无效的时候才会被GC回收，在MyNewString函数中调用的DeleteLocalRef 释放中间的变量elemArr，这样GC可以立即回收这个<em>LR</em> 不然elemArr这个<em>LR</em>会等到本地函数MyNewString返回时才被回收。</p>
+
+<p><em>LR</em>只能在创建它的线程中使用，在其它的线程中使用它是错误的。所以用一个全局变量保存在其它线程中用是不可行的。</p>
+
+
+		
+		<a href="/blog/2014/07/09/local-reference-table-overflow/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/07/09/local-reference-table-overflow//page4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/2014/07/05/config-mutil-ssh-key-user/">
 		
 			多个github用户配置SSH KEY的切换</a>
@@ -165,7 +316,7 @@
 
 
 <p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#103;&#105;&#x74;&#x40;&#103;&#105;&#x74;&#x68;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#116;&#64;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#46;&#x63;&#111;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+只需要把原先的<a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#104;&#117;&#98;&#46;&#x63;&#111;&#109;">&#x67;&#105;&#x74;&#x40;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#109;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -691,93 +842,6 @@ Example: (each WORD is surrounded by a rectangle)</p>
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/07/10/ogl-step9/">
-		
-			Ogl Step9 插值</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-10T07:27:00+08:00" pubdate data-updated="true">Jul 10<sup>th</sup>, 2013</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/opengl/'>opengl</a>
-  
-</div>
-    </div>
-		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
-
-<h1>背景</h1>
-
-<p>这节主要演示3D管道的重要部分————插值是光栅化处理程序处理从顶点缓冲区取出来的变量。正如你所看到的，为了能在屏幕上显示，你需要指明VS的输出变量是&#8217;gl_Position&#8217;. 这是一个4维的向量包含着顶点的齐次坐标。向量的XYZ分量除以W分量（透视分割），XY分量超出范围[-1,1]的Z分量超出[0,1]的都将被裁剪。结果被转换到屏幕空间坐标，然后几何图元通过光栅化程序被渲染到屏幕上。光栅化程序在三角形的三个顶点间进行插值，然后访问每一个在三角形内的像素执行片段着色器进行处理。
-片段着色器返回一个颜色缓冲区中的像素颜色。如果片段着色器没处理该变量那么驱动器会进行优化，放弃VS中影响该变量的指令（在这种情况下着色程序会合并VS和FS）</p>
-
-<p>两个非常常见的依赖于插值的变量是三角形的法线和纹理坐标。顶点的法线会在所有包含这个顶点的三角形中法线计算一个平均值。 如果对象不是完全平滑的那就意味着每个三角形的三个顶点的法线是各不相同的。 法线用于光照计算产生更真实的光照影响。纹理坐标也是相似的。这些纹理是模型的一部分有每个顶点指定。 为了用纹理覆盖三角形，需要对每个像素进行采样操作。为么个像素选择正确的纹理坐标。这些坐标是由插值产生的。</p>
-
-<p>在这一节我们会看到使用插值产生不同的颜色覆盖三角形的表面。 由于我很懒，我们直接在VS里产生颜色。一个更乏味的方法是从顶点缓冲区中提供。一般你不会通过顶点缓冲区提供，你会提供一个纹理坐标然后从纹理中采样一个颜色。这个颜色在后面会进行光照计算。</p>
-
-<hr />
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">out</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在管道之间传输的参数要声明为&#8217;out&#8217;，在着色器中定义为全局变量。这个颜色是一个4-vector，XYZ分量代表RGB值，W分量代表alpha值。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Color</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">clamp</span><span class="p">(</span><span class="n">Position</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>颜色在图形管道中通常用范围为[0.0, 1.0]的浮点数进行表示。该值随后会被映射到0~255的颜色通道上。我们设置顶点的位置作为颜色值。首先我们使用内建的函数clamp();确保值在0.0-1.0的范围内。这是因为三角形的左下角的点位于(-1,-1)，且小于等于0的值都会被渲染为黑色。这样的话左下角的角都会是黑色的。我们通过夹紧使得左下角的颜色值大于0.</p>
-
-<p>clamp函数并不会改变向量的维数，智慧改变它的值。但我们输出的变量是4-vector的形式。所以我们使用GLSL的符号&#8217;vec4(vec3,W)&lsquo;来创建一个4-vector包含了3-vector并增加了一个w值。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">in</span> <span class="n">vec4</span> <span class="n">Color</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>VS输出的变量，在FS中接受输入的变量。因为这个变量会被光栅化程序进行插值处理，所以每一个FS会对应一个不同的颜色值。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">FragColor</span> <span class="o">=</span> <span class="n">Color</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们使用插值的颜色作为片段的颜色。</p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2013/07/10/ogl-step9//page4/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page3" class="prev">Prev</a>
@@ -807,7 +871,7 @@ Example: (each WORD is surrounded by a rectangle)</p>
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

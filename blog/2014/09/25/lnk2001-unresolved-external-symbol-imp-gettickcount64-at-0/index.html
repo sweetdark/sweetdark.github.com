@@ -3,10 +3,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Tag: compile - Mario's Blog</title>
+	<title>LNK2001: unresolved external symbol __imp__GetTickCount64@0 - Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content=" 2014 LNK2001: Unresolved External Symbol __imp__GetTickCount64@0 Sep 25 Tag: compile Comments ">
+	<meta name="description" content="这个链接错误的发生在链接MSVCRT.lib时，原因是链接了的错误版本kernel32.lib等库。修改link条件，把/LIBPATH:&ldquo;libpath&#8221;这个改为正确的path就可以了。如果自己写makefile文件，在使用编译器，链接器，头文件，和库时，要特别小心。 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -89,45 +89,59 @@
 <div id="toload">
 <!-- begin toload --> 
     <div id="content" class="inner">
-        <article class="page">
-    
-    <h1 class="title">Tag: Compile</h1>
-    
-    <div class="entry-content"><dl class="archives">
-  
-  
-  
-    
-    <dt><h2>2014</h2></dt>
-  
-  <dd>
+        <article class="post">
+	<h2 class="title">LNK2001: Unresolved External Symbol __imp__GetTickCount64@0</h2>
+	<div class="entry-content"><p>这个链接错误的发生在链接MSVCRT.lib时，原因是链接了的错误版本kernel32.lib等库。修改link条件，把/LIBPATH:&ldquo;libpath&#8221;这个改为正确的path就可以了。如果自己写makefile文件，在使用编译器，链接器，头文件，和库时，要特别小心。如果使用了第三方的库要看这个第三方的库是用什么版本的CRT（运行时库）编译的，是多线程版的还是单线程版的，用Unicode的还是ASCII的。</p>
+
+<p><strong>LINK : fatal error LNK1101: incorrect MSPDB80.DLL version;</strong> 这个错误是在使用cl.exe命令行编译时出现的错误，原因是VC\Bin\下没有“msobj80.dll,mspdb80.dll,mspdbcore.dll,mspdbsrv.exe”这四个文件。
+解决的方法：</p>
+
+<ul>
+<li>直接从Common7\IDE\下复制这四个文件到VC\Bin\下即可解决</li>
+<li>添加系统变量(Path)，这样：我的电脑->属性->高级->环境变量->系统变量，在path中添加C:\Program Files\Microsoft Visual Studio 8\Common7\IDE；，注意结尾最后用“；”隔开！</li>
+</ul>
 
 
-<article>
-  <h2 class="title"><a href="/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0/">LNK2001: Unresolved External Symbol __imp__GetTickCount64@0</a></h2>
-	<div class="meta">
-		<span class="date">Sep 25</span>
-		<span class="tags">
+<p>附注：</p>
 
-  Tag:
-  
-    <a href='/blog/tags/compile/'>compile</a>
-  
-</span>
-	    
-	    <span class="comments"><a href="/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0/#disqus_thread">Comments</a></span>
-	    
-	</div>
-</article>
-</dd>
-  
-  <section>
-  <h2>Tag Cloud</h2>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
-</section>
+<blockquote><p>RUN-TIME LIBRARYRun-Time Library是编译器提供的标准库，提供一些基本的库函数和系统调用。
+我们一般使用的Run-Time Library是C Run-Time Libraries。当然也有Standard C++ libraries。</p>
+
+<p>C Run-Time Libraries实现ANSI C的标准库。VC安装目录的CRT目录有C Run-Time库的大部分源代码。 C Run-Time Libraries有静态库版本，也有动态链接库版本；有单线程版本，也有多线程版本；还有调试和非调试版本。</p>
+
+<p>动态链接库版本：/MD Multithreaded DLL 使用导入库MSVCRT.LIB</p>
+
+<p>/MDd Debug Multithreaded DLL 使用导入库MSVCRTD.LIB</p>
+
+<p>静态库版本：/ML Single-Threaded 使用静态库LIBC.LIB</p>
+
+<p>/MLd Debug Single-Threaded 使用静态库LIBCD.LIB</p>
+
+<p>/MT Multithreaded 使用静态库LIBCMT.LIB</p>
+
+<p>/MTd Debug Multithreaded 使用静态库LIBCMTD.LIB</p>
+
+<p>若要使用其中的一个运行时库 请忽略其他库：</p>
+
+<ul>
+<li>libc.lib 单线程 libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcmt.lib 多线程 libc.lib、msvcrt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>msvcrt.lib 使用多线程 DLL libc.lib、libcmt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcd.lib 单线程调试 libc.lib、libcmt.lib、msvcrt.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcmtd.lib 多线程调试 libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、msvcrtd.lib</li>
+<li>msvcrtd.lib 使用多线程调试 DLL  libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib</li>
+</ul>
 
 
-</dl>
+<p>设置方法：属性，链接器，输入，忽略指定库 libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib （使用一个，忽略其他的）</p></blockquote>
+
+<p>[1] 引用<a href="http://www.hz601.org/heaven/">http://www.hz601.org/heaven/</a></p>
+</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0/#disqus_thread">Comments</a></span>
+	
 </div>
 </article>
 
@@ -145,6 +159,11 @@
 
 
 
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 
     </div>
     <footer id="footer">
@@ -171,7 +190,10 @@
       var disqus_shortname = 'sweetdark';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

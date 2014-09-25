@@ -6,8 +6,7 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jul 23rd, 2014 Tag: build PlatForm win32 64bit
-python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以按照官方这个步骤去做。官方说Windows也差不多， &hellip;">
+	<meta name="description" content="Published on: Aug 24th, 2014 Tag: build 目录 命令最终执行的代码的目录是 build配置的slave builddir(没有则默认是slave的name) + step的workdir Scheduler Dependant &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -92,6 +91,100 @@ python version python2.7 32bit 入门 如果是Linux系统的FirstRun，可以�
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/24/buildbot-tips/">
+		
+			Buildbot Tips</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-24T22:45:16+08:00" pubdate data-updated="true">Aug 24<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/build/'>build</a>
+  
+</div>
+    </div>
+		<h2>目录</h2>
+
+<ol>
+<li>命令最终执行的代码的目录是 build配置的slave builddir(没有则默认是slave的name) + step的workdir</li>
+</ol>
+
+
+<h2>Scheduler</h2>
+
+<ol>
+<li>Dependant Scheduler只依赖于上层的Scheduler。当上层的Scheduler成功时，才会执行，而不关心其它的改变。须要注意的是如果ChangeSourcerevision为None，那这意味着Head revision。如果在上流的Scheduler执行成功后，触发Dependant的期间，ChangeSource发生了改变，那么Dependant会取最新的Head revision。 如果想要更灵活的方式，可以考虑用Triggerable Scheduler的方式</li>
+</ol>
+
+
+<h2>Steps</h2>
+
+<ol>
+<li>steps中的SVN的checkout和update会先删掉checkout目录，然后重新checkout一份代码。所以不要在这个目录下放一些非SVN服务器上的东西。</li>
+<li>steps中可以获得build设置的property，可以通过这些property来执行相应的代码。更灵活的方式是用render</li>
+<li>steps可以设置Property来给下一个steps用，使用SetProperty(property=&ldquo;&rdquo;, value=&ldquo;&rdquo;) values可以是string和 Interpolate对象,这样就可以把一些steps根据property来执行</li>
+</ol>
+
+
+<figure class='code'><figcaption><span>例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.vstudio</span> <span class="kn">import</span> <span class="n">vc8</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.properties</span> <span class="kn">import</span> <span class="n">Property</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.process.factory</span> <span class="kn">import</span> <span class="n">BuildFactory</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">buildbot.steps.master</span> <span class="kn">import</span> <span class="n">SetProperty</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">vc</span> <span class="o">=</span> <span class="n">vc8</span><span class="p">(</span><span class="n">projectfile</span><span class="o">=</span><span class="s">&quot;youproject.sln&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">mode</span><span class="o">=</span><span class="s">&quot;build&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="n">config</span><span class="o">=</span><span class="n">Property</span><span class="p">(</span><span class="s">&quot;buildconfig&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">build</span> <span class="o">=</span> <span class="n">BuildFactory</span><span class="p">()</span>
+</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">SetProperty</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="s">&quot;buildconfig&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">&quot;release&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="n">build</span><span class="o">.</span><span class="n">addStep</span><span class="p">(</span><span class="n">vc</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/24/buildbot-tips//page3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -459,159 +552,6 @@ Build选项下面就不要勾上build before launch了。</p>
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/09/local-reference-table-overflow/">
-		
-			Andriod Ndk Error Local Reference Table Overflow Max 512</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-09T12:57:43+08:00" pubdate data-updated="true">Jul 9<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/jni/'>JNI</a>
-  
-</div>
-    </div>
-		<h1>引言</h1>
-
-<p>在Android开发中，常会遇到 local reference table overflow的错误。原因是从java代码进入jni层的本地代码调用时，Dalvik就会创建一张local reference表来存储local reference， 这张表的表项数有最大限制。一般为512个。当表项数超过最大值限制时，Dalvik就会抛出异常。</p>
-
-<figure class='code'><figcaption><span>下面这段代码就会导致溢出</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">jclass</span> <span class="n">strinClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">800</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="n">stringClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">.....</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>什么是Local References？</h1>
-
-<p>大多数的JNI函数都创建了Local reference（以下简称为<em>LR</em>）。 比如 NewObject, NewString&hellip;. 和 FindClass 等。</p>
-
-<p>一个<em>LR</em>只有在创建它的的一个局部作用域内有效。在超出这个作用域之后，就可能会被释放。 所有的<em>LR</em>在本地函数调用时创建的，在这个本地函数返回时就会被释放。</p>
-
-<p>你不能把一个Local reference 保存在静态变量中，然后在后面继续调用，这是不安全的。</p>
-
-<figure class='code'><figcaption><span>错误的例子</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* This code is illegal */</span>
-</span><span class='line'><span class="n">jstring</span>
-</span><span class='line'><span class="nf">MyNewString</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jchar</span> <span class="o">*</span><span class="n">chars</span><span class="p">,</span> <span class="n">jint</span> <span class="n">len</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">static</span> <span class="n">jclass</span> <span class="n">stringClass</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">jmethodID</span> <span class="n">cid</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">jcharArray</span> <span class="n">elemArr</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">jstring</span> <span class="n">result</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">stringClass</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="n">env</span><span class="p">,</span>
-</span><span class='line'>                                        <span class="s">&quot;java/lang/String&quot;</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">stringClass</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="cm">/* exception thrown */</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="cm">/* It is wrong to use the cached stringClass here,</span>
-</span><span class='line'><span class="cm">       because it may be invalid. */</span>
-</span><span class='line'>    <span class="n">cid</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetMethodID</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span>
-</span><span class='line'>                              <span class="s">&quot;&lt;init&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;([C)V&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>    <span class="n">elemArr</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewCharArray</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>  <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">NewObject</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">stringClass</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">(</span><span class="o">*</span><span class="n">env</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">DeleteLocalRef</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">elemArr</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">JNIEXPORT</span> <span class="n">jstring</span> <span class="n">JNICALL</span>
-</span><span class='line'><span class="nf">Java_C_f</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jobject</span> <span class="n">this</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kt">char</span> <span class="o">*</span><span class="n">c_str</span> <span class="o">=</span> <span class="p">...;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">MyNewString</span><span class="p">(</span><span class="n">c_str</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">//Java 中</span>
-</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
-</span><span class='line'><span class="p">...</span> <span class="o">=</span> <span class="n">C</span><span class="p">.</span><span class="n">f</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>假设我调用了两次Java_C_f。 其中调用了MyNewString， MyNewString的想法是把stringClass这个<em>LR</em> 初始化一次后保存起来，下次可以继续用。但根据JNI的规则。在MyNewString返回时，所有的<em>LR</em>都会被释放。所以第二次调用时stringClass就是Invalid的。</p>
-
-<p>虽然VM会在本地函数返回时，释放所有的<em>LR</em>，但我们也可以显示的控制<em>LR</em>的释放。<em>LR</em>引用的对象只有在，<em>LR</em>无效的时候才会被GC回收，在MyNewString函数中调用的DeleteLocalRef 释放中间的变量elemArr，这样GC可以立即回收这个<em>LR</em> 不然elemArr这个<em>LR</em>会等到本地函数MyNewString返回时才被回收。</p>
-
-<p><em>LR</em>只能在创建它的线程中使用，在其它的线程中使用它是错误的。所以用一个全局变量保存在其它线程中用是不可行的。</p>
-
-
-		
-		<a href="/blog/2014/07/09/local-reference-table-overflow/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/07/09/local-reference-table-overflow//page3/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page2" class="prev">Prev</a>
@@ -641,7 +581,7 @@ Build选项下面就不要勾上build before launch了。</p>
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

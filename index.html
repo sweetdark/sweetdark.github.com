@@ -6,8 +6,7 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Sep 16th, 2014 Tag: code-complete 防御式编程应该要检查数据的正确性，以及在出现错误数据时应该如何处理（避免程序崩溃，提示用户，让程序正确的崩溃，处理异常等）。
-其核心思想是：子程序不应该因传入错误的数据而被破坏，要承认程序都会有问题， &hellip;">
+	<meta name="description" content="Published on: Sep 25th, 2014 Tag: compile 这个链接错误的发生在链接MSVCRT.lib时，原因是链接了的错误版本kernel32.lib等库。修改link条件，把/LIBPATH:&ldquo;libpath&#8221;这个改为正确的path就可以了。 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -92,6 +91,94 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0/">
+		
+			LNK2001: Unresolved External Symbol __imp__GetTickCount64@0</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-25T22:16:46+08:00" pubdate data-updated="true">Sep 25<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/compile/'>compile</a>
+  
+</div>
+    </div>
+		<p>这个链接错误的发生在链接MSVCRT.lib时，原因是链接了的错误版本kernel32.lib等库。修改link条件，把/LIBPATH:&ldquo;libpath&#8221;这个改为正确的path就可以了。如果自己写makefile文件，在使用编译器，链接器，头文件，和库时，要特别小心。如果使用了第三方的库要看这个第三方的库是用什么版本的CRT（运行时库）编译的，是多线程版的还是单线程版的，用Unicode的还是ASCII的。</p>
+
+<p><strong>LINK : fatal error LNK1101: incorrect MSPDB80.DLL version;</strong> 这个错误是在使用cl.exe命令行编译时出现的错误，原因是VC\Bin\下没有“msobj80.dll,mspdb80.dll,mspdbcore.dll,mspdbsrv.exe”这四个文件。
+解决的方法：</p>
+
+<ul>
+<li>直接从Common7\IDE\下复制这四个文件到VC\Bin\下即可解决</li>
+<li>添加系统变量(Path)，这样：我的电脑->属性->高级->环境变量->系统变量，在path中添加C:\Program Files\Microsoft Visual Studio 8\Common7\IDE；，注意结尾最后用“；”隔开！</li>
+</ul>
+
+
+<p>附注：</p>
+
+<blockquote><p>RUN-TIME LIBRARYRun-Time Library是编译器提供的标准库，提供一些基本的库函数和系统调用。
+我们一般使用的Run-Time Library是C Run-Time Libraries。当然也有Standard C++ libraries。</p>
+
+<p>C Run-Time Libraries实现ANSI C的标准库。VC安装目录的CRT目录有C Run-Time库的大部分源代码。 C Run-Time Libraries有静态库版本，也有动态链接库版本；有单线程版本，也有多线程版本；还有调试和非调试版本。</p>
+
+<p>动态链接库版本：/MD Multithreaded DLL 使用导入库MSVCRT.LIB</p>
+
+<p>/MDd Debug Multithreaded DLL 使用导入库MSVCRTD.LIB</p>
+
+<p>静态库版本：/ML Single-Threaded 使用静态库LIBC.LIB</p>
+
+<p>/MLd Debug Single-Threaded 使用静态库LIBCD.LIB</p>
+
+<p>/MT Multithreaded 使用静态库LIBCMT.LIB</p>
+
+<p>/MTd Debug Multithreaded 使用静态库LIBCMTD.LIB</p>
+
+<p>若要使用其中的一个运行时库 请忽略其他库：</p>
+
+<ul>
+<li>libc.lib 单线程 libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcmt.lib 多线程 libc.lib、msvcrt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>msvcrt.lib 使用多线程 DLL libc.lib、libcmt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcd.lib 单线程调试 libc.lib、libcmt.lib、msvcrt.lib、libcmtd.lib、msvcrtd.lib</li>
+<li>libcmtd.lib 多线程调试 libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、msvcrtd.lib</li>
+<li>msvcrtd.lib 使用多线程调试 DLL  libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib</li>
+</ul>
+
+
+<p>设置方法：属性，链接器，输入，忽略指定库 libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib （使用一个，忽略其他的）</p></blockquote>
+
+<p>[1] 引用<a href="http://www.hz601.org/heaven/">http://www.hz601.org/heaven/</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -503,82 +590,6 @@ dalvik.system.NativeStart.main(Native Method)
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/09/08/working-classes/">
-		
-			类的设计</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-08T11:23:01+08:00" pubdate data-updated="true">Sep 8<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/code-complete/'>code-complete</a>
-  
-</div>
-    </div>
-		<h2>抽象数据类型</h2>
-
-<p>抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
-<strong>ADT的益处</strong></p>
-
-<ul>
-<li>隐藏实现细节</li>
-<li>限制改动程序影响的范围</li>
-<li>让接口提供更多的信息</li>
-<li>让程序的正确性更显而易见，易于检查错误</li>
-<li>程序更具自我说明性</li>
-<li>无须在程序内部到处传递数据</li>
-<li>像现实世界中那样操作实体，不用在底层操作它</li>
-</ul>
-
-
-<p><strong>注意事项</strong>
-不要让ADT依赖于存储介质。在命名上须要注意。如操作税率表的RateFile类不如RateTable类的命名方式好，虽然目前是通过文件的方式实现的。</p>
-
-<h2>类优秀的设计</h2>
-
-<ol>
-<li>类的接口应该展现一致的抽象层次</li>
-<li>一定要理解类所实现的抽象是什么</li>
-<li>提供成对的服务 （如打开，关闭）</li>
-<li>把不相关的信息移到其它类中</li>
-<li>尽可能让接口可编程，而不是表达语义</li>
-<li>谨防在修改时破坏类的抽象</li>
-<li>不要添加与接口抽象不一致的公用成员</li>
-<li>同时考虑类的抽象性和内聚性</li>
-</ol>
-
-
-
-		
-		<a href="/blog/2014/09/08/working-classes/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/09/08/working-classes//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
     
@@ -606,7 +617,7 @@ dalvik.system.NativeStart.main(Native Method)
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 
