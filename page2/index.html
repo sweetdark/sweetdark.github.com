@@ -6,11 +6,7 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Sep 8th, 2014 Tag: code-complete 抽象数据类型 抽象数据类型可以让你像在现实世界中一样操作实体，而不用关心其底层实现。
-ADT的益处 隐藏实现细节
-限制改动程序影响的范围
-让接口提供更多的信息
-让程序的正确性更显而易见，易于检查错误 &hellip;">
+	<meta name="description" content="Published on: Sep 10th, 2014 Tag: JNI 今天在用JNI开发Android程序时，遇到一个奇怪的情况。我在本地C++层中用pthread_create创建一个线程，在回调函数中要使用Java层的类，使用FindClass来获取Java的类，但是返回的却是NULL &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -95,6 +91,99 @@ ADT的益处 隐藏实现细节
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/10/jni-tips/">
+		
+			JNI本地多线程FindClass错误</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-10T20:47:24+08:00" pubdate data-updated="true">Sep 10<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/jni/'>JNI</a>
+  
+</div>
+    </div>
+		<p>今天在用JNI开发Android程序时，遇到一个奇怪的情况。我在本地C++层中用<code>pthread_create</code>创建一个线程，在回调函数中要使用Java层的类，使用FindClass来获取Java的类，但是返回的却是NULL。但在主线程中却是可以用的。后来在Google的<a href="http://developer.android.com/training/articles/perf-jni.html#faq_FindClass">Android Developer的JNI Tips文章</a>中找到了相关信息。</p>
+
+<blockquote><p>If the class name looks right, you could be running into a class loader issue. FindClass wants to start the class search in the class loader associated with your code. It examines the call stack, which will look something like:</p>
+
+<pre><code>Foo.myfunc(Native Method)
+Foo.main(Foo.java:10)
+dalvik.system.NativeStart.main(Native Method)
+</code></pre>
+
+<p>The topmost method is Foo.myfunc. FindClass finds the ClassLoader object associated with the Foo class and uses that.</p>
+
+<p>This usually does what you want. You can get into trouble if you create a thread yourself (perhaps by calling pthread_create and then attaching it with AttachCurrentThread). Now the stack trace looks like this:</p>
+
+<pre><code>dalvik.system.NativeStart.run(Native Method)
+</code></pre>
+
+<p>The topmost method is NativeStart.run, which isn&rsquo;t part of your application. If you call FindClass from this thread, the JavaVM will start in the &ldquo;system&rdquo; class loader instead of the one associated with your application, so attempts to find app-specific classes will fail.</p>
+
+<p>There are a few ways to work around this:</p>
+
+<ul>
+<li>Do your FindClass lookups once, in JNI_OnLoad, and cache the class references for later use. Any FindClass calls made as part of executing JNI_OnLoad will use the class loader associated with the function that called System.loadLibrary (this is a special rule, provided to make library initialization more convenient). If your app code is loading the library, FindClass will use the correct class loader.</li>
+<li>Pass an instance of the class into the functions that need it, by declaring your native method to take a Class argument and then passing Foo.class in.</li>
+<li>Cache a reference to the ClassLoader object somewhere handy, and issue loadClass calls directly. This requires some effort.</li>
+</ul>
+</blockquote>
+
+<p>通过Java层调用JNI的接口,JNI接口参数都会包含一个class的信息，从这个class中可以获取等到相应的ClassLoader。但是如果我自己创建了一个本地的线程来调用了FindClass，却找不到相应的ClassLoader，而使用了“系统”的ClassLoader，而不是你应用程序的ClassLoader，会找不到和这个app相关的类。
+解决的方式有如下三种方式：</p>
+
+<ul>
+<li>在<code>JNI_OnLoad</code>方法中就去调用FindClass找到相应的jclass并存起来。</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">static</span> <span class="n">jclass</span> <span class="n">yourClass</span><span class="p">;</span>
+</span><span class='line'><span class="n">jclass</span> <span class="n">yourClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;yourClassName&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在你的本地方法中加一个类的参数，调用这个方法时传一个类的实例进去。比如Foo.class作为参数。</li>
+<li>在某个地方缓存ClassLoader对象，然后自己通过这个对象调用loadClass方法。
+这三个方法中，我觉得第三个方法对我目前的项目最适用吧，只须要把env->FindClass替换成一个方法，方法里面会先调用env->FindClass，如果返回为NULL，我再调用ClassLoader的loadClass方法去加载类。
+我在StackOverFlow找到了相应的<a href="http://stackoverflow.com/a/16302771/2770848">实现</a>。</li>
+</ul>
+
+
+
+		
+		<a href="/blog/2014/09/10/jni-tips/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/10/jni-tips//page2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -458,82 +547,6 @@ ADT的益处 隐藏实现细节
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/08/27/vim-plugin/">
-		
-			Vim 插件</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-27T20:59:00+08:00" pubdate data-updated="true">Aug 27<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/vim/'>vim</a>
-  
-</div>
-    </div>
-		<p>记录一些常用的好用的Vim插件</p>
-
-<h2>通用</h2>
-
-<ol>
-<li><a href="https://github.com/gmarik/Vundle.vim">Vbundle</a> 这个可以很方便的安装和管理Vim的插件。最好是也装上git，因为很多插件托管在github上</li>
-<li><a href="http://www.vim.org/scripts/script.php?script_id=2899">txtbrowser</a> 高效处理纯文本,提供快速的搜索和打开URL等功能，支持Email的格式等</li>
-<li><a href="https://github.com/scrooloose/nerdtree">nerdtree</a> 非常好的目录浏览的插件，功能强大</li>
-<li><a href="https://github.com/kien/ctrlp.vim">ctrlp</a> 文件和buffer的模糊查询</li>
-<li><a href="https://github.com/tpope/vim-surround">vim-surround</a> 引号，括号等操作，非常方便</li>
-</ol>
-
-
-<h2>编程</h2>
-
-<ol>
-<li><a href="https://github.com/klen/python-mode">pythonmode</a> python必备</li>
-<li><a href="https://github.com/vim-debug.vim">vim-debug</a> 支持python 和php debug</li>
-<li><a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a> git的插件可以在Vim中执行git命令，非常方便, 类似的有git-vim</li>
-<li><a href="www.vim.org/script.php?script_id=31">a.vim</a>在头文件和cpp,c文件中切换</li>
-<li><a href="https://github.com/Shougo/neocomplcache.vim">neocomplcache.vim</a> 强大的自动补全插件</li>
-<li><a href="https://github.com/scrooloose/syntastic">syntastic</a> Python和其它多种语言的语法检查</li>
-</ol>
-
-
-<h2>样式</h2>
-
-<ol>
-<li><a href="https://github.com/bling/vim-airline">vim-airline</a>让vim的用户体验更好</li>
-<li><a href="http://files.werx.dk/wombat.vim">Wombat</a>一种样式</li>
-</ol>
-
-
-
-		
-		<a href="/blog/2014/08/27/vim-plugin/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/08/27/vim-plugin//page2/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page1" class="prev">Prev</a>
@@ -563,7 +576,7 @@ ADT的益处 隐藏实现细节
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

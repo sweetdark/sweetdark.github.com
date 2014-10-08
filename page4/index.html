@@ -6,7 +6,8 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jul 9th, 2014 Tag: JNI 引言 在Android开发中，常会遇到 local reference table overflow的错误。原因是从java代码进入jni层的本地代码调用时，Dalvik就会创建一张local &hellip;">
+	<meta name="description" content="Published on: Jul 9th, 2014 Tag: tools 配置Javap工具 在Eclipse的Menu中打开Run->External Tools->External Tools Configurations
+添加一个新的项。 javap这个工具可以用来输出java类 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +92,69 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/07/09/eclipse-tools/">
+		
+			Eclipse 工具</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-09T19:33:01+08:00" pubdate data-updated="true">Jul 9<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/tools/'>tools</a>
+  
+</div>
+    </div>
+		<h2>配置Javap工具</h2>
+
+<p>在Eclipse的Menu中打开Run->External Tools->External Tools Configurations
+添加一个新的项。
+<img src="https://farm3.staticflickr.com/2928/14617040064_088658d740_o.png">
+<img src="https://farm3.staticflickr.com/2912/14639067183_6776a117b8_b.jpg">
+javap这个工具可以用来输出java类 对应jni的描述。
+<img src="http://farm3.staticflickr.com/2939/14619183735_dfb1841c44_b.jpg">
+把Signature 后面的字符串拷贝就行了（<strong>后面的分号也要拷贝</strong>）。这样可以在GetField中使用了。
+env->GetField(cls, &ldquo;fieldName&rdquo;, &ldquo;Signature&rdquo;);
+javah的工具配置类似。</p>
+
+<h2>定位文件目录</h2>
+
+<p>跟VS一样，VS在标签中右键打开文件目录一样。Eclipse须要配置。也是在External Tool中。
+新建一个
+<img src="http://farm3.staticflickr.com/2931/14618685852_2340a8acab_b.jpg">
+Build选项下面就不要勾上build before launch了。</p>
+
+<p><a href="http://www.open-open.com/bbs/view/1320934157953/">Eclipse快捷键 10个最有用的快捷键</a></p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/07/09/eclipse-tools//page4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -316,7 +380,7 @@
 
 
 <p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#104;&#117;&#98;&#46;&#x63;&#111;&#109;">&#x67;&#105;&#x74;&#x40;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#109;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+只需要把原先的<a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#103;&#105;&#116;&#x40;&#x67;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#99;&#x6f;&#x6d;">&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -684,164 +748,6 @@ octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上�
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/08/07/vim-8-7/">
-		
-			Vim 移动命令</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-07T21:27:00+08:00" pubdate data-updated="true">Aug 7<sup>th</sup>, 2013</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/vim/'>vim</a>
-  
-</div>
-    </div>
-		<h2>Vim移动命令小结：</h2>
-
-<h3>word和WORD 字和长字的介绍</h3>
-
-<p>word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
-A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, <EOL>). An empty line is also considered to be a word.
-Use &lsquo;w&rsquo;, &lsquo;e&rsquo;, and &lsquo;b&rsquo; to navigate words.
-Special case: &ldquo;cw&rdquo; is treated like &ldquo;ce&rdquo; if the cursor is on a non-blank. This is because &ldquo;cw&rdquo; is interpreted as change-word, and a word does not include the following white space.</p>
-
-<p>Example: (each word is surrounded by a rectangle)</p>
-
-<p>|while| |(|next_line1| |!==| |&ldquo;|The END|!&rdquo;)| |do| |{|</p>
-
-<p>  |next_line1| |=| |readNextLine|();|</p>
-
-<p>|}|</p>
-
-<p>WORD 长字代表一系列的字符串。 由blank tab 换行区分
-A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
-Use &lsquo;W&rsquo;, &lsquo;E&rsquo;, and &lsquo;B&rsquo; to navigate WORDs.
-Special case: &ldquo;cW&rdquo; is treated like &ldquo;cE&rdquo; if the cursor is on a non-blank. This is because &ldquo;cW&rdquo; is interpreted as change-WORD, and a WORD does not include the following white space.
-Example: (each WORD is surrounded by a rectangle)</p>
-
-<p>|while| |(next_line1| |!==| |&ldquo;The END!&rdquo;)| |do| |{|</p>
-
-<p>  |next_line1| |=| |readNextLine();|</p>
-
-<p>|}|</p>
-
-<h1>vim移动命令Normal模式下</h1>
-
-<h2>文件滚动</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-u&gt; 上滚动半屏
-</span><span class='line'>
-</span><span class='line'>&lt;C-d&gt; 下滚动半屏
-</span><span class='line'>
-</span><span class='line'>&lt;C-f&gt; 下滚动全屏
-</span><span class='line'>
-</span><span class='line'>&lt;C-b&gt; 上滚动全屏
-</span><span class='line'>
-</span><span class='line'>H 跳到当前页首行
-</span><span class='line'>
-</span><span class='line'>M 跳到当前页中间
-</span><span class='line'>
-</span><span class='line'>L 跳到当前页尾行
-</span><span class='line'>
-</span><span class='line'>N% 按百分比跳
-</span><span class='line'>
-</span><span class='line'>% 单独一个%代表在(),[],{}寻找匹配移动
-</span><span class='line'>
-</span><span class='line'>[{ 跳转到匹配当前}的 {位置
-</span><span class='line'>
-</span><span class='line'>]} 跳转到匹配当前{的 }位置。
-</span><span class='line'>
-</span><span class='line'>NG 或:n 跳转到N行
-</span><span class='line'>
-</span><span class='line'>n n为数字，从当前行往下移动n行
-</span><span class='line'>
-</span><span class='line'>nf* 跳转到第n个出现*字符的位置，包含*字符  大写F 为反向
-</span><span class='line'>
-</span><span class='line'>nt* 跳转到第n个出现*字符的前面，不包含*字符 如t, 跳转到第一个,的前面。大写T为反向</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>大段移动</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[[ 跳转到下一段的{处
-</span><span class='line'>
-</span><span class='line'>]] 跳转打下一段的}处</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>标记移动</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>m[a-z|A-Z] 来标记位置 ，然后通过'[a-z|A-Z]来移动到标记的行，行首。使用\`[a-z|A-Z]则移动精确的行和列</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>相对于光标滚屏</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>在阅读代码时，有时我们需要根据光标所在的位置滚屏，把光标所在行移动窗口的顶端、中间或底部，这时就可以用到”zt“、”zz“和”zb“。</span></code></pre></td></tr></table></div></figure>
-
-
-
-		
-		<a href="/blog/2013/08/07/vim-8-7/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2013/08/07/vim-8-7//page4/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page3" class="prev">Prev</a>
@@ -871,7 +777,7 @@ Example: (each WORD is surrounded by a rectangle)</p>
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

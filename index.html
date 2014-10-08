@@ -6,7 +6,10 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Sep 25th, 2014 Tag: compile 这个链接错误的发生在链接MSVCRT.lib时，原因是链接了的错误版本kernel32.lib等库。修改link条件，把/LIBPATH:&ldquo;libpath&#8221;这个改为正确的path就可以了。 &hellip;">
+	<meta name="description" content="Published on: Oct 8th, 2014 Tag: code-complete 变量命名 命名的一般注意事项 名字是否完整的表达了变量所代表的含义
+名字是否足够长，让人一看就懂
+名字反映了现实世界中的问题，而不是编程语言中的解决方案
+如果有计算值限定符，它们是否被放在了后面 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +94,119 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/10/08/naming-variables/">
+		
+			变量命名概要</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-08T22:22:05+08:00" pubdate data-updated="true">Oct 8<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/code-complete/'>code-complete</a>
+  
+</div>
+    </div>
+		<h2>变量命名</h2>
+
+<h3>命名的一般注意事项</h3>
+
+<ul>
+<li>名字是否完整的表达了变量所代表的含义</li>
+<li>名字是否足够长，让人一看就懂</li>
+<li>名字反映了现实世界中的问题，而不是编程语言中的解决方案</li>
+<li>如果有计算值限定符，它们是否被放在了后面 employCount employTotal</li>
+<li>是否使用Count和Index来代替Num</li>
+</ul>
+
+
+<h3>为特定的数据类型命名</h3>
+
+<ul>
+<li>循环下标的命名有意义吗？（如果是多层嵌套要注意下标的命名）</li>
+<li>所有的临时变量都重新命名以更有意义</li>
+<li>当布尔变量为真时，变量名能准确表达其意义</li>
+<li>枚举类型的命名是否使用了前缀<code>Color_Red</code> <code>Color_Blue</code></li>
+<li>具名常量根据其代表的实体，而不是它所代表的数字来命名</li>
+</ul>
+
+
+<h3>命名规则</h3>
+
+<ul>
+<li>规则能够区分全局数据，类数据，和局部数据吗？</li>
+<li>规则能够区分类型名，具名常量，枚举类型和变量名吗？ 如类型名用大小写混合，具名常量用全部大写</li>
+<li>规则能够区分子程序的输入和输出参数吗？</li>
+<li>规则尽可能的与语言规则标准兼容吗？</li>
+</ul>
+
+
+<h3>短名字</h3>
+
+<ul>
+<li>除非有必要才用短名字</li>
+<li>是否避免了为了节省一个字而缩写的情况</li>
+<li>所有单词的缩写方式都一致吗</li>
+<li>名字能够读出来吗</li>
+<li>避免容易看错和读错的名字了吗？ 如i 1 l， o 0 O等</li>
+<li>在缩写表里有对缩写进行说明吗</li>
+</ul>
+
+
+<h3>常见的命名问题</h3>
+
+<ul>
+<li>容易让人误解的名字</li>
+<li>有相近含义的名字</li>
+<li>只有一两个字符不同的名字</li>
+<li>发音相近的名字</li>
+<li>包含数字的名字</li>
+<li>英语中经常拼错的名字</li>
+<li>与标准的子程序或预定义的变量名冲突的名字</li>
+<li>过于随意的名字</li>
+<li>含有难读字符的名字</li>
+</ul>
+
+
+<h3>要点</h3>
+
+<ul>
+<li>名字要尽可能的具体。那些模糊的或者太通用的可以包含多种用途的名字通常都不是很好</li>
+<li>现代编程语言很少需要用到缩写</li>
+<li>代码阅读的次数要远多于编写的次数</li>
+<li>命名规则应该能够很好的区分全局数据，局部数据，类数据。它们还应该区分类型名，具名常量，枚举类型和变量名</li>
+</ul>
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/10/08/naming-variables//index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -497,99 +613,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/09/10/jni-tips/">
-		
-			JNI本地多线程FindClass错误</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-10T20:47:24+08:00" pubdate data-updated="true">Sep 10<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/jni/'>JNI</a>
-  
-</div>
-    </div>
-		<p>今天在用JNI开发Android程序时，遇到一个奇怪的情况。我在本地C++层中用<code>pthread_create</code>创建一个线程，在回调函数中要使用Java层的类，使用FindClass来获取Java的类，但是返回的却是NULL。但在主线程中却是可以用的。后来在Google的<a href="http://developer.android.com/training/articles/perf-jni.html#faq_FindClass">Android Developer的JNI Tips文章</a>中找到了相关信息。</p>
-
-<blockquote><p>If the class name looks right, you could be running into a class loader issue. FindClass wants to start the class search in the class loader associated with your code. It examines the call stack, which will look something like:</p>
-
-<pre><code>Foo.myfunc(Native Method)
-Foo.main(Foo.java:10)
-dalvik.system.NativeStart.main(Native Method)
-</code></pre>
-
-<p>The topmost method is Foo.myfunc. FindClass finds the ClassLoader object associated with the Foo class and uses that.</p>
-
-<p>This usually does what you want. You can get into trouble if you create a thread yourself (perhaps by calling pthread_create and then attaching it with AttachCurrentThread). Now the stack trace looks like this:</p>
-
-<pre><code>dalvik.system.NativeStart.run(Native Method)
-</code></pre>
-
-<p>The topmost method is NativeStart.run, which isn&rsquo;t part of your application. If you call FindClass from this thread, the JavaVM will start in the &ldquo;system&rdquo; class loader instead of the one associated with your application, so attempts to find app-specific classes will fail.</p>
-
-<p>There are a few ways to work around this:</p>
-
-<ul>
-<li>Do your FindClass lookups once, in JNI_OnLoad, and cache the class references for later use. Any FindClass calls made as part of executing JNI_OnLoad will use the class loader associated with the function that called System.loadLibrary (this is a special rule, provided to make library initialization more convenient). If your app code is loading the library, FindClass will use the correct class loader.</li>
-<li>Pass an instance of the class into the functions that need it, by declaring your native method to take a Class argument and then passing Foo.class in.</li>
-<li>Cache a reference to the ClassLoader object somewhere handy, and issue loadClass calls directly. This requires some effort.</li>
-</ul>
-</blockquote>
-
-<p>通过Java层调用JNI的接口,JNI接口参数都会包含一个class的信息，从这个class中可以获取等到相应的ClassLoader。但是如果我自己创建了一个本地的线程来调用了FindClass，却找不到相应的ClassLoader，而使用了“系统”的ClassLoader，而不是你应用程序的ClassLoader，会找不到和这个app相关的类。
-解决的方式有如下三种方式：</p>
-
-<ul>
-<li>在<code>JNI_OnLoad</code>方法中就去调用FindClass找到相应的jclass并存起来。</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">static</span> <span class="n">jclass</span> <span class="n">yourClass</span><span class="p">;</span>
-</span><span class='line'><span class="n">jclass</span> <span class="n">yourClass</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">FindClass</span><span class="p">(</span><span class="s">&quot;yourClassName&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>在你的本地方法中加一个类的参数，调用这个方法时传一个类的实例进去。比如Foo.class作为参数。</li>
-<li>在某个地方缓存ClassLoader对象，然后自己通过这个对象调用loadClass方法。
-这三个方法中，我觉得第三个方法对我目前的项目最适用吧，只须要把env->FindClass替换成一个方法，方法里面会先调用env->FindClass，如果返回为NULL，我再调用ClassLoader的loadClass方法去加载类。
-我在StackOverFlow找到了相应的<a href="http://stackoverflow.com/a/16302771/2770848">实现</a>。</li>
-</ul>
-
-
-
-		
-		<a href="/blog/2014/09/10/jni-tips/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/09/10/jni-tips//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
     
@@ -617,7 +640,7 @@ dalvik.system.NativeStart.main(Native Method)
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

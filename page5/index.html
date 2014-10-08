@@ -6,7 +6,8 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jul 10th, 2013 Tag: opengl Get The Source 背景 这节主要演示3D管道的重要部分————插值是光栅化处理程序处理从顶点缓冲区取出来的变量。正如你所看到的，为了能在屏幕上显示，你需要指明VS的输出变量是&#8217; &hellip;">
+	<meta name="description" content="Published on: Aug 7th, 2013 Tag: vim Vim移动命令小结： word和WORD 字和长字的介绍 word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
+A word consists of a sequence &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +92,164 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/08/07/vim-8-7/">
+		
+			Vim 移动命令</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-07T21:27:00+08:00" pubdate data-updated="true">Aug 7<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/vim/'>vim</a>
+  
+</div>
+    </div>
+		<h2>Vim移动命令小结：</h2>
+
+<h3>word和WORD 字和长字的介绍</h3>
+
+<p>word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
+A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, <EOL>). An empty line is also considered to be a word.
+Use &lsquo;w&rsquo;, &lsquo;e&rsquo;, and &lsquo;b&rsquo; to navigate words.
+Special case: &ldquo;cw&rdquo; is treated like &ldquo;ce&rdquo; if the cursor is on a non-blank. This is because &ldquo;cw&rdquo; is interpreted as change-word, and a word does not include the following white space.</p>
+
+<p>Example: (each word is surrounded by a rectangle)</p>
+
+<p>|while| |(|next_line1| |!==| |&ldquo;|The END|!&rdquo;)| |do| |{|</p>
+
+<p>  |next_line1| |=| |readNextLine|();|</p>
+
+<p>|}|</p>
+
+<p>WORD 长字代表一系列的字符串。 由blank tab 换行区分
+A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
+Use &lsquo;W&rsquo;, &lsquo;E&rsquo;, and &lsquo;B&rsquo; to navigate WORDs.
+Special case: &ldquo;cW&rdquo; is treated like &ldquo;cE&rdquo; if the cursor is on a non-blank. This is because &ldquo;cW&rdquo; is interpreted as change-WORD, and a WORD does not include the following white space.
+Example: (each WORD is surrounded by a rectangle)</p>
+
+<p>|while| |(next_line1| |!==| |&ldquo;The END!&rdquo;)| |do| |{|</p>
+
+<p>  |next_line1| |=| |readNextLine();|</p>
+
+<p>|}|</p>
+
+<h1>vim移动命令Normal模式下</h1>
+
+<h2>文件滚动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-u&gt; 上滚动半屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-d&gt; 下滚动半屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-f&gt; 下滚动全屏
+</span><span class='line'>
+</span><span class='line'>&lt;C-b&gt; 上滚动全屏
+</span><span class='line'>
+</span><span class='line'>H 跳到当前页首行
+</span><span class='line'>
+</span><span class='line'>M 跳到当前页中间
+</span><span class='line'>
+</span><span class='line'>L 跳到当前页尾行
+</span><span class='line'>
+</span><span class='line'>N% 按百分比跳
+</span><span class='line'>
+</span><span class='line'>% 单独一个%代表在(),[],{}寻找匹配移动
+</span><span class='line'>
+</span><span class='line'>[{ 跳转到匹配当前}的 {位置
+</span><span class='line'>
+</span><span class='line'>]} 跳转到匹配当前{的 }位置。
+</span><span class='line'>
+</span><span class='line'>NG 或:n 跳转到N行
+</span><span class='line'>
+</span><span class='line'>n n为数字，从当前行往下移动n行
+</span><span class='line'>
+</span><span class='line'>nf* 跳转到第n个出现*字符的位置，包含*字符  大写F 为反向
+</span><span class='line'>
+</span><span class='line'>nt* 跳转到第n个出现*字符的前面，不包含*字符 如t, 跳转到第一个,的前面。大写T为反向</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>大段移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[[ 跳转到下一段的{处
+</span><span class='line'>
+</span><span class='line'>]] 跳转打下一段的}处</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>标记移动</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>m[a-z|A-Z] 来标记位置 ，然后通过'[a-z|A-Z]来移动到标记的行，行首。使用\`[a-z|A-Z]则移动精确的行和列</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>相对于光标滚屏</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>在阅读代码时，有时我们需要根据光标所在的位置滚屏，把光标所在行移动窗口的顶端、中间或底部，这时就可以用到”zt“、”zz“和”zb“。</span></code></pre></td></tr></table></div></figure>
+
+
+
+		
+		<a href="/blog/2013/08/07/vim-8-7/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/08/07/vim-8-7//page5/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -413,101 +572,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/07/01/ogl-step5/">
-		
-			Ogl Step5 Uniform Variables</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-01T13:19:00+08:00" pubdate data-updated="true">Jul 1<sup>st</sup>, 2013</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/opengl/'>opengl</a>
-  
-</div>
-    </div>
-		<h1>背景</h1>
-
-<p>在这一节中我们将会使用到一个新的着色器变量————一致变量。属性变量与一致变量的不同在于，属性变量是由顶点指定的并在每一次的着色器调用中都会去从顶点缓冲区中读取。然而一致变量是在整个绘制调用保持一致。这也就意味着你在绘制调用前赋了一个值，然后你在每一次调用顶点着色器的时候使用的都是同一个值。着色器有两种类型的参数：一致变量（Uniform variables）指得是在一帧当中保持恒定的数值，典型的参数包括视口的方向和灯光的方向。而易变变量（Varying variables）对于每一个执行单元（包括顶点着色器中的顶点，以及片元着色器中的片元）都是变化的。</p>
-
-<p>在这一节中我们将会用一组一致变量在每一帧中都进行改变，通过GLUT提供的idle回调函数来实现。GLUT只有在窗体改变了尺寸和被其他窗体覆盖的时候会调用回调函数。如果在程序加载之后，我们什么都不做那么回调函数只会被调用一次。我们通过注册一个idle的回调函数来实现循环绘制画面，idle函数会在窗体系统没有接收到任何消息的时候被调用。</p>
-
-<hr />
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glutIdleFunc</span><span class="p">(</span><span class="n">RenderSceneCB</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在这里我们注册一个idle函数。如果你想要使用一个有用的idle回调函数，你需要在它结束是添加一个glutPostRedisplay()函数。否则idle函数会被一直调用，但是渲染函数却不会。glutPostRedisplay()标志了当前窗体需要被重新显示，在下一个GLUT的main循环中绘制回调函数将会被调用。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gScaleLocation</span> <span class="o">=</span> <span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ShaderProgram</span><span class="p">,</span> <span class="s">&quot;gScale&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="n">assert</span><span class="p">(</span><span class="n">gScaleLocation</span> <span class="o">!=</span> <span class="mh">0xFFFFFFFF</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在链接了程序之后，我们通过glGetUniformLocation方法去获得gScale一致变量的地址。这是一种C\C++程序执行环境映射到着色器的执行环境。你不能直接访问着色器里的内容也不能直接修改里面的变量。当你编译着色器是，GLSL的编译器就为每一个一致变量建立了一个索引。着色器器内部是通过这个索引对变量进行操作。我们也可以通过glGetUniformLocation获得某个程序内部的变量名的索引。这个函数返回索引，出错时返回-1。检查错误非常重要，着色器内部不存在这个变量（<font color="red">你的变量名拼写错误</font>）或者编译器对这个变量进行了优化（<font color="red">为被使用的变量</font>)都会导致glGetUniformLocation调用失败。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">static</span> <span class="kt">float</span> <span class="n">Scale</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">;</span>
-</span><span class='line'><span class="n">Scale</span> <span class="o">+=</span> <span class="mf">0.001f</span><span class="p">;</span>
-</span><span class='line'><span class="n">glUniform1f</span><span class="p">(</span><span class="n">gScaleLocation</span><span class="p">,</span> <span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>使用一个静态变量Scale，在每次渲染调用是递增。传给着色器的值是Scale的正弦值。会产生一个在-1.0到1.0之间的值。 通过glUniform1f传给着色器。OpenGl提供了多种形式glUniform{1234}{if}。glUniform2i glUniform3f&hellip;etc. glUniform传的第一个参数是索引。</p>
-
-<p>我们只对上一教程的VS段进行修改，FS保持不变</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">uniform</span> <span class="kt">float</span> <span class="n">gScale</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>定义一个一致变量。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">gl_Position</span> <span class="o">=</span> <span class="n">vec4</span><span class="p">(</span><span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">gScale</span> <span class="o">*</span> <span class="n">Position</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">Position</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我们队X和Y的值进行转换。你知道为什么三角形会在循环到一半时倒过来吗？</p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2013/07/01/ogl-step5//page5/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page4" class="prev">Prev</a>
@@ -537,7 +601,7 @@
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+27.77777777777778%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2014-09-25T22:32:21+08:00</updated>
+  <updated>2014-10-08T23:05:12+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,84 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[变量命名概要]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/10/08/naming-variables/"/>
+    <updated>2014-10-08T22:22:05+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/10/08/naming-variables</id>
+    <content type="html"><![CDATA[<h2>变量命名</h2>
+
+<h3>命名的一般注意事项</h3>
+
+<ul>
+<li>名字是否完整的表达了变量所代表的含义</li>
+<li>名字是否足够长，让人一看就懂</li>
+<li>名字反映了现实世界中的问题，而不是编程语言中的解决方案</li>
+<li>如果有计算值限定符，它们是否被放在了后面 employCount employTotal</li>
+<li>是否使用Count和Index来代替Num</li>
+</ul>
+
+
+<h3>为特定的数据类型命名</h3>
+
+<ul>
+<li>循环下标的命名有意义吗？（如果是多层嵌套要注意下标的命名）</li>
+<li>所有的临时变量都重新命名以更有意义</li>
+<li>当布尔变量为真时，变量名能准确表达其意义</li>
+<li>枚举类型的命名是否使用了前缀<code>Color_Red</code> <code>Color_Blue</code></li>
+<li>具名常量根据其代表的实体，而不是它所代表的数字来命名</li>
+</ul>
+
+
+<h3>命名规则</h3>
+
+<ul>
+<li>规则能够区分全局数据，类数据，和局部数据吗？</li>
+<li>规则能够区分类型名，具名常量，枚举类型和变量名吗？ 如类型名用大小写混合，具名常量用全部大写</li>
+<li>规则能够区分子程序的输入和输出参数吗？</li>
+<li>规则尽可能的与语言规则标准兼容吗？</li>
+</ul>
+
+
+<h3>短名字</h3>
+
+<ul>
+<li>除非有必要才用短名字</li>
+<li>是否避免了为了节省一个字而缩写的情况</li>
+<li>所有单词的缩写方式都一致吗</li>
+<li>名字能够读出来吗</li>
+<li>避免容易看错和读错的名字了吗？ 如i 1 l， o 0 O等</li>
+<li>在缩写表里有对缩写进行说明吗</li>
+</ul>
+
+
+<h3>常见的命名问题</h3>
+
+<ul>
+<li>容易让人误解的名字</li>
+<li>有相近含义的名字</li>
+<li>只有一两个字符不同的名字</li>
+<li>发音相近的名字</li>
+<li>包含数字的名字</li>
+<li>英语中经常拼错的名字</li>
+<li>与标准的子程序或预定义的变量名冲突的名字</li>
+<li>过于随意的名字</li>
+<li>含有难读字符的名字</li>
+</ul>
+
+
+<h3>要点</h3>
+
+<ul>
+<li>名字要尽可能的具体。那些模糊的或者太通用的可以包含多种用途的名字通常都不是很好</li>
+<li>现代编程语言很少需要用到缩写</li>
+<li>代码阅读的次数要远多于编写的次数</li>
+<li>命名规则应该能够很好的区分全局数据，局部数据，类数据。它们还应该区分类型名，具名常量，枚举类型和变量名</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[LNK2001: unresolved external symbol __imp__GetTickCount64@0]]></title>
@@ -2014,7 +2092,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 
 <p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x67;&#x69;&#116;&#x40;&#x67;&#105;&#116;&#104;&#117;&#98;&#46;&#x63;&#111;&#109;">&#x67;&#105;&#x74;&#x40;&#103;&#105;&#116;&#x68;&#x75;&#x62;&#x2e;&#x63;&#111;&#109;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+只需要把原先的<a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#103;&#105;&#116;&#x40;&#x67;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#99;&#x6f;&#x6d;">&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2299,189 +2377,6 @@ octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上�
 </span><span class='line'>q 在非insert 模式下完成记录
 </span><span class='line'>
 </span><span class='line'>@a 执行寄存器a中的操作</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[vim 移动命令]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/08/07/vim-8-7/"/>
-    <updated>2013-08-07T21:27:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/08/07/vim-8-7</id>
-    <content type="html"><![CDATA[<h2>Vim移动命令小结：</h2>
-
-<h3>word和WORD 字和长字的介绍</h3>
-
-<p>word代表一个单词，有字母和数字组成 或者使 一列非字母和数字的字符串， 不包含空格，tab,和换行。
-A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, <EOL>). An empty line is also considered to be a word.
-Use &lsquo;w&rsquo;, &lsquo;e&rsquo;, and &lsquo;b&rsquo; to navigate words.
-Special case: &ldquo;cw&rdquo; is treated like &ldquo;ce&rdquo; if the cursor is on a non-blank. This is because &ldquo;cw&rdquo; is interpreted as change-word, and a word does not include the following white space.</p>
-
-<p>Example: (each word is surrounded by a rectangle)</p>
-
-<p>|while| |(|next_line1| |!==| |&ldquo;|The END|!&rdquo;)| |do| |{|</p>
-
-<p>  |next_line1| |=| |readNextLine|();|</p>
-
-<p>|}|</p>
-
-<p>WORD 长字代表一系列的字符串。 由blank tab 换行区分
-A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a WORD.
-Use &lsquo;W&rsquo;, &lsquo;E&rsquo;, and &lsquo;B&rsquo; to navigate WORDs.
-Special case: &ldquo;cW&rdquo; is treated like &ldquo;cE&rdquo; if the cursor is on a non-blank. This is because &ldquo;cW&rdquo; is interpreted as change-WORD, and a WORD does not include the following white space.
-Example: (each WORD is surrounded by a rectangle)</p>
-
-<p>|while| |(next_line1| |!==| |&ldquo;The END!&rdquo;)| |do| |{|</p>
-
-<p>  |next_line1| |=| |readNextLine();|</p>
-
-<p>|}|</p>
-
-<h1>vim移动命令Normal模式下</h1>
-
-<h2>文件滚动</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-u&gt; 上滚动半屏
-</span><span class='line'>
-</span><span class='line'>&lt;C-d&gt; 下滚动半屏
-</span><span class='line'>
-</span><span class='line'>&lt;C-f&gt; 下滚动全屏
-</span><span class='line'>
-</span><span class='line'>&lt;C-b&gt; 上滚动全屏
-</span><span class='line'>
-</span><span class='line'>H 跳到当前页首行
-</span><span class='line'>
-</span><span class='line'>M 跳到当前页中间
-</span><span class='line'>
-</span><span class='line'>L 跳到当前页尾行
-</span><span class='line'>
-</span><span class='line'>N% 按百分比跳
-</span><span class='line'>
-</span><span class='line'>% 单独一个%代表在(),[],{}寻找匹配移动
-</span><span class='line'>
-</span><span class='line'>[{ 跳转到匹配当前}的 {位置
-</span><span class='line'>
-</span><span class='line'>]} 跳转到匹配当前{的 }位置。
-</span><span class='line'>
-</span><span class='line'>NG 或:n 跳转到N行
-</span><span class='line'>
-</span><span class='line'>n n为数字，从当前行往下移动n行
-</span><span class='line'>
-</span><span class='line'>nf* 跳转到第n个出现*字符的位置，包含*字符  大写F 为反向
-</span><span class='line'>
-</span><span class='line'>nt* 跳转到第n个出现*字符的前面，不包含*字符 如t, 跳转到第一个,的前面。大写T为反向</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>大段移动</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[[ 跳转到下一段的{处
-</span><span class='line'>
-</span><span class='line'>]] 跳转打下一段的}处</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>标记移动</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>m[a-z|A-Z] 来标记位置 ，然后通过'[a-z|A-Z]来移动到标记的行，行首。使用\`[a-z|A-Z]则移动精确的行和列</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>相对于光标滚屏</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>在阅读代码时，有时我们需要根据光标所在的位置滚屏，把光标所在行移动窗口的顶端、中间或底部，这时就可以用到”zt“、”zz“和”zb“。</span></code></pre></td></tr></table></div></figure>
-
-
-<!--more-->
-
-
-<h2>不同窗口间的移动</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-w&gt; + hjkl 在上下左右分屏的窗口移动
-</span><span class='line'>
-</span><span class='line'>&lt;C-w&gt; + w 一次跳到下一个窗口</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>文件间切换命令</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>:bn 在当前窗口打开下一个文件
-</span><span class='line'>
-</span><span class='line'>:bp 在当前窗口打开前一个文件
-</span><span class='line'>
-</span><span class='line'>:sp filename 用分屏的方式打开另一个文件</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>折叠行并移动</h2>
-
-<p>···</p>
-
-<pre><code>zo – 打开光标下的折叠
-zO – 循环打开光标下的折叠，也就是说，如果存在多级折叠，每一级都会被打开
-zc – 关闭光标下的折叠
-zC – 循环关闭光标下的折叠 
-</code></pre>
-
-<p>···
-更多的命令，请参阅手册(:help folding)。</p>
-
-<p>vim提供了一些命令在折叠间快速移动：
-···</p>
-
-<pre><code>[z – 到当前打开折叠的开始
-]z – 到当前打开折叠的结束
-zj – 向下移动到下一个折叠的开始处
-zk – 向上移动到上一个折叠的结束处 
-</code></pre>
-
-<p>···</p>
-
-<h2>跳转</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;C-o&gt; 跳转到前一次跳转的位置
-</span><span class='line'>&lt;C-i&gt; 跳转到后一次跳转的位置
-</span><span class='line'>'.  跳转到上一次编辑修改过的位置</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>
