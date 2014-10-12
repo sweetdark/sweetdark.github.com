@@ -34,16 +34,19 @@ tags: programming
  static final Set< String > mutableCollection = new HashSet< String >();
  static final ImmutableSet< SomeMutableType > mutableElements = ImmutableSet.of(mutable);
 ``` 
+
 * 方法名用动名词结合的方式，第一个字母小写，大小写混合的方式。不要出现模糊不清的命名情况，如search();
 ``` java
 getName();
 vertex.findNearestVertex();
 ```
+
 * 在名字中如果有缩写也要使用大小写混合的方式
 ``` java
  exportHtmlSource(); //而不是exportHTMLSource();
  openDvdPlayer(); //而不是openDvdPlayer();
 ``` 
+
 * 类中的私有变量要单独用一种方式来表示，在名字后面用\_下划线,或者用m\_开头，有待讨论。 如：
 ``` java
  class Person
@@ -84,12 +87,14 @@ vertex.findNearestVertex();
 ``` java
  valueSet.computeAverage();
 ``` 
+
 * *find*用于查找的方法
 ``` java
 vertex.findNearestVertex();
 matrix.findSmallestElement();
 node.findShortestPath(Node destinationNode);
 ```
+
 * _initialize_ 术语用在对象初始化的时候，不要使用_init_
 > printer.initializeFontSet();
 * GUI控件的命名应该包含控件的类型
@@ -99,6 +104,7 @@ node.findShortestPath(Node destinationNode);
 Collection< Point > points;
 int[] values;
 ```
+
 * _n_前缀可以用于表示若干个对象，这种情况下num不应该被使用
 > nPoints, nLines
 * _No_或者_total_后缀表示对象的总数，而且仅仅使用其中一种方式来表示，不要同时使用
@@ -132,6 +138,7 @@ interface Color
  final int BLUE  = 3;
 }
 ```
+
 * 异常类后缀应该加上Exception
 * 接口的默认实现应该加上前缀Default
 * Singleton 单例类通过getInstance方法来获取单例
@@ -143,6 +150,7 @@ class PointFactory
 	{...}
 }
 ```
+
 * 函数在名称中应该包含它要返回的类型信息，过程的名称则应该具体的描述它做了什么
 
 ## 文件规范
@@ -162,6 +170,7 @@ for (int tableNo = 0; tableNo < nTables;
 * 在逗号，分号和操作符等断开,然后下一行的开始与上一行表达式的开始平行
 */
 ```
+
 ## 语句
 ### package和import语句
 * package语句必须在文件的第一句，import语句跟在package语句的后面。 按照功能进行分组，每个组之间用空行分开。按照字典顺序进行排序。
@@ -178,6 +187,7 @@ import javax.swing.event.ActionEvent;
 import org.linux.apache.server.SoapServer;
 
 ``` 
+
 * 引入的类要列出来，不要使用整个包引入的方式java.util.\* 来引入整个包;
 ### 类和接口
 * 类和接口的声明顺序
@@ -207,6 +217,7 @@ for (i = 0; i < 100; i++)
   sum += value[i];
 // NOT: for (i = 0, sum = 0; i < 100; i++)
 ```
+
 * 循环变量应该紧挨着循环结构
 ``` java
 isDone = false;           // NOT: bool isDone = false;
@@ -216,6 +227,7 @@ while (!isDone) {         //      :
                           //      }
 
 ```
+
 * 在循环中避免使用do-while语句
 * 在循环中尽量避免使用continue和break语句
 
@@ -230,6 +242,7 @@ else {
 	exception();
 }
 ```
+
 * 条件语句应该写在单独一行，后面不要接其它的语句了
 * 不要在判断中去执行语句
 ``` java
@@ -243,6 +256,7 @@ if (File.open(fileName, "w") != null)) {
   :
 }
 ```
+
 * 不要使用魔数，使用具名常量代替
 * 浮点数的书写至少要有一个小数位
 * 静态方法要使用类名来调用，不要使用对象。
@@ -265,6 +279,7 @@ if (File.open(fileName, "w") != null)) {
    done = moreToDo();
  }
 ``` 
+
 * 类的布局如下
 ``` java
  class Rectangle extends Shape
@@ -273,6 +288,7 @@ if (File.open(fileName, "w") != null)) {
    ...
  }
 ``` 
+
 * 方法的布局如下
 ``` java
  public void someMethod()
@@ -281,6 +297,7 @@ if (File.open(fileName, "w") != null)) {
    ...
  }
 ``` 
+
 * 条件语句的布局如下，判断条件要另起一行不要跟}在一行
 ``` java
  if (condition) {
@@ -314,6 +331,7 @@ if (File.open(fileName, "w") != null)) {
  for (initialization; condition; update)
  ;
 ``` 
+
 * switch语句的布局如下，switch语句一定要有default:即使是空的
 ``` java
  switch (condition) {
@@ -334,6 +352,7 @@ if (File.open(fileName, "w") != null)) {
      break;
  }
 ``` 
+
 * try-catch语句布局如下
 ``` java
  try {
@@ -372,6 +391,7 @@ if (File.open(fileName, "w") != null)) {
  for (i = 0; i < 10; i++) {  // NOT: for(i=0;i<10;i++){
    ...
 ``` 
+
 * 逻辑单元之间要隔一行空行
 ``` java
  // Create a new identity matrix
@@ -390,6 +410,7 @@ if (File.open(fileName, "w") != null)) {
  // Apply rotation
  transformation.multiply(matrix);
 ``` 
+
 * 类中的每个方法之间前后要有空行
 * 变量的声明要左对齐
 ``` java
@@ -397,6 +418,7 @@ if (File.open(fileName, "w") != null)) {
  int       nPoints;
  double    x, y;
 ``` 
+
 * 语句之间也要对齐
 ``` java
  if      (a == lowValue)    compueSomething();
@@ -436,6 +458,7 @@ public double computeLocation(double x, double y, int zone)
   ...
 }
 ``` 
+
 * 在注释后面要有空格，注释要跟着代码缩进
 ``` java
 // This is a comment    NOT: //This is a comment
@@ -450,6 +473,7 @@ while (true) {       // NOT:  while (true) {
   something();                  something();
 }   
 ``` 
+
 * 所有公开的类和接口应该使用Javadoc的注释规范
 
 ### References
