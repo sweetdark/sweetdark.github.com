@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2014-10-08T23:05:12+08:00</updated>
+  <updated>2014-10-12T22:10:10+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -12,6 +12,906 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[java 风格指南]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/10/09/java-programming-guide/"/>
+    <updated>2014-10-09T21:07:38+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/10/09/java-programming-guide</id>
+    <content type="html"><![CDATA[<p>[TOC]</p>
+
+<h1>Java Programming Guide</h1>
+
+<blockquote><p>软件首要的技术革命是管理复杂度</p><footer><strong>Steve McConnel</strong> <cite>Code Complete</cite></footer></blockquote>
+
+
+<blockquote><p>代码越多，问题也就越多</p><footer><strong>Biggie Smalls</strong></footer></blockquote>
+
+
+<blockquote><p>代码被阅读的次数远远多于写的次数
+任何一个傻瓜都会写出能够让机器理解的代码，只有好的程序员才能写出人类可以理解的代码</p></blockquote>
+
+<p>编码规范的目的是在团队中达成一种共识，从而编写出易于阅读和维护的代码。值得庆幸的是Java中有现成的规范和代码风格工具，以及风格检查工具。</p>
+
+<!-- 使用github MarkdDown扩展的语法 -->
+
+
+<h2>通用命名规范</h2>
+
+<ul>
+<li>包命名规范
+
+<blockquote><p>包名统一用小写 mypackage, cn.ritu.cn</p></blockquote></li>
+<li>类型名用大小写混合的方式，第一个字母大写. UserInfo</li>
+<li>变量名也用大小写混合的方式，第一个字母小写 lineCount</li>
+<li>常量全部大写，多个单词之间用_下划线隔开
+
+<blockquote><p>常量是指那些它的内容一直不会改变的量,而不只是声明为final就可以了,如</p></blockquote></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">MIN_TIMES</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span> <span class="n">String</span> <span class="o">&gt;</span> <span class="n">NAMES</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">&quot;Ed&quot;</span><span class="o">);</span>
+</span><span class='line'> <span class="c1">//下面的不是常量</span>
+</span><span class='line'> <span class="kd">final</span> <span class="n">String</span> <span class="n">nonStatic</span> <span class="o">=</span> <span class="s">&quot;non-static&quot;</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">static</span> <span class="n">String</span> <span class="n">nonFinal</span> <span class="o">=</span> <span class="s">&quot;non-final&quot;</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Set</span><span class="o">&lt;</span> <span class="n">String</span> <span class="o">&gt;</span> <span class="n">mutableCollection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span> <span class="n">String</span> <span class="o">&gt;();</span>
+</span><span class='line'> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ImmutableSet</span><span class="o">&lt;</span> <span class="n">SomeMutableType</span> <span class="o">&gt;</span> <span class="n">mutableElements</span> <span class="o">=</span> <span class="n">ImmutableSet</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">mutable</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 方法名用动名词结合的方式，第一个字母小写，大小写混合的方式。不要出现模糊不清的命名情况，如search();</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">getName</span><span class="o">();</span>
+</span><span class='line'><span class="n">vertex</span><span class="o">.</span><span class="na">findNearestVertex</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在名字中如果有缩写也要使用大小写混合的方式</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">exportHtmlSource</span><span class="o">();</span> <span class="c1">//而不是exportHTMLSource();</span>
+</span><span class='line'> <span class="n">openDvdPlayer</span><span class="o">();</span> <span class="c1">//而不是openDvdPlayer();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 类中的私有变量要单独用一种方式来表示，在名字后面用_下划线,或者用m_开头，有待讨论。 如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">class</span> <span class="nc">Person</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">name_</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<ul>
+<li>通用的常量的名字应该和它的类型保持一致</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kt">void</span> <span class="nf">setTopic</span><span class="o">(</span><span class="n">Topic</span> <span class="n">topic</span><span class="o">)</span> <span class="c1">// NOT: void setTopic(Topic value)</span>
+</span><span class='line'>                            <span class="c1">// NOT: void setTopic(Topic aTopic)</span>
+</span><span class='line'>                            <span class="c1">// NOT: void setTopic(Topic t)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kt">void</span> <span class="nf">connect</span><span class="o">(</span><span class="n">Database</span> <span class="n">database</span><span class="o">)</span> <span class="c1">// NOT: void connect(Database db)</span>
+</span><span class='line'>                                 <span class="c1">// NOT: void connect(Database oracleDB)</span>
+</span><span class='line'><span class="c1">// 更具体一点，可以用角色加类型组合的方式来表达</span>
+</span><span class='line'> <span class="n">Point</span> <span class="n">startingPoint</span><span class="o">,</span> <span class="n">centerPoint</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<ul>
+<li>作用域大的变量必须使用具体的长名字来表示，很小范围的可以用缩写如循环中的循环变量i,j,k 如果是多层嵌套则要考虑使用更具体的名字来命名循环变量，如bookIndex</li>
+<li>尽量给临时变量起一个更好的名字，不要用temp。</li>
+<li>不要把对象的名字或类的名字包含在方法名中</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">line</span><span class="o">.</span><span class="na">getLength</span><span class="o">();</span> <span class="c1">//NOT：line.getLineLength();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h3>特定的命名规范</h3>
+
+<ul>
+<li>get/set 用于访问成员的属性</li>
+<li>is前缀的用于布尔变量和返回布尔的方法，有时用has和can前缀更加合适</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">isSet</span><span class="o">,</span> <span class="n">isVisible</span><span class="o">,</span> <span class="n">isFinished</span><span class="o">,</span> <span class="n">isFound</span><span class="o">,</span> <span class="n">isOpen</span>
+</span><span class='line'> <span class="kt">void</span> <span class="nf">setFound</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">isFound</span><span class="o">);</span>
+</span><span class='line'> <span class="kt">boolean</span> <span class="nf">hasLicense</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<ul>
+<li><em>compute</em>可以被用于那些表示计算的方法</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">valueSet</span><span class="o">.</span><span class="na">computeAverage</span><span class="o">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* <em>find</em>用于查找的方法</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">vertex</span><span class="o">.</span><span class="na">findNearestVertex</span><span class="o">();</span>
+</span><span class='line'><span class="n">matrix</span><span class="o">.</span><span class="na">findSmallestElement</span><span class="o">();</span>
+</span><span class='line'><span class="n">node</span><span class="o">.</span><span class="na">findShortestPath</span><span class="o">(</span><span class="n">Node</span> <span class="n">destinationNode</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><em>initialize</em> 术语用在对象初始化的时候，不要使用<em>init</em>
+
+<blockquote><p>printer.initializeFontSet();</p></blockquote></li>
+<li>GUI控件的命名应该包含控件的类型
+
+<blockquote><p>widthScale, nameTexField, leftScrollbar</p></blockquote></li>
+<li>复数用于表示集合对象</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Collection</span><span class="o">&lt;</span> <span class="n">Point</span> <span class="o">&gt;</span> <span class="n">points</span><span class="o">;</span>
+</span><span class='line'><span class="kt">int</span><span class="o">[]</span> <span class="n">values</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><em>n</em>前缀可以用于表示若干个对象，这种情况下num不应该被使用
+
+<blockquote><p>nPoints, nLines</p></blockquote></li>
+<li><em>No</em>或者<em>total</em>后缀表示对象的总数，而且仅仅使用其中一种方式来表示，不要同时使用</li>
+<li><p><em>Min</em>, <em>Total</em>, <em>Sum</em>, <em>Max</em>，<em>Average</em> 这些表示数量,总量，平均值，最大值，总额的限定词统一作为后缀
+不要出现前后都有的情况，revenueTotal和totalRevenue这会产生迷惑</p>
+
+<blockquote><p>revenueTotal（总收入），expanseTotal（总支出）</p></blockquote></li>
+<li><p>使用对仗词语来命名，如果出现了其中一个，通常情况下也要有另外一个。常见的对仗词有</p>
+
+<blockquote><p>get/set, add/remove, create/destroy, start/stop, insert/delete,
+increment/decrement, old/new, begin/end, first/last, up/down, min/max,
+next/previous, old/new, open/close, show/hide, suspend/resume, etc.</p></blockquote></li>
+<li>不要使用缩写，除了那些领域中的专业词汇。如：html, cpu
+
+<blockquote><p>下列的缩写是不可取的:
+cmd 代替 command
+comp 代替 compute,compare
+cp 代替 copy
+init 代替 initialize</p></blockquote></li>
+<li>不要使用否定的布尔变量
+
+<blockquote><p>bool isError; // NOT: isNoError
+bool isFound; // NOT: isNotFound</p></blockquote></li>
+<li>常量要加上类型的前缀</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="kt">int</span>  <span class="n">COLOR</span><span class="err">\</span><span class="n">_RED</span>   <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'><span class="kd">final</span> <span class="kt">int</span>  <span class="n">COLOR</span><span class="err">\</span><span class="n">_GREEN</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'><span class="kd">final</span> <span class="kt">int</span>  <span class="n">COLOR</span><span class="err">\</span><span class="n">_BLUE</span>  <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+</span><span class='line'><span class="c1">//或者使用</span>
+</span><span class='line'><span class="kd">interface</span> <span class="nc">Color</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'> <span class="kd">final</span> <span class="kt">int</span> <span class="n">RED</span>   <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">final</span> <span class="kt">int</span> <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">final</span> <span class="kt">int</span> <span class="n">BLUE</span>  <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>异常类后缀应该加上Exception</li>
+<li>接口的默认实现应该加上前缀Default</li>
+<li>Singleton 单例类通过getInstance方法来获取单例</li>
+<li>工厂类创建对象使用new[类名]的方法来创建</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">class</span> <span class="nc">PointFactory</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">Point</span> <span class="nf">newPoint</span><span class="o">()</span>
+</span><span class='line'>  <span class="o">{...}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>函数在名称中应该包含它要返回的类型信息，过程的名称则应该具体的描述它做了什么</li>
+</ul>
+
+
+<h2>文件规范</h2>
+
+<ul>
+<li>Java文件名首字母大写如Point.java</li>
+<li>每个类单独为一个文件，并且和文件名一样。私有的类可以声明为内部的嵌套类</li>
+<li>每一行的长度应该控制在80列以内</li>
+<li>统一使用2个空格作用缩进，TAB要转换为缩进</li>
+<li>未完成的行应该明显的表示出来。</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">totalSum</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span>
+</span><span class='line'>         <span class="n">d</span> <span class="o">+</span> <span class="n">e</span><span class="o">;</span>
+</span><span class='line'><span class="n">method</span><span class="o">(</span><span class="n">param1</span><span class="o">,</span> <span class="n">param2</span><span class="o">,</span>
+</span><span class='line'>     <span class="n">param3</span><span class="o">);</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">tableNo</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">tableNo</span> <span class="o">&lt;</span> <span class="n">nTables</span><span class="o">;</span>
+</span><span class='line'>   <span class="n">tableNo</span> <span class="o">+=</span> <span class="n">tableStep</span><span class="o">)</span>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm">* 在逗号，分号和操作符等断开,然后下一行的开始与上一行表达式的开始平行</span>
+</span><span class='line'><span class="cm">*/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>语句</h2>
+
+<h3>package和import语句</h3>
+
+<ul>
+<li>package语句必须在文件的第一句，import语句跟在package语句的后面。 按照功能进行分组，每个组之间用空行分开。按照字典顺序进行排序。</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.net.URL</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.RmiServer</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.server.Server</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">javax.swing.JPanel</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">javax.swing.event.ActionEvent</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.linux.apache.server.SoapServer</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 引入的类要列出来，不要使用整个包引入的方式java.util.* 来引入整个包;</p>
+
+<h3>类和接口</h3>
+
+<ul>
+<li>类和接口的声明顺序
+
+<blockquote><ol>
+<li>类和接口的文档说明</li>
+<li>类和接口的语句 class 或者 interface</li>
+<li>类和接口的变量（包括静态变量）按照public, protected, package,private的顺序列出</li>
+<li>构造函数</li>
+<li>方法
+
+<h3>方法</h3></li>
+</ol>
+</blockquote></li>
+<li>方法修饰符的顺序
+
+<blockquote><p>访问权限( public, protected, private ) static abstract synchronized final native的顺序</p></blockquote></li>
+<li>类型转换
+
+<h3>类型</h3></li>
+<li>类型转换必须强制声明,强制转换的前后要留空格 int length = (int) getLength();</li>
+<li>数组的声明[]应该紧跟着类型名 String[] names; int[] values;
+
+<h3>变量</h3></li>
+<li>变量应该的定义的时候初始化，定义在最小的作用域范围内，在要使用的地方进行定义</li>
+<li>一个变量名不应该有双重含义, 如变量 x的第一位来表示某个标志位，后面的倍数来表示坐标</li>
+<li>类变量不应该被声明为pulibc，除非这个类是作为结构体使用</li>
+<li>变量的生命周期应该保持最短，资源用完应该及时释放
+
+<h3>循环</h3></li>
+<li>只有循环控制语句应该被放在for()结构中</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span>
+</span><span class='line'>  <span class="n">sum</span> <span class="o">+=</span> <span class="n">value</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class='line'>  <span class="n">sum</span> <span class="o">+=</span> <span class="n">value</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class='line'><span class="c1">// NOT: for (i = 0, sum = 0; i &lt; 100; i++)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>循环变量应该紧挨着循环结构</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">isDone</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>           <span class="c1">// NOT: bool isDone = false;</span>
+</span><span class='line'><span class="k">while</span> <span class="o">(!</span><span class="n">isDone</span><span class="o">)</span> <span class="o">{</span>         <span class="c1">//      :</span>
+</span><span class='line'>  <span class="o">:</span>                       <span class="c1">//      while (!isDone) {</span>
+</span><span class='line'><span class="o">}</span>                         <span class="c1">//        :</span>
+</span><span class='line'>                          <span class="c1">//      }</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在循环中避免使用do-while语句</li>
+<li>在循环中尽量避免使用continue和break语句</li>
+</ul>
+
+
+<h3>条件</h3>
+
+<ul>
+<li>避免复杂的条件判断语句，可以引用临时的布尔变量来降低复杂度</li>
+<li>正常情况应该被放在if语句中，异常情况放在else语句中</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">if</span> <span class="o">(</span><span class="n">isOK</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">doSomething</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">exception</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>条件语句应该写在单独一行，后面不要接其它的语句了</li>
+<li>不要在判断中去执行语句</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">InputStream</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="n">fileName</span><span class="o">,</span> <span class="s">&quot;w&quot;</span><span class="o">);</span>
+</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="n">stream</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="o">:</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// NOT:</span>
+</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="n">File</span><span class="o">.</span><span class="na">open</span><span class="o">(</span><span class="n">fileName</span><span class="o">,</span> <span class="s">&quot;w&quot;</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>  <span class="o">:</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>不要使用魔数，使用具名常量代替</li>
+<li>浮点数的书写至少要有一个小数位</li>
+<li>静态方法要使用类名来调用，不要使用对象。</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span> <span class="c1">//NOT: thread.sleep(1000); getThread().sleep(1000);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h2>布局和注释</h2>
+
+<h3>布局</h3>
+
+<ul>
+<li>缩进为两个空格，TAB符要设置转换为空格</li>
+<li>块布局可以是下面的两种</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="k">while</span> <span class="o">(!</span><span class="n">done</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">doSomething</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">done</span> <span class="o">=</span> <span class="n">moreToDo</span><span class="o">();</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">while</span> <span class="o">(!</span><span class="n">done</span><span class="o">)</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'>   <span class="n">doSomething</span><span class="o">();</span>
+</span><span class='line'>   <span class="n">done</span> <span class="o">=</span> <span class="n">moreToDo</span><span class="o">();</span>
+</span><span class='line'> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 类的布局如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">class</span> <span class="nc">Rectangle</span> <span class="kd">extends</span> <span class="n">Shape</span>
+</span><span class='line'>   <span class="kd">implements</span> <span class="n">Cloneable</span><span class="o">,</span> <span class="n">Serializable</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'>   <span class="o">...</span>
+</span><span class='line'> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 方法的布局如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">someMethod</span><span class="o">()</span>
+</span><span class='line'>   <span class="kd">throws</span> <span class="n">SomeException</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'>   <span class="o">...</span>
+</span><span class='line'> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 条件语句的布局如下，判断条件要另起一行不要跟}在一行</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="k">if</span> <span class="o">(</span><span class="n">condition</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">if</span> <span class="o">(</span><span class="n">condition</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">if</span> <span class="o">(</span><span class="n">condition</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">condition</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<ul>
+<li>for语句和while语句的布局如下</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="k">for</span> <span class="o">(</span><span class="n">initialization</span><span class="o">;</span> <span class="n">condition</span><span class="o">;</span> <span class="n">update</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'> <span class="err">空循环如下：</span>
+</span><span class='line'> <span class="k">for</span> <span class="o">(</span><span class="n">initialization</span><span class="o">;</span> <span class="n">condition</span><span class="o">;</span> <span class="n">update</span><span class="o">)</span>
+</span><span class='line'> <span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* switch语句的布局如下，switch语句一定要有default:即使是空的</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="k">switch</span> <span class="o">(</span><span class="n">condition</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="k">case</span> <span class="n">ABC</span> <span class="o">:</span>
+</span><span class='line'>     <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'>     <span class="c1">// Fallthrough</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">case</span> <span class="n">DEF</span> <span class="o">:</span>
+</span><span class='line'>     <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'>     <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">case</span> <span class="n">XYZ</span> <span class="o">:</span>
+</span><span class='line'>     <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'>     <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="k">default</span> <span class="o">:</span>
+</span><span class='line'>     <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'>     <span class="k">break</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* try-catch语句布局如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">exception</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>   <span class="n">statements</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h3>空格</h3>
+
+<ul>
+<li>操作符两边要有空格</li>
+<li>Java保留字后面要跟空格 如 while () , if ()</li>
+<li>逗号后面要有空格</li>
+<li>冒号两边都要有空格</li>
+<li>在for语句中的分号后面要有空格</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">a</span> <span class="o">=</span> <span class="o">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="o">)</span> <span class="o">*</span> <span class="n">d</span><span class="o">;</span> <span class="c1">// NOT: a=(b+c)*d</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// NOT: while(true){</span>
+</span><span class='line'>   <span class="o">...</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">doSomething</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">c</span><span class="o">,</span> <span class="n">d</span><span class="o">);</span>  <span class="c1">// NOT: doSomething(a,b,c,d);</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">case</span> <span class="mi">100</span> <span class="o">:</span>  <span class="c1">// NOT: case 100:</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>  <span class="c1">// NOT: for(i=0;i&lt;10;i++){</span>
+</span><span class='line'>   <span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 逻辑单元之间要隔一行空行</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="c1">// Create a new identity matrix</span>
+</span><span class='line'> <span class="n">Matrix4x4</span> <span class="n">matrix</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix4x4</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'> <span class="c1">// Precompute angles for efficiency</span>
+</span><span class='line'> <span class="kt">double</span> <span class="n">cosAngle</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">cos</span><span class="o">(</span><span class="n">angle</span><span class="o">);</span>
+</span><span class='line'> <span class="kt">double</span> <span class="n">sinAngle</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">sin</span><span class="o">(</span><span class="n">angle</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'> <span class="c1">// Specify matrix as a rotation transformation</span>
+</span><span class='line'> <span class="n">matrix</span><span class="o">.</span><span class="na">setElement</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span>  <span class="n">cosAngle</span><span class="o">);</span>
+</span><span class='line'> <span class="n">matrix</span><span class="o">.</span><span class="na">setElement</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span>  <span class="n">sinAngle</span><span class="o">);</span>
+</span><span class='line'> <span class="n">matrix</span><span class="o">.</span><span class="na">setElement</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="n">sinAngle</span><span class="o">);</span>
+</span><span class='line'> <span class="n">matrix</span><span class="o">.</span><span class="na">setElement</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span>  <span class="n">cosAngle</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'> <span class="c1">// Apply rotation</span>
+</span><span class='line'> <span class="n">transformation</span><span class="o">.</span><span class="na">multiply</span><span class="o">(</span><span class="n">matrix</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 类中的每个方法之间前后要有空行
+* 变量的声明要左对齐</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="n">TextFile</span>  <span class="n">file</span><span class="o">;</span>
+</span><span class='line'> <span class="kt">int</span>       <span class="n">nPoints</span><span class="o">;</span>
+</span><span class='line'> <span class="kt">double</span>    <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 语句之间也要对齐</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="k">if</span>      <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">lowValue</span><span class="o">)</span>    <span class="n">compueSomething</span><span class="o">();</span>
+</span><span class='line'> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">mediumValue</span><span class="o">)</span> <span class="n">computeSomethingElse</span><span class="o">();</span>
+</span><span class='line'> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">highValue</span><span class="o">)</span>   <span class="n">computeSomethingElseYet</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">value</span> <span class="o">=</span> <span class="o">(</span><span class="n">potential</span>        <span class="o">*</span> <span class="n">oilDensity</span><span class="o">)</span>   <span class="o">/</span> <span class="n">constant1</span> <span class="o">+</span>
+</span><span class='line'>         <span class="o">(</span><span class="n">depth</span>            <span class="o">*</span> <span class="n">waterDensity</span><span class="o">)</span> <span class="o">/</span> <span class="n">constant2</span> <span class="o">+</span>
+</span><span class='line'>         <span class="o">(</span><span class="n">zCoordinateValue</span> <span class="o">*</span> <span class="n">gasDensity</span><span class="o">)</span>   <span class="o">/</span> <span class="n">constant3</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">minPosition</span>     <span class="o">=</span> <span class="n">computeDistance</span><span class="o">(</span><span class="n">min</span><span class="o">,</span>     <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">z</span><span class="o">);</span>
+</span><span class='line'> <span class="n">averagePosition</span> <span class="o">=</span> <span class="n">computeDistance</span><span class="o">(</span><span class="n">average</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">z</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">switch</span> <span class="o">(</span><span class="n">phase</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>   <span class="k">case</span> <span class="n">PHASE_OIL</span>   <span class="o">:</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Oil&quot;</span><span class="o">;</span>   <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>   <span class="k">case</span> <span class="n">PHASE_WATER</span> <span class="o">:</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Water&quot;</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>   <span class="k">case</span> <span class="n">PHASE_GAS</span>   <span class="o">:</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Gas&quot;</span><span class="o">;</span>   <span class="k">break</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h3>注释</h3>
+
+<ul>
+<li>代码应该能够自我解释。复杂的代码要考虑重写</li>
+<li>Javadoc的注释使用下面的格式，可以通过工具生成,块注释每行的开头要有*号</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Return lateral location of the specified position.</span>
+</span><span class='line'><span class="cm"> * If the position is unset, NaN is returned.</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> * @param x    X coordinate of position.</span>
+</span><span class='line'><span class="cm"> * @param y    Y coordinate of position.</span>
+</span><span class='line'><span class="cm"> * @param zone Zone of position.</span>
+</span><span class='line'><span class="cm"> * @return     Lateral location.</span>
+</span><span class='line'><span class="cm"> * @throws IllegalArgumentException  If zone is &lt;= 0.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">double</span> <span class="nf">computeLocation</span><span class="o">(</span><span class="kt">double</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span> <span class="n">y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">zone</span><span class="o">)</span>
+</span><span class='line'>  <span class="kd">throws</span> <span class="n">IllegalArgumentException</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>  <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 在注释后面要有空格，注释要跟着代码缩进</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// This is a comment    NOT: //This is a comment</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**                     NOT: /**</span>
+</span><span class='line'><span class="cm"> * This is a javadoc          *This is a javadoc</span>
+</span><span class='line'><span class="cm"> * comment                    *comment</span>
+</span><span class='line'><span class="cm"> */</span>                           <span class="o">*/</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>       <span class="c1">// NOT:  while (true) { </span>
+</span><span class='line'>  <span class="c1">// Do something             // Do something</span>
+</span><span class='line'>  <span class="n">something</span><span class="o">();</span>                  <span class="n">something</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+* 所有公开的类和接口应该使用Javadoc的注释规范</p>
+
+<h3>References</h3>
+
+<p>[1] Code Complete, Steve McConnel &ndash; Microsoft Press</p>
+
+<p>[2] Java Code Conventions
+<a href="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html">http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html</a></p>
+
+<p>[3] Netscape&rsquo;s Software Coding Standards for Java
+<a href="http://developer.netscape.com/docs/technote/java/codestyle.html">http://developer.netscape.com/docs/technote/java/codestyle.html</a></p>
+
+<p>[4] C / C++ / Java Coding Standards from NASA
+<a href="http://v2ma09.gsfc.nasa.gov/coding_standards.html">http://v2ma09.gsfc.nasa.gov/coding_standards.html</a></p>
+
+<p>[5] Coding Standards for Java from AmbySoft
+<a href="http://www.ambysoft.com/javaCodingStandards.html">http://www.ambysoft.com/javaCodingStandards.html</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[变量命名概要]]></title>
@@ -2092,7 +2992,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 
 <p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#103;&#105;&#116;&#x40;&#x67;&#x69;&#x74;&#104;&#117;&#98;&#x2e;&#99;&#x6f;&#x6d;">&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#x6f;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+只需要把原先的<a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x67;&#x69;&#x74;&#64;&#x67;&#105;&#x74;&#x68;&#x75;&#98;&#46;&#x63;&#111;&#109;">&#x67;&#105;&#x74;&#x40;&#x67;&#x69;&#116;&#104;&#117;&#x62;&#x2e;&#99;&#x6f;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2280,104 +3180,6 @@ octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上�
 <p>详解系列
 <a href="http://blog.jobbole.com/24379/">http://blog.jobbole.com/24379/</a>
 <a href="http://blog.jobbole.com/25808/">http://blog.jobbole.com/25808/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[vim 命令组合]]></title>
-    <link href="http://sweetdark.github.com/blog/2013/08/08/vim-component/"/>
-    <updated>2013-08-08T21:14:00+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2013/08/08/vim-component</id>
-    <content type="html"><![CDATA[<h4>以下的命令都是在非insert模式下执行的</h4>
-
-<h1>vim 与跳转命令的组合</h1>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>dw 从光标处开始往后删除一个字
-</span><span class='line'>dW 从光标处开始往后删除一个长字
-</span><span class='line'>d$ 从光标处开始往后删除到行尾
-</span><span class='line'>d0 从光标处开始往前删除到行头
-</span><span class='line'>d^ 从光标处开始往前删除到第一个字符头
-</span><span class='line'>D  删除一整行
-</span><span class='line'>dnw 往后删除多个字符
-</span><span class='line'>dd 删除一行包含换行符
-</span><span class='line'>df* 删除到第一个出现*包括*字符的字符串.
-</span><span class='line'>
-</span><span class='line'>&lt;action&gt;i&lt;object&gt; 对在object范围中的内容进行action操作
-</span><span class='line'>如：
-</span><span class='line'>di) 在删除当前光标匹配的括号中的字符
-</span><span class='line'>(i &gt;= 3 && i &lt; 5)  此时将删除括号内的内容，只留下括号
-</span><span class='line'>&lt;action&gt;a&lt;object&gt; 对object范围包含object进行action操作
-</span><span class='line'>da) 把括号也删除
-</span><span class='line'>
-</span><span class='line'>同理适用于 yank的一切
-</span><span class='line'>yw 复制一个字
-</span><span class='line'>yy, ydw, yW, yf* ynf* yi) ya) 等等
-</span><span class='line'>
-</span><span class='line'>同理也适用于v 可视模式
-</span><span class='line'>vw vW vf* vi) 等等
-</span><span class='line'>......
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>与寄存器的组合</h1>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>"byy 把一行复制到寄存器b
-</span><span class='line'>"bp 粘贴寄存器b的内容
-</span><span class='line'>同理适用于 [a-zA-Z]的寄存器</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>重复命令</h1>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>. 重复执行上一次操作
-</span><span class='line'>@a 执行寄存器a记录的操作
-</span><span class='line'>@@ 执行寄存器的操作
-</span><span class='line'>n@@ 执行多次</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>录制宏</h1>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>qa 开始记录操作 保存到寄存器a
-</span><span class='line'>....
-</span><span class='line'>q 在非insert 模式下完成记录
-</span><span class='line'>
-</span><span class='line'>@a 执行寄存器a中的操作</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

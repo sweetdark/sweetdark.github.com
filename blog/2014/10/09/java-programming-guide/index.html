@@ -3,10 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Mario's Blog</title>
+	<title>java 风格指南 - Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Oct 9th, 2014 Tag: programming [TOC] Java Programming Guide 软件首要的技术革命是管理复杂度Steve McConnel Code Complete 代码越多，问题也就越多Biggie Smalls &hellip;">
+	<meta name="description" content="[TOC] Java Programming Guide 软件首要的技术革命是管理复杂度Steve McConnel Code Complete 代码越多，问题也就越多Biggie Smalls 代码被阅读的次数远远多于写的次数
+任何一个傻瓜都会写出能够让机器理解的代码， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -89,41 +90,9 @@
 <div id="toload">
 <!-- begin toload --> 
     <div id="content" class="inner">
-        <div class="blog-index">
-
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/10/09/java-programming-guide/">
-		
-			Java 风格指南</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-09T21:07:38+08:00" pubdate data-updated="true">Oct 9<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/programming/'>programming</a>
-  
-</div>
-    </div>
-		<p>[TOC]</p>
+        <article class="post">
+	<h2 class="title">Java 风格指南</h2>
+	<div class="entry-content"><p>[TOC]</p>
 
 <h1>Java Programming Guide</h1>
 
@@ -1015,493 +984,14 @@ bool isFound; // NOT: isNotFound</p></blockquote></li>
 
 <p>[5] Coding Standards for Java from AmbySoft
 <a href="http://www.ambysoft.com/javaCodingStandards.html">http://www.ambysoft.com/javaCodingStandards.html</a></p>
-
-		
-		
-	</div>
+</div>
 
 <div class="meta">
 	
-		<span class="comments"><a href="/blog/2014/10/09/java-programming-guide//index.html#disqus_thread">Comments</a></span>
+		<span class="comments"><a href="/blog/2014/10/09/java-programming-guide/#disqus_thread">Comments</a></span>
 	
 </div>
 </article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/10/08/naming-variables/">
-		
-			变量命名概要</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-08T22:22:05+08:00" pubdate data-updated="true">Oct 8<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/code-complete/'>code-complete</a>
-  
-</div>
-    </div>
-		<h2>变量命名</h2>
-
-<h3>命名的一般注意事项</h3>
-
-<ul>
-<li>名字是否完整的表达了变量所代表的含义</li>
-<li>名字是否足够长，让人一看就懂</li>
-<li>名字反映了现实世界中的问题，而不是编程语言中的解决方案</li>
-<li>如果有计算值限定符，它们是否被放在了后面 employCount employTotal</li>
-<li>是否使用Count和Index来代替Num</li>
-</ul>
-
-
-<h3>为特定的数据类型命名</h3>
-
-<ul>
-<li>循环下标的命名有意义吗？（如果是多层嵌套要注意下标的命名）</li>
-<li>所有的临时变量都重新命名以更有意义</li>
-<li>当布尔变量为真时，变量名能准确表达其意义</li>
-<li>枚举类型的命名是否使用了前缀<code>Color_Red</code> <code>Color_Blue</code></li>
-<li>具名常量根据其代表的实体，而不是它所代表的数字来命名</li>
-</ul>
-
-
-<h3>命名规则</h3>
-
-<ul>
-<li>规则能够区分全局数据，类数据，和局部数据吗？</li>
-<li>规则能够区分类型名，具名常量，枚举类型和变量名吗？ 如类型名用大小写混合，具名常量用全部大写</li>
-<li>规则能够区分子程序的输入和输出参数吗？</li>
-<li>规则尽可能的与语言规则标准兼容吗？</li>
-</ul>
-
-
-<h3>短名字</h3>
-
-<ul>
-<li>除非有必要才用短名字</li>
-<li>是否避免了为了节省一个字而缩写的情况</li>
-<li>所有单词的缩写方式都一致吗</li>
-<li>名字能够读出来吗</li>
-<li>避免容易看错和读错的名字了吗？ 如i 1 l， o 0 O等</li>
-<li>在缩写表里有对缩写进行说明吗</li>
-</ul>
-
-
-<h3>常见的命名问题</h3>
-
-<ul>
-<li>容易让人误解的名字</li>
-<li>有相近含义的名字</li>
-<li>只有一两个字符不同的名字</li>
-<li>发音相近的名字</li>
-<li>包含数字的名字</li>
-<li>英语中经常拼错的名字</li>
-<li>与标准的子程序或预定义的变量名冲突的名字</li>
-<li>过于随意的名字</li>
-<li>含有难读字符的名字</li>
-</ul>
-
-
-<h3>要点</h3>
-
-<ul>
-<li>名字要尽可能的具体。那些模糊的或者太通用的可以包含多种用途的名字通常都不是很好</li>
-<li>现代编程语言很少需要用到缩写</li>
-<li>代码阅读的次数要远多于编写的次数</li>
-<li>命名规则应该能够很好的区分全局数据，局部数据，类数据。它们还应该区分类型名，具名常量，枚举类型和变量名</li>
-</ul>
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/10/08/naming-variables//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0/">
-		
-			LNK2001: Unresolved External Symbol __imp__GetTickCount64@0</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-25T22:16:46+08:00" pubdate data-updated="true">Sep 25<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/compile/'>compile</a>
-  
-</div>
-    </div>
-		<p>这个链接错误的发生在链接MSVCRT.lib时，原因是链接了的错误版本kernel32.lib等库。修改link条件，把/LIBPATH:&ldquo;libpath&#8221;这个改为正确的path就可以了。如果自己写makefile文件，在使用编译器，链接器，头文件，和库时，要特别小心。如果使用了第三方的库要看这个第三方的库是用什么版本的CRT（运行时库）编译的，是多线程版的还是单线程版的，用Unicode的还是ASCII的。</p>
-
-<p><strong>LINK : fatal error LNK1101: incorrect MSPDB80.DLL version;</strong> 这个错误是在使用cl.exe命令行编译时出现的错误，原因是VC\Bin\下没有“msobj80.dll,mspdb80.dll,mspdbcore.dll,mspdbsrv.exe”这四个文件。
-解决的方法：</p>
-
-<ul>
-<li>直接从Common7\IDE\下复制这四个文件到VC\Bin\下即可解决</li>
-<li>添加系统变量(Path)，这样：我的电脑->属性->高级->环境变量->系统变量，在path中添加C:\Program Files\Microsoft Visual Studio 8\Common7\IDE；，注意结尾最后用“；”隔开！</li>
-</ul>
-
-
-<p>附注：</p>
-
-<blockquote><p>RUN-TIME LIBRARYRun-Time Library是编译器提供的标准库，提供一些基本的库函数和系统调用。
-我们一般使用的Run-Time Library是C Run-Time Libraries。当然也有Standard C++ libraries。</p>
-
-<p>C Run-Time Libraries实现ANSI C的标准库。VC安装目录的CRT目录有C Run-Time库的大部分源代码。 C Run-Time Libraries有静态库版本，也有动态链接库版本；有单线程版本，也有多线程版本；还有调试和非调试版本。</p>
-
-<p>动态链接库版本：/MD Multithreaded DLL 使用导入库MSVCRT.LIB</p>
-
-<p>/MDd Debug Multithreaded DLL 使用导入库MSVCRTD.LIB</p>
-
-<p>静态库版本：/ML Single-Threaded 使用静态库LIBC.LIB</p>
-
-<p>/MLd Debug Single-Threaded 使用静态库LIBCD.LIB</p>
-
-<p>/MT Multithreaded 使用静态库LIBCMT.LIB</p>
-
-<p>/MTd Debug Multithreaded 使用静态库LIBCMTD.LIB</p>
-
-<p>若要使用其中的一个运行时库 请忽略其他库：</p>
-
-<ul>
-<li>libc.lib 单线程 libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
-<li>libcmt.lib 多线程 libc.lib、msvcrt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
-<li>msvcrt.lib 使用多线程 DLL libc.lib、libcmt.lib、libcd.lib、libcmtd.lib、msvcrtd.lib</li>
-<li>libcd.lib 单线程调试 libc.lib、libcmt.lib、msvcrt.lib、libcmtd.lib、msvcrtd.lib</li>
-<li>libcmtd.lib 多线程调试 libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、msvcrtd.lib</li>
-<li>msvcrtd.lib 使用多线程调试 DLL  libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib</li>
-</ul>
-
-
-<p>设置方法：属性，链接器，输入，忽略指定库 libc.lib、libcmt.lib、msvcrt.lib、libcd.lib、libcmtd.lib （使用一个，忽略其他的）</p></blockquote>
-
-<p>[1] 引用<a href="http://www.hz601.org/heaven/">http://www.hz601.org/heaven/</a></p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/09/25/lnk2001-unresolved-external-symbol-imp-gettickcount64-at-0//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/09/16/defensive-programming/">
-		
-			防御式编程</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-16T21:58:40+08:00" pubdate data-updated="true">Sep 16<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/code-complete/'>code-complete</a>
-  
-</div>
-    </div>
-		<p>防御式编程应该要检查数据的正确性，以及在出现错误数据时应该如何处理（避免程序崩溃，提示用户，让程序正确的崩溃，处理异常等）。
-<em>其核心思想是：子程序不应该因传入错误的数据而被破坏，要承认程序都会有问题，都需要被修改。</em></p>
-
-<h2>保护程序免遭非法输入数据的破坏</h2>
-
-<ul>
-<li><p>检查所有来源于外部的数据</p>
-
-<blockquote><p>当从文件，用户，网络或其它外部中获取数据时，要检查所有的数据值，以确保值在合法的范围内。</p></blockquote></li>
-<li><p>检查输入的参数</p></li>
-<li>决定如何处理错误的数据</li>
-</ul>
-
-
-<h2>断言</h2>
-
-<p>断言对于大型的复杂程序或可靠性要求极高的程序来说尤其有用。通过使用断言，程序员能更快排查出因修改代码或者别的原因而导致的错误。</p>
-
-<ul>
-<li>输入和输出参数处于合理的范围</li>
-<li>子程序开始（结束）执行时，文件处于打开（关闭）状态</li>
-<li>文件或流已用只读‘只写或可读写的方式打开</li>
-<li>仅用于输入的变量没有被子程序所修改</li>
-<li>指针非空</li>
-<li>传入子程序的数组或其它窗口至少能容纳X个数据元素</li>
-<li>表已初始化，存储着真实的数值</li>
-</ul>
-
-
-<p>断言只是用于开发和维护阶段。</p>
-
-<ul>
-<li>用错误处理代码来处理预期会发生的情况，断言来处理绝不应该发生的情况。</li>
-<li>避免把要执行的代码放到断言中</li>
-<li>用断言来注解前条件和后条件</li>
-<li>对于高健壮性的代码，应该先使用断言再处理错误</li>
-</ul>
-
-
-<h2>错误处理技术</h2>
-
-<p>当程序中出现错误数据时，可选的处理方式有如下几种</p>
-
-<ul>
-<li>返回中立值</li>
-<li>换用下一个正确的数据</li>
-<li>返回与前次相同的数据</li>
-<li>换用最近的合法值</li>
-<li>把警告信息记录到日志文件中</li>
-<li>返回一个错误码</li>
-<li>调用错误处理子程序</li>
-<li>当错误发生时显示错误信息</li>
-<li>用最妥当的方式在局部处理错误</li>
-<li>关闭程序</li>
-</ul>
-
-
-<h2>异常</h2>
-
-<p>异常是把代码的错误和异常事件传递给调用方的一种特殊手段。 异常和继承一样要审慎明智的使用。</p>
-
-<ul>
-<li>用异常通知程序的其余部分，发生了<em>不可忽略</em>的错误</li>
-<li>不能用异常来推卸责任</li>
-<li>避免在构造和析构函数中抛出异常，除非你在同一个地方捕获它们</li>
-<li>在恰当的抽象层次抛出异常</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">Employee</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">public</span> <span class="n">TaxID</span> <span class="n">GetTaxID</span><span class="p">()</span> <span class="k">throw</span> <span class="n">EOFException</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="p">...</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这个EOFException就和GetTexID的抽象层次不一致，暴露了内部是用读取文件的方式实现的。然而在这个抽象层次，调用方是不关心也不依赖于你是用什么方式实现的。所以正确的做法是再抽象一个Exception。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">Employee</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="k">public</span> <span class="n">TaxID</span> <span class="n">GetTaxID</span><span class="p">()</span> <span class="k">throw</span> <span class="n">EmployeeDataNotAvailable</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">{</span>
-</span><span class='line'>      <span class="p">...</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>在异常消息中加入导致异常的全部消息</li>
-<li>避免使用空的catch语句</li>
-<li>了解所用函数库可能抛出的异常</li>
-<li>考虑创建一个集中的异常报告机制。 可以自己定制一个异常的机类，里面实现了如何记录异常的方法</li>
-<li>把项目中对异常的使用标准化</li>
-<li>考虑异常的替换方案</li>
-<li><p>使用防火墙的隔离技术，在某一层次上统一做数据的检查（数据验证层），下面的层次就可以不用做检查了。</p>
-
-<blockquote><p>例如在类的public接口统一对传入的参数进行检测，private就不做这些检测了</p></blockquote></li>
-<li><p>尽早引入辅助调试的代码和工具</p></li>
-<li>计划移除辅助调试代码
-
-<blockquote><ul>
-<li>使用类似ant和make这样的工具</li>
-<li>使用内置的预处理器 如DEBUG等</li>
-<li>使用自己编写的预处理器</li>
-<li>使用调试存根</li>
-</ul>
-</blockquote></li>
-</ul>
-
-
-<h2>采用进攻式编程</h2>
-
-<p>异常情况应该尽早的在开发阶段让它显现出来。</p>
-
-<ul>
-<li>确保断言语句使程序终止运行</li>
-<li>完全填充分配到的所有内存</li>
-<li>完全填充已分配到的文件或流</li>
-<li>确保每一个case语句中的default分支或else分支都能产生严重的错误。</li>
-</ul>
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/09/16/defensive-programming//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/09/14/high-quality-routines/">
-		
-			高质量的子程序</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-14T10:24:12+08:00" pubdate data-updated="true">Sep 14<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/code-complete/'>code-complete</a>
-  
-</div>
-    </div>
-		<p>创建子程序不仅仅是为了重用和更容易调试。下面给出更多合理的理由。</p>
-
-<h2>创建子程序的正当理由</h2>
-
-<ul>
-<li>降低复杂度，隐藏细节。</li>
-<li>引入中间，易懂的抽象。 把一段代码放进一个命名恰当的子程序中，这是对代码的最好说明，而不是用注释。</li>
-<li>避免重复代码</li>
-<li>支持子类化，如果是类的方法，那么可以在必要时可以用派生类重写这个方法</li>
-<li>隐藏顺序 把事件处理的顺序隐藏起来</li>
-<li>提高可移植性， 把一切非标准的API和操作系统等底层相关的API用一个子程序封装起来，可以提高可移植性。</li>
-<li>简化复杂的布尔判断 把布尔判断放进子程序中</li>
-<li>改善性能 通过使用子程序，你可以只在一个地方优化代码。</li>
-<li>隔离复杂度</li>
-<li>限制变化所带来的影响</li>
-<li>形成中央控制点</li>
-</ul>
-
-
-<h2>在子程序上的设计</h2>
-
-<p><strong>功能上的的内聚性,这个是最好的内聚性，这意味着这个子程序只完成一项功能。如sin, CloseFile，GetCustomerName</strong></p>
-
-<p>不理想的内聚性</p>
-
-<ul>
-<li>顺序上的内聚性 指在子程序内包含有需要按特定顺序执行的操作，这些步骤需要共享数据，而且只在全部执行完成后才完成一项特定的功能</li>
-<li>通信上的内聚性 指子程序只是共享了数据，代码之间不存在任何联系</li>
-<li>临时的内聚性 指一些需要同时执行才放到一起操作的子程序。 如 StartUp。 解决这个问题是让这个子程序的代码分成多个子程序，去调用其它的多个子程序</li>
-</ul>
-
-
-<p>不可取的内聚性</p>
-
-<ul>
-<li>过程上的内聚性 指一个子程序按特定的顺序执行。 解决方式：可以把不同的操作放进各自的子程序中</li>
-<li>逻辑上的内聚性 指若干个操作放入同一个子程序，通过传入一个控制标志来执行不同的操作。 如InputAll 根据控制标志来判断输入的是姓名，不是用户ID。如果这些子程序共享数据可以考虑包裹到类中</li>
-<li>巧合的内聚性</li>
-</ul>
-
-
-
-		
-		<a href="/blog/2014/09/14/high-quality-routines/" class="more-link">阅读全文 &rarr;</a>
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/09/14/high-quality-routines//index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
-<nav id="pagenavi">
-    
-    
-        <a href="page2" class="next">Next</a>
-    
-    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
-</nav>
-</div>
 
 	<div class="share">
 	<div class="addthis_toolbox addthis_default_style ">
@@ -1517,18 +1007,11 @@ bool isFound; // NOT: isNotFound</p></blockquote></li>
 
 
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
 </section>
-
-
-  
-</aside>
-
-
 
     </div>
     <footer id="footer">
@@ -1555,7 +1038,10 @@ bool isFound; // NOT: isNotFound</p></blockquote></li>
       var disqus_shortname = 'sweetdark';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://sweetdark.github.com/blog/2014/10/09/java-programming-guide/';
+        var disqus_url = 'http://sweetdark.github.com/blog/2014/10/09/java-programming-guide/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
