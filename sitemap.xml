@@ -292,84 +292,51 @@
   
   
   <url>
-    <loc>http://sweetdark.github.com/index(WIN-AAVTBMUMBC8&#8211;Administrator&#8211;2014-10-11-21,51,27).html</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
+    <loc>http://sweetdark.github.com/about/</loc>
+    <lastmod>2014-10-12T22:16:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://sweetdark.github.com/blog/archives/</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://sweetdark.github.com/about/</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
+    <lastmod>2014-10-12T22:16:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://sweetdark.github.com/</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
+    <lastmod>2014-10-12T22:16:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://sweetdark.github.com/tag/</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://sweetdark.github.com/links(WIN-AAVTBMUMBC8&#8211;Administrator&#8211;2014-10-11-21,51,27).html</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
+    <lastmod>2014-10-12T22:16:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://sweetdark.github.com/links.html</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://sweetdark.github.com/search(WIN-AAVTBMUMBC8&#8211;Administrator&#8211;2014-10-11-21,51,27).html</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
+    <lastmod>2014-10-12T22:16:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://sweetdark.github.com/search.html</loc>
-    <lastmod>2014-10-12T22:10:10+08:00</lastmod>
+    <lastmod>2014-10-12T22:16:08+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   
   <url>
-    <loc>http://sweetdark.github.com/404(WIN-AAVTBMUMBC8&#8211;Administrator&#8211;2014-10-11-21,51,26).html</loc>
-    <lastmod>2014-09-22T21:08:1411391280Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://sweetdark.github.com/404.html</loc>
     <lastmod>2014-09-22T07:04:1411340652Z</lastmod>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://sweetdark.github.com/offline-cache(WIN-AAVTBMUMBC8&#8211;Administrator&#8211;2014-10-11-21,51,27).html</loc>
-    <lastmod>2014-09-22T21:08:1411391281Z</lastmod>
     <priority>0.6</priority>
   </url>
   
