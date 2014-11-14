@@ -6,14 +6,9 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jul 9th, 2014 Tag: JNI 在JNI中要访问结构体中的字段，首先要获得这个字段的FieldID。然后通过GetField和SetField来访问和修改。 1
-2
-3
-4
-5
-6
-//C的接口
-jfieldID GetFieldID(JNIEnv * &hellip;">
+	<meta name="description" content="Published on: Jul 17th, 2014 Tag: Compile error C2220: 警告被视为错误 &ndash; 没有生成“object”文件 这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
+解决方案：
+1. 在VS2010以后在文件-> &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -98,6 +93,143 @@ jfieldID GetFieldID(JNIEnv * &hellip;">
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/07/17/vs-error-collection/">
+		
+			Vs编译错误及解决办法</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-17T18:18:48+08:00" pubdate data-updated="true">Jul 17<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/compile/'>Compile</a>
+  
+</div>
+    </div>
+		<h3>error C2220: 警告被视为错误 &ndash; 没有生成“object”文件</h3>
+
+<p>这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
+解决方案：
+1. 在VS2010以后在文件->高级保存选项，设置UTF-8的格式，重新保存一次。 或者用其它的程序保存成UTF-8的格式。</p>
+
+<ol>
+<li>如果上述不能去掉错误，还可以点击项目，右击选择属性->配置属性->c/c++&ndash;>常规，将“警告视为错误”的选项改为“否”。就可以！</li>
+</ol>
+
+
+<h3>error C2143: 语法错误 : 缺少“;”(在“类型”的前面)</h3>
+
+<p>C99之前都要求，函数内的局部变量要在开始处定义。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">f</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;j is %d&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这可能出现在c文件编译的时候，VS2012都不完全支持C99。须要调整一下代码。把函数内的局部变量放到函数开头去定义。或者改成cpp后缀的文件</p>
+
+<p>VS2010之后开始支持C99，所以在VS2008之前如果出现 找不到 stdint.h 文件的话。可以升级到VS2010之后。</p>
+
+<h3>LNK2001: 无法解析的外部符号 __iob 问题的解决方法</h3>
+
+<ol>
+<li><p>缺少libc.lib
+解决这个问题的方法是去掉链接到libc.lib，具体地点：项目-〉属性-〉配置属性-〉链接器-〉忽略特定库。</p></li>
+<li><p>unresolved external symbol <code>__iob</code>
+这个<code>__iob</code>找不到的问题费了我大部分的时间。跟踪到stdio.h文件，发现那里有个关于iob的宏，终于搞定。加入一句话到.cpp文件中：<code>extern "C" { FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]}; }</code></p></li>
+<li><p>NULL iterator
+STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器上进行++或&mdash;之类的是不成立的。</p></li>
+<li><p>结构体默认函数
+在VC6中，结构体的默认运算符==或者&lt;之类的如果不实现也可以作为STL元素放入list等容器中。但VC8不行了，因为它已经不再为结构体生成缺省的操作符函数。</p></li>
+</ol>
+
+
+<p>该错误主要是由于静态库在VC6编译而主程序在VC2005编译，大家用的CRT不同。解决办法，代码中增加</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef __cplusplus</span>
+</span><span class='line'><span class="k">extern</span> <span class="s">&quot;C&quot;</span>
+</span><span class='line'><span class="cp">#endif</span>
+</span><span class='line'><span class="kt">FILE</span> <span class="n">_iob</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">__iob_func</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">__iob_func</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="n">__iob_func</span><span class="p">()[</span><span class="mi">2</span><span class="p">]};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此错误的产生根源：
+在VC6的stdio.h之中有如下定义</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">_CRTIMP</span> <span class="k">extern</span> <span class="kt">FILE</span> <span class="n">_iob</span><span class="p">[];</span>
+</span><span class='line'><span class="cp">#define stdin (&amp;_iob[0])</span>
+</span><span class='line'><span class="cp">#define stdout (&amp;_iob[1])</span>
+</span><span class='line'><span class="cp">#define stderr (&amp;_iob[2])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>stdin、stdout、stderr是通过查<em>iob数组得到的。所以，VC6编译的程序、静态库只要用到了printf、scanf之类的函数，都要链接</em>iob数组。</p>
+
+<p>而在vc2005中，stdio.h中变成了</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">_CRTIMP</span> <span class="kt">FILE</span> <span class="o">*</span> <span class="kr">__cdecl</span> <span class="nf">__iob_func</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</span><span class='line'><span class="cp">#define stdin (&amp;__iob_func()[0])</span>
+</span><span class='line'><span class="cp">#define stdout (&amp;__iob_func()[1])</span>
+</span><span class='line'><span class="cp">#define stderr (&amp;__iob_func()[2])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>_iob</code>数组不再是显式的暴露出来了，需要调用<em><em>iob_func()函数获得。所以vc6的静态库链接VC2005的C运行库就会找不到</em>iob数组.
+通过重新定义
+<code>FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]};</code>
+就把vc6需要用到的</em>iob数组搞出来了</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/07/17/vs-error-collection//page4/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -485,7 +617,7 @@ Build选项下面就不要勾上build before launch了。</p>
 
 
 <p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#111;&#58;&#103;&#105;&#116;&#x40;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;">&#103;&#105;&#x74;&#64;&#103;&#x69;&#116;&#104;&#x75;&#x62;&#46;&#x63;&#111;&#x6d;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
+只需要把原先的<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#x74;&#104;&#x75;&#98;&#46;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#46;&#99;&#111;&#109;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -531,195 +663,6 @@ Build选项下面就不要勾上build before launch了。</p>
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/03/how-to-install-octproess/">
-		
-			如何部署已有的octopress Blog</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-03T17:06:14+08:00" pubdate data-updated="true">Jul 3<sup>rd</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/tools/'>tools</a>
-  
-</div>
-    </div>
-		<p><strong>注意 你的系统的环境变量一定不要有中文, 如果Rake中提示 invalid byte sequence in UTF-8 (ArgumentError) 请检查你的所有的系统环境变量</strong></p>
-
-<ol>
-<li>下载和安装git， 把git安装目录的bin和cmd文件目录加到path中。</li>
-<li>下载和安装ruby1.9.3，安装时可以勾选 加到path中。 安装完成后可以通过ruby &mdash;version来测试是否安装成功</li>
-<li>去网上下载一个<a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe</a> 解压到一个目录如E:/Devkit。dos cd 到这个目录。执行如下命令:</li>
-</ol>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ruby dk.rb init 
-</span><span class='line'>ruby dk.rb install</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>
-安装之后，要把这个 E:/Devkit/mingw/bin这个目录加到你的系统环境path，如果已经安装了MinGw并且在path中配置好的，要把这个mingw拷贝过去覆盖掉。
-</strong></p>
-
-<p>博客的代码高亮需要python环境的支持。去下个python2.7安装。python 安装完成后。执行下面的命令</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>easy_install pygments</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>设置本地环境</h2>
-
-<p>为了支持中文UTF-8编码，在Windows的环境变量中增加下面的选项。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>LANG = zh_CN.UTF-8
-</span><span class='line'>LC_ALL = zh_CN.UTF-8</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>配置git</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git config --global user.name "yourname"
-</span><span class='line'>git config --global user.email "youremail"</span></code></pre></td></tr></table></div></figure>
-
-
-<p>更新gem的更新源，ruby的官方网站经常被和谐。换成国内的更新源，这样速度就快多了，变更如下：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>gem sources -a http://ruby.taobao.org/
-</span><span class='line'>gem sources -r http://rubygems.org/</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>下载并配置Blog</h2>
-
-<p>在某个目录下，DOS命令</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git@github.com:sweetdark/sweetdark.github.com.git sweetdark
-</span><span class='line'>
-</span><span class='line'>如果clone下来只有master分支，那可以新建个source分支，
-</span><span class='line'>git checkout -b source 
-</span><span class='line'>这个命令会新建source分支并切换到source分支。
-</span><span class='line'>再执行git pull origin source 把远程的github上source分支拉到本地source分支。
-</span><span class='line'>
-</span><span class='line'>cd sweetdark
-</span><span class='line'>gem install bundler
-</span><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
-
-
-<p>配置好之后，DOS cd 到sweetdark目录下就可以写blog了。请确保你在source 分支下，通过git branch 命令可以查看。你在哪个分支下。 git checkout source 可以切换到source分支</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["title"] #创建个新的文章，在source/_post目录下，打开它，就可以编辑了。
-</span><span class='line'>
-</span><span class='line'>编辑完保存之后。
-</span><span class='line'>rake generate #生成网页
-</span><span class='line'>rake preview #预览 打开127.0.0.1:4000 可以看到。
-</span><span class='line'>rake deploy #发布
-</span><span class='line'>
-</span><span class='line'>然后记得提交，须要权限，要ssh的private key。
-</span><span class='line'>git add .
-</span><span class='line'>git commit -m "your commit message"
-</span><span class='line'>git push origin source
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>git remote -v 命令可以查远程的地址。
-<img src="../images/gitremote.png" alt="" />
-有不懂的git命令都可以用git command &mdash;help 来查这个command。</p>
-
-<p>为了确保安全不造成混乱，以后每次写blog之前，都要检查，你是否是在source分支下，是否跟服务器上是一致的。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git checkout source #切换到source分支
-</span><span class='line'>git pull origin source #更新服务器上的内容到本地</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>注意事项</h2>
-
-<ul>
-<li>图片最好是上传到一些可以保存图片的网站上，然后用 octopress 的Image 标签来引用， 相关用法<a href="http://octopress.org/docs/plugins/image-tag/%E3%80%82">http://octopress.org/docs/plugins/image-tag/%E3%80%82</a>
-用markdown语法也是可以的，不要写本地的相对路径（如上面的那张图片，会导致在Tag目录下看不到</li>
-</ul>
-
-
-<p>相关的文章
-octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上搭建Octopress博客</a></p>
-
-<p><a href="http://octopress.org/">http://octopress.org/</a> 官方文档必看。这里有许多官方的plugin介绍。包括代码高亮，插入网络上图片等。</p>
-
-<p><a href="http://qingbo.net/picky/502-markdown-syntax.html">MarkDonw的语法，文章就是用markdown语法的，很简单。</a></p>
-
-<p>-git的学习</p>
-
-<p>英文10本
-<a href="http://sixrevisions.com/resources/git-tutorials-beginners/#comments">http://sixrevisions.com/resources/git-tutorials-beginners/#comments</a></p>
-
-<p>中文</p>
-
-<p><a href="http://gitbook.liuhui998.com/index.html">http://gitbook.liuhui998.com/index.html</a></p>
-
-<p>详解系列
-<a href="http://blog.jobbole.com/24379/">http://blog.jobbole.com/24379/</a>
-<a href="http://blog.jobbole.com/25808/">http://blog.jobbole.com/25808/</a></p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/07/03/how-to-install-octproess//page4/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page3" class="prev">Prev</a>
@@ -749,7 +692,7 @@ octopress+github 构建blog <a href="http://xuhehuan.com/783.html">在Github上�
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuddha%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ebuddha%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

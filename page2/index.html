@@ -6,7 +6,8 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Sep 12th, 2014 Tag: Thinking 在许多事物中都存在着共性，如果没有掌握这种共性。每次来一样新的事物都要从头学起很浪费时间。这种不求甚解，靠死记的方式，在短时间内可以立即看到效果，但长时间来看是效率低下的。我们应该学会深入挖掘事物的本质， &hellip;">
+	<meta name="description" content="Published on: Sep 14th, 2014 Tag: code-complete 创建子程序不仅仅是为了重用和更容易调试。下面给出更多合理的理由。 创建子程序的正当理由 降低复杂度，隐藏细节。
+引入中间，易懂的抽象。 把一段代码放进一个命名恰当的子程序中，这是对代码的最好说明， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +92,90 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/14/high-quality-routines/">
+		
+			高质量的子程序</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-14T10:24:12+08:00" pubdate data-updated="true">Sep 14<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/code-complete/'>code-complete</a>
+  
+</div>
+    </div>
+		<p>创建子程序不仅仅是为了重用和更容易调试。下面给出更多合理的理由。</p>
+
+<h2>创建子程序的正当理由</h2>
+
+<ul>
+<li>降低复杂度，隐藏细节。</li>
+<li>引入中间，易懂的抽象。 把一段代码放进一个命名恰当的子程序中，这是对代码的最好说明，而不是用注释。</li>
+<li>避免重复代码</li>
+<li>支持子类化，如果是类的方法，那么可以在必要时可以用派生类重写这个方法</li>
+<li>隐藏顺序 把事件处理的顺序隐藏起来</li>
+<li>提高可移植性， 把一切非标准的API和操作系统等底层相关的API用一个子程序封装起来，可以提高可移植性。</li>
+<li>简化复杂的布尔判断 把布尔判断放进子程序中</li>
+<li>改善性能 通过使用子程序，你可以只在一个地方优化代码。</li>
+<li>隔离复杂度</li>
+<li>限制变化所带来的影响</li>
+<li>形成中央控制点</li>
+</ul>
+
+
+<h2>在子程序上的设计</h2>
+
+<p><strong>功能上的的内聚性,这个是最好的内聚性，这意味着这个子程序只完成一项功能。如sin, CloseFile，GetCustomerName</strong></p>
+
+<p>不理想的内聚性</p>
+
+<ul>
+<li>顺序上的内聚性 指在子程序内包含有需要按特定顺序执行的操作，这些步骤需要共享数据，而且只在全部执行完成后才完成一项特定的功能</li>
+<li>通信上的内聚性 指子程序只是共享了数据，代码之间不存在任何联系</li>
+<li>临时的内聚性 指一些需要同时执行才放到一起操作的子程序。 如 StartUp。 解决这个问题是让这个子程序的代码分成多个子程序，去调用其它的多个子程序</li>
+</ul>
+
+
+<p>不可取的内聚性</p>
+
+<ul>
+<li>过程上的内聚性 指一个子程序按特定的顺序执行。 解决方式：可以把不同的操作放进各自的子程序中</li>
+<li>逻辑上的内聚性 指若干个操作放入同一个子程序，通过传入一个控制标志来执行不同的操作。 如InputAll 根据控制标志来判断输入的是姓名，不是用户ID。如果这些子程序共享数据可以考虑包裹到类中</li>
+<li>巧合的内聚性</li>
+</ul>
+
+
+
+		
+		<a href="/blog/2014/09/14/high-quality-routines/" class="more-link">阅读全文 &rarr;</a>
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/09/14/high-quality-routines//page2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -407,141 +492,6 @@ dalvik.system.NativeStart.main(Native Method)
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/08/30/architecture-prerequisite/">
-		
-			怎样算是一分优秀的架构规格书</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-30T19:09:52+08:00" pubdate data-updated="true">Aug 30<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/architecture/'>architecture</a>
-  
-</div>
-    </div>
-		<h2>架构的先决条件</h2>
-
-<p>架构的质量决定了系统的概念完整性。后者继而决定了软件的最终质量。</p>
-
-<h2>架构的典型组成部分</h2>
-
-<h3>程序组织</h3>
-
-<ol>
-<li>系统架构首先要以概要的形式对有关系统做一个综述。</li>
-<li>架构定义主要的构造块。根据程序规模的不同，各个构造块可以由单个类或者多个类组成的子系统。每条列在需求中的功能特性至少有一个构造块覆盖到。</li>
-<li>明确定义各个构造块的责任。构造块之间的关系和接口。各个构造块之间应该知道的越少越好。明确层次关系，对于每个构造块，可以调用哪些构造块，可以间接调用哪些构造块，不可以调用哪些构造块。</li>
-</ol>
-
-
-<h3>主要的类</h3>
-
-<p>定义20%完成80%的需求的类。</p>
-
-<h3>数据设计</h3>
-
-<p>明确使用什么样的数据形式，为什么不用其它的形式。使用文件还是数据库，为什么？</p>
-
-<h3>业务规则</h3>
-
-<p>如果架构须要依赖于特定的业务，那么要主细描述这么规则。</p>
-
-<h3>用户界面设计</h3>
-
-<p>架构中应当说明使用哪种UI，什么格式，是桌面的，WEB的，命令行接口还是其它的形式。</p>
-
-<h3>变更策略</h3>
-
-<p>明确的需求发生变更时，应当执行什么样的策略，怎样管理。</p>
-
-<h3>资源管理</h3>
-
-<p>一些有限的资源像线程，句柄，内存，硬盘。应当如何合理的使用，统一使用的方式。在嵌入式中，资源短缺的情况下，更应该注重资源的管理。</p>
-
-<h3>安全性</h3>
-
-<p>架构应该描述实现设计层面和代码层面的安全性的方法。</p>
-
-<h3>性能</h3>
-
-<p>明确性能目标，性能要达到什么样的程度。</p>
-
-<h3>可伸缩性</h3>
-
-<p>可伸缩性是指系统增长满足未来需求的能力</p>
-
-<h3>输入输出</h3>
-
-<p>架构应该详细定义读取策略，而且应该描述在哪一层检测IO错误。</p>
-
-<h3>错误处理</h3>
-
-<p>架构应该清楚的说明一种“一致处理错误错误”的策略
-* 错误处理是进行纠正还是仅仅检测
-* 错误检测是主动还是被动
-* 程序的错误如何传播
-* 错误消息的处理有什么约定
-* 如何处理异常
-* 程序在什么层次上处理错误
-* 每个类的错误处理上负什么样的责任。是每个类负责处理错误，还是由一组类来处理整个系统的错误
-* 使用运行环境中的内部支持的错误处理机制还是自己编写错误处理机制</p>
-
-<h3>容错性</h3>
-
-<p>架构应该定义所期望的容错种类。</p>
-
-<h3>架构的可行性</h3>
-
-<p>应该认证系统的技术可行性</p>
-
-<h3>架构的总体质量</h3>
-
-<ul>
-<li>优秀的架构规格书的特点在于讨论了系统中的类，每个类背后的隐藏信息，讨论了“采纳或排斥所有替代方案的理由”</li>
-<li>架构的目标应该清楚的表述</li>
-<li>架构在很大程度止是与机器和编程语言无关的</li>
-<li>架构应该描述所有决策的主要动机</li>
-<li>架构应该明确的指出有风险的区域</li>
-<li>架构应该在“欠描述”和“过度描述”之间的那条分界线上</li>
-<li>架构不应该包含很难理解的东西</li>
-</ul>
-
-
-<blockquote><p>摘自代码大全</p></blockquote>
-
-
-
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/08/30/architecture-prerequisite//page2/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page1" class="prev">Prev</a>
@@ -571,7 +521,7 @@ dalvik.system.NativeStart.main(Native Method)
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuddha%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ebuddha%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

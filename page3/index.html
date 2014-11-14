@@ -6,7 +6,8 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Aug 28th, 2014 Tag: windows Windows 的消息队列和消息处理方式一直没有非常系统的学习过。正如某位名人所说的“一知半解，最危险”。 “一知半解”就是对事物的吸收囫囵吞枣、不求甚解，导致判断失准而不自知。因为不彻底了解事物， &hellip;">
+	<meta name="description" content="Published on: Aug 30th, 2014 Tag: architecture 架构的先决条件 架构的质量决定了系统的概念完整性。后者继而决定了软件的最终质量。 架构的典型组成部分 程序组织 系统架构首先要以概要的形式对有关系统做一个综述。
+架构定义主要的构造块。根据程序规模的不同 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +92,141 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/30/architecture-prerequisite/">
+		
+			怎样算是一分优秀的架构规格书</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-30T19:09:52+08:00" pubdate data-updated="true">Aug 30<sup>th</sup>, 2014</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/architecture/'>architecture</a>
+  
+</div>
+    </div>
+		<h2>架构的先决条件</h2>
+
+<p>架构的质量决定了系统的概念完整性。后者继而决定了软件的最终质量。</p>
+
+<h2>架构的典型组成部分</h2>
+
+<h3>程序组织</h3>
+
+<ol>
+<li>系统架构首先要以概要的形式对有关系统做一个综述。</li>
+<li>架构定义主要的构造块。根据程序规模的不同，各个构造块可以由单个类或者多个类组成的子系统。每条列在需求中的功能特性至少有一个构造块覆盖到。</li>
+<li>明确定义各个构造块的责任。构造块之间的关系和接口。各个构造块之间应该知道的越少越好。明确层次关系，对于每个构造块，可以调用哪些构造块，可以间接调用哪些构造块，不可以调用哪些构造块。</li>
+</ol>
+
+
+<h3>主要的类</h3>
+
+<p>定义20%完成80%的需求的类。</p>
+
+<h3>数据设计</h3>
+
+<p>明确使用什么样的数据形式，为什么不用其它的形式。使用文件还是数据库，为什么？</p>
+
+<h3>业务规则</h3>
+
+<p>如果架构须要依赖于特定的业务，那么要主细描述这么规则。</p>
+
+<h3>用户界面设计</h3>
+
+<p>架构中应当说明使用哪种UI，什么格式，是桌面的，WEB的，命令行接口还是其它的形式。</p>
+
+<h3>变更策略</h3>
+
+<p>明确的需求发生变更时，应当执行什么样的策略，怎样管理。</p>
+
+<h3>资源管理</h3>
+
+<p>一些有限的资源像线程，句柄，内存，硬盘。应当如何合理的使用，统一使用的方式。在嵌入式中，资源短缺的情况下，更应该注重资源的管理。</p>
+
+<h3>安全性</h3>
+
+<p>架构应该描述实现设计层面和代码层面的安全性的方法。</p>
+
+<h3>性能</h3>
+
+<p>明确性能目标，性能要达到什么样的程度。</p>
+
+<h3>可伸缩性</h3>
+
+<p>可伸缩性是指系统增长满足未来需求的能力</p>
+
+<h3>输入输出</h3>
+
+<p>架构应该详细定义读取策略，而且应该描述在哪一层检测IO错误。</p>
+
+<h3>错误处理</h3>
+
+<p>架构应该清楚的说明一种“一致处理错误错误”的策略
+* 错误处理是进行纠正还是仅仅检测
+* 错误检测是主动还是被动
+* 程序的错误如何传播
+* 错误消息的处理有什么约定
+* 如何处理异常
+* 程序在什么层次上处理错误
+* 每个类的错误处理上负什么样的责任。是每个类负责处理错误，还是由一组类来处理整个系统的错误
+* 使用运行环境中的内部支持的错误处理机制还是自己编写错误处理机制</p>
+
+<h3>容错性</h3>
+
+<p>架构应该定义所期望的容错种类。</p>
+
+<h3>架构的可行性</h3>
+
+<p>应该认证系统的技术可行性</p>
+
+<h3>架构的总体质量</h3>
+
+<ul>
+<li>优秀的架构规格书的特点在于讨论了系统中的类，每个类背后的隐藏信息，讨论了“采纳或排斥所有替代方案的理由”</li>
+<li>架构的目标应该清楚的表述</li>
+<li>架构在很大程度止是与机器和编程语言无关的</li>
+<li>架构应该描述所有决策的主要动机</li>
+<li>架构应该明确的指出有风险的区域</li>
+<li>架构应该在“欠描述”和“过度描述”之间的那条分界线上</li>
+<li>架构不应该包含很难理解的东西</li>
+</ul>
+
+
+<blockquote><p>摘自代码大全</p></blockquote>
+
+
+
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2014/08/30/architecture-prerequisite//page3/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -385,143 +521,6 @@
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/17/vs-error-collection/">
-		
-			Vs编译错误及解决办法</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-17T18:18:48+08:00" pubdate data-updated="true">Jul 17<sup>th</sup>, 2014</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/compile/'>Compile</a>
-  
-</div>
-    </div>
-		<h3>error C2220: 警告被视为错误 &ndash; 没有生成“object”文件</h3>
-
-<p>这种错误的原因是：原因是该文件的代码页为英文，而我们系统中的代码页为中文。
-解决方案：
-1. 在VS2010以后在文件->高级保存选项，设置UTF-8的格式，重新保存一次。 或者用其它的程序保存成UTF-8的格式。</p>
-
-<ol>
-<li>如果上述不能去掉错误，还可以点击项目，右击选择属性->配置属性->c/c++&ndash;>常规，将“警告视为错误”的选项改为“否”。就可以！</li>
-</ol>
-
-
-<h3>error C2143: 语法错误 : 缺少“;”(在“类型”的前面)</h3>
-
-<p>C99之前都要求，函数内的局部变量要在开始处定义。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span> <span class="nf">f</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;j is %d&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这可能出现在c文件编译的时候，VS2012都不完全支持C99。须要调整一下代码。把函数内的局部变量放到函数开头去定义。或者改成cpp后缀的文件</p>
-
-<p>VS2010之后开始支持C99，所以在VS2008之前如果出现 找不到 stdint.h 文件的话。可以升级到VS2010之后。</p>
-
-<h3>LNK2001: 无法解析的外部符号 __iob 问题的解决方法</h3>
-
-<ol>
-<li><p>缺少libc.lib
-解决这个问题的方法是去掉链接到libc.lib，具体地点：项目-〉属性-〉配置属性-〉链接器-〉忽略特定库。</p></li>
-<li><p>unresolved external symbol <code>__iob</code>
-这个<code>__iob</code>找不到的问题费了我大部分的时间。跟踪到stdio.h文件，发现那里有个关于iob的宏，终于搞定。加入一句话到.cpp文件中：<code>extern "C" { FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]}; }</code></p></li>
-<li><p>NULL iterator
-STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器上进行++或&mdash;之类的是不成立的。</p></li>
-<li><p>结构体默认函数
-在VC6中，结构体的默认运算符==或者&lt;之类的如果不实现也可以作为STL元素放入list等容器中。但VC8不行了，因为它已经不再为结构体生成缺省的操作符函数。</p></li>
-</ol>
-
-
-<p>该错误主要是由于静态库在VC6编译而主程序在VC2005编译，大家用的CRT不同。解决办法，代码中增加</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#ifdef __cplusplus</span>
-</span><span class='line'><span class="k">extern</span> <span class="s">&quot;C&quot;</span>
-</span><span class='line'><span class="cp">#endif</span>
-</span><span class='line'><span class="kt">FILE</span> <span class="n">_iob</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">__iob_func</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span> <span class="n">__iob_func</span><span class="p">()[</span><span class="mi">1</span><span class="p">],</span> <span class="n">__iob_func</span><span class="p">()[</span><span class="mi">2</span><span class="p">]};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>此错误的产生根源：
-在VC6的stdio.h之中有如下定义</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">_CRTIMP</span> <span class="k">extern</span> <span class="kt">FILE</span> <span class="n">_iob</span><span class="p">[];</span>
-</span><span class='line'><span class="cp">#define stdin (&amp;_iob[0])</span>
-</span><span class='line'><span class="cp">#define stdout (&amp;_iob[1])</span>
-</span><span class='line'><span class="cp">#define stderr (&amp;_iob[2])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>stdin、stdout、stderr是通过查<em>iob数组得到的。所以，VC6编译的程序、静态库只要用到了printf、scanf之类的函数，都要链接</em>iob数组。</p>
-
-<p>而在vc2005中，stdio.h中变成了</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">_CRTIMP</span> <span class="kt">FILE</span> <span class="o">*</span> <span class="kr">__cdecl</span> <span class="nf">__iob_func</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
-</span><span class='line'><span class="cp">#define stdin (&amp;__iob_func()[0])</span>
-</span><span class='line'><span class="cp">#define stdout (&amp;__iob_func()[1])</span>
-</span><span class='line'><span class="cp">#define stderr (&amp;__iob_func()[2])</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>_iob</code>数组不再是显式的暴露出来了，需要调用<em><em>iob_func()函数获得。所以vc6的静态库链接VC2005的C运行库就会找不到</em>iob数组.
-通过重新定义
-<code>FILE _iob[3] = {__iob_func()[0], __iob_func()[1], __iob_func()[2]};</code>
-就把vc6需要用到的</em>iob数组搞出来了</p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2014/07/17/vs-error-collection//page3/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page2" class="prev">Prev</a>
@@ -551,7 +550,7 @@ STL已经不能有NULL迭代器这么一说了，想想也对，在NULL迭代器
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuddha%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ebuddha%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 
