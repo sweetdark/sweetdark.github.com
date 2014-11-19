@@ -6,7 +6,7 @@
 	<title>Mario's Blog</title>
     <meta name="author" content="Mario">
     
-	<meta name="description" content="Published on: Jul 7th, 2013 Tag: opengl Get The Source 背景 这节主要讲旋转变换。给定一个点和一个角度，绕一个坐标轴旋转。在X，Y，Z中保持一个值不变（绕该轴旋转的值不变），另外两个坐标改变。我们可以绕Z轴，Y轴，X轴旋转。 &hellip;">
+	<meta name="description" content="Published on: Jul 7th, 2013 Tag: opengl Get The Source 背景 缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +91,71 @@
     <div id="content" class="inner">
         <div class="blog-index">
 
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/07/07/ogl-step8/">
+		
+			Ogl Step8 缩放Scaling Transformation</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-07T22:02:00+08:00" pubdate data-updated="true">Jul 7<sup>th</sup>, 2013</time></div>
+      <div class="tags">
+
+  Tag:
+  
+    <a href='/blog/tags/opengl/'>opengl</a>
+  
+</div>
+    </div>
+		<p><a href="https://github.com/sweetdark/openglex">Get The Source</a></p>
+
+<h1>背景</h1>
+
+<p>缩放变换很简单，就是改变物体的大小。如果你想使用同一个模型构造大小不一样的物体以适应不同的分辨率。你可以同时缩放3个坐标轴，也可以只缩放其中的一个或者两个来让物体变得更瘦身，更精简。</p>
+
+<p>你想要缩放哪一维，只需对应的改变矩阵对角线上的值就可以了。</p>
+
+<h1>代码漫游</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="n">sinf</span><span class="p">(</span><span class="n">Scale</span><span class="p">);</span> <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>
+</span><span class='line'><span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">0.0f</span><span class="p">;</span>        <span class="n">World</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0f</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与上一节不同的只是这个矩阵。三角形会随着正弦值(0,1]由小变大，为0时缩放到最小三角形消失。在[-1, 0)时只是反过来而已。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2013/07/07/ogl-step8//page6/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -561,79 +626,6 @@ vertex processor负责执行顶点着色器去处理每一个通过管道的顶�
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/06/25/ogl-step3/">
-		
-			Ogl Step3 First Triangle</a>
-	</h2>
-    <div class="entry-content">
-    <div class="meta">
-      <div class="date">Published on: 
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-25T12:34:00+08:00" pubdate data-updated="true">Jun 25<sup>th</sup>, 2013</time></div>
-      <div class="tags">
-
-  Tag:
-  
-    <a href='/blog/tags/opengl/'>opengl</a>
-  
-</div>
-    </div>
-		<h1>背景</h1>
-
-<p>这篇指南非常短，只是简单的画一个三角形。</p>
-
-<p>在此篇指南中，我们依赖于标准化的盒子。可见的顶点必须在这个盒子内
-这样视图转换是才能够把它映射到屏幕坐标上。从z轴的负极往里面看。opengl的盒子如下：
-<img src="http://ogldev.atspace.co.uk/www/tutorial03/coord_system.png">
-Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围，那么图形将会被剪切。</p>
-
-<h1>代码漫游</h1>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">Vector3f</span> <span class="n">Vertices</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
-</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
-</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
-</span><span class='line'><span class="n">Vertices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Vector3f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>扩展顶点数组包含3个顶点。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">glDrawArrays</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>与上一篇相比两个参数变了，我们画三角形而不是画点。我们画三个顶点而不是一个顶点了。</p>
-
-		
-		
-	</div>
-
-<div class="meta">
-	
-		<span class="comments"><a href="/blog/2013/06/25/ogl-step3//page6/index.html#disqus_thread">Comments</a></span>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         <a href="page5" class="prev">Prev</a>
@@ -663,7 +655,7 @@ Point(-1.0, -1.0)为屏幕的左下角。当顶点的位置超出了这个范围
   
     <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuddha%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ebuddha%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
+    <span id="tag-cloud"><embed type='application/x-shockwave-flash' src='/javascripts/tagcloud.swf'width='100%' height='250' bgcolor='#f2f2f2' id='tagcloudflash' name='tagcloudflash' quality='high' allowscriptaccess='always'flashvars="tcolor=0x333333&amp;tcolor2=0x333333&amp;hicolor=0x000000&amp;tspeed=100&amp;distr=true&amp;mode=tags&amp;tagcloud=%3Ctags%3E%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Falgorithm%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ealgorithm%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Farchitecture%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Earchitecture%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuddha%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ebuddha%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fbuild%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ebuild%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcode-complete%27+style%3D%27font-size%3A+32.22222222222222%25%27%3Ecode-complete%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ecompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fcompile%27+style%3D%27font-size%3A+14.444444444444445%25%27%3ECompile%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fdebug%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Edebug%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fessay%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eessay%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgit%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Egit%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fgithub%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EGithub%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fjni%27+style%3D%27font-size%3A+23.333333333333336%25%27%3EJNI%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Flive%27+style%3D%27font-size%3A+27.77777777777778%25%27%3ELive%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fmarkdown%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Emarkdown%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Foctopress%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Eoctopress%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fopengl%27+style%3D%27font-size%3A+50.0%25%27%3Eopengl%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fprogramming%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Eprogramming%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fthinking%27+style%3D%27font-size%3A+27.77777777777778%25%27%3EThinking%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Ftools%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Etools%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fvim%27+style%3D%27font-size%3A+23.333333333333336%25%27%3Evim%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwindows%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewindows%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fwish%27+style%3D%27font-size%3A+14.444444444444445%25%27%3Ewish%3C%2Fa%3E+%3Ca+href%3D%27http%3A%2F%2Fsweetdark.github.com%2Fblog%2Ftags%2Fzen%27+style%3D%27font-size%3A+18.88888888888889%25%27%3Ezen%3C%2Fa%3E+%3C%2Ftags%3E"></span>
 </section>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Mario's Blog]]></title>
   <link href="http://sweetdark.github.com/atom.xml" rel="self"/>
   <link href="http://sweetdark.github.com/"/>
-  <updated>2014-11-14T23:08:43+08:00</updated>
+  <updated>2014-11-19T22:19:26+08:00</updated>
   <id>http://sweetdark.github.com/</id>
   <author>
     <name><![CDATA[Mario]]></name>
@@ -14,7 +14,45 @@
 
   
   <entry>
-    <title type="html"><![CDATA[why study buddha?]]></title>
+    <title type="html"><![CDATA[计划和发愿]]></title>
+    <link href="http://sweetdark.github.com/blog/2014/11/19/wish-and-plan/"/>
+    <updated>2014-11-19T22:03:17+08:00</updated>
+    <id>http://sweetdark.github.com/blog/2014/11/19/wish-and-plan</id>
+    <content type="html"><![CDATA[<ul>
+<li>每天扫一次地，每周拖一次地。家就是净土，把家打扫干净了，就是扫除心灵中的一些污垢</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th> 日期 </th>
+<th> 打扫 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> 2014年11月19日 </td>
+<td> Yes |</td>
+</tr>
+</tbody>
+</table>
+
+
+<ul>
+<li>修持八正道</li>
+<li>让心安住在当下</li>
+<li>放慢做事的速度</li>
+<li>平常多念“嗡嘛呢贝咪哞”净化自心,三个月内要念10万遍</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[为什么学佛]]></title>
     <link href="http://sweetdark.github.com/blog/2014/10/28/why-study-buddha/"/>
     <updated>2014-10-28T19:11:16+08:00</updated>
     <id>http://sweetdark.github.com/blog/2014/10/28/why-study-buddha</id>
@@ -3086,88 +3124,6 @@ Build选项下面就不要勾上build before launch了。</p>
 <li><p><a href="http://mysuperbaby.iteye.com/blog/1603817">http://mysuperbaby.iteye.com/blog/1603817</a></p></li>
 </ol>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[多个github用户配置SSH KEY的切换]]></title>
-    <link href="http://sweetdark.github.com/blog/2014/07/05/config-mutil-ssh-key-user/"/>
-    <updated>2014-07-05T17:01:53+08:00</updated>
-    <id>http://sweetdark.github.com/blog/2014/07/05/config-mutil-ssh-key-user</id>
-    <content type="html"><![CDATA[<p>如果你在github有多个帐户。那要在不同的帐户之间切换SSH Key。可以config来配置SSH key
-假设你有两个private key文件为 id_rsa1 和 id_rsa2
-生成ssh key的命令如下:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ssh-keygen -t rsa -C "youremail"</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在git bash下</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.ssh
-</span><span class='line'>touch config
-</span><span class='line'>#打开config 如果你用的是vim 可以 vim config 
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>打开后编辑如下：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Host firstkey 
-</span><span class='line'>  HostName github.com
-</span><span class='line'>  User git
-</span><span class='line'>  IdentityFile ~/.ssh/id_rsa1
-</span><span class='line'>Host secondkey
-</span><span class='line'>  HostName github.com
-</span><span class='line'>  User git
-</span><span class='line'>  IdentityFile ~/.ssh/id_rsa2</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>注意 Host是你的 git的SSH地址对应的地址。 也就是说 git@firstkey:yourname/your.git  这样就会找到Host 为firstkey的key了</strong>
-只需要把原先的<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#x74;&#104;&#x75;&#98;&#46;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#x74;&#64;&#103;&#x69;&#116;&#104;&#117;&#98;&#46;&#99;&#111;&#109;</a> 改为git@firstkey 就可以了,更改远程地址的命令：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git remote set-url [name] [url]
-</span><span class='line'>git remote set-url --push [name] [url]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>还要把key加入到ssh-agent中，命令如下:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ssh-add ~/.ssh/id_rsa1
-</span><span class='line'>ssh-add ~/.ssh/id_rsa2
-</span><span class='line'>#该命令如果报错：Could not open a connection to your authentication agent.无法连接到ssh agent
-</span><span class='line'>#可先执行
-</span><span class='line'>eval "ssh-agent -s" 或者 ssh-agent bash</span></code></pre></td></tr></table></div></figure>
-
-
-<p>例子：</p>
-
-<figure class='code'><figcaption><span>在同一机器不同目录下克隆远程同一个repo</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>git clone git@firstkey:xxx.git
-</span><span class='line'>
-</span><span class='line'>git clone git@secondkey:xxx.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面的两条clone命令，虽然关联到同一个repo，却是通过不同ssh连接，当然也是不同的git账号。</p>
 ]]></content>
   </entry>
   
